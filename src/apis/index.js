@@ -43,7 +43,8 @@ import getToolMode from './getToolMode';
 import getZoomLevel from './getZoomLevel';
 import getMaxZoomLevel from './getMaxZoomLevel';
 import getMinZoomLevel from './getMinZoomLevel';
-import hotkeys from './hotkeys';
+import { createHotkeysAPI } from './hotkeys';
+import { getHotkeysManager } from 'helpers/hotkeysManager';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
 import isToolDisabled from './isToolDisabled';
@@ -293,7 +294,7 @@ import {
 import { Shortcuts } from 'helpers/hotkeysUtils';
 import setReaderPageMode from './setReaderPageMode';
 
-export default (store, instanceDocViewerKey, instanceI18n) => {
+export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => {
   const CORE_NAMESPACE = 'Core';
   const UI_NAMESPACE = 'UI';
   const objForWebViewerCore = {
@@ -338,7 +339,7 @@ export default (store, instanceDocViewerKey, instanceI18n) => {
     getZoomLevel,
     getMaxZoomLevel,
     getMinZoomLevel,
-    hotkeys,
+    hotkeys: createHotkeysAPI(getHotkeysManager(store)),
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
@@ -387,7 +388,7 @@ export default (store, instanceDocViewerKey, instanceI18n) => {
     setDefaultPrintOptions: setDefaultPrintOptions(store),
     setNotesPanelSortStrategy: setNotesPanelSortStrategy(store),
     setSwipeOrientation,
-    setTheme: setTheme(store),
+    setTheme: setTheme(store, instanceRootNode),
     setToolbarGroup: setToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),

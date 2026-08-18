@@ -5,6 +5,7 @@
  */
 
 import React, { useEffect, forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import ColorPickerOverlay from 'components/ColorPickerOverlay';
 import Icon from 'components/Icon';
@@ -25,6 +26,9 @@ const propTypes = {
 };
 
 const ColorPickerButton = forwardRef((props, ref) => {
+  const menuItem = menuItems.officeEditorColorPicker;
+  const overlayDataElement = DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY;
+
   const { core } = useCore();
   const [
     activeColor,
@@ -37,35 +41,46 @@ const ColorPickerButton = forwardRef((props, ref) => {
 
   const {
     isFlyoutItem,
-    dataElement = menuItems.officeEditorColorPicker.dataElement,
-    img: icon = menuItems.officeEditorColorPicker.icon,
-    title = menuItems.officeEditorColorPicker.title,
+    dataElement = menuItem.dataElement,
+    img: icon = menuItem.icon,
+    title = menuItem.title,
   } = props;
 
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const useColorIconBorder = activeColor.toString() === 'rgba(255,255,255,1)';
-  const ariaLabel = activeColor.toHexString();
+  const useColorIconBorder = activeColor?.toString() === 'rgba(255,255,255,1)';
+  const ariaLabel = `${t(title)} ${activeColor?.toHexString()}`;
 
   const colorIcon = (
     <Icon
       dataElement={dataElement} // adding this dataElement to the icon to track the overlay position
       className={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color menu-icon`}
-      glyph={props.img || 'icon-office-editor-circle'}
-      color={activeColor.toString()}
+      glyph={icon || 'icon-office-editor-circle'}
+      color={activeColor?.toString()}
       ariaLabel={ariaLabel}
     />
   );
 
   const handleClick = () => {
-    dispatch(actions.toggleElement(DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY));
+    dispatch(actions.toggleElement(overlayDataElement));
+  };
+
+  const handleColorChange = (_, newColor) => {
+    const color = {
+      r: newColor.R,
+      g: newColor.G,
+      b: newColor.B,
+    };
+    core.getOfficeEditor().updateSelectionAndCursorStyle({ color });
+    dispatch(actions.closeElements([overlayDataElement, 'officeEditorHomeToolsGroupedItemsFlyout']));
   };
 
   useEffect(() => {
     return () => {
-      dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY));
+      dispatch(actions.closeElement(overlayDataElement));
     };
-  }, []);
+  }, [dispatch, overlayDataElement]);
 
   return (
     <>
@@ -82,24 +97,16 @@ const ColorPickerButton = forwardRef((props, ref) => {
             title={title}
             ariaLabel={ariaLabel}
             img={icon}
-            element={DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY}
-            color={activeColor.toString()}
-            toggleElement={DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY}
+            element={overlayDataElement}
+            color={activeColor?.toString()}
+            toggleElement={overlayDataElement}
             iconClassName={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color`}
           />
         )}
       <ColorPickerOverlay
-        onStyleChange={(_, newColor) => {
-          const color = {
-            r: newColor.R,
-            g: newColor.G,
-            b: newColor.B,
-            a: 255,
-          };
-          core.getOfficeEditor().updateSelectionAndCursorStyle({ color });
-          dispatch(actions.closeElements([DataElements.OFFICE_EDITOR_COLOR_PICKER_OVERLAY, 'officeEditorHomeToolsGroupedItemsFlyout']));
-        }}
+        onStyleChange={handleColorChange}
         color={activeColor}
+        overlayDataElement={overlayDataElement}
         toggleButtonDataElement={dataElement}
       />
     </>

@@ -7,6 +7,7 @@ import {
   enableThemeElements,
   disableThemeElements,
   importTheme,
+  waitForThemeLinkLoad,
 } from 'helpers/setThemeHelper';
 
 /**
@@ -21,10 +22,11 @@ WebViewer(...)
     instance.UI.setTheme(theme.DARK);
   });
  */
-export default (store) => {
+export default (store, instanceRootNode) => {
   let previousInternalTheme = null; // default; no theme is loaded initially
-  let previousActiveTheme = Theme.LIGHT; // default
-  let previousIsCustomizableUI = false; // default
+  const initialState = store.getState();
+  let previousActiveTheme = selectors.getActiveTheme(initialState) || Theme.LIGHT;
+  let previousIsCustomizableUI = initialState.featureFlags.customizableUI;
 
   /**
    * Maps internal theme strings to arrays of the corresponding DOM <style> or <link> elements
@@ -39,6 +41,15 @@ export default (store) => {
    * @ignore
    */
   let updateThemeQueue = Promise.resolve();
+
+  // Prime theme styles immediately so startup can paint in the configured theme
+  // before later store updates trigger reactive theme transitions.
+  updateThemeQueue = updateThemeQueue
+    .then(() => updateTheme(previousActiveTheme, previousIsCustomizableUI))
+    .catch((error) => {
+      console.error('Initial theme update failed:', error);
+    });
+  store.themeUpdateQueue = updateThemeQueue;
 
   /**
    * Updates the active theme by doing the following:
@@ -62,14 +73,18 @@ export default (store) => {
 
     currentlyLoadingTheme = internalTheme;
     try {
+      // Resolve DOM elements within THIS instance's own root (instanceRootNode), not the module-level getRootNode() singleton, since in multi-instance WebComponent mode that singleton always points to the most-recently-registered instance and would otherwise toggle a different instance's theme stylesheets.
       if (previousInternalTheme && !loadedThemes[previousInternalTheme]) {
-        searchForThemeElements(previousInternalTheme, loadedThemes);
+        searchForThemeElements(previousInternalTheme, loadedThemes, instanceRootNode);
       }
       const isAlreadyLoaded = loadedThemes[internalTheme];
       if (isAlreadyLoaded) {
         enableThemeElements(internalTheme, loadedThemes);
       } else {
         await importTheme(internalTheme);
+        // Wait for the link to fully load so the theme is painted before React
+        // renders for the first time.
+        await waitForThemeLinkLoad(internalTheme, instanceRootNode);
       }
 
       disableThemeElements(previousInternalTheme, loadedThemes);
@@ -101,6 +116,7 @@ export default (store) => {
       .catch((error) => {
         console.error('Theme update failed:', error);
       });
+    store.themeUpdateQueue = updateThemeQueue;
   });
   return (theme) => {
     const values = Object.values(Theme);

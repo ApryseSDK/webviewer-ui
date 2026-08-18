@@ -6,6 +6,7 @@ import * as getPopupPosition from 'helpers/getPopupPosition';
 
 jest.mock('helpers/getPopupPosition', () => ({
   getAnnotationPosition: jest.fn(),
+  getContainingBlockDocOffset: jest.fn(),
 }));
 
 jest.mock('hooks/useCore', () => ({
@@ -16,6 +17,8 @@ jest.mock('hooks/useCore', () => ({
 describe('FormFieldIndicator', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    Object.defineProperty(window, 'pageYOffset', { configurable: true, value: 0 });
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
     useCore.mockReturnValue({
       core: {
         getFormFieldCreationManager: jest.fn(() => ({
@@ -27,6 +30,7 @@ describe('FormFieldIndicator', () => {
       topLeft: { y: 100 },
       bottomRight: { y: 160 },
     });
+    getPopupPosition.getContainingBlockDocOffset.mockReturnValue({ top: 0, left: 0 });
   });
 
   const testCases = [
@@ -237,5 +241,47 @@ describe('FormFieldIndicator', () => {
     } else {
       expect(indicator).not.toHaveClass('rightSidePage');
     }
+  });
+
+  it('positions the indicator relative to the Web Component host', () => {
+    getPopupPosition.getContainingBlockDocOffset.mockReturnValue({ top: 30, left: 0 });
+
+    const annotation = {
+      PageNumber: 1,
+      getCustomData: () => 'Indicator Text',
+    };
+
+    render(
+      <FormFieldIndicator
+        annotation={annotation}
+        parameters={createParameters({ mode: 'Single', visiblePages: [1] })}
+      />,
+    );
+
+    const indicator = screen.getByText('Indicator Text').closest('.formFieldIndicator');
+    expect(indicator).toHaveStyle({
+      top: '70px',
+    });
+    expect(getPopupPosition.getContainingBlockDocOffset).toHaveBeenLastCalledWith(indicator);
+  });
+
+  it('accounts for window scroll when positioning outside a Web Component', () => {
+    getPopupPosition.getContainingBlockDocOffset.mockReturnValue({ top: 25, left: 0 });
+
+    const annotation = {
+      PageNumber: 1,
+      getCustomData: () => 'Indicator Text',
+    };
+
+    render(
+      <FormFieldIndicator
+        annotation={annotation}
+        parameters={createParameters({ mode: 'Single', visiblePages: [1] })}
+      />,
+    );
+
+    expect(screen.getByText('Indicator Text').closest('.formFieldIndicator')).toHaveStyle({
+      top: '75px',
+    });
   });
 });

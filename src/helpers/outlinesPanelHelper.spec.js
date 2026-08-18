@@ -3,9 +3,120 @@ import {
   getDefaultDestCoord,
   convertToPDFDestCoord,
   getOutlineName,
+  getVisibleOutlines,
+  isOutlineExpanded,
 } from './outlinesPanelHelper';
 
+const createOutlines = (outlineData, parent = null) => outlineData.map(({ name, children = [] }, index) => {
+  const outline = {
+    getName: () => name,
+    getIndex: () => index,
+    getParent: () => parent,
+  };
+  const childOutlines = createOutlines(children, outline);
+  outline.getChildren = () => childOutlines;
+  return outline;
+});
+
 describe('outlinesPanelHelper', () => {
+  describe('isOutlineExpanded', () => {
+    it('uses auto-expand as the default while preserving an explicit user choice', () => {
+      expect(isOutlineExpanded(undefined, true)).toBe(true);
+      expect(isOutlineExpanded({ isExpanded: false }, true)).toBe(false);
+      expect(isOutlineExpanded({ isExpanded: true }, false)).toBe(true);
+    });
+  });
+
+  describe('getVisibleOutlines', () => {
+    const outlines = createOutlines([
+      {
+        name: 'Root 1',
+        children: [
+          {
+            name: 'Child 1.1',
+            children: [{ name: 'Grandchild 1.1.1' }],
+          },
+          { name: 'Child 1.2' },
+        ],
+      },
+      {
+        name: 'Root 2',
+        children: [{ name: 'Child 2.1' }],
+      },
+    ]);
+
+    const getNamesAndLevels = (visibleOutlines) => visibleOutlines.map(({ outline, nestingLevel }) => ({
+      name: outline.getName(),
+      nestingLevel,
+    }));
+
+    it('only includes root outlines when all branches are collapsed', () => {
+      expect(getNamesAndLevels(getVisibleOutlines(outlines))).toEqual([
+        { name: 'Root 1', nestingLevel: 0 },
+        { name: 'Root 2', nestingLevel: 0 },
+      ]);
+    });
+
+    it('includes expanded descendants in tree order with their nesting levels', () => {
+      const outlinesStateMap = {
+        '0': { isExpanded: true },
+        '0-0': { isExpanded: true },
+        '1': { isExpanded: true },
+      };
+
+      expect(getNamesAndLevels(getVisibleOutlines(outlines, outlinesStateMap))).toEqual([
+        { name: 'Root 1', nestingLevel: 0 },
+        { name: 'Child 1.1', nestingLevel: 1 },
+        { name: 'Grandchild 1.1.1', nestingLevel: 2 },
+        { name: 'Child 1.2', nestingLevel: 1 },
+        { name: 'Root 2', nestingLevel: 0 },
+        { name: 'Child 2.1', nestingLevel: 1 },
+      ]);
+    });
+
+    it('includes all descendants when outlines are automatically expanded', () => {
+      expect(getNamesAndLevels(getVisibleOutlines(outlines, {}, true))).toEqual([
+        { name: 'Root 1', nestingLevel: 0 },
+        { name: 'Child 1.1', nestingLevel: 1 },
+        { name: 'Grandchild 1.1.1', nestingLevel: 2 },
+        { name: 'Child 1.2', nestingLevel: 1 },
+        { name: 'Root 2', nestingLevel: 0 },
+        { name: 'Child 2.1', nestingLevel: 1 },
+      ]);
+    });
+
+    it('keeps an explicitly collapsed branch hidden when outlines are automatically expanded', () => {
+      const outlinesStateMap = {
+        '0': { isExpanded: false },
+      };
+
+      expect(getNamesAndLevels(getVisibleOutlines(outlines, outlinesStateMap, true))).toEqual([
+        { name: 'Root 1', nestingLevel: 0 },
+        { name: 'Root 2', nestingLevel: 0 },
+        { name: 'Child 2.1', nestingLevel: 1 },
+      ]);
+    });
+
+    it('flattens a deeply nested expanded outline tree', () => {
+      const depth = 10000;
+      let child = null;
+
+      for (let index = depth - 1; index >= 0; index--) {
+        const currentChild = child;
+        child = {
+          getChildren: () => currentChild ? [currentChild] : [],
+          getIndex: () => 0,
+          getParent: () => null,
+        };
+      }
+
+      const visibleOutlines = getVisibleOutlines([child], {}, true);
+
+      expect(visibleOutlines).toHaveLength(depth);
+      expect(visibleOutlines[visibleOutlines.length - 1].nestingLevel).toBe(depth - 1);
+    });
+  });
+
   describe('getPageWidthAndHeight', () => {
     const testCases = [
       {

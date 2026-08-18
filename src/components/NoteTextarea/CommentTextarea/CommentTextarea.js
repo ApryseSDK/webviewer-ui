@@ -96,6 +96,7 @@ const CommentTextarea = React.forwardRef(
 
     const isAddReplyAttachmentDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON));
     const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
+    const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
 
     globalUserData = userData;
 
@@ -132,7 +133,7 @@ const CommentTextarea = React.forwardRef(
           onKeyDown={onKeyDown}
           formats={formats}
         />
-        {isReply && !isAddReplyAttachmentDisabled && !isOfficeEditorMode &&
+        {isReply && !isAddReplyAttachmentDisabled && !isOfficeEditorMode && !isSpreadsheetEditorMode &&
           <Button
             className='add-attachment'
             dataElement={DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON}

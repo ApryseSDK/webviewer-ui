@@ -1,7 +1,7 @@
 import core from 'core';
 import { getOfficeEditorCursorProperties, getOfficeEditorSelectionProperties } from './exposedSelectors';
 import { DEFAULT_COLOR, DEFAULT_POINT_SIZE } from 'constants/officeEditor';
-import { calculateLineSpacing, convertCursorToStylePreset, convertCoreColorToWebViewerColor } from 'helpers/officeEditor';
+import { calculateLineSpacing, convertCursorToStylePreset, convertCoreTextColor, convertCoreHighlightColor } from 'helpers/officeEditor';
 
 const isOfficeEditorReady = (state) => {
   return getIsOfficeEditorMode(state) && core.getOfficeEditor();
@@ -111,6 +111,20 @@ const isJustificationButtonActive = (state, justificationType) => {
   return isActive;
 };
 
+const getActiveHighlightColor = (state) => {
+  if (!isOfficeEditorReady(state)) {
+    return null;
+  }
+  const isTextSelected = core.getOfficeEditor().isTextSelected();
+
+  const cursorProperties = getOfficeEditorCursorProperties(state);
+  const selectionProperties = getOfficeEditorSelectionProperties(state);
+
+  const properties = isTextSelected ? selectionProperties : cursorProperties;
+  const highlightColor = convertCoreHighlightColor(properties.textBackgroundColor);
+  return highlightColor;
+};
+
 const getActiveColor = (state) => {
   if (!isOfficeEditorReady(state)) {
     return DEFAULT_COLOR;
@@ -121,7 +135,7 @@ const getActiveColor = (state) => {
   const selectionProperties = getOfficeEditorSelectionProperties(state);
 
   const properties = isTextSelected ? selectionProperties : cursorProperties;
-  const color = convertCoreColorToWebViewerColor(properties.color);
+  const color = convertCoreTextColor(properties.color);
   return color;
 };
 
@@ -147,6 +161,7 @@ export {
   getCurrentFontFace,
   getLineSpacing,
   getActiveColor,
+  getActiveHighlightColor,
   getActiveListType,
   getIsOfficeEditorMode,
   isJustificationButtonActive,

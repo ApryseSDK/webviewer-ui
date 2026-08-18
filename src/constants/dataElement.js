@@ -18,6 +18,10 @@ const DataElements = {
   STYLE_PANEL: 'stylePanel',
   SIGNATURE_LIST_PANEL: 'signatureListPanel',
   RUBBER_STAMP_PANEL: 'rubberStampPanel',
+  RUBBER_STAMP_PANEL_PRESET_TAB: 'rubberStampPanelPresetTab',
+  RUBBER_STAMP_PANEL_CUSTOM_TAB: 'rubberStampPanelCustomTab',
+  RUBBER_STAMP_PANEL_PRESET: 'rubberStampPanelPreset',
+  RUBBER_STAMP_PANEL_CUSTOM: 'rubberStampPanelCustom',
   SCALE_INPUT_CONTAINER: 'scaleInputContainer',
   PRECISION_INPUT_CONTAINER: 'precisionInputContainer',
   STYLE_POPUP_TEXT_STYLE_CONTAINER: 'stylePopupTextStyleContainer',
@@ -248,6 +252,7 @@ const DataElements = {
   MULTI_VIEWER_SAVE_DOCUMENT_BUTTON: 'multiViewerSaveDocumentButton',
   // Spreadsheet Editor
   SPREADSHEET_EDITOR_TOOLS_HEADER: 'spreadsheetEditorToolsHeader',
+  SPREADSHEET_EDITOR_COMMENT_PANEL: 'spreadsheetEditorCommentPanel',
 
   // Office Editor
   OFFICE_EDITOR_TOOLS_HEADER: 'officeEditorToolsHeader',
@@ -271,6 +276,9 @@ const DataElements = {
   OFFICE_EDITOR_BREAK_DROPDOWN_TOGGLE: 'officeEditorBreakDropdownToggle',
   OFFICE_EDITOR_BREAK_DROPDOWN: 'officeEditorBreakDropdown',
   OFFICE_EDITOR_PAGE_BREAK: 'officeEditorPageBreak',
+  OFFICE_EDITOR_FLYOUT_HIGHLIGHT_COLOR_PICKER: 'officeEditorHighlightColorPicker',
+  OFFICE_EDITOR_HIGHLIGHT_COLOR_PICKER_OVERLAY: 'officeEditorHighlightColorPickerOverlay',
+  OFFICE_EDITOR_HIGHLIGHT_RESET_TO_DEFAULT_BUTTON: 'officeEditorHighlightResetToDefaultButton',
   OFFICE_EDITOR_FLYOUT_COLOR_PICKER: 'officeEditorColorPicker',
   OFFICE_EDITOR_COLOR_PICKER_OVERLAY: 'officeEditorColorPickerOverlay',
   OFFICE_EDITOR_TEXT_COLOR_BUTTON: 'textColorButton',
@@ -288,6 +296,7 @@ const DataElements = {
   OFFICE_EDITOR_COLUMN_UNIT: 'officeEditorColumnUnit',
   OFFICE_EDITOR_COMMENT_PANEL: 'officeEditorCommentPanel',
   OFFICE_EDITOR_COMMENT_ADD_NEW_BUTTON: 'officeEditorCommentAddNewButton',
+  SPREADSHEET_EDITOR_COMMENT_ADD_NEW_BUTTON: 'spreadsheetEditorCommentAddNewButton',
   OFFICE_EDITOR_INLINE_COMMENT_POPUP_TAB_CHANGES: 'officeEditorInlineCommentPopupTabChanges',
   OFFICE_EDITOR_INLINE_COMMENT_POPUP_TAB_COMMENT: 'officeEditorInlineCommentPopupTabComment',
 
@@ -349,6 +358,7 @@ const DataElements = {
   JUSTIFY_CENTER_PRESET_BUTTON: 'justifyCenterPresetButton',
   JUSTIFY_RIGHT_PRESET_BUTTON: 'justifyRightPresetButton',
   JUSTIFY_BOTH_PRESET_BUTTON: 'justifyBothPresetButton',
+  OFFICE_EDITOR_HIGHLIGHT_COLOR_PICKER_PRESET_BUTTON: 'officeEditorHighlightColorPickerPresetButton',
   OFFICE_EDITOR_COLOR_PICKER_PRESET_BUTTON: 'officeEditorColorPickerPresetButton',
   NEW_SPREADSHEET_PRESET_BUTTON: 'newSpreadsheetPresetButton',
 

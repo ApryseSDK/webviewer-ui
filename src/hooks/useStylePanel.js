@@ -103,11 +103,23 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
     setIsAutoSizeFont(annotation.isAutoSizeFont());
 
     const { fonts, sizes } = extractUniqueFontFamilies(extraStyles.RichTextStyle, annotation.getContents());
-    if (fonts.length >= 2 || (fonts.length === 1 && fonts[0] !== extraStyles.Font)) {
+
+    if (fonts.length >= 2) {
       extraStyles.Font = undefined;
+    } else if (fonts.length === 1) {
+      // The text consistently uses a single font, even if it differs from the annotation's
+      // base Font property, so use that font instead of showing a blank font family.
+      extraStyles.Font = fonts[0];
     }
-    if (sizes.length >= 2 || (sizes.length === 1 && sizes[0] !== extraStyles.FontSize)) {
+
+    if (sizes.length >= 2) {
       extraStyles.FontSize = undefined;
+      // Dedicated flag for the mixed-size state, since `FontSize === undefined` alone is
+      // ambiguous with "no size data yet" (e.g. no annotation selected). Consumers should
+      // check this flag rather than inferring mixed state from FontSize being undefined.
+      extraStyles.isFontSizeMixed = true;
+    } else if (sizes.length === 1) {
+      extraStyles.FontSize = sizes[0];
     }
 
     return extraStyles;

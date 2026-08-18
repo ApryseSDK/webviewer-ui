@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import Button from 'components/Button';
 import hotkeys from 'hotkeys-js';
-import hotkeysManager, { defaultHotkeysScope } from 'helpers/hotkeysManager';
+import { defaultHotkeysScope } from 'helpers/hotkeysManager';
+import useHotkeysManager from 'hooks/useHotkeysManager';
 import ModalWrapper from '../ModalWrapper';
 import getRootNode from 'helpers/getRootNode';
 import classNames from 'classnames';
@@ -17,6 +18,7 @@ const editShortcutHotkeysScope = 'editShortcut';
 
 const EditKeyboardShortcutModal = ({ currentShortcut, finishEditing, getCommandStrings }) => {
   const [t] = useTranslation();
+  const hotkeysManager = useHotkeysManager();
   const shortcutKeyMap = useSelector(selectors.getShortcutKeyMap);
 
   const [currentCommand, setCurrentCommand] = useState('');

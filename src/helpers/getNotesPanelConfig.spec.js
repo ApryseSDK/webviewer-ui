@@ -9,7 +9,17 @@ describe('getNotesPanelConfig tests', () => {
     expect(resolved).toEqual(fallback);
   });
 
-  it('getNotesPanelConfig should return ReviewPanel config', () => {
+  it('getNotesPanelConfig should return NotesPanel config when notesPanel is passed in', () => {
+    const config = getNotesPanelConfig(DataElements.NOTES_PANEL);
+    expect(config).toMatchObject({
+      title: 'component.notesPanel',
+      icon: 'illustration - empty state - outlines',
+      noAnnotation: 'message.noAnnotations',
+      searchPlaceholder: 'message.searchCommentsPlaceholder',
+    });
+  });
+
+  it('getNotesPanelConfig should return ReviewPanel config when officeEditorReviewPanel is passed in', () => {
     const config = getNotesPanelConfig(DataElements.OFFICE_EDITOR_REVIEW_PANEL);
     expect(config).toMatchObject({
       title: 'officeEditor.reviewing',
@@ -19,12 +29,22 @@ describe('getNotesPanelConfig tests', () => {
     });
   });
 
-  it('getNotesPanelConfig should return OECommentPanel config', () => {
+  it('getNotesPanelConfig should return OECommentPanel config when officeEditorCommentPanel is passed in', () => {
     const config = getNotesPanelConfig(DataElements.OFFICE_EDITOR_COMMENT_PANEL);
     expect(config).toMatchObject({
       title: 'component.notesPanel',
       icon: 'illustration - empty state - outlines',
-      noAnnotation: 'message.noAnnotations',
+      noAnnotation: 'message.commentsPanelEmpty',
+      searchPlaceholder: 'message.searchCommentsPlaceholder',
+    });
+  });
+
+  it('getNotesPanelConfig should return SpreadsheetEditorCommentPanel config when spreadsheetEditorCommentPanel is passed in', () => {
+    const config = getNotesPanelConfig(DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL);
+    expect(config).toMatchObject({
+      title: 'component.notesPanel',
+      icon: 'illustration - empty state - outlines',
+      noAnnotation: 'message.commentsPanelEmpty',
       searchPlaceholder: 'message.searchCommentsPlaceholder',
     });
   });

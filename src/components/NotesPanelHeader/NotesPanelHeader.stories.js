@@ -81,6 +81,30 @@ export function CustomHeaderOverwriteDefault() {
 
 CustomHeaderOverwriteDefault.parameters = disableRtlModeParameters;
 
+export function SpreadsheetEditorMode() {
+  const spreadsheetState = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      isSpreadsheetEditorModeEnabled: true,
+      notesPanelCustomHeaderOptions: null,
+    },
+  };
+  const store = configureStore({ reducer: () => spreadsheetState });
+  return (
+    <Provider store={store}>
+      <NotesPanelHeader
+        isMultiSelectEnabled={true}
+        notes={[]}
+        disableFilterAnnotation={false}
+        setSearchInputHandler={noop}
+      />
+    </Provider>
+  );
+}
+
+SpreadsheetEditorMode.parameters = disableRtlModeParameters;
+
 export function CustomHeaderPrependToDefault() {
   initialState.viewer.notesPanelCustomHeaderOptions = {
     overwriteDefaultHeader: false,

@@ -1,0 +1,64 @@
+.StampSearchOverlay {
+  .search-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--component-background);
+      color: var(--text-color);
+      padding: 4px 8px;
+
+      &:focus-within {
+        border-color: var(--focus-border);
+      }
+
+      .Icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .search-panel-input {
+        width: 100%;
+        height: 24px;
+        border: none;
+        background: transparent;
+        padding: 0 0 0 8px;
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          color: var(--placeholder-text);
+        }
+      }
+    }
+
+    .search-option-buttons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+
+      .search-options-button {
+        width: 32px;
+        height: 32px;
+
+        .Icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+}

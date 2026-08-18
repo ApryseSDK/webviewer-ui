@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import core from 'core';
 import selectors from 'selectors';
 import { widgets } from './helper';
@@ -19,6 +19,7 @@ jest.mock('hooks/useCore');
 jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
+  useStore: jest.fn(),
 }));
 
 jest.mock('constants/map', () => ({
@@ -114,6 +115,7 @@ describe('MultiViewerMode Tests', function() {
       return selector({ viewer: { openElements: { 'indexPanel': true } } });
     });
     useDispatch.mockReturnValue(jest.fn());
+    useStore.mockReturnValue({});
 
     // Mock selectors
     selectors.isElementOpen.mockReturnValue(true);
@@ -179,6 +181,7 @@ describe('Radio Button Group Tests', function() {
       return selector({ viewer: { openElements: { 'indexPanel': true } } });
     });
     useDispatch.mockReturnValue(jest.fn());
+    useStore.mockReturnValue({});
 
     selectors.isElementOpen.mockReturnValue(true);
     selectors.isElementDisabled.mockReturnValue(false);

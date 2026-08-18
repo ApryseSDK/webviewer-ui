@@ -4,7 +4,7 @@ import NotePopup, { notePopupFlyoutItems } from './NotePopup';
 import initialState from 'src/redux/initialState';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import Flyout from '../ModularComponents/Flyout';
+import Flyout from '../ModularComponents/FlyoutContainer';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
 
 export default {

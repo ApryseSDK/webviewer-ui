@@ -41,6 +41,38 @@ const propTypes = {
   annotation: PropTypes.object,
 };
 
+const DATE_FORMAT_REGEX = /AFDate_(?:FormatEx|KeystrokeEx)\(\s*(["'])(.*?)\1\s*\)/;
+
+const getDateFormatFromActionScripts = (actions) => {
+  const scripts = [
+    ...(actions?.F || []),
+    ...(actions?.K || []),
+  ].map((action) => action?.javascript || '');
+
+  for (const script of scripts) {
+    const matched = script.match(DATE_FORMAT_REGEX);
+    if (matched?.[2]) {
+      return matched[2];
+    }
+  }
+
+  return null;
+};
+
+const getDatePickerFormatFromAnnotation = (annotation, fallback = DEFAULT_DATE_PICKER_FORMAT) => {
+  if (!annotation) {
+    return fallback;
+  }
+
+  if (annotation.pdfDateFormat) {
+    return annotation.pdfDateFormat;
+  }
+
+  const field = annotation.getField?.();
+  const actions = field?.getActions?.();
+  return getDateFormatFromActionScripts(actions) || fallback;
+};
+
 const FormFieldPanelContainer = React.memo(({ annotation }) => {
   const { core } = useCore();
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.FORM_FIELD_PANEL));
@@ -104,7 +136,8 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       const toolStyles = getToolStyles(newTool.name) || {};
       const { options , flags, Width: width = 0, Height: height = 0, defaultValue = '', indicatorText = '', showIndicator = false } = toolStyles;
       const isDatePickerTool = newTool instanceof Tools.DatePickerFormFieldCreateTool;
-      const dateFormat = toolStyles.dateFormat || dateFormatOptions[0] || DEFAULT_DATE_PICKER_FORMAT;
+      const activeToolDateFormat = newTool?.defaults?.dateFormat;
+      const dateFormat = activeToolDateFormat || toolStyles.dateFormat || dateFormatOptions[0] || DEFAULT_DATE_PICKER_FORMAT;
       const normalizedDefaultValue = isDatePickerTool ? '' : defaultValue;
 
       setFieldProperties((prev) => ({
@@ -229,7 +262,9 @@ const FormFieldPanelContainer = React.memo(({ annotation }) => {
       // Are there repercussions with this?
       // Expected result for TextField but what about other fields?
       defaultValue: annotation instanceof Annotations.DatePickerWidgetAnnotation ? '' : field.defaultValue,
-      dateFormat: annotation instanceof Annotations.DatePickerWidgetAnnotation ? annotation.pdfDateFormat : prev.dateFormat,
+      dateFormat: annotation instanceof Annotations.DatePickerWidgetAnnotation
+        ? getDatePickerFormatFromAnnotation(annotation, prev.dateFormat || DEFAULT_DATE_PICKER_FORMAT)
+        : prev.dateFormat,
       radioButtonGroups: [...new Set([...radioButtons, ...formFieldCreationManager.getRadioButtonGroups()])]
     }));
     setFieldFlags({

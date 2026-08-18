@@ -6,6 +6,7 @@ import { BASIC_PALETTE } from 'constants/commonColors';
 import core from 'core';
 import { setupNotesPanelCoreMocks } from 'src/helpers/storybookHelper';
 import { mobileStoryGlobals } from 'helpers/storybookParams';
+import { expect, waitFor } from 'storybook/test';
 
 const noop = () => { };
 
@@ -71,6 +72,14 @@ export const Basic = () => {
       <InlineCommentingPopup {...basicProps} />
     </Provider>
   );
+};
+
+Basic.play = async ({ canvasElement }) => {
+  await waitFor(() => {
+    const expandNoteButton = canvasElement.querySelector('[data-element="expandNoteButton"]');
+    expect(expandNoteButton).toBeInTheDocument();
+    expect(expandNoteButton).not.toBeVisible();
+  });
 };
 
 export const mobileProps = {

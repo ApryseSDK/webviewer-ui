@@ -1,5 +1,6 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext } from 'react';
 import getRootNode from 'helpers/getRootNode';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 
 /**
  * Creates DOM element to be used as React root.
@@ -13,16 +14,21 @@ function createRootElement(id) {
 }
 
 /**
- * Appends element as last child of body.
+ * Appends element as last child of the instance root (ShadowRoot in WC mode) or document.body in iframe mode; uses the per-instance root from context instead of the module-level singleton getRootNode() so each popup/modal portal stays inside its own instance's shadow DOM in multi-instance WC mode.
  * @ignore
  * @param {HTMLElement} rootElem
+ * @param {ShadowRoot|Document} instanceRoot
  */
-function addRootElement(rootElem) {
-  const node = (window.isApryseWebViewerWebComponent) ? getRootNode() : document.body;
-  node.insertBefore(
-    rootElem,
-    node.lastElementChild.nextElementSibling,
-  );
+function addRootElement(rootElem, instanceRoot) {
+  const node = (window.isApryseWebViewerWebComponent) ? instanceRoot : document.body;
+  if (node.lastElementChild) {
+    node.insertBefore(
+      rootElem,
+      node.lastElementChild.nextElementSibling,
+    );
+    return;
+  }
+  node.appendChild(rootElem);
 }
 
 /**
@@ -39,16 +45,18 @@ function addRootElement(rootElem) {
  */
 function usePortal(id) {
   const rootElemRef = useRef(null);
+  const instanceRoot = useContext(InstanceRootNodeContext);
+  const effectiveRoot = instanceRoot || getRootNode();
   useEffect(function setupElement() {
     // Look for existing target dom element to append to
-
-    const existingParent = document.querySelector(`#${id}`);
+    const queryRoot = typeof effectiveRoot?.querySelector === 'function' ? effectiveRoot : document;
+    const existingParent = queryRoot.querySelector(`#${id}`);
     // Parent is either a new root or the existing dom element
     const parentElem = existingParent || createRootElement(id);
 
     // If there is no existing DOM element, add a new one.
     if (!existingParent) {
-      addRootElement(parentElem);
+      addRootElement(parentElem, effectiveRoot);
     }
 
     // Add the detached element to the parent

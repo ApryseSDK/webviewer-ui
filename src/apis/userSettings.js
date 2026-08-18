@@ -2,7 +2,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import touchEventManager from 'helpers/TouchEventManager';
 import setLanguage from './setLanguage';
-import hotkeysManager from 'helpers/hotkeysManager';
+import { getHotkeysManager } from 'helpers/hotkeysManager';
 import { ShortcutKeys } from 'helpers/hotkeysUtils';
 
 /**
@@ -53,6 +53,7 @@ const SettingKeys = {
   'DISABLE_REPLY_COLLAPSE': 'disableReplyCollapse',
   'DISABLE_TEXT_COLLAPSE': 'disableTextCollapse',
   'DISABLE_CLEAR_SEARCH_ON_CLOSE': 'disableClearSearchOnPanelClose',
+  'DISABLE_VIEWPORT_RELATIVE_POSITIONING': 'disableViewportRelativePositioning',
   'DISABLE_PAGE_DELETE_CONFIRM': 'disablePageDeletionConfirmationModal',
   'DISABLE_THUMBNAIL_MULTI_SELECT': 'disableThumbnailMultiselect'
 };
@@ -82,7 +83,8 @@ export const exportUserSettings = (store) => () => {
     [SettingKeys.DISABLE_TEXT_COLLAPSE]: !selectors.isNotesPanelTextCollapsingEnabled(state),
     [SettingKeys.DISABLE_CLEAR_SEARCH_ON_CLOSE]: !selectors.shouldClearSearchPanelOnClose(state),
     [SettingKeys.DISABLE_PAGE_DELETE_CONFIRM]: !selectors.pageDeletionConfirmationModalEnabled(state),
-    [SettingKeys.DISABLE_THUMBNAIL_MULTI_SELECT]: !selectors.isThumbnailSelectingPages(state)
+    [SettingKeys.DISABLE_THUMBNAIL_MULTI_SELECT]: !selectors.isThumbnailSelectingPages(state),
+    [SettingKeys.DISABLE_VIEWPORT_RELATIVE_POSITIONING]: !selectors.isViewportRelativeAnnotationPositioningEnabled(state)
   };
 };
 
@@ -102,6 +104,7 @@ WebViewer(...)
   });
  */
 export const importUserSettings = (store, instanceI18n) => (userSettings) => {
+  const hotkeysManager = getHotkeysManager(store);
   if (SettingKeys.LANGUAGE in userSettings) {
     setLanguage(store, instanceI18n)(userSettings[SettingKeys.LANGUAGE]);
   }
@@ -145,6 +148,9 @@ export const importUserSettings = (store, instanceI18n) => (userSettings) => {
   }
   if (SettingKeys.DISABLE_THUMBNAIL_MULTI_SELECT in userSettings) {
     store.dispatch(actions.setThumbnailSelectingPages(!userSettings[SettingKeys.DISABLE_THUMBNAIL_MULTI_SELECT]));
+  }
+  if (SettingKeys.DISABLE_VIEWPORT_RELATIVE_POSITIONING in userSettings) {
+    store.dispatch(actions.setViewportRelativeAnnotationPositioning(!userSettings[SettingKeys.DISABLE_VIEWPORT_RELATIVE_POSITIONING]));
   }
   if (SettingKeys.KEYBOARD_SHORTCUT in userSettings) {
     const shortcutKeyMap = selectors.getShortcutKeyMap(store.getState());

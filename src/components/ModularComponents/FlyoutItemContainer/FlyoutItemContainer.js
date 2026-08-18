@@ -46,6 +46,8 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
   }
 
   const { t } = useTranslation();
+  const shouldUseToolStyle = [ITEM_TYPE.TOOL_BUTTON, ITEM_TYPE.TOOL_GROUP_TOGGLE_BUTTON]
+    .includes(props.type || props.flyoutItem?.type);
 
   const getFlyoutItemContent = () => {
     if (elementDOM) {
@@ -68,7 +70,10 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
     const isSelected = props.additionalClass === 'active';
     return (
       <button
-        className="flyout-item"
+        className={classNames({
+          'flyout-item': true,
+          'tool-style': shouldUseToolStyle,
+        })}
         disabled={disabled}
         onClick={onClick}
         aria-disabled={disabled}

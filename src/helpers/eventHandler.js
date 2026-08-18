@@ -1,12 +1,13 @@
 import * as eventListeners from 'src/event-listeners';
-import hotkeysManager from 'helpers/hotkeysManager';
+import { getHotkeysManager } from 'helpers/hotkeysManager';
 import core from 'core';
 import Events from 'constants/events';
 
 const { ToolNames } = window.Core.Tools;
 
-export default (store, documentViewerKey = 1, skipHotkeys = false) => {
+export default (store, documentViewerKey = 1, skipHotkeys = false, instanceId = null) => {
   const { dispatch } = store;
+  const hotkeysManager = getHotkeysManager(store);
   // TODO Compare: Add event handlers for panels and refactor code for panels
   const onBeforeDocumentLoaded = eventListeners.onBeforeDocumentLoaded(dispatch, documentViewerKey);
   const onCheckStampAnnotationAdded = eventListeners.onCheckStampAnnotationAdded(dispatch, documentViewerKey);
@@ -30,7 +31,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onAnnotationNumberingUpdated = eventListeners.onAnnotationNumberingUpdated(dispatch);
   const onFitModeUpdated = eventListeners.onFitModeUpdated(dispatch);
   const onRotationUpdated = eventListeners.onRotationUpdated(dispatch);
-  const onToolUpdated = eventListeners.onToolUpdated(dispatch);
+  const onToolUpdated = eventListeners.onToolUpdated(dispatch, instanceId);
   const onToolModeUpdated = eventListeners.onToolModeUpdated(dispatch, store);
   const onZoomUpdated = eventListeners.onZoomUpdated(dispatch, documentViewerKey, store);
   const onPageNumberUpdated = eventListeners.onPageNumberUpdated(dispatch, documentViewerKey);

@@ -14,6 +14,7 @@ jest.mock('selectors', () => ({
   getFeatureFlags: jest.fn(),
   getCustomElementOverrides: jest.fn(),
   getActiveDocumentViewerKey: jest.fn(),
+  getFlyoutToggleElement: jest.fn(),
   isInDesktopOnlyMode: jest.fn(),
 }));
 
@@ -34,6 +35,7 @@ describe('ErrorModal', () => {
     selectors.isElementDisabled.mockReturnValue(false);
     selectors.isElementOpen.mockReturnValue(true);
     selectors.getIsMultiTab.mockReturnValue(false);
+    selectors.getFlyoutToggleElement.mockReturnValue(null);
   });
 
   it('should not have aria-hidden={true} tag', () => {

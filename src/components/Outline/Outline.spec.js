@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Basic, createOutline } from './Outline.stories';
-import { shouldExpandOutline } from './Outline';
+import { isOutlinePathDescendant, isOutlinePathSelfOrDescendant, shouldExpandOutline } from './Outline';
 import Outline from '.';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -42,6 +42,24 @@ describe('Outline', () => {
       expect(shouldExpandOutline('2-1', null)).toBe(false);
     });
   });
+
+  describe('isOutlinePathDescendant', () => {
+    it('returns true only when the second path is a descendant of the first path', () => {
+      expect(isOutlinePathDescendant('2', '2-5-3')).toBe(true);
+      expect(isOutlinePathDescendant('2', '2')).toBe(false);
+      expect(isOutlinePathDescendant('2', '22-5')).toBe(false);
+      expect(isOutlinePathDescendant(null, '2-5')).toBe(false);
+    });
+  });
+
+  describe('isOutlinePathSelfOrDescendant', () => {
+    it('returns true for the same path and descendant paths only', () => {
+      expect(isOutlinePathSelfOrDescendant('2', '2')).toBe(true);
+      expect(isOutlinePathSelfOrDescendant('2', '2-5-3')).toBe(true);
+      expect(isOutlinePathSelfOrDescendant('2', '22-5')).toBe(false);
+      expect(isOutlinePathSelfOrDescendant(null, null)).toBe(false);
+    });
+  });
 });
 
 
@@ -75,7 +93,6 @@ describe('OutlinesPanel in MultiViewer mode', () => {
                 isOutlineActive: NOOP,
                 setIsAddingNewOutline: NOOP,
                 selectedOutlines: [],
-                outlineScrollParentRef: { current: null },
                 ...outlineContextProps,
               }}
             >

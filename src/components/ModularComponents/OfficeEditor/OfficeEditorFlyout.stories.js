@@ -1,6 +1,6 @@
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
-import Flyout from '../Flyout';
+import Flyout from '../FlyoutContainer';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 
@@ -53,6 +53,18 @@ const underlineButton = {
   dataElement: 'underlineButton',
   type: 'presetButton',
   buttonType: 'underlineButton',
+};
+
+const strikeoutButton = {
+  dataElement: 'strikeoutButton',
+  type: 'presetButton',
+  buttonType: 'strikeoutButton',
+};
+
+const highlightColorPickerButton = {
+  dataElement: DataElements.OFFICE_EDITOR_FLYOUT_HIGHLIGHT_COLOR_PICKER,
+  type: 'presetButton',
+  buttonType: DataElements.OFFICE_EDITOR_FLYOUT_HIGHLIGHT_COLOR_PICKER,
 };
 
 const divider = 'divider';
@@ -138,6 +150,12 @@ const activeColor = {
   'b': 0,
 };
 
+const activeHighlightColor = {
+  'r': 255,
+  'g': 255,
+  'b': 0,
+};
+
 const initialState = {
   officeEditor: {
     canUndo: true,
@@ -146,9 +164,11 @@ const initialState = {
       bold: true,
       italic: true,
       underlineStyle: 'single',
+      strikethrough: true,
       pointSize: 11,
       fontFace: 'Arial',
       color: activeColor,
+      textBackgroundColor: activeHighlightColor,
       paragraphProperties: {
         justification: 'both',
         listType: 'ordered',
@@ -200,6 +220,8 @@ const initialState = {
           boldButton,
           italicButton,
           underlineButton,
+          strikeoutButton,
+          highlightColorPickerButton,
           divider,
           ColorPickerButton,
           divider,
@@ -257,13 +279,20 @@ export const FlyoutComponent = () => {
     removeEventListener: () => { },
   });
   window.Core.Annotations.Color = class {
+    constructor(r = 0, g = 0, b = 0) {
+      this.r = r;
+      this.g = g;
+      this.b = b;
+    }
+
     toString() {
-      return 'rgba(0, 255, 0, 1)';
+      return `rgba(${this.r}, ${this.g}, ${this.b}, 1)`;
     }
 
     toHexString() {
-    // eslint-disable-next-line custom/no-hex-colors
-      return '#00FF00';
+      const toHex = (value) => value.toString(16).padStart(2, '0');
+      // eslint-disable-next-line custom/no-hex-colors
+      return `#${toHex(this.r)}${toHex(this.g)}${toHex(this.b)}`.toUpperCase();
     }
   };
 
@@ -284,6 +313,8 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   expect(italicButton).toHaveAttribute('aria-pressed', 'true');
   const underlineButton =  await canvas.findByRole('button', { name: getTranslatedText('officeEditor.underline') });
   expect(underlineButton).toHaveAttribute('aria-pressed', 'true');
+  const strikeoutButton =  await canvas.findByRole('button', { name: getTranslatedText('officeEditor.strikeout') });
+  expect(strikeoutButton).toHaveAttribute('aria-pressed', 'true');
 
   // check list type buttons active state
   const orderedListButton =  await canvas.findByRole('button', { name: getTranslatedText('officeEditor.numberList') });
@@ -301,10 +332,13 @@ FlyoutComponent.play = async ({ canvasElement }) => {
   const justifyBothButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.justify') });
   expect(justifyBothButton).toHaveAttribute('aria-pressed', 'true');
 
-  // check active color picker button's icon
-  // eslint-disable-next-line custom/no-hex-colors
-  const colorPickerIcon = canvas.getByLabelText('#00FF00');
-  expect(colorPickerIcon).toBeInTheDocument();
+  // check text color picker button icon color
+  const colorPickerButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.textColor') });
+  expect(colorPickerButton).toBeInTheDocument();
+
+  // check highlight color picker button icon color
+  const highlightColorPickerButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.highlightColor') });
+  expect(highlightColorPickerButton).toBeInTheDocument();
 
   // check active non printing characters button
   const nonPrintingCharactersButton = await canvas.findByRole('button', { name: getTranslatedText('officeEditor.nonPrintingCharacters') });

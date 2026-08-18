@@ -103,3 +103,20 @@ CrashFallbackForModal.play = async ({ canvasElement }) => {
   expect(message).toBeInTheDocument();
 };
 
+export function CrashFallbackForPopup() {
+  return (
+    <ErrorBoundaryComponent dataElement="storyPopup" componentType={COMPONENT_TYPES.POPUP}>
+      <ThrowOnRender />
+    </ErrorBoundaryComponent>
+  );
+}
+
+CrashFallbackForPopup.parameters = disableRtlModeParameters;
+
+CrashFallbackForPopup.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const componentType = getTranslatedText(`message.renderErrors.componentType.${COMPONENT_TYPES.POPUP}`);
+  const expectedMessage = getTranslatedText('message.renderErrors.toFixIssue', { componentType });
+  const message = await canvas.findByText(expectedMessage);
+  expect(message).toBeInTheDocument();
+};

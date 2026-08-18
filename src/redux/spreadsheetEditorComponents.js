@@ -21,6 +21,7 @@ const defaultSpreadsheetEditorHeaders = {
       'editorDropdown',
       'divider-0.1',
       'searchPanelToggle',
+      // 'notesPanelToggle',
     ]
   },
   'tools-header': {
@@ -276,6 +277,13 @@ const defaultSpreadsheetEditorComponents = {
     img: 'icon-header-search',
     toggleElement: 'searchPanel',
   },
+  // notesPanelToggle: {
+  //   dataElement: 'notesPanelToggle',
+  //   title: 'component.notesPanel',
+  //   type: 'toggleButton',
+  //   img: 'icon-header-chat-line',
+  //   toggleElement: DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL,
+  // },
 
   /** Cell Border Style */
   borderStyleToggleButton: {
@@ -392,6 +400,11 @@ const defaultSpreadsheetEditorPanels = [
     render: 'searchPanel',
     location: 'right'
   },
+  // {
+  //   dataElement: DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL,
+  //   render: 'notesPanel',
+  //   location: 'right'
+  // },
 ];
 
 const adjustmentButtons = CELL_ADJUSTMENT_FLYOUT_ITEMS.map((item) => {

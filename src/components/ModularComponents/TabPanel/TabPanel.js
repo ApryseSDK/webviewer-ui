@@ -16,26 +16,28 @@ import { getPanelToRender, createCustomElement } from 'helpers/tabPanelHelper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 
 const removeDuplicates = (array) => [...new Set(array)];
+const MORE_BUTTON_MIN_WIDTH = 48;
 
 const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }) => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const moreButtonDefaultIcon = 'icon-tools-more';
-  const PANEL_PADDING = 32;
   const isMobile = isMobileSize();
   const tabPanelHeaderRef = useRef();
   const moreButtonRef = useRef();
+  const previousHeaderWidthRef = useRef(0);
+  const isShrinkingPanelRef = useRef(false);
+  const isReconcilingOverflowRef = useRef(false);
   const FLYOUT_NAME = `${tabPanelDataElement}-flyout`;
   const [panelsObject, setPanelsObject] = useState({});
   const [visiblePanelTabs, setVisiblePanelTabs] = useState([]);
   const [overflowItems, setOverflowItems] = useState([]);
-  const [headerContainerPrevWidth, setHeaderContainerPrevWidth] = useState({ width: 0 });
-  const [headerContainerWidth, setHeaderContainerWidth] = useState({ width: 0 });
+  const [headerContainerWidth, setHeaderContainerWidth] = useState(0);
   const [moreButtonIcon, setMoreButtonIcon] = useState(moreButtonDefaultIcon);
-  const [labelFlag, setLabelFlag] = useState(false);
-  const [iconFlag, setIconFlag] = useState(false);
   const [hiddenTabsMinWidth, setHiddenTabsMinWidth] = useState({});
-  const [isShrinkingPanel, setIsShrinkingPanel] = useState(false);
+  const [isHeaderLayoutReady, setIsHeaderLayoutReady] = useState(false);
+  const hasIcon = Object.values(panelsObject).some((panel) => panel.icon);
+  const hasLabel = Object.values(panelsObject).some((panel) => panel.label);
 
   const genericPanels = useSelector(selectors.getGenericPanels);
   const selectedTab = useSelector((state) => selectors.getActiveTabInPanel(state, tabPanelDataElement));
@@ -164,24 +166,21 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
     while (spaceToFree > 0 && allItems.length > 1) {
       const lastItem = allItems.pop();
       const lastItemDom = Array.from(itemsDom).find((item) => item.getAttribute('data-element') === `${lastItem}-${tabPanelDataElement}`);
-      const lastItemWidth = lastItemDom.getBoundingClientRect().width;
-      const spaceFreedByItem = lastItemWidth;
-
-      if (spaceToFree > spaceFreedByItem) {
-        itemsToHide.push(lastItem);
-        spaceToFree -= lastItemWidth;
-        setHiddenTabsMinWidth((prev) => ({
-          ...prev,
-          [lastItem]: lastItemWidth,
-        }));
-      } else {
+      if (!lastItemDom) {
         break;
       }
+      const lastItemWidth = lastItemDom.getBoundingClientRect().width;
+      itemsToHide.push(lastItem);
+      spaceToFree -= lastItemWidth;
+      setHiddenTabsMinWidth((prev) => ({
+        ...prev,
+        [lastItem]: lastItemWidth,
+      }));
     }
     return itemsToHide;
   };
 
-  const getItemsToShow = (availableSpace) => {
+  const getItemsToShow = (availableSpace, moreButtonWidth) => {
     let spaceToFill = availableSpace;
     const allItems = [...overflowItems];
     const itemsToShow = [];
@@ -189,7 +188,9 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
     while (spaceToFill > 0 && allItems.length > 0) {
       const firstItem = allItems[0];
       const firstItemWidth = hiddenTabsMinWidth[firstItem];
-      if (spaceToFill >= firstItemWidth) {
+      const remainingOverflowCount = allItems.length - 1;
+      const requiredSpace = firstItemWidth + (remainingOverflowCount > 0 ? moreButtonWidth : 0);
+      if (spaceToFill >= requiredSpace) {
         itemsToShow.push(firstItem);
         allItems.shift();
         spaceToFill -= firstItemWidth;
@@ -208,49 +209,54 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
 
     const panelWidth = headerRect.width;
     const availableSpace = panelWidth - totalMinWidth;
-    return availableSpace - PANEL_PADDING;
+    return availableSpace;
   };
 
-  const handleTabPanelElements = () => {
+  const handleTabPanelElements = (shouldCheckForOverflow = false) => {
+    const headerElement = tabPanelHeaderRef.current;
+    const moreButtonElement = moreButtonRef.current;
+    if (!headerElement || !moreButtonElement) {
+      return false;
+    }
+
     dispatch(actions.closeElements([FLYOUT_NAME]));
-    const itemsShown = Array.from(tabPanelHeaderRef?.current?.querySelectorAll('.tabPanelButton'));
-    const headerRect = tabPanelHeaderRef.current.getBoundingClientRect();
-    const moreButtonWidth = moreButtonRef.current.getBoundingClientRect().width;
+    const itemsShown = Array.from(headerElement.querySelectorAll('.tabPanelButton'));
+    const headerRect = headerElement.getBoundingClientRect();
+    const moreButtonWidth = Number.parseFloat(getComputedStyle(moreButtonElement).minWidth) || MORE_BUTTON_MIN_WIDTH;
     const availableSpace = calculateAvailableSpace(itemsShown, headerRect);
 
     // when the panel is getting smaller
-    if (isShrinkingPanel) {
+    const shouldReconcileOverflow = shouldCheckForOverflow || isShrinkingPanelRef.current || isReconcilingOverflowRef.current;
+    if (shouldReconcileOverflow) {
       const minAvailableSpaceRequired = availableSpace - moreButtonWidth;
       if (minAvailableSpaceRequired < 0 && visiblePanelTabs.length > 1) {
         const itemsToHide = getItemsToHide(itemsShown, minAvailableSpaceRequired);
         if (itemsToHide.length) {
+          isReconcilingOverflowRef.current = true;
           moveItemsToOverflow(itemsToHide);
+          return true;
         }
+      } else {
+        isReconcilingOverflowRef.current = false;
       }
     } else if (availableSpace > 0 && overflowItems.length > 0) {
-      const itemsToGetBack = getItemsToShow(availableSpace);
+      const itemsToGetBack = getItemsToShow(availableSpace, moreButtonWidth);
       if (itemsToGetBack.length) {
         moveItemsToContainer(itemsToGetBack);
+        return true;
       }
     }
     handleMoreButtonIcon();
+    return false;
   };
 
   useEffect(() => {
     const panelsToRender = getPanelsObjectToRender();
 
+    isReconcilingOverflowRef.current = false;
+    setIsHeaderLayoutReady(false);
     setPanelsObject(panelsToRender);
     setVisiblePanelTabs(Object.keys(panelsToRender));
-
-    const hasIcon = Object.values(panelsToRender).some((panel) => panel.icon);
-    const hasLabel = Object.values(panelsToRender).some((panel) => panel.label);
-
-    if (hasIcon) {
-      setIconFlag(true);
-    }
-    if (hasLabel) {
-      setLabelFlag(true);
-    }
 
     // We set the overflow items to an empty array so we can re-calculate the overflow items when the tabs change
     setOverflowItems([]);
@@ -261,31 +267,28 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
       const firstPanel = Object.keys(panelsObject)[0];
       dispatch(actions.setActiveTabInPanel(firstPanel, tabPanelDataElement));
     }
-    setVisiblePanelTabs(Object.keys(panelsObject));
   }, [panelsObject]);
 
   useEffect(() => {
     handleMoreButtonIcon();
   }, [selectedTab]);
 
-  useEffect(() => {
-    if (headerContainerPrevWidth !== headerContainerWidth) {
-      if (headerContainerWidth > headerContainerPrevWidth) {
-        setIsShrinkingPanel(false);
-      } else {
-        setIsShrinkingPanel(true);
-      }
-      setHeaderContainerPrevWidth(headerContainerWidth);
-    }
-  }, [headerContainerWidth]);
-
   useLayoutEffect(() => {
-    handleTabPanelElements();
+    const canMeasureHeader = headerContainerWidth > 0 && visiblePanelTabs.length > 0;
+    if (!canMeasureHeader) {
+      return;
+    }
+
+    const didUpdateOverflow = handleTabPanelElements(!isHeaderLayoutReady);
+    if (!didUpdateOverflow && !isHeaderLayoutReady) {
+      setIsHeaderLayoutReady(true);
+    }
     overflowItems.length > 0 && setOverflowFlyout();
   }, [
     visiblePanelTabs,
     overflowItems,
     headerContainerWidth,
+    isHeaderLayoutReady,
   ]);
 
   const renderTabs = () => {
@@ -298,8 +301,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
           <Button
             className={classNames({
               tabPanelButton: true,
-              hasIcon: iconFlag,
-              hasLabel: labelFlag,
+              hasIcon,
+              hasLabel,
               lastButton: overflowItems.length === 0 && index === visiblePanelTabs.length - 1,
             })}
             key={tabSelector}
@@ -330,6 +333,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
       bounds
       innerRef={tabPanelHeaderRef}
       onResize={({ bounds }) => {
+        isShrinkingPanelRef.current = previousHeaderWidthRef.current > 0 && bounds.width < previousHeaderWidthRef.current;
+        previousHeaderWidthRef.current = bounds.width;
         setHeaderContainerWidth(bounds.width);
       }}>
       {({ measureRef }) => (
@@ -337,7 +342,11 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
           <div className='tabPanelTitleContainer'>
             {isMobile ? <Button className='tabPanelCloseButton' ariaLabel={t('action.close')} img='ic_close_black_24px' dataElement="tabPanelCloseButton" title={t('action.close')} onClick={closePanel} /> : undefined}
           </div>
-          <div ref={measureRef} className='TabPanelHeader'>
+          <div
+            ref={measureRef}
+            className={classNames('TabPanelHeader', { layoutPending: !isHeaderLayoutReady })}
+            aria-hidden={!isHeaderLayoutReady}
+          >
             <Element className='TabPanelHeaderElements' dataElement='TabPanelHeaderElements'>
               {renderTabs()}
               <div

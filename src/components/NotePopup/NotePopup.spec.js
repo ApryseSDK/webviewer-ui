@@ -1,13 +1,18 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import { Provider } from 'react-redux';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import core from 'core';
 import NotePopupWithOutI18n, { notePopupFlyoutItems } from './NotePopup';
 import NotePopupContainerWithOutI18n from './NotePopupContainer';
 import { Basic, DifferentStates } from './NotePopup.stories';
 import { configureStore } from '@reduxjs/toolkit';
 import NoteContext from 'components/Note/Context';
+import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
+import actions from 'actions';
+import rootReducer from 'src/redux/reducers/rootReducer';
+import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 
 const NotePopup = withI18n(NotePopupWithOutI18n);
 const NotePopupContainer = withProviders(NotePopupContainerWithOutI18n);
@@ -176,5 +181,62 @@ describe('NotePopupContainer', () => {
     );
     unmount();
     expect(removeEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function), expect.any(Number));
+  });
+});
+
+const NotePopupContainerI18n = withI18n(NotePopupContainerWithOutI18n);
+
+describe('NotePopupContainer - SSE mode', () => {
+  const sseAnnotationId = 'sse-id-1';
+  const sseAnnotation = { Id: sseAnnotationId, NoDelete: false };
+  const sseContextValue = {
+    isSpreadsheetEditorCommentAnnotation: true,
+    isOfficeEditorCommentAnnotation: false,
+  };
+  let sseStore;
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+    sseStore = configureStore({
+      reducer: rootReducer(),
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({ serializableCheck: false }),
+    });
+    core.getIsReadOnly.mockReturnValue(false);
+    core.canModify.mockReturnValue(false);
+    core.addEventListener.mockImplementation(() => {});
+    core.removeEventListener.mockImplementation(() => {});
+    sseStore.dispatch(actions.setSpreadsheetEditorEditMode(SpreadsheetEditorEditMode.EDITING));
+  });
+
+  const renderSSE = () =>
+    render(
+      <Provider store={sseStore}>
+        <NoteContext.Provider value={sseContextValue}>
+          <NotePopupContainerI18n annotation={sseAnnotation} />
+          <FlyoutContainer />
+        </NoteContext.Provider>
+      </Provider>
+    );
+
+  it('renders the delete button when isSpreadsheetEditorCommentAnnotation is true', async () => {
+    renderSSE();
+    await userEvent.click(screen.getByRole('button', { name: 'Options' }));
+    expect(await screen.findByRole('button', { name: 'Delete' })).toBeInTheDocument();
+  });
+
+  it('calls deleteComment with annotation.Id when delete button is clicked', async () => {
+    const deleteCommentMock = jest.fn();
+    core.getDocumentViewer.mockReturnValue({
+      getSpreadsheetEditorManager: () => ({ getCommentManager: () => ({ deleteComment: deleteCommentMock }) }),
+    });
+
+    renderSSE();
+    await userEvent.click(screen.getByRole('button', { name: 'Options' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Delete' }));
+
+    await waitFor(() => {
+      expect(deleteCommentMock).toHaveBeenCalledWith(sseAnnotationId);
+    });
   });
 });

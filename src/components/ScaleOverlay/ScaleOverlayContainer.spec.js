@@ -177,7 +177,7 @@ describe('ScaleOverlayContainer', () => {
     expect(deleteScaleButton).toBeDisabled();
   });
 
-  it('skips scales with empty measurement data', () => {
+  it('does not skip scales with empty measurement data', () => {
     const annotation = new window.Core.Annotations.Annotation();
     annotation.PageNumber = 1;
     currentCore = createCoreMock({
@@ -192,7 +192,7 @@ describe('ScaleOverlayContainer', () => {
     scaleDropdown.click();
 
     const deleteButtons = screen.getAllByLabelText(/Delete/);
-    expect(deleteButtons).toHaveLength(1);
+    expect(deleteButtons).toHaveLength(2);
   });
 
   it('shows add new scale in dropdown when multiple scales mode is enabled', () => {

@@ -1,18 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit';
-import React from 'react';
+import React, { useEffect } from 'react';
+import core from 'core';
 import initialState from 'src/redux/initialState';
+import Theme from 'constants/theme';
 import RubberStampPanel from './RubberStampPanel';
-import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import { MockApp, createStore } from 'helpers/storybookHelper';
+import { userEvent, within } from 'storybook/test';
+import { MockApp } from 'helpers/storybookHelper';
 import { mobileStoryParameters, disableRtlModeParameters } from 'helpers/storybookParams';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'ModularComponents/RubberStampPanel',
   component: RubberStampPanel,
 };
 
-const RubberStampPanelInApp = (context, location) => {
+const RubberStampPanelInApp = (isModular, context, location) => {
   const { addonRtl } = context.globals;
+  const storybookTheme = context.globals.theme;
+  const activeTheme = Object.values(Theme).includes(storybookTheme) ? storybookTheme : Theme.LIGHT;
+
   const mockState = {
     ...initialState,
     viewer: {
@@ -31,28 +36,60 @@ const RubberStampPanelInApp = (context, location) => {
       activeGroupedItems: ['insertGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Insert',
       activeToolName: 'AnnotationCreateRubberStamp',
-      activeTheme: context.globals.theme,
+      activeTheme,
     },
     featureFlags: {
       customizableUI: true,
+      newStampPanel: isModular,
     },
   };
-  const store = configureStore({ reducer: () => mockState });
-  setItemToFlyoutStore(store);
 
-  return <MockApp initialState={mockState} initialDirection={addonRtl} />;
+  const RubberStampPanelStory = () => {
+    useEffect(() => {
+      const originalGetToolMode = core.getToolMode;
+      const originalSetToolMode = core.setToolMode;
+      let activeTool = 'AnnotationCreateRubberStamp';
+
+      core.getToolMode = () => {
+        const toolMode = originalGetToolMode?.call(core);
+        if (toolMode?.name) {
+          activeTool = toolMode.name;
+          return toolMode;
+        }
+        return { name: activeTool };
+      };
+
+      core.setToolMode = (toolName) => {
+        activeTool = toolName;
+      };
+
+      return () => {
+        core.getToolMode = originalGetToolMode;
+        core.setToolMode = originalSetToolMode;
+      };
+    }, []);
+
+    return <MockApp initialState={mockState} initialDirection={addonRtl} />;
+  };
+
+  return <RubberStampPanelStory />;
 };
 
-export const RubberStampPanelInleft = (args, context) => RubberStampPanelInApp(context, 'left');
-export const RubberStampPanelInRight = (args, context) => RubberStampPanelInApp(context, 'right');
+export const RubberStampPanelInleft = (args, context) => RubberStampPanelInApp(false, context, 'left');
+export const RubberStampPanelInRight = (args, context) => RubberStampPanelInApp(false, context, 'right');
 RubberStampPanelInRight.parameters = disableRtlModeParameters;
 
-export const RubberStampPanelInMobile = (args, context) => RubberStampPanelInApp(context, );
+export const RubberStampPanelInMobile = (args, context) => RubberStampPanelInApp(false, context, 'mobile');
+
+export const ModularRubberStampPanelInleft = (args, context) => RubberStampPanelInApp(true, context, 'left');
 
 RubberStampPanelInleft.parameters = {
   layout: 'fullscreen',
 };
 RubberStampPanelInRight.parameters = {
+  layout: 'fullscreen',
+};
+ModularRubberStampPanelInleft.parameters = {
   layout: 'fullscreen',
 };
 RubberStampPanelInMobile.parameters = mobileStoryParameters;

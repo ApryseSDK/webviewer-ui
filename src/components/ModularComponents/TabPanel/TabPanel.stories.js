@@ -187,10 +187,10 @@ const tabPanelTemplate = (dataElement, width) => {
 export const TabPanelWithIconsOnly = () => (tabPanelTemplate('tabPanelIconsOnly', 320));
 TabPanelWithIconsOnly.parameters = disableRtlModeParameters;
 
-export const TabPanelWithLabelsOnly = () => (tabPanelTemplate('tabPanelLabelsOnly', 204));
+export const TabPanelWithLabelsOnly = () => (tabPanelTemplate('tabPanelLabelsOnly', 300));
 TabPanelWithLabelsOnly.parameters = disableRtlModeParameters;
 
-export const TabPanelIconsAndLabels = () => (tabPanelTemplate('tabPanelIconsAndLabels', 246));
+export const TabPanelIconsAndLabels = () => (tabPanelTemplate('tabPanelIconsAndLabels', 300));
 TabPanelIconsAndLabels.parameters = disableRtlModeParameters;
 
 const initialStateThumbnailsOnly = {

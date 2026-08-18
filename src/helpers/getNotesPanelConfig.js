@@ -10,7 +10,13 @@ const NOTES_PANEL_CONFIG = {
   [DataElements.OFFICE_EDITOR_COMMENT_PANEL]: {
     title: 'component.notesPanel',
     icon: 'illustration - empty state - outlines',
-    noAnnotation: 'message.noAnnotations',
+    noAnnotation: 'message.commentsPanelEmpty',
+    searchPlaceholder: 'message.searchCommentsPlaceholder',
+  },
+  [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: {
+    title: 'component.notesPanel',
+    icon: 'illustration - empty state - outlines',
+    noAnnotation: 'message.commentsPanelEmpty',
     searchPlaceholder: 'message.searchCommentsPlaceholder',
   },
   [DataElements.NOTES_PANEL]: {

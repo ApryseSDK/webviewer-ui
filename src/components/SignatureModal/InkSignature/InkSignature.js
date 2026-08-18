@@ -170,20 +170,22 @@ const InkSignature = ({
     }
   };
 
-  const handleColorInputChange = (property, value) => {
+  const handleColorInputChange = async (property, value) => {
     setToolStyles('AnnotationCreateSignature', property, value);
     const signatureTool = core.getTool('AnnotationCreateSignature');
-    if (signatureTool.getFullSignatureAnnotation()) {
-      signatureTool.getFullSignatureAnnotation().StrokeColor = value;
-      signatureTool.resizeCanvas(SignatureModes.FULL_SIGNATURE);
-    }
+    try {
+      if (signatureTool.getFullSignatureAnnotation()) {
+        signatureTool.getFullSignatureAnnotation().StrokeColor = value;
+        await signatureTool.resizeCanvas(SignatureModes.FULL_SIGNATURE);
+      }
 
-    if (signatureTool.getInitialsAnnotation()) {
-      signatureTool.getInitialsAnnotation().StrokeColor = value;
-      signatureTool.resizeCanvas(SignatureModes.INITIALS);
+      if (signatureTool.getInitialsAnnotation()) {
+        signatureTool.getInitialsAnnotation().StrokeColor = value;
+        await signatureTool.resizeCanvas(SignatureModes.INITIALS);
+      }
+    } finally {
+      forceUpdate();
     }
-    // hack for tool styles for signature not being on state
-    forceUpdate();
   };
 
   const deepCopy = (paths) => {

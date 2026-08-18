@@ -3,11 +3,10 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { MockDocumentContainer, oePartialState } from 'helpers/storybookHelper';
 import PageControlsContainer from './PageControlsContainer';
-import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
+import Flyout from 'components/ModularComponents/FlyoutContainer';
 import actions from 'actions';
 import ModularHeader from '../ModularHeader';
 import { ITEM_TYPE, PLACEMENT } from 'constants/customizationVariables';
-import Flyout from '../Flyout';
 import { button8, button9 } from '../Helpers/mockHeaders';
 import { expect, within, userEvent } from 'storybook/test';
 import PropTypes from 'prop-types';
@@ -197,7 +196,6 @@ PageControlsInHeader.play = async ({ canvasElement }) => {
 export const PageControlsInFlyout = () => {
   return (
     <Provider store={store}>
-      <FlyoutContainer />
       <Flyout />
     </Provider>
   );

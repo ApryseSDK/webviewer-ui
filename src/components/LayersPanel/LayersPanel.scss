@@ -4,6 +4,13 @@
 .LayersPanel {
   @extend %panel;
   padding-inline-start: 15px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
   // we don't want to style its recursive subchild
   > .Layer:first-child {
     margin-top: 0;

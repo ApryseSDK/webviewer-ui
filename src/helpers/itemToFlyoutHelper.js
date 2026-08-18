@@ -256,7 +256,15 @@ export const getIconDOMElement = (currentItem, allItems = [currentItem], disable
     iconElement && !isBase64 && (!iconElement.includes('.') || iconElement.startsWith('<svg'));
 
   if (isGlyph) {
-    return <Icon className={classNames({ 'menu-icon': true, 'disabled': disabled })} glyph={iconElement} />;
+    return (
+      <Icon
+        className={classNames({ 'menu-icon': true, 'disabled': disabled })}
+        glyph={iconElement}
+        color={currentItem.color}
+        fillColor={currentItem.fillColor}
+        strokeColor={currentItem.strokeColor}
+      />
+    );
   }
   if (iconElement && !isGlyph) {
     return <img className={classNames({ 'menu-icon': true, 'disabled': disabled })} alt="Flyout item icon" src={iconElement} />;

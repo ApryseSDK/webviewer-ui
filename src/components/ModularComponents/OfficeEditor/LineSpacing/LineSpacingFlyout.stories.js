@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
 import LineSpacingFlyout from './LineSpacingFlyout';
 import { getLineSpacingFlyoutItems } from 'helpers/officeEditor';
-import Flyout from 'components/ModularComponents/Flyout';
+import Flyout from 'components/ModularComponents/FlyoutContainer';
 import { OEModularUIMockState } from 'src/helpers/storybookHelper';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
 

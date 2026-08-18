@@ -27,6 +27,7 @@ const AdvancedTab = () => {
     customSettings,
     isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
     isWidgetHighlightingEnabled,
+    isViewportRelativeAnnotationPositioningEnabled,
     uiConfiguration,
   ] = useSelector((state) => [
     selectors.shouldFadePageNavigationComponent(state),
@@ -40,6 +41,7 @@ const AdvancedTab = () => {
     selectors.getCustomSettings(state),
     selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state),
     selectors.isWidgetHighlightingEnabled(state),
+    selectors.isViewportRelativeAnnotationPositioningEnabled(state),
     selectors.getUIConfiguration(state),
   ]);
 
@@ -90,6 +92,12 @@ const AdvancedTab = () => {
       t('option.settings.disableToolDefaultStyleUpdateFromAnnotationPopupDesc'),
       !isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
       (enable) => dispatch(actions.setToolDefaultStyleUpdateFromAnnotationPopupEnabled(!enable))
+    ),
+    createItem(
+      t('option.settings.enableViewportRelativePositioning'),
+      t('option.settings.enableViewportRelativePositioningDesc'),
+      isViewportRelativeAnnotationPositioningEnabled,
+      (enable) => dispatch(actions.setViewportRelativeAnnotationPositioning(enable))
     )
   ];
 

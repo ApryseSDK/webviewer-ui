@@ -28,24 +28,7 @@ import classNames from 'classnames';
 import { Virtuoso } from 'react-virtuoso';
 import Spinner from 'components/Spinner';
 import useDocumentLoadState from 'hooks/useDocumentLoadState';
-import { convertToPDFDestCoord, getDefaultDestCoord, getOutlineName } from 'src/helpers/outlinesPanelHelper';
-
-const createOutlinesPanelComponents = (outlineScrollParentRef) => {
-  const Scroller = React.forwardRef((props, ref) => {
-    const setRef = (node) => {
-      outlineScrollParentRef.current = node;
-      if (typeof ref === 'function') {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
-      }
-    };
-    return <div {...props} ref={setRef} />;
-  });
-  Scroller.displayName = 'OutlinesPanelScroller';
-
-  return { Scroller };
-};
+import { convertToPDFDestCoord, getDefaultDestCoord, getOutlineName, getVisibleOutlines } from 'src/helpers/outlinesPanelHelper';
 
 const OutlinesPanel = ({ isTest = false }) => {
   const { core } = useCore();
@@ -55,7 +38,6 @@ const OutlinesPanel = ({ isTest = false }) => {
   const panelRef = useRef();
   const nextPathRef = useRef(null);
   const outlinesPromiseRef = useRef(null);
-  const outlineScrollParentRef = useRef(null);
   const hasMountedRef = useRef(false);
 
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
@@ -352,15 +334,16 @@ const OutlinesPanel = ({ isTest = false }) => {
     dispatch(actions.showWarningMessage(confirmationWarning));
   };
 
-  const virtuosoComponents = useMemo(
-    () => createOutlinesPanelComponents(outlineScrollParentRef),
-    [outlineScrollParentRef]
+  const visibleOutlines = useMemo(
+    () => getVisibleOutlines(outlines, outlinesStateMap, shouldAutoExpandOutlines),
+    [outlines, outlinesStateMap, shouldAutoExpandOutlines]
   );
 
-  const renderOutlineItem = useCallback((index, outline) => (
+  const renderOutlineItem = useCallback((index, { outline, nestingLevel }) => (
     <OutlineListItem
       key={outlineUtils.getOutlineId(outline)}
       outline={outline}
+      nestingLevel={nestingLevel}
       setSelectedOutlines={setSelectedOutlines}
       moveOutlineInward={moveOutlineInward}
       moveOutlineBeforeTarget={moveOutlineBeforeTarget}
@@ -372,7 +355,7 @@ const OutlinesPanel = ({ isTest = false }) => {
     return null;
   }
 
-  const testModeProps = isTest ? { initialItemCount: outlines?.length } : {};
+  const testModeProps = isTest ? { initialItemCount: visibleOutlines.length } : {};
 
   return (
     <div
@@ -429,7 +412,6 @@ const OutlinesPanel = ({ isTest = false }) => {
             renameOutline,
             updateOutlineDest,
             removeOutlines,
-            outlineScrollParentRef,
           }}
         >
           <DndProvider backend={isMobileDevice ? TouchBackend : HTML5Backend}>
@@ -450,9 +432,8 @@ const OutlinesPanel = ({ isTest = false }) => {
               )}
               <Virtuoso
                 className={classNames({ 'small-outlines-list': isAddingNewOutline })}
-                data={outlines || []}
-                components={virtuosoComponents}
-                computeItemKey={(_, outline) => outlineUtils.getOutlineId(outline)}
+                data={visibleOutlines}
+                computeItemKey={(_, { outline }) => outlineUtils.getOutlineId(outline)}
                 itemContent={renderOutlineItem}
                 {...testModeProps}
               />

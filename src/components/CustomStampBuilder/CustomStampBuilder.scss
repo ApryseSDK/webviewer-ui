@@ -182,8 +182,26 @@ $container-margin: 16px;
     }
   }
 
+  .category-container {
+    margin-top: $container-margin;
+    position: relative;
+    z-index: 101;
+
+    .category-dropdown {
+      margin-top: 8px;
+      height: 32px;
+      width: 100%;
+    }
+
+    .category-instructions-text {
+      margin-top: 12px;
+      font-size: 12px;
+    }
+  }
+
   .stamp-sublabel,
-  .stamp-label {
+  .stamp-label,
+  .category-label {
     font-weight: bold;
     margin-bottom: 8px;
     text-transform: capitalize;
@@ -305,8 +323,7 @@ $container-margin: 16px;
   }
 
   .font-container {
-    margin-top: 8px;
-
+    margin-top: $container-margin;
     .font-inner-container {
       display: flex;
       gap: 12px;

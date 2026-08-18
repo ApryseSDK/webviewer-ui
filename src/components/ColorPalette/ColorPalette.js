@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
@@ -8,6 +8,7 @@ import { BASIC_PALETTE } from 'constants/commonColors';
 import Tooltip from 'components/Tooltip';
 import DataElements from 'constants/dataElement';
 import { transparentIcon } from 'helpers/colorPickerHelper';
+import { getWrappedGridPosition, GRID_STEP_BY_DIRECTION, GRID_DIRECTION } from 'helpers/gridNavigationHelper';
 
 import './ColorPalette.scss';
 import { css } from '@emotion/react';
@@ -22,6 +23,7 @@ const propTypes = {
   style: PropTypes.object,
   overridePalette2: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   onStyleChange: PropTypes.func.isRequired,
+  onDefaultColorReset: PropTypes.func,
   colorMapKey: PropTypes.string,
   onClose: PropTypes.func,
   disabled: PropTypes.bool,
@@ -37,6 +39,7 @@ const ColorPalette = ({
   style = {},
   overridePalette2,
   onStyleChange,
+  onDefaultColorReset,
   colorMapKey,
   onClose,
   disabled = false,
@@ -68,6 +71,7 @@ const ColorPalette = ({
   const [numberOfRows, setNumberOfRows] = useState(1);
   const [activeButton, setActiveButton] = useState(null);
   const [buttonRefs, setButtonRefs] = useState([]);
+  const resetButtonRef = useRef(null);
 
   const setColor = (color) => {
     let rgbaColor;
@@ -89,22 +93,8 @@ const ColorPalette = ({
     return rowIndex * DEFAULT_GRID_COLS + colIndex;
   };
 
-  const moveFocus = (rowIndex, colIndex, deltaX, deltaY) => {
-    let nextRowIndex = rowIndex + deltaY;
-    let nextColIndex = colIndex + deltaX;
-
-    if (nextRowIndex < 0) {
-      nextRowIndex = numberOfRows - 1;
-    }
-    if (nextRowIndex >= numberOfRows) {
-      nextRowIndex = 0;
-    }
-    if (nextColIndex < 0) {
-      nextColIndex = DEFAULT_GRID_COLS - 1;
-    }
-    if (nextColIndex >= DEFAULT_GRID_COLS) {
-      nextColIndex = 0;
-    }
+  const moveFocus = (rowIndex, colIndex, direction) => {
+    let { nextRowIndex, nextColIndex } = getWrappedGridPosition(rowIndex, colIndex, direction, numberOfRows, DEFAULT_GRID_COLS);
 
     let nextButtonIndex = getIndexFromRowCol(nextRowIndex, nextColIndex);
 
@@ -114,23 +104,69 @@ const ColorPalette = ({
     }
 
     // Locate the next button in the grid; however, this button might not exist if the total number of colors isn’t a multiple of 7, leaving gaps at the end of the grid.
+    const { deltaRow, deltaCol } = GRID_STEP_BY_DIRECTION[direction];
     const lastButtonIndex = buttonRefs.length - 1;
     const { rowIndex: lastRowIndex, colIndex: lastColIndex } = getRowColFromIndex(lastButtonIndex);
-    if (deltaX > 0) {
+    if (deltaCol > 0) {
       nextColIndex = 0;
     }
-    if (deltaX < 0) {
+    if (deltaCol < 0) {
       nextColIndex = lastColIndex;
     }
-    if (deltaY < 0) {
+    if (deltaRow < 0) {
       nextRowIndex = lastRowIndex - 1;
     }
-    if (deltaY > 0) {
+    if (deltaRow > 0) {
       nextRowIndex = 0;
     }
 
     nextButtonIndex = getIndexFromRowCol(nextRowIndex, nextColIndex);
     setActiveButton(buttonRefs[nextButtonIndex]);
+  };
+
+  const getFirstSwatchIndex = () => palette.findIndex((buttonColor) => !!buttonColor);
+
+  const getLastSwatchIndex = () => {
+    for (let i = palette.length - 1; i >= 0; i--) {
+      if (palette[i]) {
+        return i;
+      }
+    }
+    return -1;
+  };
+
+  const focusSwatchByIndex = (index) => {
+    if (index >= 0 && index < buttonRefs.length) {
+      setActiveButton(buttonRefs[index]);
+    }
+  };
+
+  // Keyboard navigation for the optional "Reset to default" button, which sits
+  // full-width above the swatch grid. It participates in the same vertical cycle:
+  // top swatch row -> reset -> bottom swatch row.
+  const onResetButtonKeyDown = (event) => {
+    if (onKeyDownHandler) {
+      onKeyDownHandler(event);
+      return;
+    }
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        event.stopPropagation();
+        focusSwatchByIndex(getFirstSwatchIndex());
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        event.stopPropagation();
+        focusSwatchByIndex(getLastSwatchIndex());
+        break;
+      case 'Escape':
+      case 'Tab':
+        onClose?.();
+        break;
+      default:
+        break;
+    }
   };
 
   const onKeyDown = (buttonColor, buttonIndex) => (event) => {
@@ -143,22 +179,30 @@ const ColorPalette = ({
       case 'ArrowRight':
         event.preventDefault();
         event.stopPropagation();
-        moveFocus(rowIndex, colIndex, 1, 0);
+        moveFocus(rowIndex, colIndex, GRID_DIRECTION.RIGHT);
         break;
       case 'ArrowLeft':
         event.preventDefault();
         event.stopPropagation();
-        moveFocus(rowIndex, colIndex, -1, 0);
+        moveFocus(rowIndex, colIndex, GRID_DIRECTION.LEFT);
         break;
       case 'ArrowDown':
         event.preventDefault();
         event.stopPropagation();
-        moveFocus(rowIndex, colIndex, 0, 1);
+        if (onDefaultColorReset && rowIndex === numberOfRows - 1) {
+          setActiveButton(resetButtonRef);
+        } else {
+          moveFocus(rowIndex, colIndex, GRID_DIRECTION.DOWN);
+        }
         break;
       case 'ArrowUp':
         event.preventDefault();
         event.stopPropagation();
-        moveFocus(rowIndex, colIndex, 0, -1);
+        if (onDefaultColorReset && rowIndex === 0) {
+          setActiveButton(resetButtonRef);
+        } else {
+          moveFocus(rowIndex, colIndex, GRID_DIRECTION.UP);
+        }
         break;
       case 'Enter':
         event.preventDefault();
@@ -188,10 +232,17 @@ const ColorPalette = ({
   }, [property, overridePalette, overridePalette2, colorMapKey]);
 
   useEffect(() => {
+    if (!hasInitialFocus) {
+      return;
+    }
+    // Focus button or reset button if it exists, otherwise focus the first swatch.
     const initialActiveButton = palette.findIndex((buttonColor) => isButtonSelected(buttonColor));
-    // Immediately focus on the button with the active color, if the palette is inside a flyout
-    if (hasInitialFocus) {
+    if (initialActiveButton >= 0) {
       setActiveButton(buttonRefs[initialActiveButton]);
+      return;
+    }
+    if (onDefaultColorReset) {
+      setActiveButton(resetButtonRef);
     }
   }, [buttonRefs, hasInitialFocus]);
 
@@ -226,6 +277,20 @@ const ColorPalette = ({
         ...style
       })}
     >
+      {onDefaultColorReset && (
+        <button
+          ref={resetButtonRef}
+          type='button'
+          className='Button resetToDefaultColor'
+          data-element={DataElements.OFFICE_EDITOR_HIGHLIGHT_RESET_TO_DEFAULT_BUTTON}
+          aria-label={t('action.resetDefault')}
+          title={t('action.resetDefault')}
+          onClick={onDefaultColorReset}
+          onKeyDown={onResetButtonKeyDown}
+        >
+          {t('action.resetDefault')}
+        </button>
+      )}
       {palette.map((buttonColor, i) => (
         !buttonColor
           ? <div key={`color-${i + 1}`} className='dummy-cell' />

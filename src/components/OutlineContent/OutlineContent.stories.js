@@ -80,7 +80,6 @@ export const Basic = () => {
           addNewOutline: NOOP,
           renameOutline: NOOP,
           removeOutlines: NOOP,
-          outlineScrollParentRef: { current: null },
         }}
       >
         <OutlineContent
@@ -107,7 +106,6 @@ export const Adding = () => {
           addNewOutline: NOOP,
           renameOutline: NOOP,
           removeOutlines: NOOP,
-          outlineScrollParentRef: { current: null },
         }}
       >
         <OutlineContent
@@ -133,7 +131,6 @@ export const Renaming = () => {
           addNewOutline: NOOP,
           renameOutline: NOOP,
           removeOutlines: NOOP,
-          outlineScrollParentRef: { current: null },
         }}
       >
         <OutlineContent
@@ -160,7 +157,6 @@ export const ChangingDestination = () => {
           removeOutlines: NOOP,
           currentDestPage: 1,
           currentDestText: 'Area Selection',
-          outlineScrollParentRef: { current: null },
         }}
       >
         <OutlineContent
@@ -185,7 +181,6 @@ export const ColoredOutline = () => {
           addNewOutline: NOOP,
           renameOutline: NOOP,
           removeOutlines: NOOP,
-          outlineScrollParentRef: { current: null },
         }}
       >
         <OutlineContent

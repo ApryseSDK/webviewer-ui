@@ -1,3 +1,5 @@
+/* global globalThis */
+
 import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
@@ -28,6 +30,8 @@ import { isOfficeEditorMode } from 'helpers/officeEditor';
 import { areConfigsEquivalent } from 'helpers/compareObjects';
 import i18next from 'i18next';
 import { panelNames } from 'src/constants/panel';
+import { getInstanceID } from 'helpers/getRootNode';
+import Theme from 'constants/theme';
 
 const getSafeDir = () => {
   try {
@@ -178,6 +182,11 @@ export const setCustomStamps = (t) => async (dispatch) => {
     payload: { customStamps },
   });
 };
+
+export const setCustomStampCategories = (customStampCategories) => ({
+  type: 'SET_CUSTOM_STAMP_CATEGORIES',
+  payload: { customStampCategories },
+});
 
 const stashEnabledRibbons = (ribbonItems) => (
   {
@@ -979,6 +988,15 @@ export const setPageReplacementModalFileList = (list) => ({
   payload: { list },
 });
 export const setActiveTheme = (theme) => {
+  try {
+    if (Object.values(Theme).includes(theme)) {
+      const instanceId = getInstanceID();
+      globalThis.sessionStorage.setItem(`${instanceId}-activeTheme`, theme);
+    }
+  } catch {
+    // sessionStorage may be unavailable in restricted environments
+  }
+
   fireEvent(Events.THEME_CHANGED, theme);
 
   return {
@@ -1169,6 +1187,11 @@ export const setToolDefaultStyleUpdateFromAnnotationPopupEnabled = (isToolDefaul
 export const setAnnotationToolStyleSyncingEnabled = (isAnnotationToolStyleSyncingEnabled) => ({
   type: 'SET_ANNOTATION_TOOL_STYLE_SYNCING_ENABLED',
   payload: isAnnotationToolStyleSyncingEnabled
+});
+
+export const setViewportRelativeAnnotationPositioning = (isEnabled) => ({
+  type: 'SET_VIEWPORT_RELATIVE_POSITIONING',
+  payload: isEnabled
 });
 
 export const setMultiViewerSyncScrollingMode = (multiViewerComparedSyncScrollingMode) => ({

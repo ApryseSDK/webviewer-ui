@@ -1,5 +1,6 @@
 import hotkeys from 'hotkeys-js';
-import hotkeysManager, { defaultHotkeysScope } from './hotkeysManager';
+import hotkeysManager, { createHotkeysManager, defaultHotkeysScope } from './hotkeysManager';
+import { createHotkeysAPI } from 'src/apis/hotkeys';
 import { Keys, Shortcuts, ShortcutKeys, isShortcutInToolList } from './hotkeysUtils';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -43,13 +44,19 @@ describe('hotkeysManager', () => {
       },
     });
     selectors.getShortcutKeyMap = jest.fn((state) => (state.shortcutKeyMap || {}));
+    selectors.getActiveDocumentViewerKey = jest.fn(() => 1);
+    selectors.isViewportRelativeAnnotationPositioningEnabled = jest.fn(() => false);
     core.getToolModeMap = jest.fn(() => ({ 'AnnotationCreateRectangle': getTool() }));
+    core.pasteCopiedAnnotations = jest.fn();
     core.getAnnotationManager = jest.fn().mockReturnValue({
       getEditBoxManager: jest.fn().mockReturnValue({
         getEditor: jest.fn().mockReturnValue(null),
       }),
     });
     core.getAnnotationsList = jest.fn().mockReturnValue([]);
+    core.getContentEditManager = jest.fn(() => ({
+      isInContentEditMode: () => false,
+    }));
     hotkeysManager.initialize(mockStore);
   });
   afterEach(() => {
@@ -101,7 +108,179 @@ describe('hotkeysManager', () => {
 
     it('should unbind all hotkeys when none given', () => {
       hotkeysManager.off();
-      expect(hotkeys.unbind).toHaveBeenCalledWith(undefined, undefined);
+      expect(hotkeys.unbind).toHaveBeenCalled();
+      expect(hotkeys.unbind).not.toHaveBeenCalledWith(undefined, undefined);
+    });
+
+    it('should disable composed shortcut listeners when off is called with a single key', () => {
+      const undoHandler = jest.fn();
+
+      hotkeysManager.on(ShortcutKeys[Shortcuts.UNDO], undoHandler);
+      hotkeys.unbind.mockClear();
+
+      hotkeysManager.off(Keys.CTRL_Z);
+
+      expect(hotkeys.unbind).toHaveBeenCalledWith(Keys.CTRL_Z, expect.any(Function));
+    });
+  });
+
+  describe('multi-instance API isolation', () => {
+    it('keeps A public API bound to A after B initializes', () => {
+      const rootA = { id: 'root-a', host: { id: 'root-a-host' } };
+      const rootB = { id: 'root-b', host: { id: 'root-b-host' } };
+      const storeA = {
+        dispatch: jest.fn(),
+        getState: jest.fn(() => ({
+          shortcutKeyMap: {
+            [Shortcuts.COPY]: 'ctrl+a',
+          },
+        })),
+      };
+      const storeB = {
+        dispatch: jest.fn(),
+        getState: jest.fn(() => ({
+          shortcutKeyMap: {
+            [Shortcuts.COPY]: 'ctrl+b',
+          },
+        })),
+      };
+      const managerA = createHotkeysManager();
+      const managerB = createHotkeysManager();
+      const apiA = createHotkeysAPI(managerA);
+
+      managerA.initialize(storeA, rootA);
+      managerB.initialize(storeB, rootB);
+
+      const handlerA = jest.fn();
+      managerA.keyHandlerMap[ShortcutKeys[Shortcuts.COPY]] = handlerA;
+
+      // register through A's public API after B has already initialized
+      apiA.on('ctrl+alt+7', handlerA);
+
+      const ctrlAlt7Callbacks = hotkeys.mock.calls
+        .filter((call) => call[0] === 'ctrl+alt+7')
+        .map((call) => call[2]);
+
+      ctrlAlt7Callbacks.forEach((callback) => callback({
+        key: '7',
+        type: 'keydown',
+        target: { getRootNode: () => rootA },
+        currentTarget: { activeElement: null },
+      }));
+      expect(handlerA).toHaveBeenCalledTimes(1);
+
+      apiA.trigger('ctrl+a');
+      expect(handlerA).toHaveBeenCalledTimes(2);
+    });
+
+    it('tearing down A only unbinds A-managed handlers', () => {
+      const rootA = { id: 'root-a', host: { id: 'root-a-host' } };
+      const rootB = { id: 'root-b', host: { id: 'root-b-host' } };
+      const baseStore = {
+        dispatch: jest.fn(),
+        getState: jest.fn(() => ({
+          shortcutKeyMap: {
+            [Shortcuts.COPY]: Keys.CTRL_C,
+          },
+        })),
+      };
+
+      const managerA = createHotkeysManager();
+      const managerB = createHotkeysManager();
+      const handlerA = jest.fn();
+      const handlerB = jest.fn();
+
+      managerA.initialize(baseStore, rootA);
+      managerB.initialize(baseStore, rootB);
+
+      managerA.on('ctrl+alt+8', handlerA);
+      managerB.on('ctrl+alt+8', handlerB);
+
+      const ctrlAlt8Callbacks = hotkeys.mock.calls
+        .filter((call) => call[0] === 'ctrl+alt+8')
+        .map((call) => call[2]);
+
+      let callbackA;
+      let callbackB;
+      ctrlAlt8Callbacks.forEach((callback) => {
+        callback({
+          key: '8',
+          type: 'keydown',
+          target: { getRootNode: () => rootA },
+          currentTarget: { activeElement: null },
+        });
+
+        if (handlerA.mock.calls.length > 0) {
+          callbackA = callback;
+          handlerA.mockClear();
+        }
+      });
+
+      ctrlAlt8Callbacks.forEach((callback) => {
+        callback({
+          key: '8',
+          type: 'keydown',
+          target: { getRootNode: () => rootB },
+          currentTarget: { activeElement: null },
+        });
+
+        if (handlerB.mock.calls.length > 0) {
+          callbackB = callback;
+          handlerB.mockClear();
+        }
+      });
+
+      expect(callbackA).toBeDefined();
+      expect(callbackB).toBeDefined();
+
+      hotkeys.unbind.mockClear();
+      managerA.off();
+
+      const unboundCtrlAlt8Callbacks = hotkeys.unbind.mock.calls
+        .filter((call) => call[0] === 'ctrl+alt+8')
+        .map((call) => call[1]);
+
+      expect(unboundCtrlAlt8Callbacks).toContain(callbackA);
+      expect(unboundCtrlAlt8Callbacks).not.toContain(callbackB);
+    });
+
+    it('does not unbind B handlers when A calls off(key) without owning key listeners', () => {
+      const rootA = { id: 'root-a', host: { id: 'root-a-host' } };
+      const rootB = { id: 'root-b', host: { id: 'root-b-host' } };
+      const baseStore = {
+        dispatch: jest.fn(),
+        getState: jest.fn(() => ({
+          shortcutKeyMap: {
+            [Shortcuts.COPY]: Keys.CTRL_C,
+          },
+        })),
+      };
+
+      const managerA = createHotkeysManager();
+      const managerB = createHotkeysManager();
+      const handlerB = jest.fn();
+
+      managerA.initialize(baseStore, rootA);
+      managerB.initialize(baseStore, rootB);
+      managerB.on('ctrl+alt+9', handlerB);
+
+      hotkeys.unbind.mockClear();
+      managerA.off('ctrl+alt+9');
+
+      expect(hotkeys.unbind).not.toHaveBeenCalledWith('ctrl+alt+9');
+
+      const ctrlAlt9Callbacks = hotkeys.mock.calls
+        .filter((call) => call[0] === 'ctrl+alt+9')
+        .map((call) => call[2]);
+
+      ctrlAlt9Callbacks.forEach((callback) => callback({
+        key: '9',
+        type: 'keydown',
+        target: { getRootNode: () => rootB },
+        currentTarget: { activeElement: null },
+      }));
+
+      expect(handlerB).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -142,6 +321,106 @@ describe('hotkeysManager', () => {
       boundHandler(e);
       expect(handler).toHaveBeenCalledWith(e);
     });
+
+    it('should route key events only to the matching webcomponent instance root', () => {
+      const originalIsWebComponent = window.isApryseWebViewerWebComponent;
+      try {
+        window.isApryseWebViewerWebComponent = true;
+
+        const firstRoot = { id: 'first-root', host: { id: 'first-host' } };
+        const secondRoot = { id: 'second-root', host: { id: 'second-host' } };
+        const firstHandler = jest.fn();
+        const secondHandler = jest.fn();
+
+        hotkeysManager.initialize(mockStore, firstRoot);
+        hotkeysManager.enableHotkey('ctrl+alt+1', firstHandler);
+
+        hotkeysManager.initialize(mockStore, secondRoot);
+        hotkeysManager.enableHotkey('ctrl+alt+1', secondHandler);
+
+        const matchingFirstEvent = {
+          key: '1',
+          type: 'keydown',
+          target: {
+            getRootNode: () => firstRoot,
+          },
+          currentTarget: {
+            activeElement: null,
+          },
+        };
+
+        const matchingSecondEvent = {
+          key: '1',
+          type: 'keydown',
+          target: {
+            getRootNode: () => secondRoot,
+          },
+          currentTarget: {
+            activeElement: null,
+          },
+        };
+
+        const callbacks = hotkeys.mock.calls
+          .filter((call) => call[0] === 'ctrl+alt+1')
+          .map((call) => call[2]);
+
+        callbacks.forEach((callback) => callback(matchingFirstEvent));
+        expect(firstHandler).toHaveBeenCalledTimes(1);
+        expect(secondHandler).toHaveBeenCalledTimes(0);
+
+        callbacks.forEach((callback) => callback(matchingSecondEvent));
+        expect(firstHandler).toHaveBeenCalledTimes(1);
+        expect(secondHandler).toHaveBeenCalledTimes(1);
+
+        // Simulate retargeted keyboard events where target is the WC host:
+        // host.getRootNode() is document, but host.shadowRoot should still
+        // resolve to the owning instance.
+        const hostLikeTargetForFirstInstance = {
+          shadowRoot: firstRoot,
+          getRootNode: () => document,
+        };
+        const retargetedHostEvent = {
+          key: '1',
+          type: 'keydown',
+          composedPath: () => [hostLikeTargetForFirstInstance],
+          target: hostLikeTargetForFirstInstance,
+          currentTarget: {
+            activeElement: hostLikeTargetForFirstInstance,
+          },
+        };
+
+        callbacks.forEach((callback) => callback(retargetedHostEvent));
+        expect(firstHandler).toHaveBeenCalledTimes(2);
+        expect(secondHandler).toHaveBeenCalledTimes(1);
+      } finally {
+        window.isApryseWebViewerWebComponent = originalIsWebComponent;
+      }
+    });
+
+    it('should not invoke non-escape handlers while content edit mode is active', () => {
+      core.getContentEditManager = jest.fn(() => ({
+        isInContentEditMode: () => true,
+      }));
+
+      const handler = jest.fn();
+      hotkeysManager.enableHotkey('ctrl+v', handler);
+
+      const event = {
+        key: 'v',
+        type: 'keydown',
+        target: {
+          getRootNode: () => document,
+        },
+        currentTarget: {
+          activeElement: null,
+        },
+      };
+
+      const boundHandler = hotkeys.mock.calls.find((call) => call[0] === 'ctrl+v')[2];
+      boundHandler(event);
+
+      expect(handler).not.toHaveBeenCalled();
+    });
   });
 
   describe('getDefaultKeyHandler', () => {
@@ -177,6 +456,34 @@ describe('hotkeysManager', () => {
       expect(typeof keyHandlerMap[ShortcutKeys[Shortcuts.BOOKMARK]]).toBe('function');
       expect(typeof keyHandlerMap[ShortcutKeys[Shortcuts.ROTATE_CLOCKWISE]]).toBe('function');
     });
+
+    it('should pass viewportRelative paste options when the setting is enabled', () => {
+      selectors.isViewportRelativeAnnotationPositioningEnabled.mockReturnValue(true);
+      selectors.getActiveDocumentViewerKey.mockReturnValue(7);
+
+      const keyHandlerMap = hotkeysManager.createKeyHandlerMap(mockStore);
+      const pasteHandler = keyHandlerMap[ShortcutKeys[Shortcuts.PASTE]];
+      const event = { preventDefault: jest.fn() };
+
+      pasteHandler(event);
+
+      expect(event.preventDefault).toHaveBeenCalledTimes(1);
+      expect(core.pasteCopiedAnnotations).toHaveBeenCalledWith(7, { viewportRelative: true });
+    });
+
+    it('should preserve default paste behavior when the setting is disabled', () => {
+      selectors.isViewportRelativeAnnotationPositioningEnabled.mockReturnValue(false);
+      selectors.getActiveDocumentViewerKey.mockReturnValue(3);
+
+      const keyHandlerMap = hotkeysManager.createKeyHandlerMap(mockStore);
+      const pasteHandler = keyHandlerMap[ShortcutKeys[Shortcuts.PASTE]];
+      const event = { preventDefault: jest.fn() };
+
+      pasteHandler(event);
+
+      expect(event.preventDefault).toHaveBeenCalledTimes(1);
+      expect(core.pasteCopiedAnnotations).toHaveBeenCalledWith(3, undefined);
+    });
   });
 
   describe('createToolHotkeyHandler', () => {
@@ -207,7 +514,7 @@ describe('hotkeysManager', () => {
         isReadOnlyModeEnabled: () => false,
       }));
       hotkeysManager.setShortcutKey(Shortcuts.COPY, Keys.CTRL_DOWN);
-      expect(hotkeys.unbind).toHaveBeenCalledWith(Keys.CTRL_C, undefined);
+      expect(hotkeys.unbind).toHaveBeenCalledWith(Keys.CTRL_C, expect.any(Function));
       expect(hotkeys).toHaveBeenCalledWith(
         Keys.CTRL_DOWN,
         { keyup: true, scope: defaultHotkeysScope },
@@ -236,7 +543,7 @@ describe('hotkeysManager', () => {
   describe('disableShortcut', () => {
     it('should unbind the given shortcut key', () => {
       hotkeysManager.disableShortcut(Shortcuts.COPY);
-      expect(hotkeys.unbind).toHaveBeenCalledWith(Keys.CTRL_C, undefined);
+      expect(hotkeys.unbind).toHaveBeenCalledWith(Keys.CTRL_C, expect.any(Function));
     });
   });
 
@@ -248,7 +555,8 @@ describe('hotkeysManager', () => {
       hotkeysManager.setViewOnlyMode(true);
       isShortcutActive = hotkeysManager.isActive(Shortcuts.COPY);
       expect(isShortcutActive).toBe(false);
-      expect(hotkeys.unbind).toHaveBeenCalledWith(undefined, undefined);
+      expect(hotkeys.unbind).toHaveBeenCalled();
+      expect(hotkeys.unbind).not.toHaveBeenCalledWith(undefined, undefined);
 
       hotkeysManager.setViewOnlyMode(false);
       isShortcutActive = hotkeysManager.isActive(Shortcuts.COPY);

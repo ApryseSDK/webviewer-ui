@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -13,19 +13,22 @@ import MultiSelectControls from 'components/MultiSelectControls';
 import CustomElement from 'components/CustomElement';
 import NotesPanelHeader from 'components/NotesPanelHeader';
 import Choice from 'components/Choice';
-import TextButton from 'components/TextButton';
 /* eslint-disable custom/use-core-hook-in-components */
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import getNotesPanelSortStrategy from 'helpers/getNotesPanelSortStrategy';
-import { EditingStreamType, OfficeEditorEditMode } from 'constants/officeEditor';
+import { OfficeEditorEditMode } from 'constants/officeEditor';
+import { SpreadsheetEditorEditMode, SPREADSHEET_SHEET_NAME_KEY, SPREADSHEET_SHEET_INDEX_KEY, SPREADSHEET_ROW_KEY, SPREADSHEET_COLUMN_KEY, SPREADSHEET_THREAD_ID_KEY } from 'constants/spreadsheetEditor';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { isIE } from 'helpers/device';
+import findExistingSpreadsheetCommentAtCell from 'helpers/findExistingSpreadsheetCommentAtCell';
+import useSpreadsheetActiveSheetIndex from 'hooks/useSpreadsheetActiveSheetIndex';
 import ReplyAttachmentPicker from './ReplyAttachmentPicker';
+import CommentPanelFooter from './CommentPanelFooter';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/react';
 
@@ -66,8 +69,11 @@ const NotesPanel = ({
   const isNotesPanelMultiSelectEnabled = useSelector(selectors.getIsNotesPanelMultiSelectEnabled);
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
+  const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const officeEditorEditMode = useSelector(selectors.getOfficeEditorEditMode);
-  const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
+  const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
+  const activeCellRangeTopLeftRow = useSelector(selectors.getActiveCellRangeTopLeftRow);
+  const activeCellRangeTopLeftColumn = useSelector(selectors.getActiveCellRangeTopLeftColumn);
   const notesPanelConfig = getNotesPanelConfig(dataElement);
 
   const dispatch = useDispatch();
@@ -75,6 +81,8 @@ const NotesPanel = ({
 
   const currentWidth = currentLeftPanelWidth || currentNotesPanelWidth;
   const isMobile = isMobileSize();
+
+  const activeSheetIndex = useSpreadsheetActiveSheetIndex(isSpreadsheetEditorMode);
 
   const [multiSelectedAnnotations, setMultiSelectedAnnotations] = useState([]);
   const [showMultiReply, setShowMultiReply] = useState(false);
@@ -193,9 +201,52 @@ const NotesPanel = ({
 
   const activeSortStrategy = getNotesPanelSortStrategy(sortStrategy);
   const sortOptions = { pageLabels, t, documentViewerKey: activeDocumentViewerKey };
-  const notesToRender = prioritizeNotesBySearchedNumber(
-    activeSortStrategy.getSortedNotes(notes, sortOptions).filter(filterNote)
-  );
+  const filteredSortedNotes = activeSortStrategy.getSortedNotes(notes, sortOptions).filter(filterNote);
+  if (isSpreadsheetEditorMode) {
+    // Spreadsheet comments are sorted top-to-bottom, left-to-right within a sheet,
+    // using the numeric row/column indices the annotation already carries (no need to
+    // re-derive them from the display cell string, e.g. "A1").
+    filteredSortedNotes.sort((a, b) => {
+      const sheetIndexA = Number.parseInt(a.getCustomData(SPREADSHEET_SHEET_INDEX_KEY), 10) || 0;
+      const sheetIndexB = Number.parseInt(b.getCustomData(SPREADSHEET_SHEET_INDEX_KEY), 10) || 0;
+
+      if (sheetIndexA !== sheetIndexB) {
+        return sheetIndexA - sheetIndexB;
+      }
+
+      const rowA = Number.parseInt(a.getCustomData(SPREADSHEET_ROW_KEY), 10) || 0;
+      const rowB = Number.parseInt(b.getCustomData(SPREADSHEET_ROW_KEY), 10) || 0;
+
+      if (rowA !== rowB) {
+        return rowA - rowB;
+      }
+
+      const columnA = Number.parseInt(a.getCustomData(SPREADSHEET_COLUMN_KEY), 10) || 0;
+      const columnB = Number.parseInt(b.getCustomData(SPREADSHEET_COLUMN_KEY), 10) || 0;
+
+      return columnA - columnB;
+    });
+  }
+  const notesToRender = prioritizeNotesBySearchedNumber(filteredSortedNotes);
+
+  // The existing comment thread's root note at the cell that would receive a new comment
+  // (the top-left cell of the current selection, whether it's a single cell or a
+  // multi-cell range), if any. Used so "Add Comment" replies to the existing thread
+  // instead of creating a second, competing comment on the same cell.
+  // Memoized since its dependencies (notes, active sheet/cell) change far less often than
+  // the component re-renders (e.g. typing in the search box shouldn't recompute this).
+  const existingCommentAtSelectedCell = useMemo(() => {
+    if (!isSpreadsheetEditorMode) {
+      return null;
+    }
+
+    return findExistingSpreadsheetCommentAtCell({
+      notes,
+      activeSheetIndex,
+      topLeftRow: activeCellRangeTopLeftRow,
+      topLeftColumn: activeCellRangeTopLeftColumn,
+    });
+  }, [isSpreadsheetEditorMode, notes, activeSheetIndex, activeCellRangeTopLeftRow, activeCellRangeTopLeftColumn]);
 
   useEffect(() => {
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
@@ -242,12 +293,6 @@ const NotesPanel = ({
     },
     [setPendingReplyMap],
   );
-
-  const handleAddNewOfficeEditorComment = useCallback(() => {
-    void core.getOfficeEditor().getCommentManager().addCommentThreadAtCurrentRange('').catch((error) => {
-      console.warn('Failed to add comment thread', error);
-    });
-  }, []);
 
   const [pendingAttachmentMap, setPendingAttachmentMap] = useState({});
   const addAttachments = (annotationID, attachments) => {
@@ -305,7 +350,16 @@ const NotesPanel = ({
     const prevNote = index === 0 ? null : notes[index - 1];
     const currNote = notes[index];
 
-    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote, sortOptions, activeDocumentViewerKey))) {
+    if (isSpreadsheetEditorMode) {
+      const prevSheetIndex = prevNote ? prevNote.getCustomData(SPREADSHEET_SHEET_INDEX_KEY) : null;
+      const currSheetIndex = currNote.getCustomData(SPREADSHEET_SHEET_INDEX_KEY);
+      if (!prevNote || prevSheetIndex !== currSheetIndex) {
+        const sheetName = currNote.getCustomData(SPREADSHEET_SHEET_NAME_KEY);
+        if (sheetName) {
+          listSeparator = <ListSeparator renderContent={() => sheetName} />;
+        }
+      }
+    } else if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote, sortOptions, activeDocumentViewerKey))) {
       listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, sortOptions, activeDocumentViewerKey)} />;
     }
 
@@ -328,6 +382,7 @@ const NotesPanel = ({
       isSelected: selectedNoteIds[currNote.Id],
       isContentEditable: core.canModifyContents(currNote, activeDocumentViewerKey) && !currNote.getContents(),
       isOfficeEditorCommentAnnotation: mapAnnotationToKey(currNote) === annotationMapKeys.OFFICE_EDITOR_COMMENT,
+      isSpreadsheetEditorCommentAnnotation: isSpreadsheetEditorMode && !!currNote.getCustomData(SPREADSHEET_THREAD_ID_KEY),
       pendingEditTextMap,
       setPendingEditText,
       pendingReplyMap,
@@ -472,16 +527,19 @@ const NotesPanel = ({
   const showMultiSelectControls = isMultiSelectMode && !isDocumentReadOnly;
 
   const showOfficeEditorFooter = isOfficeEditorMode && !isMultiSelectMode;
+  const showSpreadsheetEditorFooter = isSpreadsheetEditorMode && !isMultiSelectMode;
   const showReviewPanelFooter =
     showOfficeEditorFooter
     && dataElement === DataElements.OFFICE_EDITOR_REVIEW_PANEL
     && notesToRender.length > 0;
   const isOfficeEditorViewOnly = officeEditorEditMode === OfficeEditorEditMode.VIEW_ONLY || officeEditorEditMode === OfficeEditorEditMode.PREVIEW;
+  const isSpreadsheetEditorViewOnly = isSpreadsheetEditorMode && spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
   const showCommentPanelFooter =
-    showOfficeEditorFooter
+    (showOfficeEditorFooter
     && !core.getIsReadOnly(activeDocumentViewerKey)
     && !isOfficeEditorViewOnly
-    && dataElement === DataElements.OFFICE_EDITOR_COMMENT_PANEL;
+    && dataElement === DataElements.OFFICE_EDITOR_COMMENT_PANEL)
+    || (showSpreadsheetEditorFooter && !isSpreadsheetEditorViewOnly && dataElement === DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL);
 
   return !showNotePanel ? null : (
     <div
@@ -553,7 +611,7 @@ const NotesPanel = ({
           still being able to not have any notes cut off */}
           {showPlaceHolder ? placeHolder : null}
           {showReviewPanelFooter && (
-            <div className='office-editor-footer'>
+            <div className='comment-panel-footer'>
               <div className='divider' />
               <Choice
                 isSwitch
@@ -564,18 +622,10 @@ const NotesPanel = ({
             </div>
           )}
           {showCommentPanelFooter && (
-            <div className='office-editor-footer'>
-              <div className='divider' />
-              <TextButton
-                className='add-new-button'
-                img='icon-menu-add'
-                dataElement={DataElements.OFFICE_EDITOR_COMMENT_ADD_NEW_BUTTON}
-                disabled={activeStream !== EditingStreamType.BODY}
-                label={`${t('action.add')} ${t('action.comment')}`}
-                ariaLabel={`${t('action.add')} ${t('action.comment')}`}
-                onClick={handleAddNewOfficeEditorComment}
-              />
-            </div>
+            <CommentPanelFooter
+              dataElement={dataElement}
+              existingCommentAtSelectedCell={existingCommentAtSelectedCell}
+            />
           )}
         </>
       </div>

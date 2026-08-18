@@ -15,7 +15,7 @@ import setCurrentPage from 'helpers/setCurrentPage';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
-import getRootNode from 'helpers/getRootNode';
+import getRootNode, { getInstanceRootFromEvent } from 'helpers/getRootNode';
 import FocusStackManager from 'helpers/focusStackManager';
 import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
 import { panelNames } from 'src/constants/panel';
@@ -36,8 +36,19 @@ import {
 } from './hotkeysUtils';
 
 const NOOP = () => { };
+const STORE_HOTKEYS_MANAGER_KEY = '__wvHotkeysManager';
 
 export const defaultHotkeysScope = 'viewer';
+
+export const setHotkeysManagerForStore = (store, manager) => {
+  if (store) {
+    store[STORE_HOTKEYS_MANAGER_KEY] = manager;
+  }
+};
+
+export const getHotkeysManager = (store) => {
+  return store?.[STORE_HOTKEYS_MANAGER_KEY] || defaultHotkeysManager;
+};
 
 /**
  * A class which contains hotkeys APIs.<br/><br/>
@@ -55,10 +66,21 @@ const HotkeysManager = {
    */
   activeHotkeysMap: {},
   previousActiveHotkeysMap: {},
-  initialize(store) {
+  initialize(store, instanceRootNode) {
     // still allow hotkeys when focusing a textarea or an input
     hotkeys.filter = () => true;
+    // If this manager is re-initialized, detach any listeners registered by the previous instance
+    // before resetting tracking state.
+    if (this.boundHotkeysMap?.size) {
+      this.unbindHotkey();
+    }
+    this.activeHotkeysMap = {};
+    this.previousActiveHotkeysMap = {};
+    this.originalActiveHotkeysMap = undefined;
+    this.preViewOnlyEnabledShortcuts = undefined;
+    this.boundHotkeysMap = new Map();
     this.store = store;
+    this.instanceRootNode = instanceRootNode || getRootNode();
     this.keyHandlerMap = this.createKeyHandlerMap();
     this.previousKeyHandlerMap = this.keyHandlerMap;
     this.prevToolName = null;
@@ -113,7 +135,7 @@ WebViewer(...)
       key = key.toLocaleLowerCase();
     }
 
-    if (!handler) {
+    if (!handler && key) {
       handler = this.getDefaultKeyHandler(key);
     }
 
@@ -182,8 +204,7 @@ WebViewer(...)
       this.activeHotkeysMap[key.toLocaleLowerCase()] = false;
     }
 
-    // https://github.com/jaywcjlove/hotkeys#unbind
-    hotkeys.unbind(key, handler);
+    this.unbindHotkey(key, handler);
   },
   isActive(shortcut) {
     const key = keyMap[shortcut];
@@ -200,18 +221,31 @@ WebViewer(...)
     return true;
   },
   enableHotkey(_key, _handler) {
+    const instanceRootNode = this.instanceRootNode;
     // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
     const { keyup = NOOP, keydown = _handler } = _handler;
-    hotkeys(_key, { keyup: true, scope: defaultHotkeysScope }, (e) => {
+    const hotkeyListener = (e) => {
       // Preventing the hotkey from being called multiple times or in the wrong viewer
       // when using the web component version of webviewer.
       // the escape key is special, it can be triggered with the wrong target if for example we
       // add a signature from the modal and then choose to not apply it, so we whitelist it
       // Same with the close shortcut it can be triggered no matter where the focus is since it is kind of like an escape
       const isEscape = e.key === 'Escape' || e.key === ShortcutKeys[Shortcuts.CLOSE];
-      const shadowRoot = e.currentTarget.activeElement?.shadowRoot;
-      const calledFromCurrentViewer = shadowRoot === getRootNode();
-      if (calledFromCurrentViewer || !window.isApryseWebViewerWebComponent || isEscape) {
+      const isInContentEditMode = core.getContentEditManager?.().isInContentEditMode?.();
+
+      // Let content edit own text shortcuts (copy/paste/bold/etc.) while editing.
+      if (isInContentEditMode && !isEscape) {
+        return;
+      }
+
+      const calledFromCurrentViewer = getInstanceRootFromEvent(e) === instanceRootNode;
+      const shouldHandleHotkey =
+        !window.isApryseWebViewerWebComponent ||
+        isEscape ||
+        !instanceRootNode ||
+        calledFromCurrentViewer;
+
+      if (shouldHandleHotkey) {
         if (e.type === 'keyup') {
           keyup(e);
         }
@@ -219,9 +253,127 @@ WebViewer(...)
           keydown(e);
         }
       }
+    };
+
+    hotkeys(_key, { keyup: true, scope: defaultHotkeysScope }, hotkeyListener);
+    this.registerBoundHotkey(_key, hotkeyListener, _handler);
+  },
+  registerBoundHotkey(key, listener, sourceHandler) {
+    if (!this.boundHotkeysMap) {
+      this.boundHotkeysMap = new Map();
+    }
+
+    if (!this.boundHotkeysMap.has(key)) {
+      this.boundHotkeysMap.set(key, []);
+    }
+
+    this.boundHotkeysMap.get(key).push({ listener, sourceHandler });
+  },
+  unbindAllTrackedHotkeys() {
+    this.boundHotkeysMap.forEach((entries, boundKey) => {
+      entries.forEach(({ listener }) => {
+        hotkeys.unbind(boundKey, listener);
+      });
+    });
+    this.boundHotkeysMap.clear();
+  },
+  getTrackedKeysForUnbind(key) {
+    const hasExactTrackedKey = this.boundHotkeysMap.has(key);
+    const trackedKeys = hasExactTrackedKey
+      ? [key]
+      : [...this.boundHotkeysMap.keys()].filter((boundKey) => splitKey(boundKey).includes(key));
+    const isPartialComposedMemberUnbind = !hasExactTrackedKey && trackedKeys.length > 0;
+
+    return { trackedKeys, isPartialComposedMemberUnbind };
+  },
+  getTrackedEntries(trackedKeys) {
+    return trackedKeys.flatMap((trackedKey) => (
+      (this.boundHotkeysMap.get(trackedKey) || []).map((entry) => ({
+        ...entry,
+        trackedKey,
+      }))
+    ));
+  },
+  unbindFallback(key, handler) {
+    if (handler === undefined) {
+      return;
+    }
+
+    if (typeof handler === 'function') {
+      hotkeys.unbind(key, handler);
+    }
+  },
+  unbindEntries(entries, key, isPartialComposedMemberUnbind) {
+    entries.forEach(({ listener, trackedKey }) => {
+      hotkeys.unbind(isPartialComposedMemberUnbind ? key : trackedKey, listener);
     });
   },
+  removeTrackedEntriesByHandler(trackedKeys, handler) {
+    trackedKeys.forEach((trackedKey) => {
+      const remainingEntries = (this.boundHotkeysMap.get(trackedKey) || []).filter(
+        ({ sourceHandler }) => sourceHandler !== handler,
+      );
+
+      if (remainingEntries.length) {
+        this.boundHotkeysMap.set(trackedKey, remainingEntries);
+      } else {
+        this.boundHotkeysMap.delete(trackedKey);
+      }
+    });
+  },
+  unbindEntriesByHandler(entries, trackedKeys, key, handler, isPartialComposedMemberUnbind) {
+    const matchingEntries = entries.filter(({ sourceHandler }) => sourceHandler === handler);
+
+    if (!matchingEntries.length) {
+      if (typeof handler === 'function') {
+        hotkeys.unbind(key, handler);
+      }
+      return;
+    }
+
+    this.unbindEntries(matchingEntries, key, isPartialComposedMemberUnbind);
+
+    if (!isPartialComposedMemberUnbind) {
+      this.removeTrackedEntriesByHandler(trackedKeys, handler);
+    }
+  },
+  unbindHotkey(key, handler) {
+    if (!this.boundHotkeysMap) {
+      this.boundHotkeysMap = new Map();
+    }
+
+    if (!key) {
+      this.unbindAllTrackedHotkeys();
+      return;
+    }
+
+    const { trackedKeys, isPartialComposedMemberUnbind } = this.getTrackedKeysForUnbind(key);
+
+    if (!trackedKeys.length) {
+      this.unbindFallback(key, handler);
+      return;
+    }
+
+    const entries = this.getTrackedEntries(trackedKeys);
+
+    if (handler) {
+      this.unbindEntriesByHandler(entries, trackedKeys, key, handler, isPartialComposedMemberUnbind);
+      return;
+    }
+
+    this.unbindEntries(entries, key, isPartialComposedMemberUnbind);
+
+    if (!isPartialComposedMemberUnbind) {
+      trackedKeys.forEach((trackedKey) => {
+        this.boundHotkeysMap.delete(trackedKey);
+      });
+    }
+  },
   getDefaultKeyHandler(key) {
+    if (!this.keyHandlerMap || !key) {
+      return undefined;
+    }
+
     let defaultKeyHandler;
     const isComposedShortcut = key?.includes('+');
     if (isComposedShortcut) {
@@ -239,6 +391,9 @@ WebViewer(...)
     const store = this.store;
     const { dispatch, getState } = store;
     const { ToolNames } = window.Core.Tools;
+    const instanceRootNode = this.instanceRootNode;
+    const getInstanceRootNode = () => instanceRootNode || getRootNode();
+    const isInstanceFocusingElement = () => isFocusingElement(getInstanceRootNode());
 
     return {
       [ShortcutKeys[Shortcuts.ROTATE_CLOCKWISE]]: (e) => {
@@ -272,28 +427,29 @@ WebViewer(...)
       },
       [ShortcutKeys[Shortcuts.PASTE]]: (e) => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-        if (!isFocusingElement()) {
+        if (!isInstanceFocusingElement()) {
           e.preventDefault();
-          core.pasteCopiedAnnotations(activeDocumentViewerKey);
+          const viewportRelative = selectors.isViewportRelativeAnnotationPositioningEnabled(getState());
+          core.pasteCopiedAnnotations(activeDocumentViewerKey, viewportRelative ? { viewportRelative: true } : undefined);
         }
       },
       [ShortcutKeys[Shortcuts.UNDO]]: (e) => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-        if (!isFocusingElement()) {
+        if (!isInstanceFocusingElement()) {
           e.preventDefault();
           core.undo(activeDocumentViewerKey);
         }
       },
       [ShortcutKeys[Shortcuts.REDO]]: (e) => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-        if (!isFocusingElement()) {
+        if (!isInstanceFocusingElement()) {
           e.preventDefault();
           core.redo(activeDocumentViewerKey);
         }
       },
       [ShortcutKeys[Shortcuts.OPEN_FILE]]: (e) => {
         e.preventDefault();
-        openFilePicker();
+        openFilePicker(e);
       },
       [ShortcutKeys[Shortcuts.SEARCH]]: (e) => {
         e.preventDefault();
@@ -351,7 +507,7 @@ WebViewer(...)
         const firstHeaderDataElement = isModularUI ?
           activeHeaders[0]?.dataElement : // first modular UI header data element
           'header'; // legacy header data element
-        const firstHeaderElement = getRootNode().querySelector(`[data-element="${firstHeaderDataElement}"]`);
+        const firstHeaderElement = getInstanceRootNode()?.querySelector(`[data-element="${firstHeaderDataElement}"]`);
         firstHeaderElement?.focus();
       },
       [ShortcutKeys[Shortcuts.FIT_SCREEN_WIDTH]]: (e) => {
@@ -416,7 +572,7 @@ WebViewer(...)
       },
       [ShortcutKeys[Shortcuts.UP]]: () => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-        if (isFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
+        if (isInstanceFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
           return;
         }
 
@@ -437,7 +593,7 @@ WebViewer(...)
       },
       [ShortcutKeys[Shortcuts.DOWN]]: () => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-        if (isFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
+        if (isInstanceFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
           return;
         }
 
@@ -542,9 +698,9 @@ WebViewer(...)
           return;
         }
         dispatch(actions.setToolbarGroup('toolbarGroup-FillAndSign', false));
-        const sigToolButton = getRootNode().querySelector('[data-element="signatureToolGroupButton"] .Button');
+        const sigToolButton = getInstanceRootNode()?.querySelector('[data-element="signatureToolGroupButton"] .Button');
         sigToolButton?.click();
-        const sigModalButton = getRootNode().querySelector('.signature-row-content');
+        const sigModalButton = getInstanceRootNode()?.querySelector('.signature-row-content');
         sigModalButton?.click();
       }),
       [ShortcutKeys[Shortcuts.SQUIGGLY]]: this.createToolHotkeyHandler(() => {
@@ -581,14 +737,14 @@ WebViewer(...)
       }),
       [ShortcutKeys[Shortcuts.HOME]]: () => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-        if (isFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
+        if (isInstanceFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
           return;
         }
         setCurrentPage(1, activeDocumentViewerKey);
       },
       [ShortcutKeys[Shortcuts.END]]: this.createToolHotkeyHandler(() => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-        if (isFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
+        if (isInstanceFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
           return;
         }
         const pageCount = selectors.getTotalPages(getState());
@@ -609,6 +765,7 @@ WebViewer(...)
    */
   createToolHotkeyHandler(handler) {
     const { getState } = this.store;
+    const instanceRootNode = this.instanceRootNode;
 
     return (...args) => {
       const openElements = selectors.getOpenElements(getState());
@@ -618,7 +775,7 @@ WebViewer(...)
       const isSignatureModalOpen =
         currentToolName === window.Core.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
 
-      if (isFocusingElement() || isSignatureModalOpen) {
+      if (isFocusingElement(instanceRootNode || getRootNode()) || isSignatureModalOpen) {
         return;
       }
 
@@ -668,6 +825,10 @@ WebViewer(...)
    * @ignore
    */
   restoreHotkeys() {
+    if (!this.store || !this.keyHandlerMap) {
+      return;
+    }
+
     const disabledHotkeys = { ...this.previousActiveHotkeysMap };
     this.on();
     for (const property in Keys) {
@@ -792,4 +953,8 @@ export const setCloseToolTipFunc = (func) => {
 
 export const getCloseToolTipFunc = () => closeToolTipFunc;
 
-export default Object.create(HotkeysManager);
+export const createHotkeysManager = () => Object.create(HotkeysManager);
+
+const defaultHotkeysManager = createHotkeysManager();
+
+export default defaultHotkeysManager;

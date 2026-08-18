@@ -1,74 +1,63 @@
 import React, { useCallback, useState, useLayoutEffect, useRef, useEffect, isValidElement } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import classNames from 'classnames';
 import actions from 'actions';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import useFocusOnClose from 'hooks/useFocusOnClose';
-import { DEFAULT_GAP, ITEM_TYPE, PRESET_BUTTON_TYPES, PRESET_BUTTONS_MODAL_TOGGLES } from 'constants/customizationVariables';
+import { ITEM_TYPE, PRESET_BUTTON_TYPES, PRESET_BUTTONS_MODAL_TOGGLES } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
 import ZoomText from './flyoutHelpers/ZoomText';
 import getRootNode from 'helpers/getRootNode';
-import { getFlyoutPositionOnElement, isToggleScrolledOutOfAncestor } from 'helpers/flyoutHelper';
 import { getFlyoutItemType } from 'helpers/itemToFlyoutHelper';
-import { isMobileSize } from 'helpers/getDeviceSize';
 import { getElementToFocusOnIndex } from 'helpers/keyboardNavigationHelper';
-import getAppRect from 'helpers/getAppRect';
 import FlyoutItem from 'components/ModularComponents/Flyout/flyoutHelpers/FlyoutItem';
 import Icon from 'components/Icon';
 import './Flyout.scss';
-import { Swipeable } from 'react-swipeable';
 import useCore from 'hooks/useCore';
-const Flyout = () => {
+
+const Flyout = ({ flyoutRef, shouldOverflow, recalculatePlacement }) => {
   const { core } = useCore();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const isMobile = isMobileSize();
+  const fallbackFlyoutRef = useRef(null);
+  const resolvedFlyoutRef = flyoutRef || fallbackFlyoutRef;
 
   const flyoutMap = useSelector(selectors.getFlyoutMap, shallowEqual);
   const activeFlyout = useSelector(selectors.getActiveFlyout);
   const isFlyoutOpen = useSelector((state) => selectors.isElementOpen(state, activeFlyout), shallowEqual);
-  const position = useSelector(selectors.getFlyoutPosition, shallowEqual);
   const toggleElement = useSelector(selectors.getFlyoutToggleElement);
-  const topHeadersHeight = useSelector(selectors.getTopHeadersHeight);
-  const bottomHeadersHeight = useSelector(selectors.getBottomHeadersHeight);
   const currentPage = useSelector(selectors.getCurrentPage);
   const isSignatureModalOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL));
-  const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
-  const shouldUseMobileFlyout = isMobile && !isInDesktopOnlyMode;
 
   const flyoutProperties = flyoutMap[activeFlyout];
-  const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
   const { dataElement, items, className } = flyoutProperties;
   const [activePath, setActivePath] = useState([]);
   const [currentFocusIndex, setCurrentFocusIndex] = useState(-1);
   const [focusableElements, setFocusableElements] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [shouldOverflow, setShouldOverflow] = useState(false);
 
   let activeItem = null;
   for (const index of activePath) {
     activeItem = activeItem ? activeItem.children[index] : items[index];
   }
 
-  const flyoutRef = useRef(null);
   const flyoutItemRef = useRef(null);
-  const [correctedPosition, setCorrectedPosition] = useState(position);
-  const [maxHeightValue, setMaxHeightValue] = useState(window.innerHeight - horizontalHeadersUsedHeight);
 
   const itemsToRender = items.filter((item) => !item.hidden);
   const activeChildren = activeItem ? activeItem.children.filter((child) => !child.hidden) : [];
 
   // Resolve the per-instance root from the flyout element itself. The module- level `rootNode` singleton in helpers/getRootNode.js is overwritten by whichever WebComponent called setRootNode last, so in multi-WC mode a keyless `getRootNode().querySelector(...)` returns the wrong instance's node and flyouts position themselves against the sibling instance.
-  const getLocalRoot = () => flyoutRef.current?.getRootNode?.() || getRootNode();
+  const getLocalRoot = () => resolvedFlyoutRef.current?.getRootNode?.() || getRootNode();
 
   const getElementDOMRef = (dataElement) => {
     return getLocalRoot().querySelector(`[data-element="${dataElement}"]`);
   };
 
   const getFocusableElements = () => {
-    return flyoutRef.current.querySelectorAll('button:not([disabled]), input:not([disabled]), div[role="combobox"]:not([disabled])');
+    return resolvedFlyoutRef.current.querySelectorAll('button:not([disabled]), input:not([disabled]), div[role="combobox"]:not([disabled])');
   };
 
   const closeFlyout = useFocusOnClose(useCallback(() => {
@@ -76,113 +65,20 @@ const Flyout = () => {
     setActivePath([]);
   }, [dispatch, activeFlyout]));
 
+  // Placement and overflow are owned by FlyoutContainer. Retrigger them when the flyout's content changes (submenu navigation or typing) since that can change the rendered size.
   useLayoutEffect(() => {
-    const tempRefElement = getElementDOMRef(toggleElement);
+    recalculatePlacement?.();
+  }, [activePath, inputValue, recalculatePlacement]);
 
-    // Check if the element is in the DOM or invisible
-    if (tempRefElement && tempRefElement.offsetParent === null) {
-      return;
+  // Reset submenu navigation when the flyout closes (e.g. when FlyoutContainer closes it because its toggle scrolled out of view) so it reopens at the root level.
+  useEffect(() => {
+    if (!isFlyoutOpen) {
+      setActivePath([]);
     }
-
-    const calculateAndMaybeSetPosition = () => {
-      const refEl = getElementDOMRef(toggleElement);
-      const app = getAppRect(getLocalRoot());
-      // Keep max height in sync with the exact app rect used for positioning
-      setMaxHeightValue(app.height - horizontalHeadersUsedHeight);
-      const next = { x: position.x, y: position.y };
-
-      if (toggleElement && refEl) {
-        const { x, y } = getFlyoutPositionOnElement(toggleElement, flyoutRef);
-        next.x = x;
-        next.y = y;
-      }
-
-      const flyoutRect = flyoutRef.current?.getBoundingClientRect();
-      if (flyoutRect && app) {
-        const PADDING = 5;
-        const maxX = app.width - flyoutRect.width - PADDING;
-        const maxY = app.height - flyoutRect.height - PADDING;
-        if (next.x > maxX) {
-          next.x = maxX;
-        }
-        if (next.y > maxY) {
-          next.y = maxY;
-        }
-        if (next.x < PADDING) {
-          next.x = PADDING;
-        }
-        if (next.y < PADDING) {
-          next.y = PADDING;
-        }
-      }
-
-      setCorrectedPosition((prev) => {
-        if (!prev || prev.x !== next.x || prev.y !== next.y) {
-          return next;
-        }
-        return prev;
-      });
-    };
-
-    // Run once now and once on the next frame to catch late layout
-    if (flyoutRef.current) {
-      calculateAndMaybeSetPosition();
-      requestAnimationFrame(calculateAndMaybeSetPosition);
-    }
-
-    let resizeObserver;
-
-    if (typeof ResizeObserver !== 'undefined' && flyoutRef.current) {
-      resizeObserver = new ResizeObserver(() => {
-        calculateAndMaybeSetPosition();
-      });
-      resizeObserver.observe(flyoutRef.current);
-    }
-
-    // Reposition the flyout when something inside the WebViewer scrolls (e.g. Notes Panel scrolling through comments)
-    const localRoot = getLocalRoot();
-    const onScroll = (e) => {
-      const target = e.target;
-      // Ignore the flyout's own overflow menu scrolling itself
-      if (target?.nodeType === 1 && flyoutRef.current?.contains(target)) {
-        return;
-      }
-      // Close the flyout if the toggle button has scrolled out of view of its scrolling ancestor (e.g. it scrolled behind the NotesPanelHeader)
-      const toggle = getElementDOMRef(toggleElement);
-      if (toggle && isToggleScrolledOutOfAncestor(toggle, target)) {
-        closeFlyout();
-        return;
-      }
-      calculateAndMaybeSetPosition();
-    };
-    localRoot?.addEventListener('scroll', onScroll, true);
-
-    return () => {
-      if (resizeObserver) {
-        resizeObserver.disconnect();
-      }
-      localRoot?.removeEventListener('scroll', onScroll, true);
-    };
-  }, [activePath, position, items, inputValue, isFlyoutOpen, toggleElement, closeFlyout]);
-
-  useLayoutEffect(() => {
-    const appRect = getAppRect(getLocalRoot());
-    const flyoutRect = flyoutRef.current?.getBoundingClientRect();
-    let isChildOverflowing = false;
-    const flyoutChildren = flyoutRef?.current?.firstChild?.children;
-    if (flyoutChildren) {
-      for (let child of flyoutChildren) {
-        if (child.getBoundingClientRect().bottom > flyoutRect.bottom) {
-          isChildOverflowing = true;
-          break;
-        }
-      }
-    }
-    setShouldOverflow(appRect && flyoutRect && appRect.height > 0 && (flyoutRect.height > appRect.height || isChildOverflowing));
-  }, [activePath, position, items]);
+  }, [isFlyoutOpen]);
 
   useEffect(() => {
-    if (flyoutRef.current) {
+    if (resolvedFlyoutRef.current) {
       const focusableElements = getFocusableElements();
       if (focusableElements.length) {
         focusableElements[0].focus({ preventScroll: true });
@@ -190,10 +86,10 @@ const Flyout = () => {
         setFocusableElements(focusableElements);
       }
     }
-  }, [activePath, flyoutRef.current]);
+  }, [activePath, resolvedFlyoutRef.current]);
 
   useEffect(() => {
-    if (flyoutRef.current) {
+    if (resolvedFlyoutRef.current) {
       // This is to handle cases where the flyout items can be disabled while interacting with them,
       // for example the Page Controls flyout items can be disabled when the user is on the first or last page.
       const newFocusableElements = getFocusableElements();
@@ -230,7 +126,7 @@ const Flyout = () => {
     [closeFlyout, toggleElement, isSignatureModalOpen],
   );
 
-  useOnClickOutside(flyoutRef, onClickOutside);
+  useOnClickOutside(resolvedFlyoutRef, onClickOutside);
 
   const onClickHandler = (flyoutItem, isChild, index) => (e) => {
     e.stopPropagation();
@@ -251,6 +147,7 @@ const Flyout = () => {
       const shouldCloseFlyoutCases = dataElement !== DataElements.VIEW_CONTROLS_FLYOUT &&
         flyoutItem.type !== ITEM_TYPE.PAGE_NAVIGATION_BUTTON &&
         flyoutItem.dataElement !== DataElements.OFFICE_EDITOR_FLYOUT_COLOR_PICKER &&
+        flyoutItem.dataElement !== DataElements.OFFICE_EDITOR_FLYOUT_HIGHLIGHT_COLOR_PICKER &&
         flyoutItem.buttonType !== PRESET_BUTTON_TYPES.OE_COLOR_PICKER;
 
       if (!flyoutItem.children && shouldCloseFlyoutCases) {
@@ -377,55 +274,41 @@ const Flyout = () => {
     });
   };
 
-  const onSwipeDown = () => {
-    if (isMobile) {
-      closeFlyout();
-    }
-  };
-
-  const flyoutStyles = {
-    left: correctedPosition.x,
-    top: correctedPosition.y,
-    maxHeight: maxHeightValue - 10, // Subtracting 10px for some padding
-  };
-
   if (!activeItem && !itemsToRender.length) {
     return null;
   }
 
-  return (
-    isFlyoutOpen &&
-    <Swipeable onSwipedDown={onSwipeDown} trackMouse preventDefaultTouchmoveEvent>
-      <div
-        className={classNames({
-          'Flyout': true,
-          'mobile': shouldUseMobileFlyout,
-        })}
-        data-element={dataElement}
-        ref={flyoutRef}
-        css={isMobile ? undefined : flyoutStyles}
-      >
-        {shouldUseMobileFlyout && <div className="swipe-indicator" />}
-        <menu
-          id='FlyoutContainer'
-          className={classNames({
-            FlyoutContainer: true,
-            [className]: true,
-            'overflow': shouldOverflow,
-          })}
-        >
-          {activeItem ? (
-            <>
-              {renderBackButton()}
-              {renderItems(activeChildren, true)}
-            </>
-          ) : (
-            renderItems(itemsToRender)
-          )}
-        </menu>
-      </div>
-    </Swipeable>
+  const menuRef = flyoutRef ? undefined : resolvedFlyoutRef;
+
+  return isFlyoutOpen && (
+    <menu
+      id='FlyoutContainer'
+      ref={menuRef}
+      className={classNames({
+        FlyoutContainer: true,
+        [className]: true,
+        'overflow': shouldOverflow,
+      })}
+    >
+      {activeItem ? (
+        <>
+          {renderBackButton()}
+          {renderItems(activeChildren, true)}
+        </>
+      ) : (
+        renderItems(itemsToRender)
+      )}
+    </menu>
   );
+};
+
+Flyout.propTypes = {
+  flyoutRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
+  shouldOverflow: PropTypes.bool,
+  recalculatePlacement: PropTypes.func,
 };
 
 export default Flyout;

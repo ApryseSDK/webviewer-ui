@@ -161,4 +161,49 @@ describe('NotesPanelHeader', () => {
       expect(element.getAttribute('aria-pressed')).toBe('false');
     });
   });
+
+  describe('in spreadsheet editor mode', () => {
+    const spreadsheetState = {
+      ...initialState,
+      viewer: {
+        ...initialState.viewer,
+        isSpreadsheetEditorModeEnabled: true,
+      },
+    };
+
+    it('should not render sort, filter, or multiselect controls', () => {
+      const store = configureStore({ reducer: () => spreadsheetState });
+      render(
+        <Provider store={store}>
+          <NotesPanelHeader
+            notes={[]}
+            isMultiSelectEnabled={true}
+            disableFilterAnnotation={false}
+            setSearchInputHandler={noop}
+          />
+        </Provider>
+      );
+
+      expect(screen.queryByText('Sort:')).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Filter' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Select Multiple' })).not.toBeInTheDocument();
+    });
+
+    it('should still render search input and comment counter', () => {
+      const store = configureStore({ reducer: () => spreadsheetState });
+      render(
+        <Provider store={store}>
+          <NotesPanelHeader
+            notes={[]}
+            isMultiSelectEnabled={true}
+            disableFilterAnnotation={false}
+            setSearchInputHandler={noop}
+          />
+        </Provider>
+      );
+
+      screen.getByLabelText('Search comments');
+      screen.getByText('Comments (0)');
+    });
+  });
 });

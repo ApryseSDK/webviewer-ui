@@ -27,6 +27,7 @@ import ToggleAccessibilityMode from './buttons/ToggleAccessibilityMode';
 import OfficeEditorInsertImageButton from '../OfficeEditor/OfficeEditorInsertImageButton';
 import IndentButton from './buttons/OfficeEditor/IndentButton';
 import ColorPickerButton from './buttons/OfficeEditor/ColorPickerButton';
+import HighlightColorPickerButton from './buttons/OfficeEditor/HighlightColorPickerButton';
 import NonPrintingCharactersToggleButton from './buttons/OfficeEditor/NonPrintingCharactersToggleButton';
 import CompareButton from './buttons/Compare';
 import NewSpreadsheetButton from './buttons/NewSpreadsheet';
@@ -113,6 +114,8 @@ const PresetButton = forwardRef((props, ref) => {
             return <AlignmentButtonContainer {...props} alignment={JUSTIFICATION_OPTIONS.Right} ref={ref} />;
           case PRESET_BUTTON_TYPES.JUSTIFY_BOTH:
             return <AlignmentButtonContainer {...props} alignment={JUSTIFICATION_OPTIONS.Both} ref={ref} />;
+          case PRESET_BUTTON_TYPES.OE_HIGHLIGHT_COLOR_PICKER:
+            return <HighlightColorPickerButton {...props} ref={ref} />;
           case PRESET_BUTTON_TYPES.OE_COLOR_PICKER:
             return <ColorPickerButton {...props} ref={ref} />;
           case PRESET_BUTTON_TYPES.INSERT_IMAGE:

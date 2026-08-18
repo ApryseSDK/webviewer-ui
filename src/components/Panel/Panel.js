@@ -29,6 +29,7 @@ const DesktopPanel = ({ children }) => {
   const activeTopHeaders = useSelector(selectors.getActiveTopHeaders);
   const activeBottomHeaders = useSelector(selectors.getActiveBottomHeaders);
   const isMultiTabActive = useSelector(selectors.getIsMultiTab);
+  const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const dispatch = useDispatch();
   const isRightToLeft = useIsRTL();
 
@@ -78,6 +79,7 @@ const DesktopPanel = ({ children }) => {
         'modular-ui-panel': true,
         'multi-tab-active': isMultiTabActive,
         'right-to-left': isRightToLeft,
+        'spreadsheet-editor': isSpreadsheetEditorMode,
       })}
       tabIndex="-1"
       data-element={dataElement}

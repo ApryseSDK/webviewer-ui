@@ -48,10 +48,15 @@ const { checkTypes, TYPES } = window.Core;
 const disabledElements = [];
 const enabledElements = new Set();
 
+const clearTrackedElements = () => {
+  disabledElements.length = 0;
+  enabledElements.clear();
+};
+
 const isElementDisabled = (element) => {
-  if (element.disabled) {
+  if (element.disabled === true) {
     disabledElements.push(element.dataElement);
-  } else {
+  } else if (element.disabled === false) {
     enabledElements.add(element.dataElement);
   }
 };
@@ -243,155 +248,163 @@ const handleDisabledAndEnabledElements = (store) => {
   const elementsToEnable = [];
 
   Object.keys(disabledElementsRedux).forEach((key) => {
+    // Elements are only tracked in enabledElements when imported with explicit
+    // disabled: false, so omitted disabled flags won't be force-enabled.
     if (disabledElementsRedux[key].disabled && enabledElements.has(key)) {
       elementsToEnable.push(key);
     }
   });
 
   store.dispatch(actions.enableElements(elementsToEnable, PRIORITY_THREE));
-  store.dispatch(actions.disableElements(disabledElements));
-  disabledElements.length = 0;
-  enabledElements.length = 0;
+  store.dispatch(actions.disableElements([...disabledElements], PRIORITY_THREE));
 };
 
 export default (store) => async (components, functions = {}) => {
-  store.dispatch(actions.resetModularUIState());
-  const componentsToValidate = cloneDeep(components);
-  checkTypes([componentsToValidate, functions], [TYPES.OBJECT({}), TYPES.OBJECT({})], 'UI.importModularComponents');
-  validateJSONStructure(componentsToValidate, functions);
-  const headersMap = componentsToValidate.modularHeaders || {};
-  const componentMap = componentsToValidate.modularComponents || {};
-  const panels = componentsToValidate.panels || {};
-  const flyouts = componentsToValidate.flyouts || {};
-  const popups = componentsToValidate.popups || { ...defaultPopups };
+  clearTrackedElements();
+  try {
+    store.dispatch(actions.resetModularUIState());
+    const componentsToValidate = cloneDeep(components);
+    checkTypes([componentsToValidate, functions], [TYPES.OBJECT({}), TYPES.OBJECT({})], 'UI.importModularComponents');
+    validateJSONStructure(componentsToValidate, functions);
+    const headersMap = componentsToValidate.modularHeaders || {};
+    const componentMap = componentsToValidate.modularComponents || {};
+    const panels = componentsToValidate.panels || {};
+    const flyouts = componentsToValidate.flyouts || {};
+    const popups = componentsToValidate.popups || { ...defaultPopups };
 
-  const panelList = Object.values(panels).map((panel) => panel);
+    const panelList = Object.values(panels).map((panel) => panel);
 
-  store.dispatch(actions.setModularComponentFunctions(functions));
-  handleDisabledAndEnabledElements(store);
+    store.dispatch(actions.setModularComponentFunctions(functions));
+    handleDisabledAndEnabledElements(store);
 
-  const getFunctionFromFunctionMap = (functionString) => {
-    const storedModularComponentFunctions = store.getState().viewer.modularComponentFunctions;
-    return storedModularComponentFunctions[functionString] || (() => { });
-  };
+    const getFunctionFromFunctionMap = (functionString) => {
+      const storedModularComponentFunctions = store.getState().viewer.modularComponentFunctions;
+      return storedModularComponentFunctions[functionString] || (() => { });
+    };
 
 
-  // Import popups and bind functions
-  const fnMap = store.getState().viewer.modularComponentFunctions || {};
-  const getFn = (key) => fnMap[key];
-  const bindFunctionProps = (item, popupKey) => {
-    if (!item || typeof item !== 'object') {
-      return item;
-    }
-    const out = { ...item };
+    // Import popups and bind functions
+    const fnMap = store.getState().viewer.modularComponentFunctions || {};
+    const getFn = (key) => fnMap[key];
+    const bindFunctionProps = (item, popupKey) => {
+      if (!item || typeof item !== 'object') {
+        return item;
+      }
+      const out = { ...item };
 
-    for (const prop of ['onClick', 'render']) {
-      const val = out[prop];
-      if (typeof val === 'string') {
-        const fn = getFn(val);
-        if (typeof fn !== 'function') {
-          console.warn(
-            `importModularComponents: Missing function '${val}' for prop '${prop}' on popup item '${out.dataElement}' in popup '${popupKey}'. Provide it in the functionMap.`
-          );
-          // set a no-op function to avoid errors
-          out[prop] = () => { };
-        } else {
-          out[prop] = fn;
+      for (const prop of ['onClick', 'render']) {
+        const val = out[prop];
+        if (typeof val === 'string') {
+          const fn = getFn(val);
+          if (typeof fn !== 'function') {
+            console.warn(
+              `importModularComponents: Missing function '${val}' for prop '${prop}' on popup item '${out.dataElement}' in popup '${popupKey}'. Provide it in the functionMap.`
+            );
+            // set a no-op function to avoid errors
+            out[prop] = () => { };
+          } else {
+            out[prop] = fn;
+          }
         }
       }
+
+      return out;
+    };
+
+    for (const [popupKey, items] of Object.entries(popups)) {
+      const mapped = (items || []).map((item) => bindFunctionProps(item, popupKey));
+      store.dispatch(actions.setPopupItems(popupKey, mapped));
     }
 
-    return out;
-  };
-
-  for (const [popupKey, items] of Object.entries(popups)) {
-    const mapped = (items || []).map((item) => bindFunctionProps(item, popupKey));
-    store.dispatch(actions.setPopupItems(popupKey, mapped));
-  }
-
-  Object.values(componentMap).forEach((component) => {
-    if (component.type === ITEM_TYPE.BUTTON) {
-      component.onClick = getFunctionFromFunctionMap(component.onClick);
-    }
-    if (component.type === ITEM_TYPE.STATEFUL_BUTTON) {
-      for (const key in component.states) {
-        const state = component.states[key];
-        if (state.onClick) {
-          state.onClick = getFunctionFromFunctionMap(state.onClick);
+    Object.values(componentMap).forEach((component) => {
+      if (component.type === ITEM_TYPE.BUTTON) {
+        component.onClick = getFunctionFromFunctionMap(component.onClick);
+      }
+      if (component.type === ITEM_TYPE.STATEFUL_BUTTON) {
+        for (const key in component.states) {
+          const state = component.states[key];
+          if (state.onClick) {
+            state.onClick = getFunctionFromFunctionMap(state.onClick);
+          }
         }
+        component.mount = getFunctionFromFunctionMap(component.mount);
+        component.unmount = getFunctionFromFunctionMap(component.unmount);
       }
-      component.mount = getFunctionFromFunctionMap(component.mount);
-      component.unmount = getFunctionFromFunctionMap(component.unmount);
-    }
-    if (component.type === ITEM_TYPE.CUSTOM_ELEMENT) {
-      component.render = getFunctionFromFunctionMap(component.render);
-    }
-  });
-
-  store.dispatch(actions.setModularHeadersAndComponents(headersMap, componentMap));
-  setPanels(store)(panelList);
-
-  // keep prebuilt flyouts
-  const allFlyouts = store.getState().viewer.flyoutMap;
-  const prebuiltFlyouts = {};
-  Object.keys(allFlyouts).forEach((key) => {
-    const flyoutClassName = allFlyouts[key].className;
-    if (flyoutClassName && PREBUILT_FLYOUTS.includes(flyoutClassName)) {
-      prebuiltFlyouts[key] = allFlyouts[key];
-    }
-  });
-
-  // clear out existing flyouts
-  store.dispatch(actions.setFlyouts({}));
-
-  const mapItems = (items) => {
-    return items.map((item) => {
-      if (item === ITEM_TYPE.DIVIDER) {
-        return ITEM_TYPE.DIVIDER;
+      if (component.type === ITEM_TYPE.CUSTOM_ELEMENT) {
+        component.render = getFunctionFromFunctionMap(component.render);
       }
-      // Handle object items (like those with render property)
-      if (typeof item === 'object' && item.dataElement) {
-        const processedItem = { ...item };
-        if (item.render) {
-          const isRenderTypeUnavailable = !Object.values(ITEM_RENDER_PREFIXES).includes(item.render);
+    });
+
+    store.dispatch(actions.setModularHeadersAndComponents(headersMap, componentMap));
+    setPanels(store)(panelList);
+
+    // keep prebuilt flyouts
+    const allFlyouts = store.getState().viewer.flyoutMap;
+    const prebuiltFlyouts = {};
+    Object.keys(allFlyouts).forEach((key) => {
+      const flyoutClassName = allFlyouts[key].className;
+      if (flyoutClassName && PREBUILT_FLYOUTS.includes(flyoutClassName)) {
+        prebuiltFlyouts[key] = allFlyouts[key];
+      }
+    });
+
+    // clear out existing flyouts
+    store.dispatch(actions.setFlyouts({}));
+
+    const mapItems = (items) => {
+      return items.map((item) => {
+        if (item === ITEM_TYPE.DIVIDER) {
+          return ITEM_TYPE.DIVIDER;
+        }
+
+        // Resolve string references to their component definition
+        if (typeof item === 'string') {
+          item = componentMap[item];
+        }
+
+        // Handle object items (like those with render property)
+        if (typeof item === 'object' && item.dataElement) {
+          const processedItem = { ...item };
+
+          const isRenderTypeUnavailable = item.render && !Object.values(ITEM_RENDER_PREFIXES).includes(item.render);
           if (isRenderTypeUnavailable) {
             console.warn(`Unknown render type: ${item.render} for item ${item.dataElement}`);
           }
+
+          if (item.onClick) {
+            processedItem.onClick = getFunctionFromFunctionMap(item.onClick);
+          }
+          if (item.children) {
+            processedItem.children = mapItems(item.children);
+          }
+          return processedItem;
         }
-        if (item.onClick) {
-          processedItem.onClick = getFunctionFromFunctionMap(item.onClick);
-        }
+
         if (item.children) {
-          processedItem.children = mapItems(item.children);
+          return { ...item, children: mapItems(item.children) };
         }
-        return processedItem;
-      }
-      // Handle string items (references to components)
-      if (typeof item === 'string') {
-        item = componentMap[item];
-      }
-      if (item.children) {
-        return { ...item, children: mapItems(item.children) };
-      }
-      return item;
+        return item;
+      });
+    };
+
+    // Add normalized flyouts
+    Object.values(flyouts).forEach((flyout) => {
+      const flyoutWithMappedItems = { ...flyout, items: mapItems(flyout.items) };
+      store.dispatch(actions.addFlyout(flyoutWithMappedItems));
     });
-  };
 
-  // Add normalized flyouts
-  Object.values(flyouts).forEach((flyout) => {
-    const flyoutWithMappedItems = { ...flyout, items: mapItems(flyout.items) };
-    store.dispatch(actions.addFlyout(flyoutWithMappedItems));
-  });
+    // add prebuilt flyouts
+    Object.values(prebuiltFlyouts).forEach((flyout) => {
+      store.dispatch(actions.addFlyout(flyout));
+    });
 
-  // add prebuilt flyouts
-  Object.values(prebuiltFlyouts).forEach((flyout) => {
-    store.dispatch(actions.addFlyout(flyout));
-  });
+    // Ensure ViewControls flyout is created for compatibility with older config files
+    if (!selectors.getFlyout(store.getState(), DataElements.VIEW_CONTROLS_FLYOUT)) {
+      store.dispatch(actions.addFlyout(defaultFlyoutMap[DataElements.VIEW_CONTROLS_FLYOUT]));
+    }
 
-  // Ensure ViewControls flyout is created for compatibility with older config files
-  if (!selectors.getFlyout(store.getState(), DataElements.VIEW_CONTROLS_FLYOUT)) {
-    store.dispatch(actions.addFlyout(defaultFlyoutMap[DataElements.VIEW_CONTROLS_FLYOUT]));
+    fireEvent(Events['MODULAR_UI_IMPORTED'], components);
+  } finally {
+    clearTrackedElements();
   }
-
-  fireEvent(Events['MODULAR_UI_IMPORTED'], components);
 };

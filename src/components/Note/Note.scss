@@ -30,6 +30,15 @@
     pointer-events: none;
   }
 
+  .spreadsheet-cell-location {
+    padding-top: 12px;
+    padding-bottom: 0;
+    padding-inline-start: 12px;
+    font-size: 12px;
+    color: var(--sub-text);
+    font-weight: 500;
+  }
+
   .note-button {
     position: absolute;
     width: 100%;
@@ -148,4 +157,8 @@
   &:focus-visible {
     outline: var(--focus-visible-outline);
   }
+}
+
+.InlineCommentingPopup .Note .note-button {
+  display: none;
 }

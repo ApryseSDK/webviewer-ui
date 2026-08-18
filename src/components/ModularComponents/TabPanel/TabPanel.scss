@@ -30,6 +30,10 @@
 .TabPanelHeader {
   margin: 0 0 16px 0;
 
+  &.layoutPending {
+    visibility: hidden;
+  }
+
   .TabPanelHeaderElements {
     display: flex;
     flex: 1;

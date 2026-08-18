@@ -1,3 +1,52 @@
+import outlineUtils from 'helpers/OutlineUtils';
+
+/**
+ * Resolves an outline's expanded state, allowing an explicit user choice to override the panel default.
+ * @param {Object} outlineState The persisted UI state for an outline
+ * @param {boolean} shouldAutoExpandOutlines Whether outlines should be expanded by default
+ * @returns {boolean} Whether the outline is expanded
+ * @ignore
+ */
+export const isOutlineExpanded = (outlineState, shouldAutoExpandOutlines = false) => {
+  return outlineState?.isExpanded ?? shouldAutoExpandOutlines;
+};
+
+/**
+ * Flattens the currently visible portion of an outline tree for rendering in a single virtualized list.
+ * @param {Array} outlines The root outlines
+ * @param {Object} outlinesStateMap The outline UI state keyed by outline path
+ * @param {boolean} shouldAutoExpandOutlines Whether all outline branches should be expanded
+ * @returns {Array<{outline: Object, nestingLevel: number}>} The visible outlines in tree order
+ * @ignore
+ */
+export const getVisibleOutlines = (outlines, outlinesStateMap = {}, shouldAutoExpandOutlines = false) => {
+  if (!Array.isArray(outlines)) {
+    return [];
+  }
+
+  const visibleOutlines = [];
+  const pendingOutlines = outlines.map((outline) => ({ outline, nestingLevel: 0 })).reverse();
+
+  while (pendingOutlines.length) {
+    const visibleOutline = pendingOutlines.pop();
+    const { outline, nestingLevel } = visibleOutline;
+    visibleOutlines.push(visibleOutline);
+
+    const outlinePath = outlineUtils.getPath(outline);
+    const isExpanded = isOutlineExpanded(outlinesStateMap[outlinePath], shouldAutoExpandOutlines);
+    if (isExpanded) {
+      const children = outline.getChildren();
+      if (Array.isArray(children)) {
+        for (let childIndex = children.length - 1; childIndex >= 0; childIndex--) {
+          pendingOutlines.push({ outline: children[childIndex], nestingLevel: nestingLevel + 1 });
+        }
+      }
+    }
+  }
+
+  return visibleOutlines;
+};
+
 /**
  * Gets the page width and height. If the page is rotated 90 or 270 degrees, the width and height are swapped.
  * @param {*} doc The document (Core.Document)

@@ -223,7 +223,18 @@ const renderOfficeEditorCommentPanelStory = ({
   return renderStoryWithPanel({ store: officeEditorStore });
 };
 export function OEEmptyReviewPanel() {
-  const state = { ...initialState };
+  const state = {
+    ...initialState,
+    // This story's reducer just returns a fixed state (no combineReducers fallback),
+    // and NotesPanel unconditionally reads state.spreadsheetEditor.cellProperties via
+    // useSelector even when isSpreadsheetEditorMode is false, so this must be defined.
+    spreadsheetEditor: {
+      cellProperties: {
+        topLeftRow: null,
+        topLeftColumn: null,
+      },
+    },
+  };
   const store = configureStore({
     reducer: () => state,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),

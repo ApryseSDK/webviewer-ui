@@ -9,7 +9,22 @@ import DataElements from 'constants/dataElement';
 import { VIEWER_CONFIGURATIONS, VALID_DOCX_EXTENSIONS, VALID_SPREADSHEET_EXTENSIONS } from 'constants/customizationVariables';
 import { SpreadsheetEditorEditMode } from 'src/constants/spreadsheetEditor';
 
-export default (dispatch, src, options = {}, documentViewerKey = 1) => {
+const resolveDocumentViewerId = (documentViewerKey, documentViewerId) => {
+  if (documentViewerId !== undefined && documentViewerId !== null && documentViewerId !== '') {
+    return `${documentViewerId}`;
+  }
+
+  if (typeof core.getDocumentViewer !== 'function') {
+    return '';
+  }
+
+  const documentViewer = core.getDocumentViewer(documentViewerKey);
+  const resolvedId = documentViewer?.getID?.() || documentViewer?.id;
+  return resolvedId ? `${resolvedId}` : '';
+};
+
+export default (dispatch, src, options = {}, documentViewerKey = 1, documentViewerId = '') => {
+  const targetDocumentViewerId = resolveDocumentViewerId(documentViewerKey, documentViewerId);
   options = { ...getDefaultOptions(), ...options };
 
   const normalizedSpreadsheetInitialEditMode = normalizeInitialEditMode(
@@ -39,11 +54,11 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   if ('onError' in options) {
     const userDefinedOnErrorCallback = options.onError;
     options.onError = function(error) {
-      fireError(error);
+      fireError(error, targetDocumentViewerId);
       userDefinedOnErrorCallback(error);
     };
   } else {
-    options.onError = fireError;
+    options.onError = (error) => fireError(error, targetDocumentViewerId);
   }
 
   dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));

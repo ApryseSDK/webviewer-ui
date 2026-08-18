@@ -21,12 +21,13 @@ const CreatableDropdown = ({
 
   const customStyles = {
     control: (provided, state) => {
+      const borderColor = state.isFocused ? 'var(--blue-5)' : 'var(--gray-6)';
       return {
         ...provided,
         minHeight: '28px',
         height: '36px',
         backgroundColor: 'var(--component-background)',
-        borderColor: state.selectProps.isValid ? 'hsl(0, 0%, 80%)' : 'hsl(28, 80%, 52%)',
+        borderColor: borderColor,
         boxShadow: null,
         '&:hover': null,
       };
@@ -50,8 +51,7 @@ const CreatableDropdown = ({
     }),
     indicatorsContainer: (provided) => ({
       ...provided,
-      paddingRight: '6px',
-      height: '26px',
+      padding: '6px',
     }),
   };
 

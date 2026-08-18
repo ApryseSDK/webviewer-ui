@@ -58,12 +58,19 @@ const TextStylePicker = ({
    * @returns {string}
    */
   const getFontSize = (properties) => {
-    let defaultFontSize = isFreeTextAutoSize || properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
-    defaultFontSize = typeof defaultFontSize === 'number' ? `${defaultFontSize}pt` : defaultFontSize;
-
     if (isRichTextEditMode) {
       return properties.quillFontSize;
     }
+
+    if (properties?.isFontSizeMixed && !isFreeTextAutoSize) {
+      // Multiple distinct sizes are present (mixed state) and the annotation isn't auto-sizing,
+      // so there's no single size to display.
+      return undefined;
+    }
+
+    let defaultFontSize = isFreeTextAutoSize || properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
+    defaultFontSize = typeof defaultFontSize === 'number' ? `${defaultFontSize}pt` : defaultFontSize;
+
     return defaultFontSize || undefined;
   };
 
@@ -141,6 +148,11 @@ const TextStylePicker = ({
   const [error, setError] = useState('');
   const fontSizeProps = parseFontSize(fontSize);
   const fontSizePropsToUpdate = (fontSizeProps && parseFloat(fontSizeProps[0])) || undefined;
+  // isFontSizeMixed is an explicit flag set by useStylePanel when multiple distinct font sizes
+  // are detected in the selected text/annotations, distinct from FontSize simply not being
+  // provided at all (e.g. no annotation/tool data yet), which should still fall back to the
+  // default size.
+  const isMixedFontSize = !isRichTextEditMode && !isFreeTextAutoSize && !!properties?.isFontSizeMixed;
 
   const defaultConfig = {
     quillFont: {
@@ -239,7 +251,7 @@ const TextStylePicker = ({
         onError={setError}
         applyOnlyOnBlur={isContentEditing}
         disabled={isFreeTextAutoSize || isDisabled}
-        displayEmpty={isRichTextEditMode && !properties?.quillFontSize || fontSizePropsToUpdate === undefined}
+        displayEmpty={(isRichTextEditMode && !properties?.quillFontSize) || isMixedFontSize}
         disableFocusing={true}
       />);
   };

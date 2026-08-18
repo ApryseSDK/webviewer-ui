@@ -202,6 +202,55 @@ describe('OutlinesPanel basic tests', () => {
     );
     errorSpy.mockRestore();
   });
+
+  it('renders children of expanded outlines while keeping collapsed descendants hidden', async () => {
+    const expandedStore = configureStore({
+      reducer: rootReducer(),
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
+    });
+    const outlines = createOutlines([{
+      name: 'Root',
+      children: [{
+        name: 'Child',
+        children: [{ name: 'Grandchild', children: [] }],
+      }],
+    }]);
+    expandedStore.dispatch(actions.setOutlines(outlines, 1));
+    expandedStore.dispatch(actions.setOutlinesStateMap('0', { isExpanded: true }, 1));
+
+    render(
+      <Provider store={expandedStore}>
+        <OutlinesPanel isTest />
+      </Provider>
+    );
+
+    expect(await screen.findByRole('button', { name: 'Root' })).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Child' })).toBeVisible();
+    expect(screen.queryByRole('button', { name: 'Grandchild' })).not.toBeInTheDocument();
+  });
+
+  it('respects an explicitly collapsed outline when auto-expand is enabled', async () => {
+    const autoExpandStore = configureStore({
+      reducer: rootReducer(),
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
+    });
+    const outlines = createOutlines([{
+      name: 'Root',
+      children: [{ name: 'Child', children: [] }],
+    }]);
+    autoExpandStore.dispatch(actions.setOutlines(outlines, 1));
+    autoExpandStore.dispatch(actions.setAutoExpandOutlines(true));
+    autoExpandStore.dispatch(actions.setOutlinesStateMap('0', { isExpanded: false }, 1));
+
+    render(
+      <Provider store={autoExpandStore}>
+        <OutlinesPanel isTest />
+      </Provider>
+    );
+
+    expect(await screen.findByRole('button', { name: 'Expand Root' })).toBeVisible();
+    expect(screen.queryByRole('button', { name: 'Child' })).not.toBeInTheDocument();
+  });
 });
 
 describe('OutlinesPanel in MultiViewer mode', () => {

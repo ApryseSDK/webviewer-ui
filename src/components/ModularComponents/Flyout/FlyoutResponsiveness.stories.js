@@ -1,5 +1,5 @@
 import { userEvent, within, expect } from 'storybook/test';
-import Flyout from './Flyout';
+import Flyout from '../FlyoutContainer';
 import { createMockAppTemplate } from '../AppStories/helpers/appResponsivenessHelpers';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 

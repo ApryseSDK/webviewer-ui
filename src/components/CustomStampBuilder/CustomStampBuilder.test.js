@@ -1,41 +1,41 @@
-import CustomStampForums from 'components/CreateStampModal/CustomStampForums';
+import CustomStampBuilder from 'src/components/CustomStampBuilder/CustomStampBuilder';
 import CreateStampModal from 'components/CreateStampModal/CreateStampModal';
 import { render, fireEvent, screen } from '@testing-library/react';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-
-const ModalBodyWithI18n = withProviders(CustomStampForums);
 
 const noop = () => { };
 
+const fonts = [
+  'Arial',
+  'Times New Roman',
+];
+
+const dateTimeFormats = [
+  {
+    date: 'DD/MM/YYYY',
+    time: 'h:mm A',
+    timeFirst: false,
+  },
+  {
+    date: 'DD/MM/YYYY',
+    time: 'HH:mm',
+    timeFirst: false,
+  }
+];
+
 const props = {
-  dateTimeFormats: [
-    {
-      date: 'DD/MM/YYYY',
-      time: 'h:mm A',
-      timeFirst: false,
-    },
-    {
-      date: 'DD/MM/YYYY',
-      time: 'HH:mm',
-      timeFirst: false,
-    }
-  ],
-  fonts: [
-    'Arial',
-    'Times New Roman',
-  ],
+  dateTimeFormats: dateTimeFormats,
+  fonts: fonts,
   getCustomColorAndRemove: noop,
   openColorPicker: noop,
   openDeleteModal: noop,
   setEmptyInput: noop,
-  setState: noop,
+  setStamp: noop,
   stampTool: {
     drawCustomStamp: noop,
   },
   /* eslint-disable custom/no-hex-colors */
-  state: {
+  stamp: {
     bold: true,
     color: '#2A85D0',
     dataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=',
@@ -64,30 +64,19 @@ const initialState = {
     openElements: {
       customStampModal: true
     },
+    fonts: fonts,
+    dateTimeFormats: dateTimeFormats,
   },
   stampTool: {
     drawCustomStamp: noop,
   },
+  featureFlags: {
+    newStampPanel: true,
+  },
 };
 
-function rootReducer(state = initialState) {
-  return state;
-}
-
-// Apply the thunk middleware
-const store = configureStore({ reducer: rootReducer });
-
-function withMockRedux(Component) {
-  return function WithMockReduxWrapper(props) {
-    return (
-      <Provider store={store}>
-        <Component {...props} />
-      </Provider>
-    );
-  };
-}
-
-const ModalCustomStamp = withMockRedux(CreateStampModal);
+const ModalBodyWithI18n = withProviders(CustomStampBuilder, initialState);
+const ModalCustomStamp = withProviders(CreateStampModal, initialState);
 const mockCustomStampTool = {
   drawCustomStamp: () => 0
 };
@@ -107,27 +96,27 @@ describe('Custom Stamp Modal Body Tests', () => {
     // Correctly adds a alt text to the image
     screen.getByRole('img', { name: /Preview of Draft, Guest/ });
 
-    // should have two dropdowns, 1 input, 3 checkboxes
+    // should have 3 dropdowns, 1 input, 3 checkboxes
     const dropdowns = screen.getAllByRole('combobox');
-    expect(dropdowns.length).toBe(2);
+    expect(dropdowns).toHaveLength(3);
     const textInput = screen.getAllByRole('textbox');
-    expect(textInput.length).toBe(1);
+    expect(textInput).toHaveLength(1);
     const checkboxes = screen.getAllByRole('checkbox');
-    expect(checkboxes.length).toBe(3);
+    expect(checkboxes).toHaveLength(3);
   });
 
-  it('Should change state and call draw canvas', () => {
-    const setStateMock = jest.fn();
+  it('Should change stamp state', () => {
+    const setStampMock = jest.fn();
     const stampToolMock = {
       drawCustomStamp: jest.fn(),
     };
     const { container } = render(
       <ModalBodyWithI18n
-        {...props} setState={setStateMock} stampTool={stampToolMock}
+        {...props} setStamp={setStampMock} stampTool={stampToolMock}
       />
     );
-    // Fire interaction events and check if setState and drawCustomStamp are called
-    let expectedCalls = 1; // Calls 1 time on intial Render
+    // Fire interaction events and check if setStamp is called
+    let expectedCalls = 1; // Calls 1 time on initial Render
     const textInput = container.querySelector('input[type="text"]');
     fireEvent.change(textInput, { target: { value: 'test' } });
     expectedCalls++;
@@ -139,28 +128,57 @@ describe('Custom Stamp Modal Body Tests', () => {
       fireEvent.click(button);
       expectedCalls++;
     }
-    expect(setStateMock).toHaveBeenCalledTimes(expectedCalls);
+    expect(setStampMock).toHaveBeenCalledTimes(expectedCalls);
+  });
+
+
+  it('Should call draw canvas', () => {
+    const setStampMock = jest.fn();
+    const stampToolMock = {
+      drawCustomStamp: jest.fn(),
+    };
+    const { container } = render(
+      <ModalBodyWithI18n
+        {...props} setStamp={setStampMock} stampTool={stampToolMock}
+      />
+    );
+    // Fire interaction events and check if drawCustomStamp is called
+    let expectedCalls = 2; // Calls 1 time on initial Render and 1 more to update based on timestamp
+    const textInput = container.querySelector('input[type="text"]');
+    fireEvent.change(textInput, { target: { value: 'test' } });
+    expectedCalls++;
+    for (const checkbox of container.querySelectorAll('input[type="checkbox"]')) {
+      fireEvent.click(checkbox);
+      expectedCalls++;
+    }
+    for (const button of container.querySelectorAll('.Button')) {
+      fireEvent.click(button);
+      expectedCalls++;
+    }
     expect(stampToolMock.drawCustomStamp).toHaveBeenCalledTimes(expectedCalls);
   });
+
   it('should render correctly and create button has a role', async () => {
     render(<ModalCustomStamp />);
     const button = screen.getByRole('button', { name: 'Create' });
     expect(button).toBeInTheDocument();
   });
+
   it('Date Format should have a role and name', async () => {
     render(<ModalBodyWithI18n {...props} />);
     const input = screen.getByRole('button', { name: 'More info about date format' });
     expect(input).toBeInTheDocument();
     expect(input).toHaveAttribute('aria-label', 'More info about date format');
   });
+
   it('should have the subtitle as expected when updating timestamp text checkboxes', async () => {
-    const setStateMock = jest.fn();
+    const setStampMock = jest.fn();
     const stampToolMock = {
       drawCustomStamp: jest.fn(),
     };
     render(
       <ModalBodyWithI18n
-        {...props} setState={setStateMock} stampTool={stampToolMock}
+        {...props} setStamp={setStampMock} stampTool={stampToolMock}
       />
     );
     const usernameCheckbox = screen.getByRole('checkbox', { name: /Username/i });

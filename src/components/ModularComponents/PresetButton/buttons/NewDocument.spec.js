@@ -30,6 +30,7 @@ jest.mock('selectors', () => ({
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
   useSelector: (selector) => selector(mockState),
+  useStore: () => ({ getState: () => mockState, dispatch: mockDispatch, subscribe: () => () => {} }),
 }));
 
 

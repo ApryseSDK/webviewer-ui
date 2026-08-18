@@ -14,7 +14,7 @@ import Button from 'components/Button';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import Spinner from '../Spinner';
 import SearchOptionsFlyout from './SearchOptionsFlyout';
-import { getEndFacingChevronIcon, getStartFacingChevronIcon } from 'helpers/rightToLeft';
+import useDirectionalChevronIcons from 'hooks/useDirectionalChevronIcons';
 import { isOfficeEditorMode, isSpreadsheetEditorMode } from 'helpers/officeEditor';
 import './SearchOverlay.scss';
 import '../Button/Button.scss';
@@ -64,6 +64,7 @@ function SearchOverlay(props) {
   const dispatch = useDispatch();
   const isSearchInProgress = useSelector((state) => selectors.isSearchInProgress(state));
   const officeEditorIsReplaceInProgress = useSelector((state) => selectors.getOfficeEditorIsReplaceInProgress(state));
+  const { startChevronIcon, endChevronIcon } = useDirectionalChevronIcons(isSpreadsheetEditorModeEnabled);
 
   useEffect(() => {
     try {
@@ -117,10 +118,6 @@ function SearchOverlay(props) {
     if (searchValue && searchValue.length > 0) {
       setSearchStatus('SEARCH_IN_PROGRESS');
 
-      if (isOfficeEditorMode()) {
-        await core.getDocument().getOfficeEditor().updateSearchData();
-      }
-
       executeSearch(searchValue, {
         caseSensitive: isCaseSensitive,
         wholeWord: isWholeWord,
@@ -159,10 +156,10 @@ function SearchOverlay(props) {
   });
 
   const onPagesUpdated = (e) => {
-    const { searchValue, officeEditorIsReplaceInProgress } = searchParamsRef.current;
-    if (e.linearizedUpdate || officeEditorIsReplaceInProgress) {
+    if (e.linearizedUpdate || isOfficeEditorMode()) {
       return;
     }
+    const { searchValue } = searchParamsRef.current;
     search(searchValue);
   };
 
@@ -463,10 +460,10 @@ function SearchOverlay(props) {
         {numberOfResultsFound > 0 && (
           <div className="buttons">
             <button className="button" onClick={previousButtonOnClick} title={t('action.prevResult')} aria-label={t('action.prevResult')}>
-              <Icon className="arrow" glyph={getStartFacingChevronIcon(isSpreadsheetEditorModeEnabled)} />
+              <Icon className="arrow" glyph={startChevronIcon} />
             </button>
             <button className="button" onClick={nextButtonOnClick} title={t('action.nextResult')} aria-label={t('action.nextResult')}>
-              <Icon className="arrow" glyph={getEndFacingChevronIcon(isSpreadsheetEditorModeEnabled)} />
+              <Icon className="arrow" glyph={endChevronIcon} />
             </button>
           </div>
         )}

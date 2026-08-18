@@ -85,7 +85,20 @@ export const convertCursorToStylePreset = (cursorProperties) => {
   ) || defaultStylePreset;
 };
 
-export const convertCoreColorToWebViewerColor = (color) => {
+export const convertCoreHighlightColor = (color) => {
+  if (!color || color.a === 0) {
+    return null;
+  }
+
+  return new window.Core.Annotations.Color(
+    color.r,
+    color.g,
+    color.b,
+    color.a,
+  );
+};
+
+export const convertCoreTextColor = (color) => {
   if (!color) {
     return DEFAULT_COLOR;
   }

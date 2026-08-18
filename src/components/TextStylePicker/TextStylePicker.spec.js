@@ -73,6 +73,7 @@ describe('TextStylePicker Component', () => {
     expect(comboBox).toHaveTextContent('12');
     jest.useRealTimers();
   });
+
   it('should disable vertical alignment when isFreeTextAutoSize is true', () => {
     const props = {
       onPropertyChange: noop,
@@ -83,6 +84,7 @@ describe('TextStylePicker Component', () => {
     expect(screen.getByLabelText('Align top')).toBeDisabled();
     expect(screen.getByLabelText('Align middle')).toBeDisabled();
   });
+
   it('should only render the dropdown when isWidget is true', () => {
     const props = {
       onPropertyChange: noop,
@@ -95,5 +97,15 @@ describe('TextStylePicker Component', () => {
     expect(dropdown[0]).toBeInTheDocument();
     expect(inputs).toHaveLength(1);
     expect(inputs[0]).toBeInTheDocument();
+  });
+
+  it('should render a blank font size when the FontSize property is explicitly mixed (multiple distinct sizes)', () => {
+    const props = {
+      onPropertyChange: noop,
+      properties: { FontSize: undefined, isFontSizeMixed: true },
+    };
+    render(<TextStylePickerWithRedux {...props} />);
+    const comboBox = screen.getByRole('combobox', { name: 'Font Size' });
+    expect(comboBox).toHaveTextContent('');
   });
 });

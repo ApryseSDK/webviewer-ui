@@ -1,7 +1,7 @@
-import hotkeys from 'src/apis/hotkeys';
 import core from 'core';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
+import { getHotkeysManager } from 'helpers/hotkeysManager';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -9,6 +9,7 @@ import selectors from 'selectors';
 export default (enable, store) => (
   toolNames,
 ) => {
+  const hotkeysManager = getHotkeysManager(store);
   const map = {
     AnnotationCreateTextUnderline: 'textUnderlineToolButton',
     AnnotationCreateTextHighlight: 'textHighlightToolButton',
@@ -48,13 +49,13 @@ export default (enable, store) => (
 
   if (enable) {
     toolNameArray.forEach((toolName) => {
-      toolName && hotkeys.on(toolName);
+      toolName && hotkeysManager.on(toolName);
     });
 
     store.dispatch(actions.enableElements(dataElements, PRIORITY_TWO));
   } else {
     toolNameArray.forEach((toolName) => {
-      toolName && hotkeys.off(toolName);
+      toolName && hotkeysManager.off(toolName);
     });
 
     store.dispatch(actions.disableElements(dataElements, PRIORITY_TWO));

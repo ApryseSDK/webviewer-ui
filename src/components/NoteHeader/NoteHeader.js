@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import useCore from 'hooks/useCore';
 import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
 import { parseRecordId } from 'helpers/officeEditorCommentHelper';
+import { SPREADSHEET_THREAD_ID_KEY, SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import { OFFICE_EDITOR_TRACKED_CHANGE_KEY, OfficeEditorEditMode } from 'constants/officeEditor';
@@ -180,10 +181,13 @@ function NoteHeader(props) {
 
   const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
   const officeEditorEditMode = useSelector(selectors.getOfficeEditorEditMode);
+  const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const isOfficeEditorViewOnly = isOfficeEditorMode && (
     officeEditorEditMode === OfficeEditorEditMode.VIEW_ONLY ||
     officeEditorEditMode === OfficeEditorEditMode.PREVIEW
   );
+  const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
+  const isSpreadsheetEditorViewOnly = isSpreadsheetEditorMode && spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
 
   let date = getDateCreatedInTimezone(sortStrategy, notesShowLastUpdatedDate, annotation, timezone);
   const noteDateAndTime = date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate');
@@ -198,7 +202,12 @@ function NoteHeader(props) {
   if (color === '') {
     color = getColorFromTheme(activeTheme, color);
   }
-  const fillColor = getColor(annotation.FillColor);
+  let fillColor = getColor(annotation.FillColor);
+
+  const isSpreadsheetComment = !!annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY) && isSpreadsheetEditorMode;
+  if (isSpreadsheetComment) {
+    color = 'var(--icon-color)';
+  }
 
   const annotationAssociatedNumber = annotation.getAssociatedNumber();
   const annotationDisplayedAssociatedNumber = `#${annotationAssociatedNumber} - `;
@@ -215,8 +224,8 @@ function NoteHeader(props) {
     core.getTrackedChangeManager().rejectTrackedChange(trackedChangeId);
   };
 
-  const showNoteState = !isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange;
-  const showNotePopup = !isEditing && isSelected && !isMultiSelectMode && !isGroupMember && !isTrackedChange && !isOfficeEditorViewOnly;
+  const showNoteState = !isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange && !isSpreadsheetComment;
+  const showNotePopup = !isEditing && isSelected && !isMultiSelectMode && !isGroupMember && !isTrackedChange && !isOfficeEditorViewOnly && !isSpreadsheetEditorViewOnly;
   const flyoutId = flyoutIdSuffix ? `${annotation.Id}-${flyoutIdSuffix}` : annotation.Id;
 
   return (
@@ -226,7 +235,7 @@ function NoteHeader(props) {
           {isUnread &&
             <div className="unread-notification"></div>
           }
-          <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
+          <Icon className={classNames('type-icon', { 'spreadsheet-type-icon': isSpreadsheetComment })} glyph={icon} color={color} fillColor={fillColor} />
         </div>
       }
       <div className={authorAndDateClass}>

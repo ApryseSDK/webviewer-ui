@@ -1,5 +1,5 @@
-import React from 'react';
-import { getAnnotationPosition } from 'helpers/getPopupPosition';
+import React, { useState } from 'react';
+import { getAnnotationPosition, getContainingBlockDocOffset } from 'helpers/getPopupPosition';
 import useCore from 'hooks/useCore';
 
 import './FormFieldIndicator.scss';
@@ -7,15 +7,18 @@ import './FormFieldIndicator.scss';
 const INDICATOR_HEIGHT = 40;
 const INDICATOR_WIDTH = 100;
 const INDICATOR_PADDING = 20;
+
 const FormFieldIndicator = ({ annotation, parameters }) => {
   const { core } = useCore();
+  const [anchorNode, setAnchorNode] = useState(null);
   const { displayMode, viewerBoundingRect, appBoundingRect, scrollLeft, scrollTop } = parameters;
 
   const setIndicatorYPosition = (annotation) => {
     try {
       const { bottomRight: annotationBottomRight, topLeft: annotationTopLeft } = getAnnotationPosition(annotation);
       const annotHeightInPixels = annotationBottomRight.y - annotationTopLeft.y;
-      return annotationTopLeft.y + annotHeightInPixels / 2 - INDICATOR_HEIGHT / 2 - scrollTop;
+      const containingBlockTop = getContainingBlockDocOffset(anchorNode).top;
+      return annotationTopLeft.y + annotHeightInPixels / 2 - INDICATOR_HEIGHT / 2 - scrollTop - containingBlockTop;
     } catch (e) {
       return 0;
     }
@@ -57,6 +60,7 @@ const FormFieldIndicator = ({ annotation, parameters }) => {
 
   return (
     <div
+      ref={setAnchorNode}
       className={`formFieldIndicator ${isRightSidePage ? 'rightSidePage' : ''}`}
       css={{
         top: yOffset,

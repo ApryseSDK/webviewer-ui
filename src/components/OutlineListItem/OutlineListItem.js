@@ -15,6 +15,7 @@ import Outline from 'components/Outline';
  */
 const OutlineListItem = React.memo(({
   outline,
+  nestingLevel,
   setSelectedOutlines,
   moveOutlineInward,
   moveOutlineBeforeTarget,
@@ -39,6 +40,7 @@ const OutlineListItem = React.memo(({
   return (
     <Outline
       outline={outline}
+      nestingLevel={nestingLevel}
       setMultiSelected={handleSetMultiSelected}
       moveOutlineInward={moveOutlineInward}
       moveOutlineBeforeTarget={moveOutlineBeforeTarget}
@@ -49,6 +51,7 @@ const OutlineListItem = React.memo(({
 OutlineListItem.displayName = 'OutlineListItem';
 OutlineListItem.propTypes = {
   outline: Outline.propTypes.outline,
+  nestingLevel: PropTypes.number.isRequired,
   setSelectedOutlines: PropTypes.func.isRequired,
   moveOutlineInward: PropTypes.func.isRequired,
   moveOutlineBeforeTarget: PropTypes.func.isRequired,

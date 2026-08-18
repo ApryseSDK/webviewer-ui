@@ -1,13 +1,14 @@
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
-import hotkeysManager from 'helpers/hotkeysManager';
+import { getHotkeysManager } from 'helpers/hotkeysManager';
 import { getViewOnlyShortcuts as getShortcuts, setViewOnlyShortcuts, Shortcuts } from 'helpers/hotkeysUtils';
 
 const { checkTypes, TYPES } = window.Core;
 
 const toggleViewOnlyMode = (store, enable) => {
   const { dispatch } = store;
+  const hotkeysManager = getHotkeysManager(store);
   if (enable) {
     core.getFormFieldCreationManager().endFormFieldCreationMode();
     core.getContentEditManager().endContentEditMode();
@@ -121,6 +122,7 @@ export const updateViewOnlyWhitelist = (store) => (dataElements) => {
  *    });
  */
 export const updateViewOnlyShortcuts = (store) => (shortcuts) => {
+  const hotkeysManager = getHotkeysManager(store);
   checkTypes([shortcuts], [TYPES.ARRAY(TYPES.ONE_OF(Object.values(Shortcuts)))], 'UI.updateViewOnlyShortcuts');
   setViewOnlyShortcuts(shortcuts);
   const isViewOnly = selectors.isViewOnly(store.getState());

@@ -200,6 +200,11 @@ const defaultOfficeEditorModularComponents = {
     type: 'presetButton',
     buttonType: 'justifyBothButton'
   },
+  officeEditorHighlightColorPicker: {
+    dataElement: DataElements.OFFICE_EDITOR_FLYOUT_HIGHLIGHT_COLOR_PICKER,
+    type: 'presetButton',
+    buttonType: DataElements.OFFICE_EDITOR_FLYOUT_HIGHLIGHT_COLOR_PICKER,
+  },
   officeEditorColorPicker: {
     dataElement: DataElements.OFFICE_EDITOR_FLYOUT_COLOR_PICKER,
     type: 'presetButton',
@@ -386,6 +391,7 @@ const defaultOfficeEditorModularComponents = {
       'italicButton',
       'underlineButton',
       'strikeoutButton',
+      // 'officeEditorHighlightColorPicker',
       'divider-0.3',
       'officeEditorColorPicker',
       'divider-0.4',

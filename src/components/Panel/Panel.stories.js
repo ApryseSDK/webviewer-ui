@@ -73,7 +73,8 @@ export function PanelWithHeaders() {
       tabs: [],
       genericPanels: [],
       modularHeadersHeight: {
-        top: 49,
+        topHeaders: 49,
+        bottomHeaders: 45,
       },
       activeGroupedItems: [
         'annotateGroupedItems',

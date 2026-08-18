@@ -50,6 +50,25 @@ export const transparentIcon = (
     <line stroke="#d82e28" x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
+
+/**
+ * Returns a React component that renders a color swatch icon.
+ * @param {string} color - The color to be displayed in the swatch. It can be any valid CSS color value (e.g., hex, rgb, rgba).
+ * @returns {JSX.Element} A JSX Element representing the color swatch icon.
+ * @ignore
+ */
+export const getColorSwatchIcon = (color) => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="-15 -15 130 130"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <circle cx="50" cy="50" r="57" fill={color} stroke="var(--white-color-palette-border)" strokeWidth="7" />
+  </svg>
+);
+
 /* eslint-enable custom/no-hex-colors */
 
 export const getCustomColorAndRemove = (dispatch, store) => {

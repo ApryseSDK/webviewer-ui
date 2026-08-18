@@ -171,3 +171,40 @@ describe('AnnotationPopup in read-only mode', () => {
     });
   });
 });
+
+describe('AnnotationPopup form field button', () => {
+  const AnnotationPopupWithProviders = withProviders(AnnotationPopup);
+
+  const baseProps = {
+    isOpen: true,
+    isRightClickMenu: false,
+    isVisible: true,
+    focusedAnnotation: {
+      ToolName: '',
+      isContentEditPlaceholder: () => false,
+    },
+    position: { top: 0, left: 0 },
+    showCommentButton: false,
+    showEditStyleButton: false,
+    showLinkButton: false,
+    linkAnnotationToURL: jest.fn(),
+    showDeleteButton: false,
+    onDeleteAnnotation: jest.fn(),
+    showCalibrateButton: false,
+  };
+
+  it('calls onOpenFormField when the form field edit button is clicked', () => {
+    const onOpenFormField = jest.fn();
+
+    render(
+      <AnnotationPopupWithProviders
+        {...baseProps}
+        showFormFieldButton
+        onOpenFormField={onOpenFormField}
+      />
+    );
+
+    userEvent.click(screen.getByRole('button', { name: /edit form field/i }));
+    expect(onOpenFormField).toHaveBeenCalledTimes(1);
+  });
+});

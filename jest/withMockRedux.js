@@ -29,11 +29,14 @@ const defaultState = {
   document: {
     totalPages: { 1: 9, 2: 0 },
   },
+  spreadsheetEditor: {
+    editMode: 'viewOnly',
+  },
   featureFlags: {
   },
 };
 
-export default function withMockRedux(Component, mockInitialState ={ viewer: {}, search: {}, document: {} }) {
+export default function withMockRedux(Component, mockInitialState = { viewer: {}, search: {}, document: {}, user: {} }) {
   const initialState = {
     viewer: {
       ...defaultState.viewer,
@@ -59,6 +62,10 @@ export default function withMockRedux(Component, mockInitialState ={ viewer: {},
       ...defaultState.featureFlags,
       ...mockInitialState.featureFlags,
     },
+    user: {
+      ...defaultState.user,
+      ...mockInitialState.user,
+    }
   };
   return function WithMockReduxWrapper(props) {
     return (

@@ -100,7 +100,7 @@ const SignatureModal = () => {
       await signatureToolArray[i].setSignature(signatureToolArray[0].getFullSignatureAnnotation());
     }
 
-    const signatureTool = signatureToolArray[activeDocumentViewerKey - 1];
+    const signatureTool = core.getDocumentViewer(activeDocumentViewerKey).getTool('AnnotationCreateSignature');
 
     if (!(await signatureTool.isEmptySignature())) {
       core.setToolMode('AnnotationCreateSignature');
@@ -125,7 +125,7 @@ const SignatureModal = () => {
       await signatureToolArray[i].saveInitials(signatureToolArray[0].getInitialsAnnotation());
     }
 
-    const signatureTool = signatureToolArray[activeDocumentViewerKey - 1];
+    const signatureTool = core.getDocumentViewer(activeDocumentViewerKey).getTool('AnnotationCreateSignature');
     if (!(await signatureTool.isEmptyInitialsSignature())) {
       core.setToolMode('AnnotationCreateSignature');
 

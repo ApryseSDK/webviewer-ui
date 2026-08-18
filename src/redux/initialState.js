@@ -1,4 +1,7 @@
+/* global globalThis */
+
 import DataElements from 'constants/dataElement';
+import Theme from 'constants/theme';
 import { defaultZoomList } from 'constants/zoomFactors';
 import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
@@ -39,6 +42,21 @@ import { AUTO_SAVE_DEFAULT_TIMEOUT } from 'constants/autosave';
 const { ToolNames } = window.Core.Tools;
 const instanceId = getInstanceID();
 
+const getSessionTheme = () => {
+  try {
+    const currentInstanceId = getInstanceID();
+    const storedTheme = globalThis.sessionStorage.getItem(`${currentInstanceId}-activeTheme`);
+    return Object.values(Theme).includes(storedTheme) ? storedTheme : null;
+  } catch {
+    return null;
+  }
+};
+
+const themeParam = getHashParameters('theme', null);
+const initialTheme = Object.values(Theme).includes(themeParam)
+  ? themeParam
+  : (getSessionTheme() || Theme.LIGHT);
+
 export default {
   viewer: {
     uiConfiguration: VIEWER_CONFIGURATIONS.DEFAULT,
@@ -72,7 +90,7 @@ export default {
     thumbnailSelectingPages: false,
     isInDesktopOnlyMode: false,
     toolbarGroup: DataElements.ANNOTATE_TOOLBAR_GROUP,
-    activeTheme: 'light',
+    activeTheme: initialTheme,
     currentLanguage: getHashParameters('defaultLanguage', 'en'),
     disabledElements: {
       [DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON]: { disabled: true, priority: 2 },
@@ -1310,6 +1328,7 @@ export default {
       pageReplacementModal: 'urlInputPanelButton',
       linkModal: 'URLPanelButton',
       rubberStampTab: 'standardStampPanelButton',
+      rubberStampPanel: DataElements.RUBBER_STAMP_PANEL_PRESET_TAB,
       filterAnnotModal: DataElements.ANNOTATION_USER_FILTER_PANEL_BUTTON,
       [DataElements.SETTINGS_MODAL]: DataElements.SETTINGS_GENERAL_BUTTON,
       savedSignatures: DataElements.SAVED_SIGNATURES_PANEL_BUTTON,
@@ -1411,6 +1430,7 @@ export default {
     noteTransformFunction: null,
     standardStamps: [],
     customStamps: [],
+    customStampCategories: [],
     selectedStampIndex: 0,
     lastSelectedStampIndex: 0,
     signatureMode: SignatureModes.FULL_SIGNATURE,
@@ -1508,6 +1528,7 @@ export default {
     },
     toolDefaultStyleUpdateFromAnnotationPopupEnabled: true,
     annotationToolStyleSyncingEnabled: false,
+    viewportRelativeAnnotationPositioningEnabled: true,
     shortcutKeyMap: { ...ShortcutKeys },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: null,
@@ -1610,6 +1631,7 @@ export default {
   },
   featureFlags: {
     customizableUI: true,
+    newStampPanel: false,
   },
   officeEditor: {
     canUndo: false,

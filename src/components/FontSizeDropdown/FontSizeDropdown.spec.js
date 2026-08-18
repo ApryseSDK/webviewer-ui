@@ -31,7 +31,6 @@ describe('FontSizeDropdown component', () => {
     expect(comboBox).toHaveTextContent('12');
     userEvent.click(comboBox);
 
-
     //The input should have the same value as the combobox
     const input = screen.getAllByRole('combobox')[1];
     expect(input.value).toBe('12');
@@ -47,6 +46,7 @@ describe('FontSizeDropdown component', () => {
     // and our mock got called with 30pt as a string
     expect(mockOnFontSizeChange).toHaveBeenCalledWith('30pt');
   });
+
   it('Should render the correct amount of items', () => {
     const items = 5;
     render(<FontSizeDropdownWithProviders onFontSizeChange={noop} maxFontSize={items} incrementMap={{ 0: 1 }} />);
@@ -56,8 +56,8 @@ describe('FontSizeDropdown component', () => {
 
     const options = screen.getAllByRole('option');
     expect(options.length).toEqual(items);
-
   });
+
   it('Should account for increment map correctly', () => {
     render(<FontSizeDropdownWithProviders onFontSizeChange={noop} fontSize={1} maxFontSize={200} incrementMap={{ 0: 1, 10: 10, 100: 100 }} />);
 
@@ -66,5 +66,19 @@ describe('FontSizeDropdown component', () => {
 
     const options = screen.getAllByRole('option');
     expect(options.length).toEqual(20);
+  });
+
+  it('Should render blank instead of defaulting to 12 when displayEmpty is true and fontSize is undefined', () => {
+    render(<FontSizeDropdownWithProviders onFontSizeChange={noop} fontSize={undefined} displayEmpty />);
+
+    const comboBox = screen.getByRole('combobox');
+    expect(comboBox).toHaveTextContent('');
+  });
+
+  it('Should still default to 12 when fontSize is undefined and displayEmpty is not set', () => {
+    render(<FontSizeDropdownWithProviders onFontSizeChange={noop} fontSize={undefined} />);
+
+    const comboBox = screen.getByRole('combobox');
+    expect(comboBox).toHaveTextContent('12');
   });
 });

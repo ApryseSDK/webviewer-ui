@@ -1,4 +1,5 @@
 import core from 'core';
+import getZoomToMouseOffsets from 'helpers/getZoomToMouseOffsets';
 
 /**
  * https://docs.apryse.com/api/web/Core.DocumentViewer.html#zoomToMouse__anchor
@@ -8,14 +9,7 @@ import core from 'core';
  * @see https://docs.apryse.com/api/web/Core.DocumentViewer.html#event:zoomUpdated__anchor
  */
 export default (zoomFactor, documentViewerKey, mouseEvent) => {
-  // left panel width when it's not closed
-  // it still maintains its width when closed
-  const xOffset = document.querySelector('[data-element=leftPanel]:not(.closed)')?.offsetWidth || 0;
-
-  // height of main header and the header tools that may appear below
-  const headerHeight = document.querySelector('[data-element=header]')?.offsetHeight || 0;
-  const headerToolsHeight = document.querySelector('[data-element=toolsHeader]')?.offsetHeight || 0;
-  const yOffset = headerHeight + headerToolsHeight;
-
-  core.getDocumentViewer(documentViewerKey).zoomToMouse(zoomFactor, xOffset, yOffset, mouseEvent);
+  const documentViewer = core.getDocumentViewer(documentViewerKey);
+  const { xOffset, yOffset } = getZoomToMouseOffsets(documentViewer, mouseEvent);
+  documentViewer.zoomToMouse(zoomFactor, xOffset, yOffset, mouseEvent);
 };

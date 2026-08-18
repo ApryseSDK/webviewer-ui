@@ -6,7 +6,6 @@ import Draggable from 'react-draggable';
 import selectors from 'selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useCallback, useReducer, useEffect, useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import useDraggablePosition from '../../hooks/useDraggablePosition';
 import PropTypes from 'prop-types';
@@ -38,7 +37,6 @@ const propTypes = {
 const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   const { core } = useCore();
   const dispatch = useDispatch();
-  const [t] = useTranslation();
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SCALE_OVERLAY_CONTAINER));
   const isDisabledViewOnly = useSelector((state) => selectors.isDisabledViewOnly(state, DataElements.SCALE_OVERLAY));
   const areToolsDisabledViewOnly = useSelector((state) => {
@@ -59,12 +57,6 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
 
     Object.keys(scales).forEach((scaleKey) => {
       const scaleData = scales[scaleKey];
-
-      if (!scaleData || scaleData.length === 0) {
-        console.warn(`No measurements found for scale ${scaleKey}`);
-        return;
-      }
-
       const measurements = [];
       const relatedPages = new Set();
       let canDelete = true;
@@ -82,7 +74,6 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
           canDelete = false;
         }
       });
-
       scaleInfoList.push({
         scale: new Scale(scaleKey),
         title: scaleKey,
@@ -127,49 +118,9 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
       openScaleModal(scale);
     } else {
       const applyTo = [...annotations, selectedTool];
-      const scaleToDelete = core.getDocumentViewer().getMeasurementManager().getOldScalesToDeleteAfterApplying({ scale: newScale, applyTo })[0];
-      const createAndApplyScale = () => {
-        core.createAndApplyScale(
-          newScale,
-          [...annotations, selectedTool]
-        );
-      };
-      if (scaleToDelete) {
-        confirmScaleToDelete(scaleToDelete, createAndApplyScale);
-      } else {
-        createAndApplyScale();
-      }
+      core.createAndApplyScale(newScale, applyTo);
     }
-  }, [annotations, selectedTool]);
-
-  const confirmScaleToDelete = (scaleToDelete, createAndApplyScale) => {
-    const message = (
-      <div className='customMessage'>
-        <p>
-          <span>
-            {t('option.measurement.deleteScaleModal.ifChangeScale')}
-            <b>{scaleToDelete}</b>
-            {t('option.measurement.deleteScaleModal.notUsedWillDelete')}
-          </span>
-        </p>
-        <p>
-          <span>
-            {t('option.measurement.deleteScaleModal.ifToContinue')}
-          </span>
-        </p>
-      </div>
-    );
-    const title = `${t('option.measurement.deleteScaleModal.deleteScale')} ${scaleToDelete}`;
-    const confirmBtnText = t('action.confirm');
-
-    const warning = {
-      message,
-      title,
-      confirmBtnText,
-      onConfirm: () => createAndApplyScale()
-    };
-    dispatch(actions.showWarningMessage(warning));
-  };
+  }, [annotations, selectedTool, core, openScaleModal]);
 
   const onCancelCalibrationMode = useCallback((previousToolName) => {
     updateIsCalibration(false);
@@ -191,10 +142,10 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
 
   useEffect(() => {
     const onScaleUpdated = (newScales) => {
-      setScales(newScales);
+      setScales({ ...newScales });
     };
     const updateScales = () => {
-      setScales(core.getScales());
+      setScales({ ...core.getScales() });
     };
     const onCreateAnnotationWithNoScale = () => {
       onAddingNewScale();

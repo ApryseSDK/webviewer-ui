@@ -321,7 +321,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
         };
       });
     };
-    const html2canvas = (await import('html2canvas')).default;
+    const html2canvas = (await import('@pdftron/html2canvas')).default;
     for (let page of createdPages) {
       page = await page;
       let dataURL;

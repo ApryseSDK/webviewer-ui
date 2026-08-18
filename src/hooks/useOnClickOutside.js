@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import getRootNode from 'helpers/getRootNode';
 
 // https://usehooks.com/useOnClickOutside/
-export default (ref, handler) => {
+export default (ref, handler, rootNodeOverride) => {
   useEffect(
     () => {
       const listener = (event) => {
@@ -15,7 +15,10 @@ export default (ref, handler) => {
       };
       let browserDocument = document;
       if (window.isApryseWebViewerWebComponent) {
-        browserDocument = getRootNode().getElementById('app');
+        browserDocument = (rootNodeOverride || getRootNode())?.getElementById('app');
+      }
+      if (!browserDocument) {
+        return () => {};
       }
       browserDocument.addEventListener('mousedown', listener);
       browserDocument.addEventListener('touchstart', listener);
@@ -31,6 +34,6 @@ export default (ref, handler) => {
     // ... callback/cleanup to run every render. It's not a big deal ...
     // ... but to optimize you can wrap handler in useCallback before ...
     // ... passing it into this hook.
-    [ref, handler],
+    [ref, handler, rootNodeOverride],
   );
 };

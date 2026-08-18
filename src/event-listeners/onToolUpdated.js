@@ -4,11 +4,11 @@ import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
 import i18next from 'i18next';
 
-export default (dispatch) => (tool) => {
+export default (dispatch, instanceId = getInstanceID()) => (tool) => {
   const toolName = tool.name;
   const toolStyles = tool.defaults;
   if (toolStyles) {
-    storeStyle(toolName, toolStyles);
+    storeStyle(toolName, toolStyles, instanceId);
   }
 
   const currentTool = core.getToolMode();
@@ -23,9 +23,8 @@ export default (dispatch) => (tool) => {
   }
 };
 
-const storeStyle = (toolName, toolStyles) => {
+const storeStyle = (toolName, toolStyles, instanceId) => {
   try {
-    const instanceId = getInstanceID();
     localStorageManager.setItemSynchronous(`${instanceId}-toolData-${toolName}`, JSON.stringify(toolStyles));
     if (toolStyles.Font || toolStyles.TextAlign) {
       let currentDir;

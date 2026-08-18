@@ -6,7 +6,7 @@ import Choice from 'components/Choice';
 import { useTranslation } from 'react-i18next';
 import { updateLayerVisibililty } from './updateLayerVisibililty';
 import Label from 'components/Label';
-import { getEndFacingChevronIcon } from 'helpers/rightToLeft';
+import useDirectionalChevronIcons from 'hooks/useDirectionalChevronIcons';
 import DataElementWrapper from '../DataElementWrapper';
 import './Layer.scss';
 
@@ -18,6 +18,7 @@ function Layer(props) {
   const { layer, layerUpdated } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const [t] = useTranslation();
+  const { endChevronIcon } = useDirectionalChevronIcons();
 
   const onChange = (isVisible) => {
     const newLayer = updateLayerVisibililty(layer, isVisible);
@@ -47,7 +48,7 @@ function Layer(props) {
       <div className="parent-layer">
         {hasSubLayers ? (
           <div className="arrow" onClick={toggleExpanded}>
-            { isExpanded ? <Icon glyph="icon-chevron-down" /> : <Icon glyph={getEndFacingChevronIcon()} />}
+            { isExpanded ? <Icon glyph="icon-chevron-down" /> : <Icon glyph={endChevronIcon} />}
           </div>
         ) : (
           // create dummy icon to make aligning easier

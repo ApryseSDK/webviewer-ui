@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import actions from 'actions';
 import { getSizeManager } from 'helpers/responsivenessHelper';
-import { getEndFacingChevronIcon, getStartFacingChevronIcon } from 'helpers/rightToLeft';
+import useDirectionalChevronIcons from 'hooks/useDirectionalChevronIcons';
 import PageControls from './PageControls';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
   const shouldFadePageNavigationComponent = useSelector(selectors.shouldFadePageNavigationComponent);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { startChevronIcon, endChevronIcon } = useDirectionalChevronIcons();
   const { core } = useCore();
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const totalPages = useSelector((state) => selectors.getTotalPages(state, activeDocumentViewerKey));
@@ -51,6 +52,38 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
     }
   }, [size]);
 
+  const previousPageButton = {
+    onClick: () => {
+      if (currentPage - 1 > 0) {
+        core.setCurrentPage(Math.max(currentPage - 1, 1), activeDocumentViewerKey);
+      }
+    },
+    dataElement: DataElements.PREVIOUS_PAGE_BUTTON,
+    title: isFirstPage ? null : t('action.pagePrev'),
+    label: size === 1 ? t('action.pagePrev') : null,
+    headerPlacement,
+    img: headerPlacement === PLACEMENT.LEFT ? 'icon-chevron-up' : startChevronIcon,
+    type: ITEM_TYPE.PAGE_NAVIGATION_BUTTON,
+    disabled: isFirstPage,
+    ariaLabel: t('action.pagePrev'),
+  };
+
+  const nextPageButton = {
+    onClick: () => {
+      if (currentPage + 1 <= totalPages) {
+        core.setCurrentPage(Math.min(currentPage + 1, totalPages), activeDocumentViewerKey);
+      }
+    },
+    dataElement: DataElements.NEXT_PAGE_BUTTON,
+    title: isLastPage ? null : t('action.pageNext'),
+    label: size === 1 ? t('action.pageNext') : null,
+    headerPlacement,
+    img: headerPlacement === PLACEMENT.LEFT ? 'icon-chevron-down' : endChevronIcon,
+    type: ITEM_TYPE.PAGE_NAVIGATION_BUTTON,
+    disabled: isLastPage,
+    ariaLabel: t('action.pageNext'),
+  };
+
   useEffect(() => {
     const pageControlsFlyout = {
       dataElement: 'pageControlsFlyout',
@@ -67,7 +100,7 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
     };
 
     dispatch(actions.updateFlyout(pageControlsFlyout.dataElement, pageControlsFlyout));
-  }, [totalPages, currentPage]);
+  }, [totalPages, currentPage, startChevronIcon, endChevronIcon]);
 
   useEffect(() => {
     if (size === 0) {
@@ -80,38 +113,6 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
       dispatch(actions.setOpacityOfItem(DataElements.PAGE_NAV_FLOATING_HEADER, OPACITY_LEVELS.FULL));
     }
   }, []);
-
-  const previousPageButton = {
-    onClick: () => {
-      if (currentPage - 1 > 0) {
-        core.setCurrentPage(Math.max(currentPage - 1, 1), activeDocumentViewerKey);
-      }
-    },
-    dataElement: DataElements.PREVIOUS_PAGE_BUTTON,
-    title: isFirstPage ? null : t('action.pagePrev'),
-    label: size === 1 ? t('action.pagePrev') : null,
-    headerPlacement,
-    img: headerPlacement === PLACEMENT.LEFT ? 'icon-chevron-up' : getStartFacingChevronIcon(),
-    type: ITEM_TYPE.PAGE_NAVIGATION_BUTTON,
-    disabled: isFirstPage,
-    ariaLabel: t('action.pagePrev'),
-  };
-
-  const nextPageButton = {
-    onClick: () => {
-      if (currentPage + 1 <= totalPages) {
-        core.setCurrentPage(Math.min(currentPage + 1, totalPages), activeDocumentViewerKey);
-      }
-    },
-    dataElement: DataElements.NEXT_PAGE_BUTTON,
-    title: isLastPage ? null : t('action.pageNext'),
-    label: size === 1 ? t('action.pageNext') : null,
-    headerPlacement,
-    img: headerPlacement === PLACEMENT.LEFT ? 'icon-chevron-down' : getEndFacingChevronIcon(),
-    type: ITEM_TYPE.PAGE_NAVIGATION_BUTTON,
-    disabled: isLastPage,
-    ariaLabel: t('action.pageNext'),
-  };
 
   const onFlyoutToggle = () => {
     const dataElement = elementRef.current.getAttribute('data-element');

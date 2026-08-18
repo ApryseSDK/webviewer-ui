@@ -21,6 +21,7 @@ const propTypes = {
   disabled: PropTypes.bool,
   width: PropTypes.number,
   disableFocusing: PropTypes.bool,
+  displayEmpty: PropTypes.bool, // If true and fontSize is undefined/null, render a blank box instead of defaulting to 12pt
 };
 
 const MIN_FONT_SIZE = 1;
@@ -36,7 +37,7 @@ const BREAKS_AND_INCREMENT = {
 const FontSizeDropdown = ({
   dataElement,
   onFontSizeChange,
-  fontSize = 12,
+  fontSize: fontSizeProp,
   fontUnit = 'pt',
   maxFontSize = RENDER_ROWS_UPPER_LIMIT,
   initialFontValue = MIN_FONT_SIZE,
@@ -46,20 +47,36 @@ const FontSizeDropdown = ({
   disabled = false,
   width,
   disableFocusing = false,
+  displayEmpty = false,
 }) => {
   const { core } = useCore();
+  // Only treat the size as "empty" when the caller explicitly opts in via displayEmpty,
+  // so other consumers that never pass it keep defaulting a missing fontSize to 12pt.
+  const isEmpty = displayEmpty && (fontSizeProp === undefined || fontSizeProp === null);
+  const fontSize = fontSizeProp ?? 12;
+  let normalizedFontSize = '';
+
+  if (!isEmpty) {
+    normalizedFontSize = fontSize <= maxFontSize ? fontSize : 1;
+  }
+
   const [sizes, setSizes] = useState([]);
-  const [currentFontSize, setCurrentFontSize] = useState(fontSize <= maxFontSize ? fontSize : 1);
+  const [currentFontSize, setCurrentFontSize] = useState(normalizedFontSize);
 
   const isValidFontSize = (num, arr = []) => num && arr.indexOf(num) === -1 && num <= maxFontSize && num >= MIN_FONT_SIZE;
   useEffect(() => {
+    if (isEmpty) {
+      setCurrentFontSize('');
+      return;
+    }
+
     // update the font size indicator in Text Editing Panel
     if (core.getContentEditManager().isInContentEditMode()) {
       setCurrentFontSize(fontSize <= maxFontSize ? fontSize : 1);
     } else {
       setCurrentFontSize(fontSize);
     }
-  }, [fontSize]);
+  }, [fontSize, isEmpty]);
 
   useEffect(() => {
     incrementMap[maxFontSize] = 12;
@@ -96,9 +113,15 @@ const FontSizeDropdown = ({
         }
       }
     };
-    const sizesAsStrings = getNewNumbers(Math.floor(currentFontSize)).map((size) => `${size}`);
+    const sizesAsStrings = getNewNumbers(Math.floor(isEmpty ? initialFontValue : currentFontSize)).map((size) => `${size}`);
     setSizes(sizesAsStrings);
-  }, []);
+    // currentFontSize is intentionally omitted: it changes asynchronously (see the
+    // sync effect above, which doesn't clamp to maxFontSize in the non-edit-mode
+    // branch), and re-running this effect on every currentFontSize change would
+    // pull that unclamped value into the options list. Only isEmpty toggling
+    // should trigger a recompute.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEmpty]);
 
   const sizeChange = (newSize) => {
     //Check for NAN and outside the range

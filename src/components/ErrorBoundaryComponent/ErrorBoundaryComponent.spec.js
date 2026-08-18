@@ -5,6 +5,8 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import rootReducer from 'src/redux/reducers/rootReducer';
 import ErrorBoundaryComponent from './ErrorBoundaryComponent';
+import COMPONENT_TYPES from 'constants/componentTypes';
+import actions from 'actions';
 
 const ThrowingChild = ({ shouldThrow }) => {
   if (shouldThrow) {
@@ -106,6 +108,41 @@ describe('ErrorBoundaryComponent', () => {
       jest.runAllTimers();
     });
     expect(store.getState().viewer.openElements.myPanel).toBe(true);
+
+    jest.useRealTimers();
+  });
+
+  it('restores the flyout toggle element after reload so the flyout stays anchored', () => {
+    jest.useFakeTimers();
+    const store = createStore();
+    const flyoutDataElement = 'myFlyout';
+    const toggleElement = 'flyoutToggleButton';
+    store.dispatch(actions.addFlyout({ dataElement: flyoutDataElement, items: [] }));
+    store.dispatch(actions.setActiveFlyout(flyoutDataElement));
+    store.dispatch(actions.openElement(flyoutDataElement));
+    store.dispatch(actions.setFlyoutToggleElement(toggleElement));
+
+    render(
+      <Provider store={store}>
+        <ErrorBoundaryComponent dataElement={flyoutDataElement} componentType={COMPONENT_TYPES.FLYOUT}>
+          <ThrowingChild shouldThrow />
+        </ErrorBoundaryComponent>
+      </Provider>
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Reload' }));
+
+    // Closing the flyout clears its open + toggle state.
+    expect(store.getState().viewer.openElements[flyoutDataElement]).toBeFalsy();
+    expect(store.getState().viewer.flyoutToggleElement).toBeNull();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    // After the delay the flyout reopens and the toggle element is restored so it re-anchors.
+    expect(store.getState().viewer.openElements[flyoutDataElement]).toBe(true);
+    expect(store.getState().viewer.flyoutToggleElement).toBe(toggleElement);
 
     jest.useRealTimers();
   });

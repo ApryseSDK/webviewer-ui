@@ -232,6 +232,14 @@ const baseMenuItems = {
     title: 'officeEditor.textColor',
     hidden: false,
   },
+  [PRESET_BUTTON_TYPES.OE_HIGHLIGHT_COLOR_PICKER]: {
+    dataElement: DataElements.OFFICE_EDITOR_FLYOUT_HIGHLIGHT_COLOR_PICKER,
+    presetDataElement: DataElements.OFFICE_EDITOR_HIGHLIGHT_COLOR_PICKER_PRESET_BUTTON,
+    icon: 'icon-tool-text-manipulation-highlight',
+    label: 'officeEditor.highlightColor',
+    title: 'officeEditor.highlightColor',
+    hidden: false,
+  },
   [PRESET_BUTTON_TYPES.COMPARE]: {
     dataElement: 'comparePanelToggle',
     presetDataElement: 'comparePanelToggle',

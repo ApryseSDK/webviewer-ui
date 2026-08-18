@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import core from 'core';
 import { configureStore } from '@reduxjs/toolkit';
-import Flyout from './Flyout';
+import Flyout from '../FlyoutContainer';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';

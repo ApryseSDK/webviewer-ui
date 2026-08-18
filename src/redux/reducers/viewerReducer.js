@@ -381,6 +381,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         customStamps: payload.customStamps,
       };
+    case 'SET_CUSTOM_STAMP_CATEGORIES':
+      return {
+        ...state,
+        customStampCategories: payload.customStampCategories,
+      };
     case 'SET_SAVED_SIGNATURES':
       return {
         ...state,
@@ -1011,6 +1016,8 @@ export default (initialState) => (state = initialState, action) => {
         modularComponentFunctions: initialState.modularComponentFunctions,
         activeCustomRibbon: initialState.activeCustomRibbon,
         activeGroupedItems: initialState.activeGroupedItems,
+        fixedGroupedItems: initialState.fixedGroupedItems,
+        customElementSizes: initialState.customElementSizes,
         lastActiveToolForRibbon: initialState.lastActiveToolForRibbon,
         activeFlyout: initialState.activeFlyout,
         flyoutToggleElement: initialState.flyoutToggleElement,
@@ -1256,6 +1263,8 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         annotationToolStyleSyncingEnabled: payload,
       };
+    case 'SET_VIEWPORT_RELATIVE_POSITIONING':
+      return { ...state, viewportRelativeAnnotationPositioningEnabled: payload };
     case 'SET_SHORTCUT_KEY_MAP':
       return { ...state, shortcutKeyMap: payload };
     case 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE':

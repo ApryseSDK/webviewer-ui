@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import actions from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { parseColor, transparentIcon } from 'helpers/colorPickerHelper';
+import { parseColor, transparentIcon, getColorSwatchIcon } from 'helpers/colorPickerHelper';
 import selectors from 'selectors';
 import Button from 'components/Button';
 import Tooltip from 'components/Tooltip';
@@ -13,7 +13,6 @@ import useFocusHandler from 'hooks/useFocusHandler';
 import useColorPickerAddColor from 'hooks/useColorPickerAddColor';
 import useColorPickerDeleteColor from 'hooks/useColorPickerDeleteColor';
 import DataElementWrapper from 'components/DataElementWrapper';
-import { css } from '@emotion/react';
 
 const TRANSPARENT_COLOR = 'transparent';
 
@@ -133,14 +132,12 @@ const ColorPicker = ({
                 >
                   <div
                     className={classNames({
-                      cell: true,
-                      border: true,
-                    })}
-                    css={css({
-                      backgroundColor: color
+                      cell: true
                     })}
                   >
-                    {color === TRANSPARENT_COLOR && transparentIcon}
+                    {color === TRANSPARENT_COLOR
+                      ? transparentIcon
+                      : getColorSwatchIcon(color)}
                   </div>
                 </div>
               </button>

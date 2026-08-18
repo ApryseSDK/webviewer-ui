@@ -15,6 +15,7 @@ import retargetEvents from 'react-shadow-dom-retarget-events';
 import core from 'core';
 import actions from 'actions';
 import App from 'components/App';
+import Theme from 'constants/theme';
 import { workerTypes } from 'constants/types';
 import defaultTool from 'constants/defaultTool';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
@@ -32,6 +33,7 @@ import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import getCspNonce from 'helpers/getCspNonce';
 import getHashParameters, { getHashParameterFromHost } from 'helpers/getHashParameters';
+import applyPrePaintTheme from 'helpers/applyPrePaintTheme';
 import {
   addDocumentViewer,
   setupOpenURLHandler,
@@ -39,9 +41,11 @@ import {
 } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
 import getRootNode, { getInstanceID } from 'helpers/getRootNode';
+import { createHotkeysManager, setHotkeysManagerForStore } from 'helpers/hotkeysManager';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import ensureReactDraggableStyleEl from 'helpers/ensureReactDraggableStyleEl';
 import EmotionProvider from '../emotion/EmotionProvider';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 import localStorageManager from './localStorageManager';
 
 // Global counter for unique documentViewer keys in multi-instance mode. Each createUIInstance call gets its own key so instances don't overwrite each other in the shared documentViewerMap.
@@ -229,7 +233,7 @@ function applyBackendSettings(state, instanceRootNode) {
   loadCustomCSS(customCSS, instanceRootNode);
 }
 
-function createInstanceDocumentViewer(store, instanceI18n) {
+function createInstanceDocumentViewer(store, instanceI18n, instanceRootNode) {
   logDebugInfo();
 
   // In multi-instance mode, each instance gets a unique documentViewer key so they don't overwrite each other in the shared documentViewerMap.
@@ -245,7 +249,7 @@ function createInstanceDocumentViewer(store, instanceI18n) {
     documentViewer.getAnnotationManager().hideDetachedReplies();
   }
 
-  defineWebViewerInstanceUIAPIs(store, instanceDocViewerKey, instanceI18n);
+  defineWebViewerInstanceUIAPIs(store, instanceDocViewerKey, instanceI18n, instanceRootNode);
   setItemToFlyoutStore(store);
 
   return { documentViewer, instanceDocViewerKey };
@@ -451,6 +455,24 @@ function resolveInitialLanguage(store) {
   return currentLanguage || defaultLanguage;
 }
 
+function resolveInitialTheme(store) {
+  const currentTheme = store.getState().viewer.activeTheme;
+  const requestedTheme = getHashParameters('theme', null);
+
+  return Object.values(Theme).includes(requestedTheme) ? requestedTheme : currentTheme;
+}
+
+function updateInstanceTheme(store, theme) {
+  if (!theme) {
+    return;
+  }
+
+  const currentTheme = store.getState().viewer.activeTheme;
+  if (currentTheme !== theme) {
+    store.dispatch(actions.setActiveTheme(theme));
+  }
+}
+
 function updateInstanceLanguage(instanceI18n, language) {
   // nsSeparator is the colon. We do not currently use this because a customer requested removing the colon from the namespace after it broke their labels. Avoid calling init() a second time for createInstance() instances because the first init (in setupI18n) may still be in flight and a second init() would corrupt options/services. Instead, apply the two settings directly.
   if (instanceI18n.options) {
@@ -491,15 +513,17 @@ function renderInstanceApp(rootNode, store, persistor, instanceI18n, removeEvent
   const appElement = rootNode.getElementById('app');
   const app = (
     <EmotionProvider rootNode={rootNode}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <I18nextProvider i18n={instanceI18n}>
-            <DndProvider backend={HTML5Backend} options={{ rootElement: appElement }}>
-              <App removeEventHandlers={removeEventHandlers}/>
-            </DndProvider>
-          </I18nextProvider>
-        </PersistGate>
-      </Provider>
+      <InstanceRootNodeContext.Provider value={rootNode}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <I18nextProvider i18n={instanceI18n}>
+              <DndProvider backend={HTML5Backend} options={{ rootElement: appElement }}>
+                <App removeEventHandlers={removeEventHandlers} instanceRootNode={rootNode}/>
+              </DndProvider>
+            </I18nextProvider>
+          </PersistGate>
+        </Provider>
+      </InstanceRootNodeContext.Provider>
     </EmotionProvider>
   );
 
@@ -521,6 +545,7 @@ function startAsyncUIInitialization({
   persistor,
   instanceI18n,
   removeEventHandlers,
+  rootNode,
 }) {
   fullAPIReady
     .then(() => loadConfig())
@@ -529,8 +554,13 @@ function startAsyncUIInitialization({
       applyDocumentViewerRuntimeSettings(documentViewer);
       await loadUiConfigIfPresent(store);
       setupLoadAnnotationsFromServer(store);
+      updateInstanceTheme(store, resolveInitialTheme(store));
       updateInstanceLanguage(instanceI18n, resolveInitialLanguage(store));
-      renderInstanceApp(getRootNode(), store, persistor, instanceI18n, removeEventHandlers);
+      if (store.themeUpdateQueue) {
+        await store.themeUpdateQueue;
+      }
+      // Render into THIS instance's captured root, not the module-level singleton getRootNode(): under the Vite/ESM build the UI module is evaluated once and shared across every WebComponent instance, so by the time this callback runs (after several awaits) a sibling instance may have flipped the singleton, and rendering into it would mount this instance's React tree into another instance's shadow root.
+      renderInstanceApp(rootNode, store, persistor, instanceI18n, removeEventHandlers);
     })
     .catch((err) => {
       console.error('[WebViewer] Error during UI initialization:', err);
@@ -572,9 +602,18 @@ function registerInstanceCleanup(instanceRoot, removeEventHandlers, removeActiva
   );
 }
 
-export function initializeCanvasInstance({ store, persistor, instanceI18n, instanceRootNode }) {
+export function initializeCanvasInstance({ store, persistor, instanceI18n, instanceRootNode, instanceId }) {
+  const initialTheme = resolveInitialTheme(store);
+  const resolvedRootNode = instanceRootNode || getRootNode();
+
+  // Set the html theme attribute before React renders to avoid light-theme first paint.
+  applyPrePaintTheme(initialTheme, resolvedRootNode);
+
   const cspNonce = getCspNonce();
   ensureReactDraggableStyleEl(cspNonce);
+
+  const instanceHotkeysManager = createHotkeysManager();
+  setHotkeysManagerForStore(store, instanceHotkeysManager);
 
   const state = store.getState();
   const fullAPIReady = createFullAPIReady(state);
@@ -584,7 +623,7 @@ export function initializeCanvasInstance({ store, persistor, instanceI18n, insta
   applyBackendSettings(state, instanceRootNode);
 
   const { preloadWorker } = state.advanced;
-  const { documentViewer, instanceDocViewerKey } = createInstanceDocumentViewer(store, instanceI18n);
+  const { documentViewer, instanceDocViewerKey } = createInstanceDocumentViewer(store, instanceI18n, resolvedRootNode);
 
   const removeActivationHandlers = setupMultiInstanceActivation(instanceDocViewerKey);
   setupI18n(state, instanceI18n);
@@ -593,7 +632,7 @@ export function initializeCanvasInstance({ store, persistor, instanceI18n, insta
   setAutoSwitch();
   documentViewer.setToolMode(documentViewer.getTool(defaultTool));
 
-  const { addEventHandlers, removeEventHandlers } = eventHandler(store, instanceDocViewerKey);
+  const { addEventHandlers, removeEventHandlers } = eventHandler(store, instanceDocViewerKey, false, instanceId);
 
   startAsyncUIInitialization({
     fullAPIReady,
@@ -603,10 +642,11 @@ export function initializeCanvasInstance({ store, persistor, instanceI18n, insta
     persistor,
     instanceI18n,
     removeEventHandlers,
+    rootNode: resolvedRootNode,
   });
   addEventHandlers();
 
-  const instanceRoot = instanceRootNode || getRootNode();
+  const instanceRoot = resolvedRootNode;
   registerInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, instanceDocViewerKey);
 }
 

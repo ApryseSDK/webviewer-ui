@@ -53,6 +53,7 @@ function NotesPanelHeader({
     isAnnotationNumberingEnabled,
     isOfficeEditorMode,
     officeEditorEditMode,
+    isSpreadsheetEditorMode,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
@@ -62,10 +63,10 @@ function NotesPanelHeader({
       selectors.isAnnotationNumberingEnabled(state),
       selectors.getIsOfficeEditorMode(state),
       selectors.getOfficeEditorEditMode(state),
+      selectors.isSpreadsheetEditorModeEnabled(state),
     ],
     shallowEqual
   );
-
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [filterEnabled, setFilterEnabled] = useState(false);
@@ -188,7 +189,7 @@ function NotesPanelHeader({
         <h2 className='main-comment'>{t(notesPanelConfig.title)} {`(${notes.length})`}</h2>
       </DataElementWrapper>
 
-      <DataElementWrapper
+      {!isSpreadsheetEditorMode && <DataElementWrapper
         className="sort-row"
         dataElement={DataElements.NotesPanel.DefaultHeader.SORT_ROW}
       >
@@ -224,7 +225,7 @@ function NotesPanelHeader({
             ariaPressed={filterEnabled}
           />
         </div>
-      </DataElementWrapper>
+      </DataElementWrapper>}
     </DataElementWrapper>
   );
 

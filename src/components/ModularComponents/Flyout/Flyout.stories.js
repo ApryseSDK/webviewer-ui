@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
-import Flyout from './Flyout';
+import Flyout from '../FlyoutContainer';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
@@ -865,3 +865,120 @@ FlyoutOverflow.parameters = {
   layout: 'fullscreen',
   ...disableRtlModeParameters,
 };
+
+export const ToolButtonInFlyout = createTemplate({
+  headers: {
+    topHeader: {
+      dataElement: 'topHeader',
+      placement: 'top',
+      justifyContent: 'left',
+      items: ['toggleFlyoutButton']
+    },
+  },
+  components: {
+    toggleFlyoutButton: {
+      dataElement: 'toggleFlyoutButton',
+      title: 'Toggle Flyout',
+      type: 'toggleButton',
+      img: 'icon-header-search',
+      toggleElement: 'flyoutMenu',
+    }
+  },
+  flyoutMap: {
+    flyoutMenu: {
+      dataElement: 'flyoutMenu',
+      items: [
+        {
+          type: 'toolButton',
+          dataElement: 'highlightToolButton',
+          toolName: 'AnnotationCreateTextHighlight',
+          className: 'FlyoutToolButton'
+        },
+        {
+          type: 'toolButton',
+          dataElement: 'underlineToolButton',
+          toolName: 'AnnotationCreateTextUnderline',
+          className: 'FlyoutToolButton'
+        },
+      ],
+    },
+  },
+  viewerRedux: {
+    activeToolName: 'AnnotationCreateTextHighlight',
+    activeFlyout: 'flyoutMenu',
+    openElements: { 'flyoutMenu': true },
+    flyoutToggleElement: 'toggleFlyoutButton',
+  }
+});
+
+ToolButtonInFlyout.parameters = disableRtlModeParameters;
+
+export const ToolGroupToggleButtonInFlyout = createTemplate({
+  headers: {
+    topHeader: {
+      dataElement: 'topHeader',
+      placement: 'top',
+      justifyContent: 'left',
+      items: ['toggleFlyoutButton', 'divider', 'highlightToolGroup']
+    },
+  },
+  components: {
+    toggleFlyoutButton: {
+      dataElement: 'toggleFlyoutButton',
+      title: 'Toggle Flyout',
+      type: 'toggleButton',
+      img: 'icon-header-search',
+      toggleElement: 'flyoutMenu',
+    },
+    highlightToolButton: {
+      type: 'toolButton',
+      toolName: 'AnnotationCreateTextHighlight',
+    },
+    highlightToolButton2: {
+      type: 'toolButton',
+      toolName: 'AnnotationCreateTextHighlight2',
+    },
+    highlightToolGroup: {
+      items: ['highlightToolButton', 'highlightToolButton2'],
+      type: 'groupedItems',
+    },
+    underlineToolButton: {
+      type: 'toolButton',
+      toolName: 'AnnotationCreateTextUnderline',
+    },
+    underlineToolGroup: {
+      items: ['underlineToolButton'],
+      type: 'groupedItems',
+    },
+  },
+  flyoutMap: {
+    flyoutMenu: {
+      dataElement: 'flyoutMenu',
+      items: [
+        {
+          type: 'toolGroupToggleButton',
+          dataElement: 'highlightToolGroupToggleButton',
+          groupedItems: 'highlightToolGroup',
+          className: 'FlyoutHighlightToolGroupToggleButton',
+          title: 'Highlight Tool Group',
+        },
+        {
+          type: 'toolGroupToggleButton',
+          dataElement: 'underlineToolGroupToggleButton',
+          groupedItems: 'underlineToolGroup',
+          className: 'FlyoutUnderlineToolGroupToggleButton',
+          title: 'Underline Tool Group',
+        }
+      ],
+    },
+  },
+  viewerRedux: {
+    activeToolName: 'AnnotationCreateTextHighlight2',
+    activeGroupedItems: ['highlightToolGroup'],
+    activeFlyout: 'flyoutMenu',
+    openElements: { 'flyoutMenu': true },
+    flyoutToggleElement: 'toggleFlyoutButton',
+  }
+});
+
+ToolGroupToggleButtonInFlyout.parameters = disableRtlModeParameters;

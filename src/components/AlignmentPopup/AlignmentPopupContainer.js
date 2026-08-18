@@ -10,7 +10,9 @@ import selectors from 'selectors';
 import AlignmentPopup from './AlignmentPopup';
 import './AlignmentPopup.scss';
 import DataElementWrapper from '../DataElementWrapper';
+import ErrorBoundaryComponent from 'components/ErrorBoundaryComponent';
 import DataElements from 'src/constants/dataElement';
+import COMPONENT_TYPES from 'constants/componentTypes';
 import { alignmentConfig, distributeConfig } from './AlignmentConfig';
 const propTypes = {
   annotation: PropTypes.object,
@@ -88,14 +90,19 @@ const AlignmentPopupContainer = ({
       wrapperStyle={position}
       ref={popupRef}
     >
-      <AlignmentPopup
-        alignmentConfig={alignmentConfig}
-        alignmentOnClick={alignmentOnClick}
-        backToMenuOnClick={backToMenuOnClick}
-        distributeConfig={distributeConfig}
-        distributeOnClick={distributeOnClick}
-        isAnnotation={isAnnotation}
-      />
+      <ErrorBoundaryComponent
+        dataElement={DataElements.ANNOTATION_ALIGNMENT_POPUP}
+        componentType={COMPONENT_TYPES.POPUP}
+      >
+        <AlignmentPopup
+          alignmentConfig={alignmentConfig}
+          alignmentOnClick={alignmentOnClick}
+          backToMenuOnClick={backToMenuOnClick}
+          distributeConfig={distributeConfig}
+          distributeOnClick={distributeOnClick}
+          isAnnotation={isAnnotation}
+        />
+      </ErrorBoundaryComponent>
     </DataElementWrapper>
   );
 };

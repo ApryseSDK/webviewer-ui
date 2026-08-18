@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import useCore from 'hooks/useCore';
 import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
-import hotkeysManager from 'helpers/hotkeysManager';
+import useHotkeysManager from 'hooks/useHotkeysManager';
 import getColor from 'helpers/getColor';
 import { mapToolNameToKey } from 'constants/map';
 import defaultTool from 'constants/defaultTool';
@@ -44,6 +44,7 @@ const ToolButton = ({
   );
   const { core } = useCore();
   const dispatch = useDispatch();
+  const hotkeysManager = useHotkeysManager();
   const { group = '', ...restObjectData } = toolButtonObject;
 
   useEffect(() => {

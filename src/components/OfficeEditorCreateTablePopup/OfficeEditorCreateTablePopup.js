@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import useFocusOnClose from 'hooks/useFocusOnClose';
 import FocusStackManager from 'helpers/focusStackManager';
+import { getWrappedGridPosition, GRID_DIRECTION } from 'helpers/gridNavigationHelper';
 import DataElements from 'constants/dataElement';
 import FocusTrap from '../FocusTrap';
 import './OfficeEditorCreateTablePopup.scss';
@@ -26,21 +27,8 @@ const OfficeEditorCreateTablePopup = ({ isOpen, onClose }) => {
 
   const closeModalWithOnFocusClose = useFocusOnClose(onClose);
 
-  const moveFocus = (rowIndex, colIndex, deltaX, deltaY) => {
-    let nextRowIndex = rowIndex + deltaY;
-    let nextColIndex = colIndex + deltaX;
-    if (nextRowIndex < 0) {
-      nextRowIndex = DEFAULT_GRID_SIZE - 1;
-    }
-    if (nextRowIndex >= DEFAULT_GRID_SIZE) {
-      nextRowIndex = 0;
-    }
-    if (nextColIndex < 0) {
-      nextColIndex = DEFAULT_GRID_SIZE - 1;
-    }
-    if (nextColIndex >= DEFAULT_GRID_SIZE) {
-      nextColIndex = 0;
-    }
+  const moveFocus = (rowIndex, colIndex, direction) => {
+    const { nextRowIndex, nextColIndex } = getWrappedGridPosition(rowIndex, colIndex, direction, DEFAULT_GRID_SIZE, DEFAULT_GRID_SIZE);
     setCurrentRowIndex(nextRowIndex);
     setCurrentColIndex(nextColIndex);
   };
@@ -50,20 +38,20 @@ const OfficeEditorCreateTablePopup = ({ isOpen, onClose }) => {
       case 'ArrowRight':
         event.preventDefault();
         event.stopPropagation();
-        moveFocus(rowIndex, colIndex, 1, 0);
+        moveFocus(rowIndex, colIndex, GRID_DIRECTION.RIGHT);
         break;
       case 'ArrowLeft':
         event.preventDefault();
         event.stopPropagation();
-        moveFocus(rowIndex, colIndex, -1, 0);
+        moveFocus(rowIndex, colIndex, GRID_DIRECTION.LEFT);
         break;
       case 'ArrowDown':
         event.preventDefault();
-        moveFocus(rowIndex, colIndex, 0, 1);
+        moveFocus(rowIndex, colIndex, GRID_DIRECTION.DOWN);
         break;
       case 'ArrowUp':
         event.preventDefault();
-        moveFocus(rowIndex, colIndex, 0, -1);
+        moveFocus(rowIndex, colIndex, GRID_DIRECTION.UP);
         break;
       case 'Enter':
         event.preventDefault();

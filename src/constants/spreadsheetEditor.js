@@ -62,8 +62,16 @@ export const formatsMap = {
 
 export const SPREADSHEET_EDITOR_SCOPE = 'spreadsheet-editor';
 
+export const SPREADSHEET_THREAD_ID_KEY = 'spreadsheetThreadId';
+export const SPREADSHEET_SHEET_INDEX_KEY = 'spreadsheetSheetIndex';
+export const SPREADSHEET_ROW_KEY = 'spreadsheetRow';
+export const SPREADSHEET_COLUMN_KEY = 'spreadsheetColumn';
+export const SPREADSHEET_SHEET_NAME_KEY = 'spreadsheetSheetName';
+export const SPREADSHEET_CELL_KEY = 'spreadsheetCell';
+
 export const ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR = [
-  DataElements.CONTEXT_MENU_POPUP
+  DataElements.CONTEXT_MENU_POPUP,
+  DataElements.ANNOTATION_NOTE_CONNECTOR_LINE,
 ];
 
 export const ELEMENTS_TO_ENABLE_IN_SPREADSHEET_EDITOR = [

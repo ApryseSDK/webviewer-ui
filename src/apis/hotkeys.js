@@ -8,12 +8,12 @@
 import hotkeysManager from 'helpers/hotkeysManager';
 import { EventTypes, Keys } from 'helpers/hotkeysUtils';
 
-export default {
+export const createHotkeysAPI = (instanceHotkeysManager = hotkeysManager) => ({
   on: (...args) => {
-    hotkeysManager.on(...args);
+    instanceHotkeysManager.on(...args);
   },
   off: (...args) => {
-    hotkeysManager.off(...args);
+    instanceHotkeysManager.off(...args);
   },
   /**
    * Programmatically trigger a shortcut action by its key combination string. This is useful when you need to trigger WebViewer shortcuts from outside the WebViewer window (e.g. from a custom toolbar in your app or a sibling component).
@@ -45,15 +45,17 @@ export default {
    * });
    */
   trigger: (shortcut, eventType) => {
-    hotkeysManager.trigger(shortcut, eventType);
+    instanceHotkeysManager.trigger(shortcut, eventType);
   },
   /**
    * Restores the hotkeys to default and disables previously unbinded hotkeys.
    * @ignore
    */
   restoreHotkeys: () => {
-    hotkeysManager.restoreHotkeys();
+    instanceHotkeysManager.restoreHotkeys();
   },
   Keys,
   EventTypes,
-};
+});
+
+export default createHotkeysAPI();

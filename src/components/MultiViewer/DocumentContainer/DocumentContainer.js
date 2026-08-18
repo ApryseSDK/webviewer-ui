@@ -11,9 +11,9 @@ import { getStep } from 'helpers/zoom';
 import throttle from 'lodash/throttle';
 import useCore from 'hooks/useCore';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
-import getRootNode from 'helpers/getRootNode';
 import { createTouchEventManager } from 'helpers/TouchEventManager';
 import { buildTabUpdateForViewer, getTargetTabId } from 'helpers/multiViewerTabUpdate';
+import getZoomToMouseOffsets from 'helpers/getZoomToMouseOffsets';
 import { css } from '@emotion/react';
 
 import './DocumentContainer.scss';
@@ -123,8 +123,7 @@ const DocumentContainer = ({
         getMinZoomLevel()
       );
     }
-    const yOffset = getRootNode().getElementById(`header${documentViewerKey}`).getBoundingClientRect().bottom;
-    const xOffset = e.clientX - getRootNode().getElementById(`container${documentViewerKey}`).getBoundingClientRect().left;
+    const { xOffset, yOffset } = getZoomToMouseOffsets(documentViewer, e);
     documentViewer.zoomToMouse(newZoomFactor, xOffset, yOffset, e);
   }, 30, { trailing: false });
   const wheelToNavigatePages = (e) => {

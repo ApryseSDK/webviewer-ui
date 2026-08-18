@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createPortal } from 'react-dom';
 import getRootNode from 'src/helpers/getRootNode';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 import HeaderFooterControlsBar from './HeaderFooterControlsBar';
 import PropTypes from 'prop-types';
 
@@ -13,8 +14,9 @@ const propTypes = {
 };
 
 const HeaderFooterControlsOverlay = ({ visiblePages, isHeaderControlsActive, isFooterControlsActive }) => {
+  const instanceRoot = useContext(InstanceRootNodeContext);
   const portals = visiblePages.map((pageNumber) => {
-    const pageSection = getRootNode().getElementById(`pageSection${pageNumber}`);
+    const pageSection = (instanceRoot || getRootNode()).getElementById(`pageSection${pageNumber}`);
     if (!pageSection) {
       return null;
     }

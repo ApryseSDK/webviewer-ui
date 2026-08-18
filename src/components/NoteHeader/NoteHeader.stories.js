@@ -5,12 +5,13 @@ import NoteContext from '../Note/Context';
 import { Provider } from 'react-redux';
 import { initialColors } from 'helpers/initialColorStates';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
+import { SPREADSHEET_THREAD_ID_KEY } from 'constants/spreadsheetEditor';
 
 export default {
   title: 'Components/Note/NoteHeader',
   component: NoteHeader,
-  includeStories: ['Basic', 'BasicWithAnnotationNumbering', 'BasicWithTrackedChange'],
-  excludeStories: ['testProps'],
+  includeStories: ['Basic', 'BasicWithAnnotationNumbering', 'BasicWithTrackedChange', 'SpreadsheetComment'],
+  excludeStories: ['testProps', 'testPropsSpreadsheetComment'],
 };
 
 const initialState = {
@@ -35,6 +36,18 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
 });
 
+const spreadsheetCommentStore = configureStore({
+  preloadedState: {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      isSpreadsheetEditorModeEnabled: true,
+    },
+  },
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+});
+
 const context = {
   pendingEditTextMap: {},
   pendingReplyMap: {},
@@ -48,6 +61,7 @@ const mockAnnotation = {
   getStatus: () => '',
   isReply: () => false,
   getAssociatedNumber: () => 1,
+  getCustomData: () => null,
   StrokeColor: {
     'R': 255,
     'G': 205,
@@ -122,4 +136,23 @@ export function BasicWithTrackedChange() {
   );
 }
 BasicWithTrackedChange.parameters = disableRtlModeParameters;
+
+export const testPropsSpreadsheetComment = {
+  ...testProps,
+  annotation: {
+    ...mockAnnotation,
+    getCustomData: (key) => key === SPREADSHEET_THREAD_ID_KEY ? 'thread-123' : null,
+  },
+};
+
+export function SpreadsheetComment() {
+  return (
+    <Provider store={spreadsheetCommentStore}>
+      <NoteContext.Provider value={context}>
+        <NoteHeader {...testPropsSpreadsheetComment} />
+      </NoteContext.Provider>
+    </Provider>
+  );
+}
+SpreadsheetComment.parameters = disableRtlModeParameters;
 

@@ -1,14 +1,15 @@
 import core from 'core';
 import getRootNode from './getRootNode';
 
-export default () => {
+export default (rootNodeOverride) => {
   const freetextAnnots = core.getAnnotationsList().filter((annot) => annot instanceof window.Core.Annotations.FreeTextAnnotation);
   const editBoxManager = core.getAnnotationManager().getEditBoxManager();
   const isEditingFreetext = freetextAnnots.some((annot) => {
     const editor = editBoxManager.getExistingEditor(annot);
     return editor ? editor.hasFocus() : false;
   });
-  const { activeElement } = getRootNode();
+  const rootNode = rootNodeOverride || getRootNode();
+  const { activeElement } = rootNode || {};
 
   return (activeElement && (
     activeElement instanceof window.HTMLInputElement ||

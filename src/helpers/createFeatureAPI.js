@@ -1,7 +1,7 @@
 import core from 'core';
 import localStorageManager from 'helpers/localStorageManager';
 import touchEventManager from 'helpers/TouchEventManager';
-import hotkeysManager from 'helpers/hotkeysManager';
+import { getHotkeysManager } from 'helpers/hotkeysManager';
 import { Shortcuts } from 'helpers/hotkeysUtils';
 import { enableMultiTab } from 'helpers/TabManager';
 import Feature from 'constants/feature';
@@ -20,6 +20,7 @@ import { getTargetTabId } from 'helpers/multiViewerTabUpdate';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
+  const hotkeysManager = getHotkeysManager(store);
   // map a feature to the dataElements that should be enabled/disabled and the function to run
   const map = {
     [Feature.Ribbons]: {

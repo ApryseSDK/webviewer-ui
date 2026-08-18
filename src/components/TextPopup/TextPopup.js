@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import FocusTrap from 'components/FocusTrap';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
 
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
+import ErrorBoundaryComponent from 'components/ErrorBoundaryComponent';
 
 import useCore from 'hooks/useCore';
 import { getTextPopupPositionBasedOn } from 'helpers/getPopupPosition';
@@ -17,8 +19,85 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { isMobile, isIE } from 'helpers/device';
 import DataElements from 'src/constants/dataElement';
+import COMPONENT_TYPES from 'constants/componentTypes';
 
 import './TextPopup.scss';
+
+// Rendered inside ErrorBoundaryComponent so render-time logic (e.g. core.isCreateRedactionEnabled())
+// is caught by the boundary. ActionButtons stay direct children of CustomizablePopup for dataElement matching.
+const TextPopupContent = ({ core, isRightClickAnnotationPopupEnabled, dispatch, activeDocumentViewerKey }) => (
+  <CustomizablePopup
+    dataElement={DataElements.TEXT_POPUP}
+    childrenClassName='main-menu-button'
+  >
+    <ActionButton
+      className="main-menu-button"
+      dataElement="copyTextButton"
+      label={isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
+      title={!isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
+      img="ic_copy_black_24px"
+      onClick={() => copyText(activeDocumentViewerKey)}
+    />
+    <ActionButton
+      className="main-menu-button"
+      dataElement="textHighlightToolButton"
+      label={isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
+      title={!isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
+      img="icon-tool-highlight"
+      onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation, activeDocumentViewerKey)}
+    />
+    <ActionButton
+      className="main-menu-button"
+      dataElement="textUnderlineToolButton"
+      label={isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
+      title={!isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
+      img="icon-tool-text-manipulation-underline"
+      onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation, activeDocumentViewerKey)}
+    />
+    <ActionButton
+      className="main-menu-button"
+      dataElement="textSquigglyToolButton"
+      label={isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
+      title={!isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
+      img="icon-tool-text-manipulation-squiggly"
+      onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation, activeDocumentViewerKey)}
+    />
+    <ActionButton
+      className="main-menu-button"
+      label={isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
+      title={!isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
+      img="icon-text-strikeout"
+      onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation, activeDocumentViewerKey)}
+      dataElement="textStrikeoutToolButton"
+    />
+    <ActionButton
+      className="main-menu-button"
+      label={isRightClickAnnotationPopupEnabled ? 'tool.Link' : ''}
+      title={!isRightClickAnnotationPopupEnabled ? 'tool.Link' : ''}
+      img="icon-tool-link"
+      onClick={() => dispatch(actions.openElement(DataElements.LINK_MODAL))}
+      dataElement="linkButton"
+    />
+    {core.isCreateRedactionEnabled() && (
+      <ActionButton
+        className="main-menu-button"
+        dataElement="textRedactToolButton"
+        label={isRightClickAnnotationPopupEnabled ? 'option.redaction.markForRedaction' : ''}
+        title={!isRightClickAnnotationPopupEnabled ? 'option.redaction.markForRedaction' : ''}
+        fillColor="868E96"
+        img="icon-tool-select-area-redaction"
+        onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.RedactionAnnotation, activeDocumentViewerKey)}
+      />
+    )}
+  </CustomizablePopup>
+);
+
+TextPopupContent.propTypes = {
+  core: PropTypes.object.isRequired,
+  isRightClickAnnotationPopupEnabled: PropTypes.bool,
+  dispatch: PropTypes.func.isRequired,
+  activeDocumentViewerKey: PropTypes.number,
+};
 
 const TextPopup = ({ t, selectedTextQuads }) => {
   const { core } = useCore();
@@ -92,70 +171,17 @@ const TextPopup = ({ t, selectedTextQuads }) => {
     >
       <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>
         <div className="container">
-          <CustomizablePopup
+          <ErrorBoundaryComponent
             dataElement={DataElements.TEXT_POPUP}
-            childrenClassName='main-menu-button'
+            componentType={COMPONENT_TYPES.POPUP}
           >
-            <ActionButton
-              className="main-menu-button"
-              dataElement="copyTextButton"
-              label={isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
-              title={!isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
-              img="ic_copy_black_24px"
-              onClick={() => copyText(activeDocumentViewerKey)}
+            <TextPopupContent
+              core={core}
+              isRightClickAnnotationPopupEnabled={isRightClickAnnotationPopupEnabled}
+              dispatch={dispatch}
+              activeDocumentViewerKey={activeDocumentViewerKey}
             />
-            <ActionButton
-              className="main-menu-button"
-              dataElement="textHighlightToolButton"
-              label={isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
-              title={!isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
-              img="icon-tool-highlight"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation, activeDocumentViewerKey)}
-            />
-            <ActionButton
-              className="main-menu-button"
-              dataElement="textUnderlineToolButton"
-              label={isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
-              title={!isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
-              img="icon-tool-text-manipulation-underline"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation, activeDocumentViewerKey)}
-            />
-            <ActionButton
-              className="main-menu-button"
-              dataElement="textSquigglyToolButton"
-              label={isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
-              title={!isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
-              img="icon-tool-text-manipulation-squiggly"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation, activeDocumentViewerKey)}
-            />
-            <ActionButton
-              className="main-menu-button"
-              label={isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
-              title={!isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
-              img="icon-text-strikeout"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation, activeDocumentViewerKey)}
-              dataElement="textStrikeoutToolButton"
-            />
-            <ActionButton
-              className="main-menu-button"
-              label={isRightClickAnnotationPopupEnabled ? 'tool.Link' : ''}
-              title={!isRightClickAnnotationPopupEnabled ? 'tool.Link' : ''}
-              img="icon-tool-link"
-              onClick={() => dispatch(actions.openElement(DataElements.LINK_MODAL))}
-              dataElement="linkButton"
-            />
-            {core.isCreateRedactionEnabled() && (
-              <ActionButton
-                className="main-menu-button"
-                dataElement="textRedactToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'option.redaction.markForRedaction' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'option.redaction.markForRedaction' : ''}
-                fillColor="868E96"
-                img="icon-tool-select-area-redaction"
-                onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.RedactionAnnotation, activeDocumentViewerKey)}
-              />
-            )}
-          </CustomizablePopup>
+          </ErrorBoundaryComponent>
         </div>
       </FocusTrap>
     </div>

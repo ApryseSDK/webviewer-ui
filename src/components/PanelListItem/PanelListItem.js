@@ -10,7 +10,7 @@ import './PanelListItem.scss';
 import useNestingLevel from 'src/hooks/useNestingLevel';
 import createItemsForBookmarkOutlineFlyout from 'helpers/createItemsForBookmarkOutlineFlyout';
 import { menuItems, menuTypes } from 'helpers/outlineFlyoutHelper';
-import { getEndFacingChevronIcon } from 'helpers/rightToLeft';
+import useDirectionalChevronIcons from 'hooks/useDirectionalChevronIcons';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
 const PanelListChildren = ({ children }) => {
@@ -95,14 +95,16 @@ const PanelListItem = ({
   setIsExpandedHandler,
   textColor,
   isActive,
-  virtualizedChildrenRenderer,
-  virtualizedChildrenCount,
+  childrenCount,
+  nestingLevel,
 }) => {
   const panelListItemRef = useRef();
-  const currentNestingLevel = useNestingLevel(panelListItemRef);
+  const detectedNestingLevel = useNestingLevel(panelListItemRef);
+  const currentNestingLevel = nestingLevel ?? detectedNestingLevel;
   const [isExpanded, setIsExpanded] = useState(expanded ?? false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { endChevronIcon } = useDirectionalChevronIcons();
   const {
     shouldHideDeleteButton = false,
     currentFlyout,
@@ -139,7 +141,7 @@ const PanelListItem = ({
   }, [expanded]);
 
   const defaultChildrenCount = React.Children.count(children);
-  const totalChildrenCount = virtualizedChildrenCount ?? defaultChildrenCount;
+  const totalChildrenCount = childrenCount ?? defaultChildrenCount;
 
   const handleOnExpand = (e) => {
     e.stopPropagation();
@@ -190,7 +192,7 @@ const PanelListItem = ({
             })}
           >
             <Button
-              img={getEndFacingChevronIcon()}
+              img={endChevronIcon}
               className="panel-list-button"
               ariaExpanded={isExpanded}
               ariaLabel={`${isExpanded ? t('action.collapse') : t('action.expand')} ${labelHeader}`}
@@ -224,11 +226,7 @@ const PanelListItem = ({
           <div className="panel-list-description">{description}</div>
         )}
       </div>
-      {isExpanded && totalChildrenCount > 0 && (
-        virtualizedChildrenRenderer
-          ? virtualizedChildrenRenderer()
-          : <PanelListChildren>{children}</PanelListChildren>
-      )}
+      {isExpanded && defaultChildrenCount > 0 && <PanelListChildren>{children}</PanelListChildren>}
     </div>
   );
 };
@@ -264,8 +262,8 @@ PanelListItem.propTypes = {
     moreOptionsDataElement: PropTypes.string,
   }),
   isActive: PropTypes.bool,
-  virtualizedChildrenRenderer: PropTypes.func,
-  virtualizedChildrenCount: PropTypes.number,
+  childrenCount: PropTypes.number,
+  nestingLevel: PropTypes.number,
 };
 
 export default PanelListItem;

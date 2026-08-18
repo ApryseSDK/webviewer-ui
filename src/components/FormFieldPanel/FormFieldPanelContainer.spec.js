@@ -112,7 +112,7 @@ const baseState = {
   document: {},
 };
 
-const renderWithState = (stateOverrides = {}) => {
+const renderWithState = (stateOverrides = {}, annotationOverride) => {
   const state = {
     ...baseState,
     ...stateOverrides,
@@ -132,11 +132,34 @@ const renderWithState = (stateOverrides = {}) => {
     getFieldOptions: () => [],
   };
 
+  const annotation = annotationOverride === undefined ? mockFormFieldAnnotation : annotationOverride;
+
   return render(
     <Provider store={store}>
-      <FormFieldPanelContainerWithi18n annotation={mockFormFieldAnnotation} />
+      <FormFieldPanelContainerWithi18n annotation={annotation} />
     </Provider>
   );
+};
+
+const createDatePickerAnnotation = ({ actions, pdfDateFormat } = {}) => {
+  const field = {
+    name: 'Date Picker Field',
+    defaultValue: '',
+    getFieldType: () => 'DateFormField',
+    getActions: () => actions || {},
+  };
+
+  const datePickerAnnotation = Object.create(window.Core.Annotations.DatePickerWidgetAnnotation.prototype);
+  datePickerAnnotation.getFieldFlags = () => ({ READ_ONLY: false, MULTI_SELECT: false, MULTILINE: false, REQUIRED: false });
+  datePickerAnnotation.getField = () => field;
+  datePickerAnnotation.getFieldOptions = () => [];
+  datePickerAnnotation.Width = 200;
+  datePickerAnnotation.Height = 40;
+  datePickerAnnotation.X = 0;
+  datePickerAnnotation.Y = 0;
+  datePickerAnnotation.pdfDateFormat = pdfDateFormat;
+
+  return datePickerAnnotation;
 };
 
 describe('FormFieldPanelContainer', () => {
@@ -173,5 +196,101 @@ describe('FormFieldPanelContainer', () => {
       await i18next.changeLanguage('es');
     });
     expect(await screen.findByText(/Anotación de campo de casilla de verificación/)).toBeInTheDocument();
+  });
+
+  it('uses date format from field actions when date picker pdfDateFormat is undefined', async () => {
+    const datePickerAnnotation = createDatePickerAnnotation({
+      actions: {
+        F: [{ name: 'JavaScript', javascript: 'AFDate_FormatEx("dd/mm/yyyy")' }],
+        K: [{ name: 'JavaScript', javascript: 'AFDate_KeystrokeEx("dd/mm/yyyy")' }],
+      },
+    });
+
+    renderWithState({}, datePickerAnnotation);
+
+    const dateFormatCombobox = await screen.findByRole('combobox', { name: /Date format/i });
+    expect(dateFormatCombobox).toHaveTextContent('dd/mm/yyyy');
+  });
+
+  it('prefers annotation pdfDateFormat over field action scripts', async () => {
+    const datePickerAnnotation = createDatePickerAnnotation({
+      actions: {
+        F: [{ name: 'JavaScript', javascript: 'AFDate_FormatEx("dd/mm/yyyy")' }],
+      },
+      pdfDateFormat: 'yyyy/mm/dd',
+    });
+
+    renderWithState({}, datePickerAnnotation);
+
+    const dateFormatCombobox = await screen.findByRole('combobox', { name: /Date format/i });
+    expect(dateFormatCombobox).toHaveTextContent('yyyy/mm/dd');
+  });
+
+  it('falls back to default when no date format can be extracted', async () => {
+    const datePickerAnnotation = createDatePickerAnnotation({
+      actions: {
+        F: [{ name: 'JavaScript', javascript: 'app.alert("Hello")' }],
+      },
+    });
+
+    renderWithState({}, datePickerAnnotation);
+
+    const dateFormatCombobox = await screen.findByRole('combobox', { name: /Date format/i });
+    expect(dateFormatCombobox).toHaveTextContent('m/d/yy');
+  });
+
+  it('scans all date actions and finds the first AFDate format call', async () => {
+    const datePickerAnnotation = createDatePickerAnnotation({
+      actions: {
+        F: [
+          { name: 'JavaScript', javascript: 'app.alert("ignored")' },
+          { name: 'JavaScript', javascript: 'AFDate_FormatEx("d mmmm yyyy")' },
+        ],
+      },
+    });
+
+    renderWithState({
+      viewer: {
+        dateTimeFormats: [{ date: 'D MMMM YYYY' }],
+      },
+    }, datePickerAnnotation);
+
+    const dateFormatCombobox = await screen.findByRole('combobox', { name: /Date format/i });
+    expect(dateFormatCombobox).toHaveTextContent('d mmmm yyyy');
+  });
+
+  it('uses active date picker tool format over stale getToolStyles in tool mode', async () => {
+    const datePickerTool = Object.create(window.Core.Tools.DatePickerFormFieldCreateTool.prototype);
+    datePickerTool.name = 'DatePickerFormFieldCreateTool';
+    datePickerTool.defaults = {
+      dateFormat: 'dd/mm/yyyy',
+      options: [],
+    };
+    currentTool = datePickerTool;
+
+    mockGetToolStyles.mockImplementation((toolName) => {
+      if (toolName === 'DatePickerFormFieldCreateTool') {
+        return {
+          dateFormat: 'm/d/yy',
+          flags: {},
+          Width: 200,
+          Height: 40,
+          defaultValue: '',
+          indicatorText: '',
+          showIndicator: false,
+          options: [],
+        };
+      }
+      return {};
+    });
+
+    renderWithState({
+      viewer: {
+        dateTimeFormats: [{ date: 'DD/MM/YYYY' }],
+      },
+    }, null);
+
+    const dateFormatCombobox = await screen.findByRole('combobox', { name: /Date format/i });
+    expect(dateFormatCombobox).toHaveTextContent('dd/mm/yyyy');
   });
 });

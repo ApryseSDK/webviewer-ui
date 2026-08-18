@@ -17,6 +17,48 @@
     font-weight: 700;
   }
 
+  .stamp-panel-toggle-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0;
+    min-height: 36px;
+    max-height: 36px;
+    flex-shrink: 0;
+    border: solid 1px var(--blue-5);
+    border-radius: 4px;
+    overflow: hidden;
+
+    .stamp-panel-toggle-button {
+      flex: 1;
+      justify-content: center;
+      width: auto;
+      height: 34px;
+      min-height: 34px;
+      max-height: 34px;
+      padding: 8px;
+      color: var(--blue-5);
+      border: none;
+      border-radius: 0;
+      background: transparent;
+
+      &:not(:first-child) {
+        border-inline-start: solid 1px var(--blue-5);
+      }
+
+      &:hover {
+        color: var(--primary-button-hover);
+        background: var(--tools-button-active);
+      }
+
+      &.active,
+      &.selected {
+        background: var(--tools-button-active);
+        box-shadow: none;
+      }
+    }
+  }
+
   .CreateRubberStampButton {
     width: 100%;
     padding: 8px;
@@ -24,14 +66,38 @@
     border: solid 1px var(--blue-5);
     border-radius: 4px;
     margin: 16px 0;
+    gap: 4px;
+
+    .Icon {
+      margin-inline-end: 0;
+      color: var(--blue-5);
+      line {
+        stroke: var(--blue-5);
+      }
+
+    }
 
     &:hover {
       color: var(--primary-button-hover);
       border-color: var(--primary-button-hover);
+
+      .Icon {
+        color: var(--primary-button-hover);
+        line {
+          stroke: var(--primary-button-hover);
+        }
+
+      }
     }
   }
 
+  .modularCreateRubberStampButton {
+    border-color: transparent;
+  }
+
   .rubber-stamps-container {
+    flex: 1;
+    min-height: 0;
     overflow: auto;
     padding: 0px 4px;
 
@@ -49,6 +115,12 @@
       gap: 4px;
       padding-top: 2px;
       padding-bottom: 16px;
+
+      &.standard-rubber-stamps-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
 
       .rubber-stamp {
         @include button-reset;
@@ -85,6 +157,12 @@
     align-items: center;
     gap: 8px;
 
+    &.custom-rubber-stamps-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
     .icon-button {
       @include button-reset;
       display: flex;
@@ -100,6 +178,13 @@
         background: var(--gray-2);
       }
     }
+  }
+
+  .rubber-stamp-panel-footer {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    border-top: 1px solid var(--gray-5);
   }
 
   @include mobile {

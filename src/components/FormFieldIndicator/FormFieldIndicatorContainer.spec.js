@@ -5,6 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'reducers/rootReducer';
 import FormFieldIndicatorContainer from './FormFieldIndicatorContainer';
 import selectors from 'selectors';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 
 jest.mock('hooks/useCore', () => ({
   __esModule: true,
@@ -80,6 +81,42 @@ describe('FormFieldIndicatorContainer', () => {
 
     const wrapper = document.body.querySelector('#form-field-indicator-wrapper');
     expect(wrapper).not.toBeInTheDocument();
+  });
+
+  it('should portal into the per-instance root from context (not the singleton getRootNode) in WebComponent mode', () => {
+    selectors.isElementOpen.mockReturnValue(true);
+    selectors.isElementDisabled.mockReturnValue(false);
+    selectors.isMultiViewerMode.mockReturnValue(false);
+    window.isApryseWebViewerWebComponent = true;
+
+    // Fake sibling WC instance's ShadowRoot that must NOT receive this
+    // instance's portal.
+    const otherInstanceHost = document.createElement('div');
+    document.body.appendChild(otherInstanceHost);
+    const otherInstanceRoot = otherInstanceHost.attachShadow({ mode: 'open' });
+
+    // This instance's own ShadowRoot, provided via InstanceRootNodeContext.
+    const ownInstanceHost = document.createElement('div');
+    document.body.appendChild(ownInstanceHost);
+    const ownInstanceRoot = ownInstanceHost.attachShadow({ mode: 'open' });
+    const ownAppEl = document.createElement('div');
+    ownAppEl.id = 'app';
+    ownInstanceRoot.appendChild(ownAppEl);
+
+    render(
+      <Provider store={store}>
+        <InstanceRootNodeContext.Provider value={ownInstanceRoot}>
+          <FormFieldIndicatorContainer />
+        </InstanceRootNodeContext.Provider>
+      </Provider>,
+    );
+
+    expect(ownAppEl.querySelector('#form-field-indicator-wrapper')).toBeInTheDocument();
+    expect(otherInstanceRoot.querySelector('#form-field-indicator-wrapper')).toBeNull();
+
+    document.body.removeChild(otherInstanceHost);
+    document.body.removeChild(ownInstanceHost);
+    delete window.isApryseWebViewerWebComponent;
   });
 
 });

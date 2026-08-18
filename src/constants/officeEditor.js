@@ -24,6 +24,8 @@ export const LIST_OPTIONS = {
   Unordered: 'unordered',
 };
 
+export const TRANSPARENT_COLOR = 'none';
+
 export const DEFAULT_POINT_SIZE = 11;
 export const DEFAULT_COLOR = new window.Core.Annotations.Color(0, 0, 0, 1);
 

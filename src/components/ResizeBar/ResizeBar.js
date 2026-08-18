@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import useIsRTL from 'hooks/useIsRTL';
 
 import './ResizeBar.scss';
-import { getWebViewerRect } from 'src/helpers/getRootNode';
+import { getInstanceRect } from 'src/helpers/getRootNode';
 
 const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement, currentWidth }) => {
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
@@ -19,6 +19,7 @@ const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement, currentWidt
   const pendingWidthRef = useRef(null);
   const isRTL = useIsRTL();
   const onResizeRef = useRef(onResize);
+  const resizeBarRef = useRef(null);
 
   useEffect(() => {
     onResizeRef.current = onResize;
@@ -55,7 +56,7 @@ const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement, currentWidt
           newWidth = initialWidthRef.current + (isRTL ? -deltaX : deltaX);
         } else {
 
-          const windowRect = getWebViewerRect();
+          const windowRect = getInstanceRect(resizeBarRef.current);
           if (leftDirection) {
             const elementOffset = windowRect.right;
             newWidth = Math.max(minWidth, Math.min(window.innerWidth, elementOffset - clientX));
@@ -87,6 +88,7 @@ const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement, currentWidt
 
   return (
     <div
+      ref={resizeBarRef}
       data-element={dataElement}
       className="resize-bar"
       onMouseDown={(e) => {

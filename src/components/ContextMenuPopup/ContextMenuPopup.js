@@ -7,6 +7,7 @@ import FocusTrap from 'components/FocusTrap';
 import { useTranslation } from 'react-i18next';
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
+import ErrorBoundaryComponent from 'components/ErrorBoundaryComponent';
 import OfficeActionItem from './OfficeActionItem';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
@@ -17,12 +18,21 @@ import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox, isMac } from 
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
+import COMPONENT_TYPES from 'constants/componentTypes';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 import { EditingStreamType } from 'constants/officeEditor';
 import { ITEM_TYPE } from 'constants/customizationVariables';
 import { OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER } from 'src/redux/officeEditorModularComponents';
 
 import './ContextMenuPopup.scss';
+
+// Renders office popup items in a child component so item-building errors are caught by ErrorBoundaryComponent.
+const OfficeContextMenuItems = ({ items, renderItem }) => items.map(renderItem);
+
+OfficeContextMenuItems.propTypes = {
+  items: PropTypes.array.isRequired,
+  renderItem: PropTypes.func.isRequired,
+};
 
 const ContextMenuPopup = ({
   clickPosition,
@@ -329,80 +339,85 @@ const ContextMenuPopup = ({
     >
       <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>
         <div className="container">
-          {isOfficeEditor ? (
-            popupItems.map(renderOfficePopupItem)
-          ) : (
-            <CustomizablePopup
-              dataElement={DataElements.CONTEXT_MENU_POPUP}
-              childrenClassName='main-menu-button'
-            >
-              <ActionButton
-                className="main-menu-button"
-                dataElement="panToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'tool.pan' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'tool.pan' : ''}
-                img="icon-header-pan"
-                onClick={() => setToolModeAndGroup(store, 'Pan')}
-              />
-              <ActionButton
-                className="main-menu-button"
-                dataElement="stickyToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'annotation.stickyNote' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'annotation.stickyNote' : ''}
-                img="icon-tool-comment-line"
-                onClick={() => setToolModeAndGroup(store, 'AnnotationCreateSticky')}
-              />
-              <ActionButton
-                className="main-menu-button"
-                dataElement="highlightToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
-                img="icon-tool-highlight"
-                onClick={() => setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
-                }
-              />
-              <ActionButton
-                className="main-menu-button"
-                dataElement="freeHandToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'annotation.freehand' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'annotation.freehand' : ''}
-                img="icon-tool-pen-line"
-                onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
-              />
-              <ActionButton
-                className="main-menu-button"
-                dataElement="freeHandHighlightToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'annotation.freeHandHighlight' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'annotation.freeHandHighlight' : ''}
-                img="icon-tool-pen-highlight"
-                onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHandHighlight')}
-              />
-              <ActionButton
-                className="main-menu-button"
-                dataElement="freeTextToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'annotation.freetext' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'annotation.freetext' : ''}
-                img="icon-tool-text-free-text"
-                onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
-              />
-              <ActionButton
-                className="main-menu-button"
-                dataElement="markInsertTextToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'annotation.markInsertText' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'annotation.markInsertText' : ''}
-                img="ic-insert text"
-                onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkInsertText')}
-              />
-              <ActionButton
-                className="main-menu-button"
-                dataElement="markReplaceTextToolButton"
-                label={isRightClickAnnotationPopupEnabled ? 'annotation.markReplaceText' : ''}
-                title={!isRightClickAnnotationPopupEnabled ? 'annotation.markReplaceText' : ''}
-                img="ic-replace text"
-                onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkReplaceText')}
-              />
-            </CustomizablePopup>
-          )}
+          <ErrorBoundaryComponent
+            dataElement={DataElements.CONTEXT_MENU_POPUP}
+            componentType={COMPONENT_TYPES.POPUP}
+          >
+            {isOfficeEditor ? (
+              <OfficeContextMenuItems items={popupItems} renderItem={renderOfficePopupItem} />
+            ) : (
+              <CustomizablePopup
+                dataElement={DataElements.CONTEXT_MENU_POPUP}
+                childrenClassName='main-menu-button'
+              >
+                <ActionButton
+                  className="main-menu-button"
+                  dataElement="panToolButton"
+                  label={isRightClickAnnotationPopupEnabled ? 'tool.pan' : ''}
+                  title={!isRightClickAnnotationPopupEnabled ? 'tool.pan' : ''}
+                  img="icon-header-pan"
+                  onClick={() => setToolModeAndGroup(store, 'Pan')}
+                />
+                <ActionButton
+                  className="main-menu-button"
+                  dataElement="stickyToolButton"
+                  label={isRightClickAnnotationPopupEnabled ? 'annotation.stickyNote' : ''}
+                  title={!isRightClickAnnotationPopupEnabled ? 'annotation.stickyNote' : ''}
+                  img="icon-tool-comment-line"
+                  onClick={() => setToolModeAndGroup(store, 'AnnotationCreateSticky')}
+                />
+                <ActionButton
+                  className="main-menu-button"
+                  dataElement="highlightToolButton"
+                  label={isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
+                  title={!isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
+                  img="icon-tool-highlight"
+                  onClick={() => setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
+                  }
+                />
+                <ActionButton
+                  className="main-menu-button"
+                  dataElement="freeHandToolButton"
+                  label={isRightClickAnnotationPopupEnabled ? 'annotation.freehand' : ''}
+                  title={!isRightClickAnnotationPopupEnabled ? 'annotation.freehand' : ''}
+                  img="icon-tool-pen-line"
+                  onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
+                />
+                <ActionButton
+                  className="main-menu-button"
+                  dataElement="freeHandHighlightToolButton"
+                  label={isRightClickAnnotationPopupEnabled ? 'annotation.freeHandHighlight' : ''}
+                  title={!isRightClickAnnotationPopupEnabled ? 'annotation.freeHandHighlight' : ''}
+                  img="icon-tool-pen-highlight"
+                  onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHandHighlight')}
+                />
+                <ActionButton
+                  className="main-menu-button"
+                  dataElement="freeTextToolButton"
+                  label={isRightClickAnnotationPopupEnabled ? 'annotation.freetext' : ''}
+                  title={!isRightClickAnnotationPopupEnabled ? 'annotation.freetext' : ''}
+                  img="icon-tool-text-free-text"
+                  onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
+                />
+                <ActionButton
+                  className="main-menu-button"
+                  dataElement="markInsertTextToolButton"
+                  label={isRightClickAnnotationPopupEnabled ? 'annotation.markInsertText' : ''}
+                  title={!isRightClickAnnotationPopupEnabled ? 'annotation.markInsertText' : ''}
+                  img="ic-insert text"
+                  onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkInsertText')}
+                />
+                <ActionButton
+                  className="main-menu-button"
+                  dataElement="markReplaceTextToolButton"
+                  label={isRightClickAnnotationPopupEnabled ? 'annotation.markReplaceText' : ''}
+                  title={!isRightClickAnnotationPopupEnabled ? 'annotation.markReplaceText' : ''}
+                  img="ic-replace text"
+                  onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkReplaceText')}
+                />
+              </CustomizablePopup>
+            )}
+          </ErrorBoundaryComponent>
         </div>
       </FocusTrap>
     </div>

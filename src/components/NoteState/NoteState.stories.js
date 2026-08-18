@@ -5,7 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { userEvent, within, expect, screen } from 'storybook/test';
 import rootReducer from 'src/redux/reducers/rootReducer';
 import ToggleElementButton from '../ModularComponents/ToggleElementButton';
-import Flyout from '../ModularComponents/Flyout';
+import Flyout from '../ModularComponents/FlyoutContainer';
 import { noteStateFlyoutItems } from '../ModularComponents/NoteStateFlyout/NoteStateFlyout';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 import { disableRtlModeParameters } from 'helpers/storybookParams';

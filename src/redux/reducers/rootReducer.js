@@ -38,7 +38,6 @@ export function createRootReducer(instanceId) {
       'lastActiveToolForRibbon',
       'activeCustomRibbon',
       'currentLanguage',
-      'activeTheme',
       'fadePageNavigationComponent',
       'toolDefaultStyleUpdateFromAnnotationPopupEnabled',
       'enableNoteSubmissionWithEnter',
@@ -48,7 +47,8 @@ export function createRootReducer(instanceId) {
       'isNotesPanelTextCollapsingEnabled',
       'pageDeletionConfirmationModalEnabled',
       'thumbnailSelectingPages',
-      'shortcutKeyMap'
+      'shortcutKeyMap',
+      'viewportRelativeAnnotationPositioningEnabled'
     ]
   };
 

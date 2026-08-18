@@ -38,6 +38,41 @@ export const resetRootNode = () => {
   rootNode = undefined;
 };
 
+export const getShadowRootFromNode = (node) => {
+  if (!node) {
+    return null;
+  }
+
+  if (node.shadowRoot) {
+    return node.shadowRoot;
+  }
+
+  if (typeof node.getRootNode === 'function') {
+    const root = node.getRootNode();
+    return root?.host ? root : null;
+  }
+
+  return null;
+};
+
+export const getInstanceRootFromEvent = (event) => {
+  const eventPath = typeof event?.composedPath === 'function' ? event.composedPath() : [];
+  const candidateNodes = [
+    ...eventPath,
+    event?.target,
+    event?.currentTarget?.activeElement,
+  ];
+
+  for (const node of candidateNodes) {
+    const root = getShadowRootFromNode(node);
+    if (root) {
+      return root;
+    }
+  }
+
+  return null;
+};
+
 const getRootNode = () => {
   if (!window.isApryseWebViewerWebComponent) {
     return document;
@@ -87,6 +122,23 @@ export const getWebViewerRect = () => {
     return window.document.documentElement.getBoundingClientRect();
   }
   return getInstanceNode().getBoundingClientRect();
+};
+
+/**
+ * Get the bounding rect of the WebViewer instance that contains the given element.
+ *
+ * When the element lives inside a shadow root, the rect of that shadow root's host
+ * is returned so resizing works correctly with multiple WebViewer instances.
+ * Otherwise it falls back to the global WebViewer rect.
+ *
+ * @ignore
+ * @param {Element} element to get the WebViewer rect for
+ * @returns {DOMRect} the bounding rect of the WebViewer instance that contains the element
+ */
+export const getInstanceRect = (element) => {
+  const root = element?.getRootNode?.();
+  const host = root?.host;
+  return host ? host.getBoundingClientRect() : getWebViewerRect();
 };
 
 export default getRootNode;

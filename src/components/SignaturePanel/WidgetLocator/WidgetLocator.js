@@ -1,10 +1,12 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import './WidgetLocator.scss';
 import useCore from 'hooks/useCore';
 import getRootNode from 'helpers/getRootNode';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 const WidgetLocator = ({ rect }) => {
   const { core } = useCore();
+  const instanceRoot = useContext(InstanceRootNodeContext);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const WidgetLocator = ({ rect }) => {
           height: rect.y2 - rect.y1,
         }}
       />,
-      getRootNode().querySelector('#app'),
+      (instanceRoot || getRootNode()).querySelector('#app'),
     )
   );
 };

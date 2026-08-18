@@ -9,6 +9,7 @@ import {
 import { within, expect, userEvent } from 'storybook/test';
 import initialState from 'src/redux/initialState';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import DataElements from 'constants/dataElement';
 
 export default {
   title: 'SpreadsheetEditor/App',
@@ -33,6 +34,10 @@ const editingModeTemplate = {
     genericPanels: [{
       dataElement: 'searchPanel',
       render: 'searchPanel',
+      location: 'right',
+    }, {
+      dataElement: 'spreadsheetEditorCommentPanel',
+      render: 'notesPanel',
       location: 'right',
     }]
   },
@@ -200,4 +205,57 @@ MoreOptionsFlyoutTest.play = async ({ canvasElement }) => {
   await userEvent.click(moreButton);
   const insertImageButton = await canvas.findByRole('button', { name: getTranslatedText('spreadsheetEditor.insertImage') });
   expect(insertImageButton).toBeInTheDocument();
+};
+
+const commentPanelWithFormulaBarConfig = {
+  ...editingModeTemplate,
+  viewerRedux: {
+    ...editingModeTemplate.viewerRedux,
+    openElements: {
+      ...editingModeTemplate.viewerRedux.openElements,
+      [DataElements.FORMULA_BAR]: true,
+      [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: true,
+    },
+  },
+};
+
+export const SSECommentPanelHeightWithFormulaBar = createTemplate(commentPanelWithFormulaBarConfig);
+SSECommentPanelHeightWithFormulaBar.play = async ({ canvasElement }) => {
+  const appRootElement = canvasElement.querySelector('.App');
+  const appComputedStyle = getComputedStyle(appRootElement);
+  const topHeadersOffset = parseFloat(appComputedStyle.getPropertyValue('--panel-top-headers-height')) || 0;
+  const formulaBarOffset = parseFloat(appComputedStyle.getPropertyValue('--panel-formula-bar-height')) || 0;
+  const bottomHeadersOffset = parseFloat(appComputedStyle.getPropertyValue('--panel-bottom-headers-height')) || 0;
+
+  expect(topHeadersOffset).toBeGreaterThan(0);
+  expect(formulaBarOffset).toBeGreaterThan(0);
+  expect(bottomHeadersOffset).toBeGreaterThan(0);
+};
+
+const commentPanelFormulaBarDisabledConfig = {
+  ...editingModeTemplate,
+  viewerRedux: {
+    ...editingModeTemplate.viewerRedux,
+    openElements: {
+      ...editingModeTemplate.viewerRedux.openElements,
+      [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: true,
+    },
+    disabledElements: {
+      ...editingModeTemplate.viewerRedux.disabledElements,
+      [DataElements.FORMULA_BAR]: { disabled: true },
+    },
+  },
+};
+
+export const SSECommentPanelHeightFormulaBarDisabled = createTemplate(commentPanelFormulaBarDisabledConfig);
+SSECommentPanelHeightFormulaBarDisabled.play = async ({ canvasElement }) => {
+  const appRootElement = canvasElement.querySelector('.App');
+  const appComputedStyle = getComputedStyle(appRootElement);
+  const topHeadersOffset = parseFloat(appComputedStyle.getPropertyValue('--panel-top-headers-height')) || 0;
+  const formulaBarOffset = parseFloat(appComputedStyle.getPropertyValue('--panel-formula-bar-height')) || 0;
+  const bottomHeadersOffset = parseFloat(appComputedStyle.getPropertyValue('--panel-bottom-headers-height')) || 0;
+
+  expect(topHeadersOffset).toBeGreaterThan(0);
+  expect(formulaBarOffset).toEqual(0);
+  expect(bottomHeadersOffset).toBeGreaterThan(0);
 };

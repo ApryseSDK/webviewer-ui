@@ -139,6 +139,7 @@ export const uiWithPanelsInFlyout = {
     readerPageTransitionButton: {
       type: ITEM_TYPE.PRESET_BUTTON,
       buttonType: PRESET_BUTTON_TYPES.READER_PAGE_TRANSITION,
+      disabled: true,
     },
     rotateClockwiseButton: {
       type: ITEM_TYPE.PRESET_BUTTON,

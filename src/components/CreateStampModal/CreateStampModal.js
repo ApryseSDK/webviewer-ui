@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import useCore from 'hooks/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
-import CustomStampForums from './CustomStampForums';
+import CustomStampBuilder from '../CustomStampBuilder/CustomStampBuilder';
 import Button from 'components/Button';
 import DataElements from 'constants/dataElement';
 import ModalWrapper from 'components/ModalWrapper';
@@ -18,20 +18,27 @@ const fillColors = window.Core.Tools.RubberStampCreateTool['FILL_COLORS'];
 
 const CustomStampModal = () => {
   const { core } = useCore();
-  const [state, setState] = useState({ font: 'Helvetica', bold: true, color: fillColors[0] });
-  const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
   const [t] = useTranslation();
-  const store = useStore();
-  const [emptyInput, setEmptyInput] = useState(false);
   const customStampModalOverlayRef = useRef(null);
   const modalWrapperRef = useRef(null);
-  const [isOpen, fonts, dateTimeFormats, userName] = useSelector((state) => [
-    selectors.isElementOpen(state, DataElements.CUSTOM_STAMP_MODAL),
-    selectors.getFonts(state),
-    selectors.getDateTimeFormats(state),
-    selectors.getUserName(state),
-  ]);
   const dispatch = useDispatch();
+
+  const defaultStamp = {
+    title: 'Draft',
+    font: 'Helvetica',
+    bold: true,
+    color: fillColors[0],
+    subtitle: '[$currentUser] DD/MM/YYYY h:mm A',
+  };
+  const [stamp, setStamp] = useState(defaultStamp);
+  const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CUSTOM_STAMP_MODAL));
+  const userName = useSelector((state) => selectors.getUserName(state));
+  const featureFlags = useSelector((state) => selectors.getFeatureFlags(state));
+
+  const isStampTextInputEmpty = !stamp.title || stamp.title.trim() === '';
+  const isCategoryInputEmpty = !stamp.category || stamp.category.trim() === '';
+  const isCreateDisabled = isStampTextInputEmpty || (featureFlags.newStampPanel && isCategoryInputEmpty);
 
   const updateOverflow = () => {
     const currentModalOverlayElement = customStampModalOverlayRef.current;
@@ -77,30 +84,6 @@ const CustomStampModal = () => {
     dispatch(actions.closeElement(DataElements.CUSTOM_STAMP_MODAL));
   });
 
-  const openColorPicker = () => {
-    dispatch(actions.openElement('ColorPickerModal'));
-  };
-
-  const getCustomColorAndRemove = () => {
-    const customColor = selectors.getCustomColor(store.getState());
-    dispatch(actions.setCustomColor(null));
-    return customColor;
-  };
-
-  const openDeleteModal = async (onConfirm) => {
-    const message = t('warning.colorPicker.deleteMessage');
-    const title = t('warning.colorPicker.deleteTitle');
-    const confirmBtnText = t('action.ok');
-
-    const warning = {
-      message,
-      title,
-      confirmBtnText,
-      onConfirm,
-    };
-    dispatch(actions.showWarningMessage(warning));
-  };
-
   const modalClass = classNames({
     Modal: true,
     CustomStampModal: true,
@@ -111,8 +94,8 @@ const CustomStampModal = () => {
   const createCustomStamp = async () => {
     core.setToolMode(TOOL_NAME);
     for (const stampTool of stampToolArray) {
-      stampTool.addCustomStamp(state);
-      const annot = await stampTool.createCustomStampAnnotation(state);
+      stampTool.addCustomStamp(stamp);
+      const annot = await stampTool.createCustomStampAnnotation(stamp);
       await stampTool.setRubberStamp(annot);
       stampTool.showPreview();
     }
@@ -123,7 +106,7 @@ const CustomStampModal = () => {
   };
 
   const onCreateCustomStampClick = useFocusOnClose(() => {
-    if (emptyInput) {
+    if (isCreateDisabled) {
       return;
     }
     createCustomStamp();
@@ -146,17 +129,9 @@ const CustomStampModal = () => {
           swipeToClose
         >
           <div className="container" onMouseDown={(e) => e.stopPropagation()}>
-            <CustomStampForums
-              openDeleteModal={openDeleteModal}
-              getCustomColorAndRemove={getCustomColorAndRemove}
-              openColorPicker={openColorPicker}
-              isModalOpen={isOpen}
-              state={state}
-              setState={setState}
-              closeModal={closeModal}
-              setEmptyInput={setEmptyInput}
-              fonts={fonts}
-              dateTimeFormats={dateTimeFormats}
+            <CustomStampBuilder
+              stamp={stamp}
+              setStamp={setStamp}
               stampTool={stampToolArray[0]}
               userName={userName}
             />
@@ -165,7 +140,7 @@ const CustomStampModal = () => {
                 label={t('action.create')}
                 title={t('action.create')}
                 onClick={onCreateCustomStampClick}
-                disabled={emptyInput}
+                disabled={isCreateDisabled}
                 className="stamp-create"
               />
             </div>

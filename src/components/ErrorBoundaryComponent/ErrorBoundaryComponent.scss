@@ -76,3 +76,59 @@
     }
   }
 }
+
+.error-boundary.error-boundary--flyout {
+  min-width: 252px;
+  max-width: 320px;
+  height: auto;
+  min-height: 280px;
+  max-height: 100%;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--divider);
+
+  // resets flyout specific overrides for mobile
+  @include mobile {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    border: none;
+    border-radius: 0;
+  }
+}
+
+.error-boundary.error-boundary--popup {
+  min-width: 252px;
+  max-width: 320px;
+  height: auto;
+  min-height: 280px;
+  max-height: 100%;
+
+  .error-boundary-actions .Button {
+    width: fit-content;
+    height: 32px;
+    margin: 0;
+  }
+
+  .error-boundary-actions .error-boundary-reload-button:hover {
+    @extend %secondary-button-hover;
+  }
+
+  .error-boundary-actions .error-boundary-close-button:hover {
+    @extend %secondary-button-hover;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  @include mobile {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+
+    .error-boundary-actions {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+}

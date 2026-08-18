@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import NoteStateFlyout, { noteStateFlyoutItems } from './NoteStateFlyout';
-import Flyout from '../Flyout';
+import Flyout from '../FlyoutContainer';
 
 import { createTemplate, oePartialState } from 'helpers/storybookHelper';
 import { userEvent, within, expect } from 'storybook/test';

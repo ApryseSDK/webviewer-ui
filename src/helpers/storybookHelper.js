@@ -191,7 +191,12 @@ export const OEModularUIMockState = {
       fontFace: 'Arial',
       color: {
         r: 0,
-        g: 0,
+        g: 255,
+        b: 0,
+      },
+      textBackgroundColor: {
+        r: 255,
+        g: 255,
         b: 0,
       },
       paragraphProperties: {

@@ -3,6 +3,10 @@ import getRootNode from 'helpers/getRootNode';
 
 let eventHandler;
 
+// Private event used internally by the UI to route load errors to the
+// active viewer/modal
+export const INTERNAL_LOAD_ERROR_EVENT = '__ui_loaderror_internal__';
+
 export const getEventHandler = () => {
   if (!eventHandler) {
     eventHandler = new window.Core.EventHandler();
@@ -69,6 +73,28 @@ const fireEvent = async (eventName, data, element = null) => {
 };
 
 export default fireEvent;
-export const fireError = (message) => {
+
+const createInternalLoadErrorPayload = (message, documentViewerId) => {
+  if (message && typeof message === 'object') {
+    return {
+      error: message,
+      ...message,
+      message: message.message,
+      documentViewerId: message.documentViewerId || documentViewerId,
+    };
+  }
+
+  return {
+    error: message,
+    message,
+    documentViewerId,
+  };
+};
+
+export const fireError = (message, documentViewerId = '') => {
+  // Public contract: preserve original loaderror payload shape.
   fireEvent(Events.LOAD_ERROR, message);
+
+  // Internal modal routing: include viewer id metadata when available.
+  fireEvent(INTERNAL_LOAD_ERROR_EVENT, createInternalLoadErrorPayload(message, documentViewerId));
 };

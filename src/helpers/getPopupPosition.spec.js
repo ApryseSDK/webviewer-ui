@@ -4,6 +4,7 @@ import {
   calcPopupTop,
   getAnnotationPopupPositionBasedOn,
   getAnnotationPosition,
+  getContainingBlockDocOffset,
   getTextPopupPositionBasedOn,
   isAnnotationInView,
 } from './getPopupPosition';
@@ -54,7 +55,7 @@ describe('getPopupPosition', () => {
   it('returns null bounds when converted coordinates are invalid for no-zoom annotation', () => {
     const annotation = createAnnotation();
 
-    core.getDocumentViewers.mockReturnValue([{ getPageCount: () => 1 }]);
+    core.getDocumentViewer.mockReturnValue({ getPageCount: () => 1 });
     core.getDisplayModeObject.mockReturnValue({
       pageToWindow: jest.fn()
         .mockReturnValueOnce(undefined)
@@ -68,7 +69,7 @@ describe('getPopupPosition', () => {
   it('returns fallback position when annotation bounds are invalid', () => {
     const annotation = createAnnotation();
 
-    core.getDocumentViewers.mockReturnValue([{ getPageCount: () => 1 }]);
+    core.getDocumentViewer.mockReturnValue({ getPageCount: () => 1 });
     core.getDisplayModeObject.mockReturnValue({
       pageToWindow: jest.fn().mockReturnValue(undefined),
     });
@@ -92,7 +93,7 @@ describe('getPopupPosition', () => {
   });
 
   it('returns null bounds when document viewer is unavailable', () => {
-    core.getDocumentViewers.mockReturnValue([]);
+    core.getDocumentViewer.mockReturnValue(null);
     const bounds = getAnnotationPosition(createAnnotation());
     expect(bounds).toEqual({ topLeft: null, bottomRight: null });
   });
@@ -106,7 +107,7 @@ describe('getPopupPosition', () => {
 
   it('uses fallback popup dimensions when popup ref is missing', () => {
     const annotation = createAnnotation({ NoZoom: false });
-    core.getDocumentViewers.mockReturnValue([{ getPageCount: () => 1 }]);
+    core.getDocumentViewer.mockReturnValue({ getPageCount: () => 1 });
     core.getDisplayModeObject.mockReturnValue({
       pageToWindow: jest.fn()
         .mockReturnValueOnce({ x: 100, y: 200 })
@@ -132,6 +133,56 @@ describe('getPopupPosition', () => {
     core.getScrollViewElement.mockReturnValue(null);
     const top = calcPopupTop({ topLeft: { x: 10, y: 20 }, bottomRight: { x: 30, y: 40 } }, { height: 80 }, 1);
     expect(top).toBe(0);
+  });
+
+  it('calcPopupTop uses the anchor node Web Component host offset', () => {
+    const originalIsWebComponent = window.isApryseWebViewerWebComponent;
+    window.isApryseWebViewerWebComponent = true;
+    core.getScrollViewElement.mockReturnValue({
+      scrollLeft: 0,
+      scrollTop: 0,
+      getBoundingClientRect: () => ({ top: 0, left: 0, width: 800, height: 600 }),
+    });
+    const anchorNode = {
+      getRootNode: () => ({
+        host: {
+          getBoundingClientRect: () => ({ top: 30, left: 40 }),
+        },
+      }),
+    };
+
+    try {
+      const top = calcPopupTop(
+        { topLeft: { x: 10, y: 100 }, bottomRight: { x: 30, y: 120 } },
+        { height: 20 },
+        1,
+        anchorNode,
+        17,
+      );
+
+      expect(top).toBe(107);
+    } finally {
+      window.isApryseWebViewerWebComponent = originalIsWebComponent;
+    }
+  });
+
+  it('returns the Web Component containing block document offset', () => {
+    window.isApryseWebViewerWebComponent = true;
+    Object.defineProperty(window, 'pageXOffset', { configurable: true, value: 15 });
+    Object.defineProperty(window, 'pageYOffset', { configurable: true, value: 25 });
+    const anchorNode = {
+      getRootNode: () => ({
+        host: {
+          getBoundingClientRect: () => ({ top: 30, left: 40 }),
+        },
+      }),
+    };
+
+    expect(getContainingBlockDocOffset(anchorNode)).toEqual({ top: 55, left: 55 });
+
+    window.isApryseWebViewerWebComponent = false;
+    Object.defineProperty(window, 'pageXOffset', { configurable: true, value: 0 });
+    Object.defineProperty(window, 'pageYOffset', { configurable: true, value: 0 });
   });
 
   it('calcPopupLeft tolerates invalid scaleX values', () => {
@@ -189,7 +240,7 @@ describe('getPopupPosition', () => {
     });
 
     const setupAnnotationPosition = (topLeft, bottomRight) => {
-      core.getDocumentViewers.mockReturnValue([{ getPageCount: () => 5 }]);
+      core.getDocumentViewer.mockReturnValue({ getPageCount: () => 5 });
       core.getDisplayModeObject.mockReturnValue({
         pageToWindow: jest.fn()
           .mockReturnValueOnce(topLeft)

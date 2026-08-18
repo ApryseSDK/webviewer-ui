@@ -11,6 +11,14 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 
+  .resetToDefaultColor.Button {
+    grid-column: 1 / -1;
+    width: 100%;
+    color: var(--blue-5);
+    border: solid 1px var(--blue-5);
+    border-radius: 4px;
+  }
+
   &.padding {
     padding-top: 4px;
     padding-bottom: 8px;

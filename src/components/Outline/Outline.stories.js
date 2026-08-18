@@ -136,7 +136,6 @@ export const Basic = () => {
             isOutlineActive: NOOP,
             setIsAddingNewOutline: NOOP,
             selectedOutlines: [],
-            outlineScrollParentRef: { current: null },
           }}
         >
           <DndProvider backend={HTML5Backend}>

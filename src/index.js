@@ -42,7 +42,7 @@ function createUIInstance(instanceRootNode) {
     return;
   }
 
-  initializeCanvasInstance({ store, persistor, instanceI18n, instanceRootNode });
+  initializeCanvasInstance({ store, persistor, instanceI18n, instanceRootNode, instanceId });
 }
 
 // Backward compatibility

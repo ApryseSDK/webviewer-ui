@@ -61,6 +61,14 @@ const initialState = {
   officeEditor: {
     editMode: 'editing'
   },
+  // NotesPanel unconditionally reads state.spreadsheetEditor.cellProperties via useSelector,
+  // even when isSpreadsheetEditorMode is false, so this must always be defined.
+  spreadsheetEditor: {
+    cellProperties: {
+      topLeftRow: null,
+      topLeftColumn: null,
+    },
+  },
 };
 
 const createStoryState = (viewerOverrides = {}, stateOverrides = {}) => ({
@@ -255,6 +263,12 @@ NotesPanelWithNotes.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const listItems = await canvas.findAllByRole('listitem');
   expect(listItems.length).toBe(1);
+
+  await waitFor(() => {
+    const expandNoteButton = canvasElement.querySelector('[data-element="expandNoteButton"]');
+    expect(expandNoteButton).toBeInTheDocument();
+    expect(expandNoteButton).toBeVisible();
+  });
 };
 
 const createTestNotesWithComments = () => {

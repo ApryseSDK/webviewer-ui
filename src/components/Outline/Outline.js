@@ -19,12 +19,14 @@ import { isMobile, isIE } from 'helpers/device';
 import OutlineContext from './Context';
 import OutlineContent from 'src/components/OutlineContent';
 import DataElementWrapper from '../DataElementWrapper';
+import { isOutlineExpanded } from 'src/helpers/outlinesPanelHelper';
 
 import './Outline.scss';
 import '../../constants/bookmarksOutlinesShared.scss';
 
 const propTypes = {
   outline: PropTypes.object.isRequired,
+  nestingLevel: PropTypes.number,
   setMultiSelected: PropTypes.func,
   moveOutlineInward: PropTypes.func.isRequired,
   moveOutlineBeforeTarget: PropTypes.func.isRequired,
@@ -37,16 +39,30 @@ const propTypes = {
   isDraggedDownwards: PropTypes.bool,
 };
 
+const OUTLINE_NESTING_INDENT = 32;
+
+export const isOutlinePathDescendant = (ancestorPath, descendantPath) => {
+  return typeof ancestorPath === 'string'
+    && typeof descendantPath === 'string'
+    && descendantPath !== ancestorPath
+    && descendantPath.startsWith(`${ancestorPath}-`);
+};
+
+export const isOutlinePathSelfOrDescendant = (ancestorPath, descendantPath) => {
+  return typeof ancestorPath === 'string'
+    && typeof descendantPath === 'string'
+    && (descendantPath === ancestorPath || isOutlinePathDescendant(ancestorPath, descendantPath));
+};
+
 export const shouldExpandOutline = (activeOutlinePath, outlinePath) => {
-  return activeOutlinePath !== null
-    && activeOutlinePath !== outlinePath
-    && activeOutlinePath.startsWith(`${outlinePath}-`);
+  return isOutlinePathDescendant(outlinePath, activeOutlinePath);
 };
 
 const Outline = forwardRef(
   function Outline(
     {
       outline,
+      nestingLevel,
       setMultiSelected,
       isDragging,
       isDraggedUpwards,
@@ -54,15 +70,13 @@ const Outline = forwardRef(
       connectDragSource,
       connectDragPreview,
       connectDropTarget,
-      moveOutlineInward,
-      moveOutlineBeforeTarget,
-      moveOutlineAfterTarget
     },
     ref
   ) {
     const { core } = useCore();
     const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
     const outlinePath = outlineUtils.getPath(outline);
+    const resolvedNestingLevel = nestingLevel ?? outlineUtils.getNestedLevel(outline);
     const outlineState = useSelector(
       (state) => selectors.getOutlinesStateMap(state, activeDocumentViewerKey)?.[outlinePath],
       shallowEqual
@@ -80,7 +94,7 @@ const Outline = forwardRef(
       updateOutlines,
     } = useContext(OutlineContext);
 
-    const isExpanded = shouldAutoExpandOutlines || outlineState?.isExpanded || false;
+    const isExpanded = isOutlineExpanded(outlineState, shouldAutoExpandOutlines);
     const isRenaming = outlineState?.isRenaming || false;
     const isChangingDest = outlineState?.isChangingDest || false;
 
@@ -148,6 +162,7 @@ const Outline = forwardRef(
       <div
         ref={(!isAddingNewOutline && isMultiSelectMode && isOutlineEditable) ? elementRef : null}
         className={classNames('outline-drag-container', { 'outline-dragging': isDragging })}
+        css={{ paddingInlineStart: resolvedNestingLevel * OUTLINE_NESTING_INDENT }}
       >
         <div className={classNames('outline-drag-line', { 'outline-dragged': isDraggedUpwards })} />
         <DataElementWrapper
@@ -185,22 +200,18 @@ const Outline = forwardRef(
             updateIsChangingDest={updateIsOutlineChangingDest}
             textColor={outline.color ? convertRgbObjectToRgbString(outline.color) : null}
             setMultiSelected={setMultiSelected}
-            moveOutlineInward={moveOutlineInward}
-            moveOutlineBeforeTarget={moveOutlineBeforeTarget}
-            moveOutlineAfterTarget={moveOutlineAfterTarget}
-          >
-            {outline.getChildren()}
-          </OutlineContent>
+            childrenCount={outline.getChildren()?.length || 0}
+            nestingLevel={resolvedNestingLevel}
+          />
         </DataElementWrapper>
 
         <div className={classNames('outline-drag-line', { 'outline-dragged': isDraggedDownwards })} />
 
         {isAddingNewOutline && isActive && (
-          <DataElementWrapper className="bookmark-outline-single-container editing">
-            <div
-              className="outline-treeview-toggle"
-              css={{ marginLeft: outlineUtils.getNestedLevel(outline) * 12 }}
-            ></div>
+          <DataElementWrapper
+            className="bookmark-outline-single-container editing"
+            css={{ marginInlineStart: OUTLINE_NESTING_INDENT }}
+          >
             <OutlineContent
               isAdding={true}
               text={''}
@@ -228,16 +239,18 @@ const OutlineNested = DropTarget(
         return;
       }
 
-      const { dragOutline, dragSourceNode } = dragObject;
+      const { dragOutline } = dragObject;
       const { outline: dropOutline } = props;
 
       const dropTargetNode = dropTargetContainer.getNode();
-      if (!dragSourceNode || !dropTargetNode) {
+      if (!dropTargetNode) {
         return;
       }
 
-      const outlineIsBeingDraggedIntoDescendant = dragSourceNode.contains(dropTargetNode);
-      if (outlineIsBeingDraggedIntoDescendant) {
+      const dragPath = outlineUtils.getPath(dragOutline);
+      const dropPath = outlineUtils.getPath(dropOutline);
+      const outlineIsBeingDraggedIntoSelfOrDescendant = isOutlinePathSelfOrDescendant(dragPath, dropPath);
+      if (outlineIsBeingDraggedIntoSelfOrDescendant) {
         dragObject.dropTargetNode = undefined;
         dragObject.dropLocation = DropLocation.INITIAL;
         return;
@@ -324,10 +337,9 @@ const OutlineNested = DropTarget(
 )(DragSource(
   ItemTypes.OUTLINE,
   {
-    beginDrag: (props, dragSourceMonitor, dragSourceContainer) => ({
+    beginDrag: (props, dragSourceMonitor) => ({
       sourceId: dragSourceMonitor.sourceId,
       dragOutline: props.outline,
-      dragSourceNode: dragSourceContainer.getNode(),
       dropLocation: DropLocation.INITIAL,
     }),
     canDrag() {

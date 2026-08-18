@@ -273,8 +273,6 @@ const RichTextStyleEditor = ({
     italic: RichTextStyle?.[0]?.['font-style'] === 'italic',
     underline: RichTextStyle?.[0]?.['text-decoration']?.includes('underline') || RichTextStyle?.[0]?.['text-decoration']?.includes('word'),
     strikeout: RichTextStyle?.[0]?.['text-decoration']?.includes('line-through') ?? false,
-    font: RichTextStyle?.[0]?.['font-family'],
-    size: RichTextStyle?.[0]?.['font-size'],
     StrokeStyle: 'solid',
   };
 

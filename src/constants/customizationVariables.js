@@ -215,6 +215,7 @@ const ROTATE_DOCUMENT_BUTTONS = {
  * @property {string} ALIGN_RIGHT {@link UI.Components.PresetButton.alignRightButton}.
  * @property {string} JUSTIFY_BOTH {@link UI.Components.PresetButton.justifyBothButton}.
  * @property {string} OE_COLOR_PICKER {@link UI.Components.PresetButton.officeEditorColorPicker}.
+ * @property {string} OE_HIGHLIGHT_COLOR_PICKER {@link UI.Components.PresetButton.officeEditorHighlightColorPicker}.
  * @property {string} INSERT_IMAGE {@link UI.Components.PresetButton.insertImageButton}.
  * @property {string} OFFICE_EDITOR_TOGGLE_NON_PRINTING_CHARACTERS_BUTTON {@link UI.Components.PresetButton.officeEditorToggleNonPrintingCharactersButton}.
  * @property {string} CONTINUOUS_PAGE_TRANSITION {@link UI.Components.PresetButton.continuousPageTransitionButton}.
@@ -265,6 +266,7 @@ const PRESET_BUTTON_TYPES = {
   ...ROTATE_DOCUMENT_BUTTONS,
 
   OE_COLOR_PICKER: 'officeEditorColorPicker',
+  OE_HIGHLIGHT_COLOR_PICKER: 'officeEditorHighlightColorPicker',
   OE_TOGGLE_NON_PRINTING_CHARACTERS: 'officeEditorToggleNonPrintingCharactersButton',
   INSERT_IMAGE: 'insertImageButton',
   COMPARE: 'compareButton',
@@ -325,6 +327,8 @@ const ITEM_RENDER_PREFIXES = {
 };
 
 const DEFAULT_GAP = 12;
+const FLYOUT_BOUNDARY_PADDING = 5;
+const FLYOUT_MAX_HEIGHT_PADDING = 10;
 
 const VIEWER_CONFIGURATIONS = {
   DEFAULT: 'default',
@@ -417,6 +421,8 @@ export {
   PREBUILT_FLYOUTS,
   OVERFLOW_FLYOUTS,
   DEFAULT_GAP,
+  FLYOUT_BOUNDARY_PADDING,
+  FLYOUT_MAX_HEIGHT_PADDING,
   OPACITY_LEVELS,
   OPACITY_MODES,
   RESPONSIVE_ITEMS,

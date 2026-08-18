@@ -137,9 +137,11 @@
       &:hover:not(.disabled) {
         color: var(--gray-0);
 
-        .Icon,
-        .Icon svg * {
-          color: var(--gray-0);
+        > .flyout-item:not(.tool-style) {
+          .Icon,
+          .Icon svg * {
+            color: var(--gray-0);
+          }
         }
 
         .hotkey-wrapper,

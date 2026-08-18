@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import debounce from 'lodash/debounce';
 import useOnFormFieldsChanged from '../../hooks/useOnFormFieldsChanged';
@@ -8,10 +8,12 @@ import FormFieldIndicator from './FormFieldIndicator';
 import './FormFieldIndicator.scss';
 import DataElements from 'src/constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 import { createPortal } from 'react-dom';
 
 const FormFieldIndicatorContainer = () => {
   const { core } = useCore();
+  const instanceRootNode = useContext(InstanceRootNodeContext);
   const [
     isOpen,
     isDisabled,
@@ -31,6 +33,10 @@ const FormFieldIndicatorContainer = () => {
   const formFieldAnnotationsList = useOnFormFieldsChanged();
   const [indicators, setIndicators] = useState([]);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
+
+  // Resolve THIS instance's root (its ShadowRoot in WebComponent mode) from context rather than the module-level getRootNode() singleton, which in multi-instance WC mode points to the most-recently-registered instance and would otherwise portal #form-field-indicator-wrapper into ANOTHER instance's #app, causing an intermittent React "removeChild ... not a child" crash on re-render.
+  const getInstanceRootNode = () => instanceRootNode || getRootNode();
+
   const getIndicators = () => {
     if (!core.getDocument()) {
       return [];
@@ -88,7 +94,7 @@ const FormFieldIndicatorContainer = () => {
         .getDisplayModeManager()
         .getDisplayMode(),
       viewerBoundingRect: core.getViewerElement().getBoundingClientRect(),
-      appBoundingRect: getRootNode()
+      appBoundingRect: getInstanceRootNode()
         .getElementById('app')
         .getBoundingClientRect(),
       scrollLeft: scrollLeft,
@@ -104,7 +110,7 @@ const FormFieldIndicatorContainer = () => {
           <div id="form-field-indicator-wrapper">
             <div data-element={DataElements['FORM_FIELD_INDICATOR_CONTAINER']}>{indicators}</div>
           </div>,
-          window.isApryseWebViewerWebComponent ? getRootNode().getElementById('app') : document.body,
+          window.isApryseWebViewerWebComponent ? getInstanceRootNode().getElementById('app') : document.body,
         )}
       </>
     );

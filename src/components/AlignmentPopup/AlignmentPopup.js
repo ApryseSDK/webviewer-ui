@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import ActionButton from 'components/ActionButton';
-import { getStartFacingChevronIcon } from 'helpers/rightToLeft';
+import useDirectionalChevronIcons from 'hooks/useDirectionalChevronIcons';
 
 import './AlignmentPopup.scss';
 
@@ -25,6 +25,7 @@ const AlignmentPopup = ({
   isAnnotation
 }) => {
   const [t] = useTranslation();
+  const { startChevronIcon } = useDirectionalChevronIcons();
 
   const renderButtonRow = (title, config, onClick) => {
     return (
@@ -54,7 +55,7 @@ const AlignmentPopup = ({
           className="back-to-menu-button"
           dataElement="backToMenuButton"
           title={t('action.backToMenu')}
-          img={getStartFacingChevronIcon()}
+          img={startChevronIcon}
           onClick={backToMenuOnClick}
         />
         <div role="button" type="button" tabIndex="0" onClick={backToMenuOnClick} onKeyDown={backToMenuOnClick}>{t('action.backToMenu')}</div>

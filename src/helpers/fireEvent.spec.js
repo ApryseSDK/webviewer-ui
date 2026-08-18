@@ -1,4 +1,4 @@
-import fireEvent, { getEventHandler } from 'helpers/fireEvent';
+import fireEvent, { fireError, getEventHandler, INTERNAL_LOAD_ERROR_EVENT } from 'helpers/fireEvent';
 import Events from 'constants/events';
 
 jest.mock('helpers/getRootNode', () => () => global.document);
@@ -182,6 +182,62 @@ describe('fireEvent', () => {
       await fireEvent('ready', undefined, target);
 
       expect(listener).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('fireError', () => {
+    it('keeps the public loaderror payload unchanged for Error objects', async () => {
+      const publicListener = jest.fn();
+      const internalListener = jest.fn();
+
+      window.addEventListener(Events.LOAD_ERROR, publicListener);
+      window.addEventListener(INTERNAL_LOAD_ERROR_EVENT, internalListener);
+
+      const originalError = new Error('boom');
+      fireError(originalError, 'dv-2');
+
+      await Promise.resolve();
+      await Promise.resolve();
+
+      expect(publicListener).toHaveBeenCalledTimes(1);
+      expect(publicListener.mock.calls[0][0].detail).toBe(originalError);
+
+      expect(internalListener).toHaveBeenCalledTimes(1);
+      expect(internalListener.mock.calls[0][0].detail).toMatchObject({
+        error: originalError,
+        message: 'boom',
+        documentViewerId: 'dv-2',
+      });
+
+      window.removeEventListener(Events.LOAD_ERROR, publicListener);
+      window.removeEventListener(INTERNAL_LOAD_ERROR_EVENT, internalListener);
+    });
+
+    it('keeps the public loaderror payload unchanged for string payloads', async () => {
+      const publicListener = jest.fn();
+      const internalListener = jest.fn();
+
+      window.addEventListener(Events.LOAD_ERROR, publicListener);
+      window.addEventListener(INTERNAL_LOAD_ERROR_EVENT, internalListener);
+
+      fireError('plain string error', 'dv-7');
+
+      await Promise.resolve();
+      await Promise.resolve();
+
+      expect(publicListener).toHaveBeenCalledTimes(1);
+      expect(publicListener.mock.calls[0][0].detail).toBe('plain string error');
+
+      expect(internalListener).toHaveBeenCalledTimes(1);
+      expect(internalListener.mock.calls[0][0].detail).toMatchObject({
+        error: 'plain string error',
+        message: 'plain string error',
+        documentViewerId: 'dv-7',
+      });
+      expect(internalListener.mock.calls[0][0].detail.message).not.toContain('DocumentViewerId:');
+
+      window.removeEventListener(Events.LOAD_ERROR, publicListener);
+      window.removeEventListener(INTERNAL_LOAD_ERROR_EVENT, internalListener);
     });
   });
 });

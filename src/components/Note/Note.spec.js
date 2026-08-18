@@ -10,6 +10,7 @@ let mockCustomNoteSelectionFunction = null;
 let mockCanModify = true;
 let mockCanModifyContents = true;
 let mockIsOfficeEditorMode = false;
+let mockIsSpreadsheetEditorMode = false;
 let mockOfficeEditorCommentId = null;
 const mockMoveCursorToTrackedChange = jest.fn();
 const mockMoveCursorToComment = jest.fn();
@@ -60,6 +61,7 @@ jest.mock('selectors', () => ({
   getActiveDocumentViewerKey: () => 1,
   getIsOfficeEditorMode: () => mockIsOfficeEditorMode,
   getOfficeEditorEditMode: () => 'editing',
+  isSpreadsheetEditorModeEnabled: () => mockIsSpreadsheetEditorMode,
 }));
 
 jest.mock('components/NoteContent', () => {
@@ -152,7 +154,47 @@ describe('Note', () => {
     mockCanModify = true;
     mockCanModifyContents = true;
     mockIsOfficeEditorMode = false;
+    mockIsSpreadsheetEditorMode = false;
     mockOfficeEditorCommentId = null;
+  });
+
+  it('should show the spreadsheet sheet and cell location for SSE comments', () => {
+    mockIsSpreadsheetEditorMode = true;
+
+    const annotation = {
+      ...createAnnotation(() => []),
+      getCustomData: (key) => {
+        if (key === 'spreadsheetThreadId') {
+          return 'thread-1';
+        }
+
+        if (key === 'spreadsheetSheetName') {
+          return 'Sheet 1';
+        }
+
+        if (key === 'spreadsheetCell') {
+          return 'B4';
+        }
+
+        return null;
+      },
+    };
+
+    render(
+      <NoteContext.Provider value={baseContext}>
+        <Note
+          annotation={annotation}
+          isMultiSelected={false}
+          isMultiSelectMode={false}
+          isInNotesPanel={false}
+          isCustomPanelOpen={false}
+          shouldHideConnectorLine
+          handleMultiSelect={jest.fn()}
+        />
+      </NoteContext.Provider>
+    );
+
+    expect(screen.getByText('Sheet 1 | B4')).toBeInTheDocument();
   });
 
   it('should trigger custom note selection when note container is clicked', async () => {

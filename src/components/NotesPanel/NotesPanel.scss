@@ -1,7 +1,8 @@
 @import '../../constants/panel';
 
 .notes-panel-container {
-  &.office-editor {
+  &.office-editor,
+  .spreadsheetEditorCommentPanel & {
     height: 100%;
   }
 
@@ -72,7 +73,7 @@
       height: 72px;
     }
 
-    .office-editor-footer {
+    .comment-panel-footer {
       height: 57px;
       display: flex;
       flex-direction: column;
@@ -80,7 +81,8 @@
       position: relative;
       margin-inline-end: 16px;
 
-      .officeEditorCommentPanel & {
+      .officeEditorCommentPanel &,
+      .spreadsheetEditorCommentPanel & {
         align-items: center;
       }
 
@@ -117,7 +119,8 @@
       flex-direction: column;
       align-items: center;
 
-      .officeEditorCommentPanel & {
+      .officeEditorCommentPanel &,
+      .spreadsheetEditorCommentPanel & {
         flex-grow: 1;
       }
 

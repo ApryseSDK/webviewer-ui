@@ -571,6 +571,7 @@ export const uiWithCustomElements = {
     readerPageTransitionButton: {
       type: ITEM_TYPE.PRESET_BUTTON,
       buttonType: PRESET_BUTTON_TYPES.READER_PAGE_TRANSITION,
+      disabled: true,
     },
     rotateClockwiseButton: {
       type: ITEM_TYPE.PRESET_BUTTON,
@@ -739,6 +740,7 @@ export const uiWithCustomStyleAndClass = {
     readerPageTransitionButton: {
       type: ITEM_TYPE.PRESET_BUTTON,
       buttonType: PRESET_BUTTON_TYPES.READER_PAGE_TRANSITION,
+      disabled: true,
     },
     rotateClockwiseButton: {
       type: ITEM_TYPE.PRESET_BUTTON,

@@ -74,5 +74,8 @@ export const getDocumentViewer = (number) => {
 };
 
 export const getDocumentViewers = () => {
+  if (multiInstanceActiveKey != null && documentViewerMap.has(multiInstanceActiveKey)) {
+    return [documentViewerMap.get(multiInstanceActiveKey)];
+  }
   return Array.from(documentViewerMap.values());
 };

@@ -327,4 +327,20 @@
       }
     }
   }
+
+  &.modular-ui-panel.spreadsheet-editor {
+    @include tablet-and-desktop {
+      // Height adapts automatically via CSS variables set in App.js:
+      //   var(--panel-top-headers-height): getTopHeadersHeight
+      //     editing mode  = 2 × 49px = 98px
+      //     view-only mode = 1 × 49px = 49px  (tools header is disabled)
+      //   var(--panel-formula-bar-height): 50px when formulaBar is open, 0px otherwise
+      //   var(--panel-bottom-headers-height): getBottomHeadersHeight (SpreadsheetSwitcher = 45px)
+      height: calc(100% - var(--panel-top-headers-height, 0px) - var(--panel-formula-bar-height, 0px) - var(--panel-bottom-headers-height, 0px));
+
+      .ModularPanel-container {
+        height: 100%;
+      }
+    }
+  }
 }

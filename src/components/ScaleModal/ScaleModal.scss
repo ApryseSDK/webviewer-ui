@@ -153,6 +153,12 @@
                 .Dropdown {
                   height: 100%;
                   text-align: start;
+
+                  // Intentionally targets Dropdown's chevron icon class to keep it from inheriting
+                  // warning icon color in this modal. Update this selector if Dropdown arrow markup changes.
+                  .arrow {
+                    color: var(--icon-color);
+                  }
                 }
               }
 

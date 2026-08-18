@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import actions from 'actions';
@@ -16,9 +17,11 @@ const COMPONENT_TYPE_VALUES = Object.values(COMPONENT_TYPES);
 
 function DefaultFallback({ componentType, onReload, onClose }) {
   const { t } = useTranslation();
-  const resolvedComponentType = t(`message.renderErrors.componentType.${componentType ?? COMPONENT_TYPES.COMPONENT}`);
+  const normalizedComponentType = componentType ?? COMPONENT_TYPES.COMPONENT;
+  const resolvedComponentType = t(`message.renderErrors.componentType.${normalizedComponentType}`);
+  const className = classNames('error-boundary', `error-boundary--${normalizedComponentType}`);
   return (
-    <div className="error-boundary">
+    <div className={className}>
       <div className="error-boundary-content">
         <Icon className="error-boundary-icon" glyph="ic-error" />
         <div className="error-boundary-messages" role="alert">
@@ -55,8 +58,10 @@ DefaultFallback.propTypes = {
 function ErrorBoundaryComponent(props) {
   const { children, componentType, dataElement } = props;
 
+  const isFlyout = componentType === COMPONENT_TYPES.FLYOUT;
   const dispatch = useDispatch();
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const flyoutToggleElement = useSelector((state) => isFlyout ? selectors.getFlyoutToggleElement(state) : null);
 
   const handleError = (error, errorInfo) => {
     console.error(`${dataElement} crashed`, error, errorInfo);
@@ -65,7 +70,12 @@ function ErrorBoundaryComponent(props) {
   const renderFallback = ({ resetErrorBoundary }) => {
     const handleReload = () => {
       dispatch(actions.closeElements([dataElement]));
-      setTimeout(() => dispatch(actions.openElement(dataElement)), 0);
+      setTimeout(() => {
+        dispatch(actions.openElement(dataElement));
+        if (isFlyout) {
+          dispatch(actions.setFlyoutToggleElement(flyoutToggleElement));
+        }
+      }, 0);
       resetErrorBoundary();
     };
     const handleClose = () => {

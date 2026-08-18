@@ -1,10 +1,11 @@
 import React from 'react';
-import { render, getByText } from '@testing-library/react';
+import { render, getByText, screen } from '@testing-library/react';
 import NoteHeader from './NoteHeader';
 import NoteContext from '../Note/Context';
 import * as reactRedux from 'react-redux';
-import { testProps, testPropsWithAnnotationNumbering } from './NoteHeader.stories';
+import { testProps, testPropsWithAnnotationNumbering, testPropsSpreadsheetComment } from './NoteHeader.stories';
 import useCore from 'hooks/useCore';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 const NoteHeaderWithProviders = withProviders(NoteHeader);
 const noteContextValue = {
@@ -55,6 +56,7 @@ describe('NoteHeader Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    initialState.viewer.isSpreadsheetEditorModeEnabled = false;
     getEditorMock = jest.fn().mockReturnValue(null);
     getExistingEditorMock = jest.fn().mockReturnValue(null);
 
@@ -120,5 +122,45 @@ describe('NoteHeader Component', () => {
 
     expect(getExistingEditorMock).toHaveBeenCalledWith(freeTextAnnotation);
     expect(getEditorMock).not.toHaveBeenCalled();
+  });
+
+  describe('spreadsheet comment behavior', () => {
+    beforeEach(() => {
+      initialState.viewer.isSpreadsheetEditorModeEnabled = true;
+    });
+
+    it('does not render status button for spreadsheet comments', () => {
+      const { container } = render(
+        <TestNoteHeader
+          {...notSelectedProps}
+          annotation={testPropsSpreadsheetComment.annotation}
+        />
+      );
+      expect(screen.queryByRole('button', { name: getTranslatedText('option.notesOrder.status') })).not.toBeInTheDocument();
+    });
+
+    it('renders status button for non-spreadsheet comments', () => {
+      const { container } = render(
+        <TestNoteHeader {...notSelectedProps} />
+      );
+      expect(screen.getByRole('button', { name: getTranslatedText('option.notesOrder.status') })).toBeInTheDocument();
+    });
+
+    it('adds spreadsheet-type-icon class to icon for spreadsheet comments', () => {
+      const { container } = render(
+        <TestNoteHeader
+          {...notSelectedProps}
+          annotation={testPropsSpreadsheetComment.annotation}
+        />
+      );
+      expect(container.querySelector('.spreadsheet-type-icon')).toBeInTheDocument();
+    });
+
+    it('does not add spreadsheet-type-icon class for non-spreadsheet annotations', () => {
+      const { container } = render(
+        <TestNoteHeader {...notSelectedProps} />
+      );
+      expect(container.querySelector('.spreadsheet-type-icon')).not.toBeInTheDocument();
+    });
   });
 });

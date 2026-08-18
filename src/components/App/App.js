@@ -1,11 +1,13 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import classNames from 'classnames';
 import { shallowEqual, useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import useCore from 'hooks/useCore';
 import actions from 'actions';
+import fireEvent, { INTERNAL_LOAD_ERROR_EVENT , getEventHandler } from 'helpers/fireEvent';
+import { css } from '@emotion/react';
 
 import LogoBar from 'components/LogoBar';
 import Accessibility from 'components/Accessibility';
@@ -51,12 +53,11 @@ import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChang
 import useOnHeaderFooterUpdate from 'src/hooks/useOnHeaderFooterUpdate';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters, { getHashParameterFromHost } from 'helpers/getHashParameters';
-import fireEvent, { getEventHandler } from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
-import hotkeysManager from 'helpers/hotkeysManager';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isMobileDevice } from 'helpers/device';
+import useHotkeysManager from 'hooks/useHotkeysManager';
 
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
@@ -84,11 +85,13 @@ const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 9
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
   initialDirection: PropTypes.oneOf(['ltr','rtl']),
+  instanceRootNode: PropTypes.object,
 };
 
-const App = ({ removeEventHandlers, initialDirection }) => {
+const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
   const { core } = useCore();
   const store = useStore();
+  const hotkeysManager = useHotkeysManager();
   const dispatch = useDispatch();
   let timeoutReturn;
 
@@ -104,6 +107,22 @@ const App = ({ removeEventHandlers, initialDirection }) => {
   const { i18n: instanceI18n } = useTranslation();
   const isSpreadsheetEditorModeEnabled = currentUIConfiguration === VIEWER_CONFIGURATIONS.SPREADSHEET_EDITOR;
   const defaultDirection = isSpreadsheetEditorModeEnabled ? 'ltr' : (initialDirection ?? instanceI18n?.dir?.() ?? 'ltr');
+  const topHeadersHeight = useSelector(selectors.getTopHeadersHeight);
+  const bottomHeadersHeight = useSelector(selectors.getBottomHeadersHeight);
+  const isFormulaBarVisible = useSelector((state) => (
+    selectors.isElementOpen(state, DataElements.FORMULA_BAR) &&
+    !selectors.isElementDisabled(state, DataElements.FORMULA_BAR)
+  ));
+  const spreadsheetEditorCss = useMemo(() => {
+    if (!isSpreadsheetEditorModeEnabled) {
+      return null;
+    }
+    return css({
+      '--panel-top-headers-height': `${topHeadersHeight}px`,
+      '--panel-formula-bar-height': `${isFormulaBarVisible ? 50 : 0}px`,
+      '--panel-bottom-headers-height': `${bottomHeadersHeight}px`,
+    });
+  }, [isSpreadsheetEditorModeEnabled, topHeadersHeight, isFormulaBarVisible, bottomHeadersHeight]);
   const [direction, setDirection] = useState(defaultDirection);
 
   // These hooks control behaviours regarding the opening and closing of panels and in the case
@@ -192,15 +211,10 @@ const App = ({ removeEventHandlers, initialDirection }) => {
   }, []);
 
   useEffect(() => {
-    // Capture the WC host element ONCE at mount. In multi-WC mode the
-    // module-level `getInstanceNode()` singleton is overwritten as each new
-    // instance mounts, so any async caller (the 500ms fallback timer below,
-    // postMessage handler, etc.) that resolves attributes through the
-    // singleton at fire-time would read the most-recently-mounted instance's
-    // attributes (e.g. another viewer's `initialDoc`) instead of THIS
-    // instance's. Pin the host element here so all the closures below read
-    // attributes from this instance only.
-    const wcHost = window.isApryseWebViewerWebComponent ? getInstanceNode() : null;
+    // Capture the WC host element ONCE at mount (preferring the per-instance root from renderInstanceApp, falling back to the singleton for iframe/legacy), since the module-level getInstanceNode() singleton flips as each new instance mounts and would otherwise leak another viewer's attributes into async callers here.
+    const wcHost = window.isApryseWebViewerWebComponent
+      ? (instanceRootNode?.host || getInstanceNode())
+      : null;
     const readHashParam = wcHost
       ? (param, defaultValue) => getHashParameterFromHost(wcHost, param, defaultValue)
       : getHashParameters;
@@ -210,7 +224,7 @@ const App = ({ removeEventHandlers, initialDirection }) => {
       fireEvent(Events.VIEWER_LOADED);
     }, 300);
     window.isApryseWebViewerWebComponent ?
-      fireEvent('ready', undefined, wcHost) :
+      fireEvent('ready', { source: 'apryse-webviewer-ui' }, wcHost) :
       window.parent.postMessage(
         {
           type: 'viewerLoaded',
@@ -391,26 +405,36 @@ const App = ({ removeEventHandlers, initialDirection }) => {
 
   // These need to be done only once on app load
   useEffect(() => {
-    hotkeysManager.initialize(store);
+    hotkeysManager.initialize(store, instanceRootNode);
     setDefaultDisabledElements(store);
-  }, []);
+  }, [hotkeysManager, store, instanceRootNode]);
 
   useEffect(() => {
-    const onError = (error) => {
+    const onError = (errorPayload) => {
+      const payloadDocumentViewerId = errorPayload?.documentViewerId;
+      if (payloadDocumentViewerId) {
+        const currentDocumentViewer = core.getDocumentViewer();
+        const currentDocumentViewerId = currentDocumentViewer?.getID?.() || currentDocumentViewer?.id;
+        if (`${currentDocumentViewerId || ''}` !== `${payloadDocumentViewerId}`) {
+          return;
+        }
+      }
+
       // The LOAD_ERROR event always represents a load error.
       let errorTitle = 'message.loadError';
-      error = error?.message ?? error;
+      const normalizedError = errorPayload?.error ?? errorPayload;
+      const resolvedMessage = normalizedError?.message ?? normalizedError;
 
       let errorMessage;
 
-      if (typeof error === 'string') {
-        errorMessage = error;
+      if (typeof resolvedMessage === 'string') {
+        errorMessage = resolvedMessage;
 
         // provide a more specific error message
         if (errorMessage.includes('File does not exist')) {
           errorMessage = 'message.notSupported';
         }
-      } else if (error?.type === 'InvalidPDF') {
+      } else if (normalizedError?.type === 'InvalidPDF') {
         errorMessage = 'message.badDocument';
       }
 
@@ -419,8 +443,8 @@ const App = ({ removeEventHandlers, initialDirection }) => {
       }
     };
 
-    getEventHandler().addEventListener(Events.LOAD_ERROR, onError);
-    return () => getEventHandler().removeEventListener(Events.LOAD_ERROR, onError);
+    getEventHandler().addEventListener(INTERNAL_LOAD_ERROR_EVENT, onError);
+    return () => getEventHandler().removeEventListener(INTERNAL_LOAD_ERROR_EVENT, onError);
   }, []);
 
   useEffect(() => {
@@ -519,7 +543,9 @@ const App = ({ removeEventHandlers, initialDirection }) => {
           'App': true,
           'is-in-desktop-only-mode': isInDesktopOnlyMode,
           'is-web-component': window.isApryseWebViewerWebComponent,
-        })} dir={direction}
+        })}
+        dir={direction}
+        css={spreadsheetEditorCss}
       >
         <FlyoutContainer />
         <RibbonOverflowFlyout />

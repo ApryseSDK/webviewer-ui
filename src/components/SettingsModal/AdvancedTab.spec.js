@@ -18,6 +18,7 @@ jest.mock('selectors', () => ({
   getCustomSettings: jest.fn().mockReturnValue([]),
   isToolDefaultStyleUpdateFromAnnotationPopupEnabled: jest.fn().mockReturnValue(false),
   isWidgetHighlightingEnabled: jest.fn().mockReturnValue(true),
+  isViewportRelativeAnnotationPositioningEnabled: jest.fn().mockReturnValue(false),
   getUIConfiguration: jest.fn().mockReturnValue('default'),
   getActiveDocumentViewerKey: jest.fn().mockReturnValue(1),
 }));
@@ -53,6 +54,10 @@ jest.mock('actions', () => ({
   disablePageDeletionConfirmationModal: jest.fn(),
   enablePageDeletionConfirmationModal: jest.fn(),
   setThumbnailSelectingPages: jest.fn(),
+  setViewportRelativeAnnotationPositioning: jest.fn((isEnabled) => ({
+    type: 'SET_VIEWPORT_RELATIVE_PASTE',
+    payload: isEnabled,
+  })),
 }));
 
 jest.mock('helpers/TouchEventManager', () => ({
@@ -127,7 +132,8 @@ describe('AdvancedTab Component', () => {
           selector === selectors.isNotesPanelRepliesCollapsingEnabled ||
           selector === selectors.isNotesPanelTextCollapsingEnabled ||
           selector === selectors.isThumbnailSelectingPages ||
-          selector === selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled
+          selector === selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled ||
+          selector === selectors.isViewportRelativeAnnotationPositioningEnabled
         ) {
           selector.mockReturnValue(false);
         } else {
@@ -226,6 +232,18 @@ describe('AdvancedTab Component', () => {
     renderWithRedux(<AdvancedTab />, initialState);
 
     expect(screen.getByText('option.settings.enabledFormFieldHighlightingDesc')).toBeInTheDocument();
+  });
+
+  test('dispatches viewport relative paste action when toggle is enabled', () => {
+    const selectors = require('selectors');
+    selectors.isViewportRelativeAnnotationPositioningEnabled.mockReturnValue(false);
+
+    renderWithRedux(<AdvancedTab />, createInitialState());
+
+    const checkbox = screen.getByTestId('option.settings.enableViewportRelativePositioning-checkbox');
+    fireEvent.click(checkbox);
+
+    expect(actions.setViewportRelativeAnnotationPositioning).toHaveBeenCalledWith(true);
   });
 });
 

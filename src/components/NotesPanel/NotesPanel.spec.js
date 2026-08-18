@@ -10,6 +10,15 @@ import selectors from 'selectors';
 import userEvent from '@testing-library/user-event';
 import { getExtendedSortStrategies } from 'src/constants/sortStrategies';
 import onAnnotationNumberingUpdated from 'src/event-listeners/onAnnotationNumberingUpdated';
+import {
+  SpreadsheetEditorEditMode,
+  SPREADSHEET_ROW_KEY,
+  SPREADSHEET_COLUMN_KEY,
+  SPREADSHEET_SHEET_INDEX_KEY,
+  SPREADSHEET_SHEET_NAME_KEY,
+  SPREADSHEET_THREAD_ID_KEY,
+} from 'constants/spreadsheetEditor';
+import DataElements from 'constants/dataElement';
 
 jest.mock('components/MultiSelectControls', () => {
   const MockMultiSelectControls = () => <div data-testid="multi-select-controls" />;
@@ -55,10 +64,23 @@ const initialState = {
       colorFilter: [],
       typeFilter: [],
       statusFilter: []
-    }
+    },
+    modularHeadersHeight: {
+      topHeaders: 49,
+      bottomHeaders: 45,
+    },
   },
   officeEditor: {},
   featureFlags: {},
+  spreadsheetEditor: {
+    editMode: 'viewOnly',
+    activeCellRange: '',
+    cellProperties: {
+      topLeftRow: null,
+      topLeftColumn: null,
+      isSingleCell: false,
+    },
+  },
 };
 
 const store = configureStore({ reducer: () => initialState });
@@ -610,6 +632,298 @@ describe('NotesPanel', () => {
         expect(container.querySelector('.multi-select-place-holder')).not.toBeInTheDocument();
         expect(screen.queryByTestId('multi-select-controls')).not.toBeInTheDocument();
       });
+    });
+
+    it('should not render an empty spreadsheet separator when sheet name metadata is missing', () => {
+      const spreadsheetNote = new window.Core.Annotations.StickyAnnotation();
+      spreadsheetNote.Id = 'spreadsheet-note-1';
+      spreadsheetNote.Author = 'Guest';
+      spreadsheetNote.DateCreated = 1;
+      spreadsheetNote.setContents('Spreadsheet note');
+      spreadsheetNote.getReplies = () => [];
+      spreadsheetNote.getAssociatedNumber = () => 1;
+      spreadsheetNote.getCustomData = (key) => {
+        if (key === SPREADSHEET_SHEET_INDEX_KEY) {
+          return '1';
+        }
+        if (key === SPREADSHEET_SHEET_NAME_KEY) {
+          return '';
+        }
+        return '';
+      };
+
+      const spreadsheetState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isSpreadsheetEditorModeEnabled: true,
+          sortStrategy: 'createdDate',
+        },
+      };
+
+      const { container } = render(
+        <Provider store={configureStore({ reducer: () => spreadsheetState })}>
+          <NotesPanel
+            notes={[spreadsheetNote]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={''}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      expect(container.querySelector('h4.ListSeparator')).not.toBeInTheDocument();
+    });
+
+    it('should render the Add Comment button in SSE Editing mode for comment panel', () => {
+      const sseState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isSpreadsheetEditorModeEnabled: true,
+          openElements: {
+            [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: true,
+          },
+          panelWidths: {
+            [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: DEFAULT_NOTES_PANEL_WIDTH,
+          },
+        },
+        spreadsheetEditor: {
+          ...initialState.spreadsheetEditor,
+          editMode: 'editing',
+          activeCellRange: 'A1',
+          cellProperties: {
+            ...initialState.spreadsheetEditor.cellProperties,
+            isSingleCell: true,
+            topLeftRow: 0,
+            topLeftColumn: 0,
+          },
+        },
+      };
+
+      render(
+        <Provider store={configureStore({ reducer: () => sseState })}>
+          <NotesPanel
+            dataElement={DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL}
+            notes={[]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={''}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      expect(screen.getByRole('button', { name: 'Add Comment' })).toBeEnabled();
+    });
+
+    it('should not render the Add Comment button in SSE View only mode for comment panel', () => {
+      const sseState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isSpreadsheetEditorModeEnabled: true,
+          openElements: {
+            [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: true,
+          },
+          panelWidths: {
+            [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: DEFAULT_NOTES_PANEL_WIDTH,
+          },
+        },
+        spreadsheetEditor: {
+          ...initialState.spreadsheetEditor,
+          editMode: 'viewOnly',
+        },
+      };
+
+      render(
+        <Provider store={configureStore({ reducer: () => sseState })}>
+          <NotesPanel
+            dataElement={DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL}
+            notes={[]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={''}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      expect(screen.queryByRole('button', { name: 'Add Comment' })).not.toBeInTheDocument();
+    });
+
+    it('should sort spreadsheet comments by sheet and cell position', () => {
+      const sheetNoteA2 = new window.Core.Annotations.StickyAnnotation();
+      sheetNoteA2.Id = 'spreadsheet-note-a2';
+      sheetNoteA2.Author = 'Guest';
+      sheetNoteA2.DateCreated = 1;
+      sheetNoteA2.setContents('A2 note');
+      sheetNoteA2.getReplies = () => [];
+      sheetNoteA2.getAssociatedNumber = () => 1;
+      sheetNoteA2.getCustomData = (key) => {
+        if (key === SPREADSHEET_THREAD_ID_KEY) {
+          return 'thread-a2';
+        }
+        if (key === SPREADSHEET_SHEET_INDEX_KEY) {
+          return '1';
+        }
+        if (key === SPREADSHEET_SHEET_NAME_KEY) {
+          return 'Sheet 1';
+        }
+        if (key === SPREADSHEET_ROW_KEY) {
+          return '1';
+        }
+        if (key === SPREADSHEET_COLUMN_KEY) {
+          return '0';
+        }
+        return '';
+      };
+
+      const sheetNoteB1 = new window.Core.Annotations.StickyAnnotation();
+      sheetNoteB1.Id = 'spreadsheet-note-b1';
+      sheetNoteB1.Author = 'Guest';
+      sheetNoteB1.DateCreated = 2;
+      sheetNoteB1.setContents('B1 note');
+      sheetNoteB1.getReplies = () => [];
+      sheetNoteB1.getAssociatedNumber = () => 1;
+      sheetNoteB1.getCustomData = (key) => {
+        if (key === SPREADSHEET_THREAD_ID_KEY) {
+          return 'thread-b1';
+        }
+        if (key === SPREADSHEET_SHEET_INDEX_KEY) {
+          return '1';
+        }
+        if (key === SPREADSHEET_SHEET_NAME_KEY) {
+          return 'Sheet 1';
+        }
+        if (key === SPREADSHEET_ROW_KEY) {
+          return '0';
+        }
+        if (key === SPREADSHEET_COLUMN_KEY) {
+          return '1';
+        }
+        return '';
+      };
+
+      const spreadsheetState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isSpreadsheetEditorModeEnabled: true,
+          sortStrategy: 'createdDate',
+        },
+      };
+
+      const { container } = render(
+        <Provider store={configureStore({ reducer: () => spreadsheetState })}>
+          <NotesPanel
+            notes={[sheetNoteA2, sheetNoteB1]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={''}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      const noteItems = container.querySelectorAll('[role="listitem"]');
+      expect(noteItems[0]).toHaveTextContent('B1 note');
+      expect(noteItems[1]).toHaveTextContent('A2 note');
+    });
+
+    it('should render the Add Comment button in SSE Editing mode for comment panel', () => {
+      const sseState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isSpreadsheetEditorModeEnabled: true,
+          openElements: {
+            [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: true,
+          },
+          panelWidths: {
+            [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: DEFAULT_NOTES_PANEL_WIDTH,
+          },
+        },
+        spreadsheetEditor: {
+          ...initialState.spreadsheetEditor,
+          editMode: SpreadsheetEditorEditMode.EDITING,
+        },
+      };
+
+      render(
+        <Provider store={configureStore({ reducer: () => sseState })}>
+          <NotesPanel
+            dataElement={DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL}
+            notes={[]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={''}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      expect(screen.getByRole('button', { name: 'Add Comment' })).toBeEnabled();
+    });
+
+    it('should not render the Add Comment button in SSE View only mode for comment panel', () => {
+      const sseState = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          isSpreadsheetEditorModeEnabled: true,
+          openElements: {
+            [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: true,
+          },
+          panelWidths: {
+            [DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL]: DEFAULT_NOTES_PANEL_WIDTH,
+          },
+        },
+        spreadsheetEditor: {
+          ...initialState.spreadsheetEditor,
+          editMode: SpreadsheetEditorEditMode.VIEW_ONLY,
+        },
+      };
+
+      render(
+        <Provider store={configureStore({ reducer: () => sseState })}>
+          <NotesPanel
+            dataElement={DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL}
+            notes={[]}
+            selectedNoteIds={{}}
+            setSelectedNoteIds={jest.fn()}
+            searchInput={''}
+            setSearchInput={jest.fn()}
+            isMultiSelectMode={false}
+            setMultiSelectMode={jest.fn()}
+            multiSelectedMap={{}}
+            setMultiSelectedMap={jest.fn()}
+          />
+        </Provider>
+      );
+
+      expect(screen.queryByRole('button', { name: 'Add Comment' })).not.toBeInTheDocument();
     });
   });
 });

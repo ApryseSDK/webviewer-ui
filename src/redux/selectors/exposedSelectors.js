@@ -1,5 +1,6 @@
 import { isAndroid, isMobile } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
+import DataElements from 'constants/dataElement';
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE, PANEL_LOCATION } from 'constants/customizationVariables';
 import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
@@ -14,6 +15,7 @@ export const {
   getCursorStyleToPreset,
   getCurrentFontFace,
   getLineSpacing,
+  getActiveHighlightColor,
   getActiveColor,
   getActiveListType,
   getIsOfficeEditorMode,
@@ -228,6 +230,7 @@ export const getSelectedStamp = (state) => {
   }
   return selectedStamp;
 };
+export const getCustomStampCategories = (state) => state.viewer.customStampCategories || [];
 export const getSavedSignatures = (state) => state.viewer.savedSignatures;
 export const getDisplayedSignatures = (state) => state.viewer.savedSignatures.filter(state.viewer.displayedSignaturesFilterFunction);
 export const getSelectedDisplayedSignatureIndex = (state) => state.viewer.selectedDisplayedSignatureIndex;
@@ -659,16 +662,18 @@ export const getActiveBottomHeaders = createSelector(
 );
 
 export const getTopHeadersHeight = createSelector(
-  [getActiveTopHeaders, (state) => state.viewer.modularHeadersHeight.topHeaders],
+  [getActiveTopHeaders, (state) => state.viewer.modularHeadersHeight?.topHeaders ?? 0],
   (activeHeaders, topHeadersHeight) => activeHeaders.length * topHeadersHeight
 );
 
 export const getBottomHeadersHeight = createSelector(
   [getActiveBottomHeaders,
-    (state) => state.viewer.modularHeadersHeight.bottomHeaders,
-    (state) => state.viewer.isSpreadsheetEditorModeEnabled],
-  // For SpreadsheetEditor Mode, we need to include the height of the Spreadsheet Switcher which is a special bottom header that doesn't get included in config files
-  (activeHeaders, bottomHeadersHeight, isSpreadsheetEditorModeEnabled) => activeHeaders.length * bottomHeadersHeight + (isSpreadsheetEditorModeEnabled ? bottomHeadersHeight : 0)
+    (state) => state.viewer.modularHeadersHeight?.bottomHeaders ?? 0,
+    (state) => state.viewer.isSpreadsheetEditorModeEnabled && isElementOpen(state, DataElements.SPREADSHEET_SWITCHER)],
+  // For SpreadsheetEditor Mode, we need to include the height of the Spreadsheet Switcher which is a special bottom header that doesn't get included in config files.
+  // The switcher offset is only added when in SSE mode AND the switcher is open (isElementOpen covers both closed and disabled states).
+  (activeHeaders, bottomHeadersHeight, isSpreadsheetSwitcherVisible) =>
+    activeHeaders.length * bottomHeadersHeight + (isSpreadsheetSwitcherVisible ? bottomHeadersHeight : 0)
 );
 
 export const getRightHeaderWidth = (state) => state.viewer.modularHeadersWidth.rightHeader;
@@ -1178,6 +1183,8 @@ export const isToolDefaultStyleUpdateFromAnnotationPopupEnabled = (state) => sta
 
 export const isAnnotationToolStyleSyncingEnabled = (state) => state.viewer.annotationToolStyleSyncingEnabled;
 
+export const isViewportRelativeAnnotationPositioningEnabled = (state) => state.viewer.viewportRelativeAnnotationPositioningEnabled;
+
 export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;
 
 export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerSyncScrollMode;
@@ -1246,9 +1253,11 @@ export const getUIConfiguration = (state) => state.viewer.uiConfiguration;
 // ** Spreadsheet Editor Selectors **
 const DEFAULT_BORDER_BUTTONS = [];
 export const getActiveCellRange = (state) => state.spreadsheetEditor.activeCellRange;
+export const getActiveCellRangeTopLeftRow = (state) => state.spreadsheetEditor.cellProperties.topLeftRow;
+export const getActiveCellRangeTopLeftColumn = (state) => state.spreadsheetEditor.cellProperties.topLeftColumn;
 export const getCellFormula = (state) => state.spreadsheetEditor.cellProperties.cellFormula;
 export const getStringCellValue = (state) => state.spreadsheetEditor.cellProperties.stringCellValue;
-export const getSpreadsheetEditorEditMode = (state) => state.spreadsheetEditor.editMode;
+export const getSpreadsheetEditorEditMode = (state) => state.spreadsheetEditor?.editMode;
 export const getActiveCellRangeVerticalAlignment = (state) => state.spreadsheetEditor.cellProperties.styles.verticalAlignment;
 export const getActiveCellRangeHorizontalAlignment = (state) => state.spreadsheetEditor.cellProperties.styles.horizontalAlignment;
 export const getActiveCellRangeWrapText = (state) => state.spreadsheetEditor.cellProperties.styles.wrapText;

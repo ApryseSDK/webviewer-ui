@@ -84,7 +84,12 @@ const ToolGroupToggleButton = forwardRef((props, ref) => {
   });
 
   if (isFlyoutItem) {
-    const icon = getIconDOMElement({ icon: img || lastPickedToolButton?.img }, props.allFlyoutItems || []);
+    const icon = getIconDOMElement({
+      icon: img || lastPickedToolButton?.img,
+      color,
+      fillColor,
+      strokeColor,
+    }, props.allFlyoutItems || []);
     return (
       <FlyoutItemContainer {...props}
         ref={ref}

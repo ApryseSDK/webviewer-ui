@@ -132,11 +132,8 @@ const searchTextFullFactory = (store) => async (searchValue, options, isUserTrig
       if (!resultTimeout) {
         doneCallback();
       }
-      activeDocumentViewer.removeEventListener('searchInProgress', searchInProgressCallback);
     }
   }
-
-  function onDocumentEnd() { }
 
   function handleSearchError(error) {
     if (dispatch) {
@@ -155,9 +152,10 @@ const searchTextFullFactory = (store) => async (searchValue, options, isUserTrig
     for await (const result of searchStream) {
       onResult(result);
     }
-    onDocumentEnd();
   } catch (error) {
     handleSearchError(error);
+  } finally {
+    activeDocumentViewer.removeEventListener('searchInProgress', searchInProgressCallback);
   }
 };
 

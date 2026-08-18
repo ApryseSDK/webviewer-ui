@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import PresetButton from '../../PresetButton';
-import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
+import { PRESET_BUTTON_TYPES, STYLE_TOGGLE_OPTIONS } from 'src/constants/customizationVariables';
 import core from 'core';
 import { workerTypes } from 'src/constants/types';
 import { expect, within, waitFor, fn } from 'storybook/test';
@@ -33,13 +33,20 @@ const prepareButtonStory = (buttonsToRender, initialState, enableNonPrintingChar
     removeEventListener: () => { },
   });
   window.Core.Annotations.Color = class {
+    constructor(r = 0, g = 0, b = 0) {
+      this.r = r;
+      this.g = g;
+      this.b = b;
+    }
+
     toString() {
-      return 'rgba(0, 255, 0, 1)';
+      return `rgba(${this.r}, ${this.g}, ${this.b}, 1)`;
     }
 
     toHexString() {
-    // eslint-disable-next-line custom/no-hex-colors
-      return '#00FF00';
+      const toHex = (value) => value.toString(16).padStart(2, '0');
+      // eslint-disable-next-line custom/no-hex-colors
+      return `#${toHex(this.r)}${toHex(this.g)}${toHex(this.b)}`.toUpperCase();
     }
   };
 
@@ -64,16 +71,12 @@ const officeEditorButtons = [
   PRESET_BUTTON_TYPES.INCREASE_INDENT,
   PRESET_BUTTON_TYPES.DECREASE_INDENT,
   PRESET_BUTTON_TYPES.OE_COLOR_PICKER,
+  PRESET_BUTTON_TYPES.OE_HIGHLIGHT_COLOR_PICKER,
   PRESET_BUTTON_TYPES.INSERT_IMAGE,
   PRESET_BUTTON_TYPES.OE_TOGGLE_NON_PRINTING_CHARACTERS,
 ];
 
-const officeEditorStyleTypes = [
-  'bold',
-  'italic',
-  'underline',
-  'strikeout',
-];
+const officeEditorStyleTypes = Object.values(STYLE_TOGGLE_OPTIONS);
 
 export const OfficeEditorPresetButtons = () => {
   return prepareButtonStory(officeEditorButtons, initialState);
@@ -83,9 +86,13 @@ OfficeEditorPresetButtons.play = async ({ canvasElement }) => {
   // check color picker button active state
   const canvas = within(canvasElement);
   // eslint-disable-next-line custom/no-hex-colors
-  const colorPickerButton = canvas.getByRole('button', { name: '#00FF00' });
+  const colorPickerButton = canvas.getByRole('button', { name: `${getTranslatedText('officeEditor.textColor')} #00FF00` });
   const colorPickerButtonIcon = colorPickerButton.querySelector('.Icon');
   expect(getComputedStyle(colorPickerButtonIcon).color, 'color picker button should have correct color').toBe('rgb(0, 255, 0)');
+  // eslint-disable-next-line custom/no-hex-colors
+  const highlightColorPickerButton = canvas.getByRole('button', { name: getTranslatedText('officeEditor.highlightColor') });
+  const highlightColorPickerButtonIcon = highlightColorPickerButton.querySelector('.Icon');
+  expect(getComputedStyle(highlightColorPickerButtonIcon).color, 'highlight color picker button should have correct color').toBe('rgb(255, 255, 0)');
 
   for (const style of officeEditorStyleTypes) {
     const button = await canvas.findByRole('button', { name: getTranslatedText(`spreadsheetEditor.${style}`) });

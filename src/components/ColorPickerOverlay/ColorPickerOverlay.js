@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPortal } from 'react-dom';
 import selectors from 'selectors';
@@ -12,12 +12,14 @@ import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import DataElement from 'constants/dataElement';
 import classNames from 'classnames';
 import getRootNode from 'helpers/getRootNode';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 
 import './ColorPickerOverlay.scss';
 
 const propTypes = {
   color: PropTypes.object,
   onStyleChange: PropTypes.func,
+  overlayDataElement: PropTypes.string,
   toggleButtonDataElement: PropTypes.string,
   portalElementId: PropTypes.string,
 };
@@ -25,15 +27,19 @@ const propTypes = {
 const ColorPickerOverlay = ({
   color,
   onStyleChange,
+  onDefaultColorReset,
+  overlayDataElement,
   toggleButtonDataElement,
   portalElementId = 'app',
 }) => {
+  const instanceRoot = useContext(InstanceRootNodeContext);
+  const rootNode = instanceRoot || getRootNode();
   const [position, setPosition] = useState(() => ({ left: '555px', right: 'auto', top: 'auto' }));
   const overlayRef = useRef(null);
   const [
     isOpen,
   ] = useSelector((state) => [
-    selectors.isElementOpen(state, DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY),
+    selectors.isElementOpen(state, overlayDataElement),
   ]);
 
   const headerButtonDataElement = toggleButtonDataElement || DataElement.OFFICE_EDITOR_TEXT_COLOR_BUTTON;
@@ -41,22 +47,22 @@ const ColorPickerOverlay = ({
 
   const dispatch = useDispatch();
 
-  const onClose = () => dispatch(actions.closeElements([DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY]));
+  const onClose = () => dispatch(actions.closeElements([overlayDataElement]));
 
   const onClickOutside = (e) => {
-    const headerButton = getRootNode().querySelector(`[data-element="${headerButtonDataElement}"]`);
-    const flyoutButton = getRootNode().querySelector(`[data-element="${flyoutButtonDataElement}"]`);
+    const headerButton = rootNode?.querySelector(`[data-element="${headerButtonDataElement}"]`);
+    const flyoutButton = rootNode?.querySelector(`[data-element="${flyoutButtonDataElement}"]`);
     const clickedButton = headerButton?.contains(e.target) || flyoutButton?.contains(e.target);
     if (!clickedButton) {
       onClose();
     }
   };
-  useOnClickOutside(overlayRef, onClickOutside);
+  useOnClickOutside(overlayRef, onClickOutside, rootNode);
 
   useLayoutEffect(() => {
     if (isOpen) {
       const onResize = () => {
-        const overlayPosition = getOverlayPositionBasedOn(headerButtonDataElement, overlayRef);
+        const overlayPosition = getOverlayPositionBasedOn(headerButtonDataElement, overlayRef, false, rootNode);
         setPosition(overlayPosition);
       };
       onResize();
@@ -64,7 +70,7 @@ const ColorPickerOverlay = ({
       window.addEventListener('resize', onResize);
       return () => window.removeEventListener('resize', onResize);
     }
-  }, [isOpen]);
+  }, [headerButtonDataElement, isOpen, rootNode]);
 
   if (!isOpen) {
     return null;
@@ -72,7 +78,7 @@ const ColorPickerOverlay = ({
 
   return createPortal(
     <DataElementWrapper
-      data-element={DataElement.OFFICE_EDITOR_COLOR_PICKER_OVERLAY}
+      data-element={overlayDataElement}
       className={classNames({
         ColorPickerOverlay: true,
         Popup: true,
@@ -86,12 +92,13 @@ const ColorPickerOverlay = ({
         color={color}
         property='TextColor'
         onStyleChange={onStyleChange}
+        onDefaultColorReset={onDefaultColorReset}
         hasInitialFocus={true}
         useMobileMinMaxWidth
         onClose={onClose}
       />
     </DataElementWrapper>,
-    getRootNode().getElementById(portalElementId),
+    rootNode.getElementById(portalElementId),
   );
 };
 

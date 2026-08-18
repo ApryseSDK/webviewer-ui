@@ -1,14 +1,16 @@
-import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef, useImperativeHandle, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import hotkeysManager, { setCloseToolTipFunc } from 'helpers/hotkeysManager';
+import { setCloseToolTipFunc } from 'helpers/hotkeysManager';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import { getWebComponentScale } from 'helpers/getWebComponentScale';
 import fireEvent from 'helpers/fireEvent';
 import { isMac, isWindows, isIOS, isAndroid } from 'helpers/device';
 import getRootNode from 'helpers/getRootNode';
+import useHotkeysManager from 'hooks/useHotkeysManager';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 import Events from 'constants/events';
 import { css } from '@emotion/react';
 import './Tooltip.scss';
@@ -30,10 +32,12 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
   const timeoutRef = useRef(null);
   const hiddenByClickRef = useRef(false);
   const childRef = useRef(null);
+  const hotkeysManager = useHotkeysManager();
   const showRef = useRef(false); // track current show state to avoid redundant enqueues from high-frequency pointermove
   const opacityRef = useRef(0); // track current opacity to avoid redundant enqueues
   useImperativeHandle(ref, () => childRef.current);
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'tooltip'));
+  const instanceRoot = useContext(InstanceRootNodeContext);
 
   const tooltipRef = useRef(null);
   const [show, setShow] = useState(false);
@@ -59,6 +63,13 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       opacityRef.current = value;
       setOpacity(value);
     }
+  };
+
+  const getLocalRoot = () => {
+    return instanceRoot
+      || childRef.current?.getRootNode?.()
+      || tooltipRef.current?.getRootNode?.()
+      || getRootNode();
   };
 
   useEffect(() => {
@@ -112,7 +123,8 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       }
     };
 
-    getRootNode().addEventListener('pointermove', changeToolTipState);
+    const localRoot = getLocalRoot();
+    localRoot?.addEventListener('pointermove', changeToolTipState);
     if (hideOnClick) {
       childRef.current?.addEventListener('click', hideByClick);
     }
@@ -141,14 +153,14 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       hideTooltip();
       observer.disconnect();
 
-      getRootNode().removeEventListener('pointermove', changeToolTipState);
+      localRoot?.removeEventListener('pointermove', changeToolTipState);
       if (hideOnClick) {
         childRef.current?.removeEventListener('click', hideByClick);
       }
       childRef.current?.removeEventListener('focus', showToolTip);
       childRef.current?.removeEventListener('blur', hideByBlur);
     };
-  }, [childRef, hideOnClick]);
+  }, [childRef, hideOnClick, instanceRoot]);
 
   useLayoutEffect(() => {
     const childEle = childRef.current;
@@ -161,10 +173,10 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       let hostX = 0;
       let hostY = 0;
       if (window.isApryseWebViewerWebComponent) {
-        const shadowRoot = getRootNode();
-        const hostRect = shadowRoot.host.getBoundingClientRect();
-        hostX = hostRect.x;
-        hostY = hostRect.y;
+        const shadowRoot = getLocalRoot();
+        const hostRect = shadowRoot?.host?.getBoundingClientRect?.();
+        hostX = hostRect?.x || 0;
+        hostY = hostRect?.y || 0;
       }
 
       const locationTopLeftMap = {
@@ -281,7 +293,7 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
               )}
             </div>
           </div>,
-          getRootNode().querySelector('#app'),
+          getLocalRoot().querySelector('#app'),
         )}
     </React.Fragment>
   );

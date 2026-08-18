@@ -16,7 +16,6 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
-import { PRIORITY_THREE } from 'constants/actionPriority';
 import getRootNode from 'helpers/getRootNode';
 import { ITEM_RENDER_PREFIXES } from 'constants/customizationVariables';
 import AnnotationPopup from './AnnotationPopup';
@@ -322,7 +321,7 @@ const AnnotationPopupContainer = ({
   };
 
   /* EDIT STYLE */
-  const hasStyle = Object.keys(focusedAnnotationStyle).length > 0;
+  const hasStyle = !!focusedAnnotationStyle && Object.keys(focusedAnnotationStyle).length > 0;
 
   const toolsWithNoStyling = [
     ToolNames.CROP,
@@ -395,11 +394,6 @@ const AnnotationPopupContainer = ({
 
   const onOpenFormField = () => {
     closePopup();
-    // We disable it while the form field popup is open to prevent having both open
-    // at the same time. We re-enable it when the form field popup is closed.
-    dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
-    dispatch(actions.closeElement(DataElements.FORM_FIELD_EDIT_POPUP));
-    dispatch(actions.openElement(DataElements.FORM_FIELD_EDIT_POPUP));
     dispatch(actions.openElement(DataElements.FORM_FIELD_PANEL));
   };
 

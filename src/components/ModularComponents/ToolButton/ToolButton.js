@@ -170,7 +170,12 @@ const ToolButton = forwardRef((props, ref) => {
     const shortcutKey = toolTipTitle ? toolTipTitle.slice(toolTipTitle.indexOf('.') + 1) : undefined;
     const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
     const displayTitle = label || toolTipTitle;
-    const icon = getIconDOMElement({ ...toolButtonObject }, allFlyoutItems);
+    const icon = getIconDOMElement({
+      ...toolButtonObject,
+      color,
+      fillColor,
+      strokeColor
+    }, allFlyoutItems);
     const isActive = activeToolName === toolName;
 
     return (

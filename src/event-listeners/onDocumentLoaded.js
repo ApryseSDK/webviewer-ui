@@ -10,7 +10,7 @@ import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
 import getCurrentT from 'helpers/getCurrentT';
 import hotkeys from 'hotkeys-js';
-import hotkeysManager, { defaultHotkeysScope } from 'helpers/hotkeysManager';
+import { defaultHotkeysScope, getHotkeysManager } from 'helpers/hotkeysManager';
 import { ShortcutKeys, Shortcuts } from 'helpers/hotkeysUtils';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode, isSpreadsheetEditorMode } from 'helpers/officeEditor';
@@ -292,6 +292,7 @@ export const syncDisplayModeMultiviewer = (documentViewerKey) => () => {
 };
 
 export const configureEditorMode = (store, documentViewerKey) => () => {
+  const hotkeysManager = getHotkeysManager(store);
   const { getState, dispatch } = store;
   const doc = core.getDocument(documentViewerKey);
   if (!doc) {

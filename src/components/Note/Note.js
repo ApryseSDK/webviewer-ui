@@ -21,6 +21,7 @@ import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import { parseRecordId } from 'helpers/officeEditorCommentHelper';
 import { OfficeEditorEditMode, OFFICE_EDITOR_TRACKED_CHANGE_KEY, OFFICE_EDITOR_COMMENT_KEY } from 'constants/officeEditor';
+import { SPREADSHEET_THREAD_ID_KEY, SPREADSHEET_SHEET_NAME_KEY, SPREADSHEET_CELL_KEY } from 'constants/spreadsheetEditor';
 
 import './Note.scss';
 import { isAnnotationRenderedInDisplayMode } from 'src/helpers/isAnnotationRenderedInDisplayMode';
@@ -90,6 +91,7 @@ const Note = ({
     documentViewerKey,
     isOfficeEditorMode,
     officeEditorEditMode,
+    isSpreadsheetEditorMode,
   ] = useSelector(
     (state) => [
       selectors.getNoteTransformFunction(state),
@@ -100,6 +102,7 @@ const Note = ({
       selectors.getActiveDocumentViewerKey(state),
       selectors.getIsOfficeEditorMode(state),
       selectors.getOfficeEditorEditMode(state),
+      selectors.isSpreadsheetEditorModeEnabled(state),
     ],
     shallowEqual,
   );
@@ -347,6 +350,10 @@ const Note = ({
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
   const isRenderableInCurrentDisplayMode =  isAnnotationRenderedInDisplayMode(core, annotation);
   const isRenderingConnectorLine = isSelected && (isInNotesPanel || isCustomPanelOpen) && !shouldHideConnectorLine && isRenderableInCurrentDisplayMode;
+  const isSpreadsheetComment = isSpreadsheetEditorMode && !!annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY);
+  const spreadsheetSheetName = isSpreadsheetComment ? annotation.getCustomData(SPREADSHEET_SHEET_NAME_KEY) : null;
+  const spreadsheetCell = isSpreadsheetComment ? annotation.getCustomData(SPREADSHEET_CELL_KEY) : null;
+  const shouldRenderSpreadsheetCellLocation = spreadsheetSheetName && spreadsheetCell;
 
   return (
     <div
@@ -363,6 +370,9 @@ const Note = ({
         ariaCurrent={isSelected}
         dataElement="expandNoteButton"
       />
+      {shouldRenderSpreadsheetCellLocation && (
+        <div className="spreadsheet-cell-location">{spreadsheetSheetName} | {spreadsheetCell}</div>
+      )}
       <NoteContent
         editingKey={annotation.Id}
         annotation={annotation}

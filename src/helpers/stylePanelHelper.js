@@ -23,6 +23,8 @@ export const shouldHideStrokeDropdowns = (toolName) => {
     Tools.ArcCreateTool,
     Tools.ArcMeasurementCreateTool,
     Tools.TextAnnotationCreateTool,
+    Tools.StickyCreateTool,
+    Tools.FileAttachmentCreateTool,
   ];
 
   return toolsWithNoStrokeDropdowns.some((tool) => core.getTool(toolName) instanceof tool);
@@ -149,10 +151,11 @@ export const extractUniqueFontFamilies = (jsonData, inputText) => {
   for (const key in jsonData) {
     if (jsonData.hasOwnProperty(key)) {
       const index = parseInt(key, 10);
-      if (!isNaN(index) && inputText[index] !== ' ' && jsonData[key]['font-family']) {
+      const isValidTextIndex = !isNaN(index) && index >= 0 && index < inputText.length && inputText[index] !== ' ';
+      if (isValidTextIndex && jsonData[key]['font-family']) {
         uniqueFontFamilies.add(jsonData[key]['font-family'].trim());
       }
-      if (!isNaN(index) && inputText[index] !== ' ' && jsonData[key]['font-size']) {
+      if (isValidTextIndex && jsonData[key]['font-size']) {
         uniqueFontSizes.add(jsonData[key]['font-size'].trim());
       }
     }

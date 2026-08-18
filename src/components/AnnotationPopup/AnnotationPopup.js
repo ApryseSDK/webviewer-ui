@@ -12,7 +12,7 @@ import CalibrationPopup from 'components/CalibrationPopup';
 import DataElements from 'constants/dataElement';
 
 import './AnnotationPopup.scss';
-import getRootNode from 'helpers/getRootNode';
+import { getShadowRootFromNode } from 'helpers/getRootNode';
 const propTypes = {
   isMobile: PropTypes.bool,
   isIE: PropTypes.bool,
@@ -155,7 +155,9 @@ const AnnotationPopup = ({
     focusedAnnotation instanceof window.Core.Annotations.FreeTextAnnotation &&
     (focusedAnnotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeText ||
       focusedAnnotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeTextCallout);
-  const isInstanceActive = !window.isApryseWebViewerWebComponent || document.activeElement?.shadowRoot === getRootNode();
+  const activeRoot = getShadowRootFromNode(document.activeElement);
+  const popupRoot = getShadowRootFromNode(popupRef?.current);
+  const isInstanceActive = !window.isApryseWebViewerWebComponent || Boolean(popupRoot && activeRoot === popupRoot);
   const isContentEdit = focusedAnnotation.isContentEditPlaceholder?.();
   const isReadOnlySignature = focusedAnnotation instanceof window.Core.Annotations.SignatureWidgetAnnotation && focusedAnnotation.fieldFlags.get(window.Core.Annotations.WidgetFlags.READ_ONLY);
 
