@@ -21,6 +21,7 @@ const SettingsModal = () => {
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SETTINGS_MODAL));
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SETTINGS_MODAL));
   const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
+  const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
   const selectedTab = useSelector((state) => selectors.getSelectedTab(state, TABS_ID));
   const isGeneralTabDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SETTINGS_GENERAL_BUTTON));
   const isKeyboardTabDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.SETTINGS_KEYBOARD_BUTTON));
@@ -39,6 +40,8 @@ const SettingsModal = () => {
     switch (true) {
       case isSpreadsheetEditorMode:
         return EditorModes.SPREADSHEET;
+      case isContentEditingEnabled:
+        return EditorModes.CONTENT_EDIT;
       default:
         return EditorModes.DEFAULT;
     }

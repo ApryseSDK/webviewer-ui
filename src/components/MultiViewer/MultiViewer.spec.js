@@ -6,6 +6,9 @@ import * as multiViewerHelper from 'helpers/multiViewerHelper';
 import useCore from 'hooks/useCore';
 import actions from 'actions';
 import initialState from 'src/redux/initialState';
+import DataElements from 'constants/dataElement';
+import LoadingScreenContexts from 'constants/loadingScreenContexts';
+import LoadingScreenStyles from 'constants/loadingScreenStyles';
 
 jest.mock('core');
 jest.mock('hooks/useCore');
@@ -183,6 +186,84 @@ describe('MultiViewer', () => {
         const header2 = container.querySelector('#header2');
         expect(header1).toBeInTheDocument();
         expect(header2).toBeInTheDocument();
+      });
+    });
+
+    it('should render the document loading skeleton only in the loading viewer', async () => {
+      const { container } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        doc1Loaded: true,
+        doc2Loaded: false,
+        loadingScreenContext: LoadingScreenContexts.DOCUMENT,
+        loadingDocumentViewerKeys: { 2: true },
+        openElements: {
+          [DataElements.LOADING_MODAL]: true,
+          [DataElements.PROGRESS_MODAL]: true,
+        },
+      });
+
+      await waitFor(() => {
+        expect(container.querySelector('#DocumentContainer1 .LoadingSkeleton')).not.toBeInTheDocument();
+        expect(container.querySelector('#DocumentContainer2 .LoadingSkeleton')).toBeInTheDocument();
+        expect(container.querySelector('#DocumentContainer2 .LoadingSkeleton')).toHaveClass('LoadingSkeleton--viewer');
+      });
+    });
+
+    it('should prefer loading skeletons over drop areas while initially loading documents', async () => {
+      const { container } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        doc1Loaded: false,
+        doc2Loaded: false,
+        loadingScreenContext: LoadingScreenContexts.DOCUMENT,
+        loadingDocumentViewerKeys: { 1: true, 2: true },
+        openElements: {
+          [DataElements.LOADING_MODAL]: true,
+          [DataElements.PROGRESS_MODAL]: true,
+        },
+      });
+
+      await waitFor(() => {
+        expect(container.querySelectorAll('.DropArea')).toHaveLength(0);
+        expect(container.querySelector('#DocumentContainer1 .LoadingSkeleton')).toBeInTheDocument();
+        expect(container.querySelector('#DocumentContainer2 .LoadingSkeleton')).toBeInTheDocument();
+      });
+    });
+
+    it('should keep the drop area for an unloaded viewer during another viewer load', async () => {
+      const { container } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        doc1Loaded: false,
+        doc2Loaded: false,
+        loadingScreenContext: LoadingScreenContexts.DOCUMENT,
+        loadingDocumentViewerKeys: { 1: true },
+        openElements: {
+          [DataElements.LOADING_MODAL]: true,
+          [DataElements.PROGRESS_MODAL]: true,
+        },
+      });
+
+      await waitFor(() => {
+        expect(container.querySelector('#container2 .DropArea')).toBeInTheDocument();
+        expect(container.querySelector('#DocumentContainer2 .LoadingSkeleton')).not.toBeInTheDocument();
+      });
+    });
+
+    it('should not render pane loading skeletons when legacy loading screen is configured', async () => {
+      const { container } = await renderMultiViewer({
+        isMultiViewerMode: true,
+        doc1Loaded: false,
+        doc2Loaded: false,
+        loadingScreenStyle: LoadingScreenStyles.LEGACY,
+        loadingScreenContext: LoadingScreenContexts.DOCUMENT,
+        loadingDocumentViewerKeys: { 1: true, 2: true },
+        openElements: {
+          [DataElements.LOADING_MODAL]: true,
+          [DataElements.PROGRESS_MODAL]: true,
+        },
+      });
+
+      await waitFor(() => {
+        expect(container.querySelectorAll('.LoadingSkeleton')).toHaveLength(0);
       });
     });
 

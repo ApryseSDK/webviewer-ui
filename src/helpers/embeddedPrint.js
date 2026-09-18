@@ -11,6 +11,10 @@ import {
   createLayerDocument,
 } from './embeddedPrintHelper';
 
+const hasGroupedAnnotationRepliesInXFDF = (xfdfString = '') => {
+  return /\binreplyto\s*=\s*['"][^'"]+['"]/i.test(xfdfString);
+};
+
 /**
  * Handle different process of embedded print for iOS Safari
  * @returns {boolean} true if the current browser is iOS Safari
@@ -118,6 +122,7 @@ export const createEmbeddedPrintPages = async (
   try {
     const { isAlwaysPrintAnnotationsInColorEnabled } = printingOptions;
     const isClientSideDocument = !document.isWebViewerServerDocument();
+
     const cleanDocument = await createCleanDocumentCopy(document);
     const processedBaseDoc = isClientSideDocument
       ? await createLayerDocument(document, cleanDocument, pagesToPrint)
@@ -125,9 +130,14 @@ export const createEmbeddedPrintPages = async (
 
     const watermarkedDocument = await applyWatermark(processedBaseDoc, watermarkModalOptions);
     const xfdfString = await prepareAnnotations(annotationManager, pagesToPrint, printingOptions);
+    const printProcessingOptions = {
+      ...printingOptions,
+      preserveGroupedAnnotationReplies:
+        !!printingOptions.includeAnnotations && hasGroupedAnnotationRepliesInXFDF(xfdfString),
+    };
     return isAlwaysPrintAnnotationsInColorEnabled
-      ? await processColorAnnotations(core, document, watermarkedDocument, xfdfString, printingOptions, pagesToPrint)
-      : await processStandardDocument(core, document, watermarkedDocument, xfdfString, printingOptions, pagesToPrint);
+      ? await processColorAnnotations(core, document, watermarkedDocument, xfdfString, printProcessingOptions, pagesToPrint)
+      : await processStandardDocument(core, document, watermarkedDocument, xfdfString, printProcessingOptions, pagesToPrint);
   } catch (error) {
     console.error('Error creating embedded print pages:', error);
     throw error;

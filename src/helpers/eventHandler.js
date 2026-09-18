@@ -74,7 +74,9 @@ export default (store, documentViewerKey = 1, skipHotkeys = false, instanceId = 
   const onSpreadsheetEditorEditModeChanged = eventListeners.onSpreadsheetEditorEditModeChanged(dispatch);
   const onSpreadsheetEditorHistoryChanged = eventListeners.onSpreadsheetEditorHistoryChanged(dispatch, documentViewerKey);
   const openSpreadsheetEditorLoadingModal = eventListeners.openSpreadsheetEditorLoadingModal(dispatch);
-  const closeSpreadsheetEditorLoadingModal = eventListeners.closeSpreadsheetEditorLoadingModal(dispatch, store);
+  const closeSpreadsheetEditorLoadingModal = eventListeners.closeSpreadsheetEditorLoadingModal(dispatch);
+  const onDocumentLoadingStarted = eventListeners.onDocumentLoadingStarted(dispatch, documentViewerKey);
+  const onDocumentUIReady = eventListeners.onDocumentUIReady(dispatch, documentViewerKey);
   const onWidgetHighlightingChanged = eventListeners.onWidgetHighlightingChanged(dispatch, store);
   const onSelectedRangeStyleChanged = eventListeners.onSelectedRangeStyleChanged(dispatch);
   const initializeLayersVisibility = eventListeners.initializeLayersVisibility(store, documentViewerKey);
@@ -160,9 +162,11 @@ export default (store, documentViewerKey = 1, skipHotkeys = false, instanceId = 
       core.addEventListener('documentLoaded', setServerProperties, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', syncDisplayModeMultiviewer, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', updateOutlines, undefined, documentViewerKey);
+      core.addEventListener('beforeDocumentLoaded', onDocumentLoadingStarted, undefined, documentViewerKey);
       core.addEventListener('beforeDocumentLoaded', onBeforeDocumentLoaded, undefined, documentViewerKey);
       core.addEventListener('displayModeUpdated', onDisplayModeUpdated, undefined, documentViewerKey);
       core.addEventListener('documentLoaded', onDocumentLoaded, undefined, documentViewerKey);
+      core.addEventListener('documentLoaded', onDocumentUIReady, undefined, documentViewerKey);
       core.addEventListener('documentUnloaded', onDocumentUnloaded, undefined, documentViewerKey);
       core.addEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated, undefined, documentViewerKey);
       core.addEventListener('zoomUpdated', onZoomUpdated, undefined, documentViewerKey);
@@ -189,6 +193,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false, instanceId = 
       }
       _removed = true;
       if (_editorEventsRegistered) {
+        core.removeEventListener('beforeDocumentLoaded', onDocumentLoadingStarted, documentViewerKey);
         // ContentEdit Not supported for MultiViewerMode
         core.removeEventListener('contentEditModeStarted', onContentEditModeStarted, documentViewerKey);
         core.removeEventListener('contentEditDocumentDigitallySigned', onContentEditDocumentDigitalSigned, documentViewerKey);
@@ -255,9 +260,11 @@ export default (store, documentViewerKey = 1, skipHotkeys = false, instanceId = 
       core.removeEventListener('documentLoaded', setServerProperties, documentViewerKey);
       core.removeEventListener('documentLoaded', syncDisplayModeMultiviewer, documentViewerKey);
       core.removeEventListener('documentLoaded', updateOutlines, documentViewerKey);
+      core.removeEventListener('beforeDocumentLoaded', onDocumentLoadingStarted, documentViewerKey);
       core.removeEventListener('beforeDocumentLoaded', onBeforeDocumentLoaded, documentViewerKey);
       core.removeEventListener('displayModeUpdated', onDisplayModeUpdated, documentViewerKey);
       core.removeEventListener('documentLoaded', onDocumentLoaded, documentViewerKey);
+      core.removeEventListener('documentLoaded', onDocumentUIReady, documentViewerKey);
       core.removeEventListener('documentUnloaded', onDocumentUnloaded, documentViewerKey);
       core.removeEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated, documentViewerKey);
       core.removeEventListener('zoomUpdated', onZoomUpdated, documentViewerKey);

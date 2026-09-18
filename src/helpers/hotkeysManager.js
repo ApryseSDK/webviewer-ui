@@ -17,6 +17,8 @@ import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
 import getRootNode, { getInstanceRootFromEvent } from 'helpers/getRootNode';
 import FocusStackManager from 'helpers/focusStackManager';
+import pasteClipboardImage from 'helpers/pasteClipboardImage';
+import pasteClipboardText from 'helpers/pasteClipboardText';
 import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
 import { panelNames } from 'src/constants/panel';
 import {
@@ -74,6 +76,15 @@ const HotkeysManager = {
     if (this.boundHotkeysMap?.size) {
       this.unbindHotkey();
     }
+    if (this.pasteEventTarget && this.clipboardPasteHandler) {
+      this.pasteEventTarget.removeEventListener?.('paste', this.clipboardPasteHandler);
+    }
+    if (this.ownerWindow && this.windowBlurHandler) {
+      this.ownerWindow.removeEventListener?.('blur', this.windowBlurHandler);
+    }
+    if (this.ownerWindow && this.windowClipboardPasteHandler) {
+      this.ownerWindow.removeEventListener?.('paste', this.windowClipboardPasteHandler);
+    }
     this.activeHotkeysMap = {};
     this.previousActiveHotkeysMap = {};
     this.originalActiveHotkeysMap = undefined;
@@ -82,6 +93,16 @@ const HotkeysManager = {
     this.store = store;
     this.instanceRootNode = instanceRootNode || getRootNode();
     this.keyHandlerMap = this.createKeyHandlerMap();
+    this.pasteEventTarget = this.instanceRootNode || document;
+    this.clipboardPasteHandler = this.handleClipboardPaste.bind(this);
+    this.pasteEventTarget.addEventListener?.('paste', this.clipboardPasteHandler);
+    this.ownerWindow = this.pasteEventTarget.ownerDocument?.defaultView || this.pasteEventTarget.defaultView || window;
+    this.windowClipboardPasteHandler = this.handleWindowClipboardPaste.bind(this);
+    this.ownerWindow.addEventListener?.('paste', this.windowClipboardPasteHandler);
+    this.windowBlurHandler = this.handleWindowBlur.bind(this);
+    this.ownerWindow.addEventListener?.('blur', this.windowBlurHandler);
+    this.preferInternalAnnotationPaste = false;
+    this.externalClipboardPasteRequested = false;
     this.previousKeyHandlerMap = this.keyHandlerMap;
     this.prevToolName = null;
     const shortcutKeyMap = this.getShortcutKeyMap();
@@ -91,6 +112,62 @@ const HotkeysManager = {
     this.didInitializeAllKeys = true;
     hotkeys.setScope(defaultHotkeysScope);
     this.formBuilderDisabledKeys = {};
+  },
+  async handleClipboardPaste(e) {
+    this.externalClipboardPasteRequested = false;
+    const { getState } = this.store;
+    const state = getState();
+    const shortcutKeyMap = this.getShortcutKeyMap();
+    if (
+      selectors.getIsOfficeEditorMode(state) ||
+      selectors.isSpreadsheetEditorModeEnabled(state) ||
+      !isShortcutKeyActive(Shortcuts.PASTE, shortcutKeyMap, this.activeHotkeysMap)
+    ) {
+      return;
+    }
+
+    const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
+    const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
+    if (
+      isFocusingElement(this.instanceRootNode || getRootNode()) ||
+      (this.preferInternalAnnotationPaste && annotationManager.getCopiedAnnotations().length > 0)
+    ) {
+      return;
+    }
+
+    const plainText = e.clipboardData?.getData?.('text/plain');
+    let didPasteImage;
+    try {
+      didPasteImage = await pasteClipboardImage(e, activeDocumentViewerKey);
+    } catch (error) {
+      console.warn('Failed to paste an image from the clipboard.', error);
+      return;
+    }
+
+    if (!didPasteImage) {
+      try {
+        pasteClipboardText(e, activeDocumentViewerKey, plainText);
+      } catch (error) {
+        console.warn('Failed to paste text from the clipboard.', error);
+      }
+    }
+  },
+  async handleWindowClipboardPaste(e) {
+    const state = this.store.getState();
+    const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
+    const isRootlessPasteForActiveInstance =
+      window.isApryseWebViewerWebComponent &&
+      !getInstanceRootFromEvent(e) &&
+      core.getMultiInstanceActiveKey?.() === activeDocumentViewerKey &&
+      !isFocusingElement(this.ownerWindow.document);
+    if ((!this.externalClipboardPasteRequested && !isRootlessPasteForActiveInstance) || e.defaultPrevented) {
+      return;
+    }
+
+    await this.handleClipboardPaste(e);
+  },
+  handleWindowBlur() {
+    this.preferInternalAnnotationPaste = false;
   },
   /**
    * Add an event handler for the given hotkey
@@ -419,18 +496,28 @@ WebViewer(...)
       [ShortcutKeys[Shortcuts.COPY]]: () => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         if (core.getSelectedText(activeDocumentViewerKey)) {
+          this.preferInternalAnnotationPaste = false;
           copyText(activeDocumentViewerKey);
           dispatch(actions.closeElement('textPopup'));
         } else if (core.getSelectedAnnotations(activeDocumentViewerKey).length) {
           core.updateCopiedAnnotations(activeDocumentViewerKey);
+          this.preferInternalAnnotationPaste = true;
+        } else {
+          this.preferInternalAnnotationPaste = false;
         }
       },
       [ShortcutKeys[Shortcuts.PASTE]]: (e) => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         if (!isInstanceFocusingElement()) {
-          e.preventDefault();
-          const viewportRelative = selectors.isViewportRelativeAnnotationPositioningEnabled(getState());
-          core.pasteCopiedAnnotations(activeDocumentViewerKey, viewportRelative ? { viewportRelative: true } : undefined);
+          const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
+          if (this.preferInternalAnnotationPaste && annotationManager.getCopiedAnnotations().length > 0) {
+            this.externalClipboardPasteRequested = false;
+            e.preventDefault();
+            const viewportRelative = selectors.isViewportRelativeAnnotationPositioningEnabled(getState());
+            core.pasteCopiedAnnotations(activeDocumentViewerKey, viewportRelative ? { viewportRelative: true } : undefined);
+          } else {
+            this.externalClipboardPasteRequested = true;
+          }
         }
       },
       [ShortcutKeys[Shortcuts.UNDO]]: (e) => {

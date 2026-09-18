@@ -2,9 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import './MultiViewer.scss';
 import selectors from 'selectors';
 import actions from 'actions';
+import DataElements from 'constants/dataElement';
+import LoadingScreenContexts from 'constants/loadingScreenContexts';
+import LoadingScreenStyles from 'constants/loadingScreenStyles';
 import useCore from 'hooks/useCore';
 import useIsRTL from 'hooks/useIsRTL';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import DropArea from 'components/MultiViewer/DropArea';
 import ResizeBar from 'components/ResizeBar';
 import DocumentHeader from 'components/MultiViewer/DocumentHeader';
@@ -64,6 +67,15 @@ const MultiViewer = () => {
   const documentContentContainerWidthStyle = useSelector(selectors.getDocumentContentContainerWidthStyle);
   const zoom = useSelector((state) => selectors.getZoom(state, 1));
   const zoom2 = useSelector((state) => selectors.getZoom(state, 2));
+  const [isLoadingModalOpen, loadingScreenContext, loadingScreenStyle, loadingDocumentViewerKeys] = useSelector(
+    (state) => [
+      selectors.isElementOpen(state, DataElements.LOADING_MODAL),
+      selectors.getLoadingScreenContext(state),
+      selectors.getLoadingScreenStyle(state),
+      selectors.getLoadingDocumentViewerKeys(state),
+    ],
+    shallowEqual
+  );
   const documentContainerLeftMargin = useSelector(selectors.getDocumentContainerLeftMargin);
   const documentContainerRightMargin = useSelector(selectors.getDocumentContainerRightMargin);
   const { startMargin, endMargin } = getLogicalMargins(
@@ -146,6 +158,14 @@ const MultiViewer = () => {
   const compareContainerPadding = (containerWidth, docLoaded) => {
     return css({ padding: docLoaded ? '0' : '16px', width: containerWidth });
   };
+  const isShowingLoadingSkeleton = (documentViewerKey) => (
+    loadingScreenStyle === LoadingScreenStyles.SKELETON &&
+    loadingScreenContext === LoadingScreenContexts.DOCUMENT &&
+    isLoadingModalOpen &&
+    !!loadingDocumentViewerKeys[documentViewerKey]
+  );
+  const isLoadingDocument1 = isShowingLoadingSkeleton(1);
+  const isLoadingDocument2 = isShowingLoadingSkeleton(2);
 
   return (
     <div className={classNames('MultiViewer', { hidden: !isMultiViewerMode })}
@@ -165,9 +185,9 @@ const MultiViewer = () => {
           onWheelCapture={() => !isSyncing && setFirstViewerActive()}
           onScroll={() => !isSyncing && setFirstViewerActive()}
         >
-          {!doc1Loaded && <DropArea documentViewerKey={1} />}
+          {!doc1Loaded && !isLoadingDocument1 && <DropArea documentViewerKey={1} />}
           <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing} canSync={canSync}/>
-          <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} docLoaded={doc1Loaded}/>
+          <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} docLoaded={doc1Loaded} isLoading={isLoadingDocument1}/>
           <div className={'custom-container-1'}/>
           <div css={{ width: width }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 1 })} />
         </div>
@@ -195,9 +215,9 @@ const MultiViewer = () => {
           onWheelCapture={() => !isSyncing && setSecondViewerActive()}
           onScroll={() => !isSyncing && setSecondViewerActive()}
         >
-          {!doc2Loaded && <DropArea documentViewerKey={2} />}
+          {!doc2Loaded && !isLoadingDocument2 && <DropArea documentViewerKey={2} />}
           <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} canSync={canSync}/>
-          <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} docLoaded={doc2Loaded}/>
+          <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} docLoaded={doc2Loaded} isLoading={isLoadingDocument2}/>
           <div className={'custom-container-2'}/>
           <div css={{ width: width2 }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 2 })} />
         </div>

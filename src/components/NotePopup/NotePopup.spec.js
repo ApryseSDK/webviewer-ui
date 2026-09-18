@@ -188,7 +188,12 @@ const NotePopupContainerI18n = withI18n(NotePopupContainerWithOutI18n);
 
 describe('NotePopupContainer - SSE mode', () => {
   const sseAnnotationId = 'sse-id-1';
-  const sseAnnotation = { Id: sseAnnotationId, NoDelete: false };
+  const sseAnnotation = {
+    Id: sseAnnotationId,
+    NoDelete: false,
+    isReply: jest.fn(() => false),
+    getCustomData: jest.fn(() => 'open'),
+  };
   const sseContextValue = {
     isSpreadsheetEditorCommentAnnotation: true,
     isOfficeEditorCommentAnnotation: false,
@@ -197,6 +202,7 @@ describe('NotePopupContainer - SSE mode', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
+    sseAnnotation.getCustomData.mockReturnValue('open');
     sseStore = configureStore({
       reducer: rootReducer(),
       middleware: (getDefaultMiddleware) =>
@@ -219,10 +225,105 @@ describe('NotePopupContainer - SSE mode', () => {
       </Provider>
     );
 
+  const renderSSEReply = (rootState = 'open') => {
+    const rootAnnotation = {
+      getCustomData: jest.fn(() => rootState),
+    };
+    const replyAnnotation = {
+      Id: 'sse-reply-id-1',
+      NoDelete: false,
+      InReplyTo: sseAnnotationId,
+      isReply: jest.fn(() => true),
+      getCustomData: jest.fn(),
+    };
+    core.getAnnotationManager.mockReturnValue({
+      getAnnotationById: jest.fn(() => rootAnnotation),
+    });
+
+    return render(
+      <Provider store={sseStore}>
+        <NoteContext.Provider value={sseContextValue}>
+          <NotePopupContainerI18n annotation={replyAnnotation} isReply />
+          <FlyoutContainer />
+        </NoteContext.Provider>
+      </Provider>
+    );
+  };
+
   it('renders the delete button when isSpreadsheetEditorCommentAnnotation is true', async () => {
     renderSSE();
     await userEvent.click(screen.getByRole('button', { name: 'Options' }));
     expect(await screen.findByRole('button', { name: 'Delete' })).toBeInTheDocument();
+  });
+
+  it('does not show the edit button for SSE comments in view-only mode', () => {
+    sseStore.dispatch(actions.setSpreadsheetEditorEditMode(SpreadsheetEditorEditMode.VIEW_ONLY));
+
+    renderSSE();
+
+    expect(screen.queryByRole('button', { name: 'Edit' })).not.toBeInTheDocument();
+  });
+
+  it('shows the edit button for resolved SSE comments', async () => {
+    sseAnnotation.getCustomData.mockReturnValue('resolved');
+
+    renderSSE();
+    await userEvent.click(screen.getByRole('button', { name: 'Options' }));
+
+    expect(await screen.findByRole('button', { name: 'Edit' })).toBeInTheDocument();
+  });
+
+  it('shows edit and delete buttons for replies when the root comment is open', async () => {
+    renderSSEReply();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Options' }));
+
+    expect(await screen.findByRole('button', { name: 'Edit' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Delete' })).toBeInTheDocument();
+  });
+
+  it('shows only delete for replies when the root comment is resolved', async () => {
+    renderSSEReply('resolved');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Options' }));
+
+    expect(screen.queryByRole('button', { name: 'Edit' })).not.toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Delete' })).toBeInTheDocument();
+  });
+
+  it('shows the edit button for a reply after the root comment reopens and the component re-renders', async () => {
+    let rootState = 'resolved';
+    const rootAnnotation = {
+      getCustomData: jest.fn(() => rootState),
+    };
+    const replyAnnotation = {
+      Id: 'sse-reply-id-1',
+      NoDelete: false,
+      InReplyTo: sseAnnotationId,
+      isReply: jest.fn(() => true),
+      getCustomData: jest.fn(),
+    };
+    core.getAnnotationManager.mockReturnValue({
+      getAnnotationById: jest.fn(() => rootAnnotation),
+    });
+
+    const renderTree = () => (
+      <Provider store={sseStore}>
+        <NoteContext.Provider value={sseContextValue}>
+          <NotePopupContainerI18n annotation={replyAnnotation} isReply />
+          <FlyoutContainer />
+        </NoteContext.Provider>
+      </Provider>
+    );
+    const { rerender } = render(renderTree());
+
+    await userEvent.click(screen.getByRole('button', { name: 'Options' }));
+    expect(screen.queryByRole('button', { name: 'Edit' })).not.toBeInTheDocument();
+
+    rootState = 'open';
+    rerender(renderTree());
+
+    expect(await screen.findByRole('button', { name: 'Edit' })).toBeInTheDocument();
   });
 
   it('calls deleteComment with annotation.Id when delete button is clicked', async () => {

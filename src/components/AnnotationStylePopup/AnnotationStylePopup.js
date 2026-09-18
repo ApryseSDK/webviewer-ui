@@ -14,6 +14,8 @@ import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import handleFreeTextAutoSizeToggle from 'src/helpers/handleFreeTextAutoSizeToggle';
+import { syncCustomLineStyleSelection } from 'helpers/customLineStyleManager';
+import { parseMiddleLineStyleValue } from 'helpers/customLineStyleUtils';
 import './AnnotationStylePopup.scss';
 
 const propTypes = {
@@ -120,12 +122,12 @@ const AnnotationStylePopup = (props) => {
         annotation.setEndStyle(value);
         lineStyle = 'EndLineStyle';
       } else if (section === 'middle') {
-        const dashes = value.split(',');
-        const style = dashes.shift();
+        const { style, dashes } = parseMiddleLineStyleValue(value);
         annotation['Style'] = style;
         annotation['Dashes'] = dashes;
         lineStyle = 'StrokeStyle';
       }
+      syncCustomLineStyleSelection(annotation, section, value);
 
       if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, lineStyle, value);

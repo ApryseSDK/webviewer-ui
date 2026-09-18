@@ -20,39 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import postcss from 'postcss';
-
-const isInsideRoot = (rule) => {
-  return (
-    rule.selectors.length !== 1 ||
-    rule.selectors[0] !== ':root' ||
-    rule.parent.type !== 'root'
-  );
-};
-
-const isVariableDeclaration = (decl) => {
-  return Boolean(decl.value) && decl.prop.startsWith('--');
-};
-
-const parse = (css, options) => {
-  const root = postcss.parse(css, {
-    from: options.from,
-    parser: options.parser
-  });
-
+const parse = (css) => {
+  const style = document.createElement('style');
+  style.textContent = css;
+  document.head.appendChild(style);
   const variables = {};
-  root.walkRules((rule) => {
-    if (isInsideRoot(rule)) {
-      return;
-    }
 
-    rule.each((decl) => {
-      if (isVariableDeclaration(decl)) {
-        const name = decl.prop.slice(2);
-        variables[name] = decl.value;
+  try {
+    for (const rule of Array.from(style.sheet.cssRules)) {
+      if (rule.selectorText !== ':root') {
+        continue;
       }
-    });
-  });
+
+      for (const property of Array.from(rule.style)) {
+        const value = rule.style.getPropertyValue(property).trim();
+        if (property.startsWith('--') && value) {
+          variables[property.slice(2)] = value;
+        }
+      }
+    }
+  } finally {
+    style.remove();
+  }
 
   return variables;
 };

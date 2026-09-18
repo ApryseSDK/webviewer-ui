@@ -18,7 +18,7 @@ const ContentEditLinkModalContainer = () => {
 
   let existingLinkUrl = '';
   if (contentBoxEditor) {
-    existingLinkUrl = contentBoxEditor.hyperlink;
+    existingLinkUrl = contentBoxEditor.getHyperlink();
   }
 
   const closeModal = useCallback(() => {

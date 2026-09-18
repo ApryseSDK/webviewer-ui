@@ -12,7 +12,11 @@ import { hexToRGBA } from 'helpers/color';
 import { extractUniqueFontFamilies, stylePanelSectionTitles } from 'helpers/stylePanelHelper';
 import { useTranslation } from 'react-i18next';
 import defaultTool from 'constants/defaultTool';
+import { SOLID_FILL_STYLE_KEY } from 'constants/strokeStyleIcons';
+import { syncCustomFillStyleSelection } from 'helpers/customFillStyleManager';
 import actions from 'actions';
+import { syncCustomLineStyleSelection } from 'helpers/customLineStyleManager';
+import { parseMiddleLineStyleValue } from 'helpers/customLineStyleUtils';
 
 const { Annotations } = window.Core;
 
@@ -26,6 +30,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   });
   const [panelTitle, setPanelTitle] = useState('');
   const [strokeStyle, setStrokeStyle] = useState('');
+  const [fillStyle, setFillStyle] = useState('');
   const [startLineStyle, setStartLineStyle] = useState('');
   const [endLineStyle, setEndLineStyle] = useState('');
   const [isAutoSizeFont, setIsAutoSizeFont] = useState(false);
@@ -38,6 +43,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
   const toolButtonObject = useSelector(selectors.getToolButtonObjects);
   const isAnnotationToolStyleSyncingEnabled = useSelector(selectors.isAnnotationToolStyleSyncingEnabled);
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const activeToolStyles = useSelector(selectors.getActiveToolStyles);
 
   const selectedAnnotation = selectedAnnotations?.[0];
 
@@ -156,6 +162,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
     setStartLineStyle(annotation.getStartStyle ? annotation.getStartStyle() : 'None');
     setEndLineStyle(annotation.getEndStyle ? annotation.getEndStyle() : 'None');
     setStrokeStyle(getStrokeStyle(annotation));
+    setFillStyle(annotation.FillStyle || '');
   };
 
   const updateFromTool = (tool) => {
@@ -171,6 +178,7 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
     setStartLineStyle(styles?.StartLineStyle || '');
     setEndLineStyle(styles?.EndLineStyle || '');
     setStrokeStyle(styles?.StrokeStyle || '');
+    setFillStyle(styles?.FillStyle || '');
     setPanelTitleForSelectedTool(tool);
   };
 
@@ -188,7 +196,19 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       updateFromTool(currentTool);
       setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(currentToolName)).hasLineEndings);
     }
-  }, [selectedAnnotation, currentTool, selectedAnnotations, i18n.language, activeDocumentViewerKey]);
+  }, [
+    selectedAnnotation,
+    selectedAnnotation?.FillStyle,
+    selectedAnnotation?.Style,
+    selectedAnnotation?.Dashes,
+    selectedAnnotation?.StartLineStyle,
+    selectedAnnotation?.EndLineStyle,
+    currentTool,
+    selectedAnnotations,
+    i18n.language,
+    activeDocumentViewerKey,
+    activeToolStyles,
+  ]);
 
   const getColorFromHex = (hex) => {
     const colorRGB = hexToRGBA(hex);
@@ -266,13 +286,14 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
           annotation.setStartStyle(value);
         }
         if (section === 'middle') {
-          const dashes = value.split(',');
-          annotation.Style = dashes.shift();
-          annotation.Dashes = dashes.length ? dashes : null;
+          const { style, dashes } = parseMiddleLineStyleValue(value);
+          annotation.Style = style;
+          annotation.Dashes = dashes;
         }
         if (section === 'end') {
           annotation.setEndStyle(value);
         }
+        syncCustomLineStyleSelection(annotation, section, value);
         core.getAnnotationManager(activeDocumentViewerKey).redrawAnnotation(annotation);
         if (isAnnotationToolStyleSyncingEnabled) {
           setToolStyles(annotation.ToolName, sectionPropertyMap[section], value);
@@ -283,6 +304,29 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
       const currentTool = core.getToolMode();
       if (currentTool) {
         setToolStyles(currentTool.name, sectionPropertyMap[section], value);
+      }
+    }
+  };
+
+  const onFillStyleChange = (value) => {
+    // The solid entry is the "no custom fill" option, so it is stored as an empty FillStyle.
+    const fillStyleValue = value === SOLID_FILL_STYLE_KEY ? '' : value;
+    setFillStyle(fillStyleValue);
+
+    if (selectedAnnotations.length > 0) {
+      selectedAnnotations.forEach((annotation) => {
+        annotation.FillStyle = fillStyleValue;
+        syncCustomFillStyleSelection(annotation, fillStyleValue);
+        core.getAnnotationManager(activeDocumentViewerKey).redrawAnnotation(annotation);
+        if (isAnnotationToolStyleSyncingEnabled) {
+          setToolStyles(annotation.ToolName, 'FillStyle', fillStyleValue);
+        }
+      });
+      core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationChanged', [selectedAnnotations, 'modify', {}]);
+    } else {
+      const tool = core.getToolMode();
+      if (tool) {
+        setToolStyles(tool.name, 'FillStyle', fillStyleValue);
       }
     }
   };
@@ -335,10 +379,12 @@ const useStylePanel = ({ selectedAnnotations, currentTool }) => {
     panelTitle,
     annotationStyle: annotationStyle,
     strokeStyle,
+    fillStyle,
     startLineStyle,
     endLineStyle,
     onStyleChange,
     onLineStyleChange,
+    onFillStyleChange,
     isAutoSizeFont,
     handleAutoSize,
     handleRichTextStyleChange,

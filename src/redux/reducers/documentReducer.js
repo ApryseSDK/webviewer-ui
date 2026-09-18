@@ -56,6 +56,14 @@ export default (initialState) => (state = initialState, action) => {
           [payload.documentViewerKey]: payload.layers,
         }
       };
+    case 'SET_INITIAL_LAYERS':
+      return {
+        ...state,
+        initialLayers: {
+          ...state.initialLayers,
+          [payload.documentViewerKey]: payload.initialLayers,
+        }
+      };
     case 'SET_PASSWORD_ATTEMPTS':
       return { ...state, passwordAttempts: payload.attempt };
     case 'SET_PRINT_QUALITY':

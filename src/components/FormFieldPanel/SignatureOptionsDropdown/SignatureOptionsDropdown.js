@@ -51,6 +51,10 @@ const getStyles = () => ({
     paddingRight: '6px',
     height: '26px',
   }),
+  dropdownIndicator: (provided) => ({
+    ...provided,
+    padding: 0,
+  }),
 });
 
 const propTypes = {
@@ -102,7 +106,9 @@ const SignatureOptionsDropdown = ({ onChangeHandler, initialOption }) => {
           options={signatureOptions}
           isSearchable={false}
           isClearable={false}
-          components={{ IndicatorsContainer: ReactSelectCustomArrowIndicator }}
+          menuShouldScrollIntoView={false}
+          menuPlacement="auto"
+          components={{ DropdownIndicator: ReactSelectCustomArrowIndicator, IndicatorSeparator: null }}
           aria-labelledby="form-field-type-label"
           onKeyDown={handleKeyDown}
           menuIsOpen={menuIsOpen}

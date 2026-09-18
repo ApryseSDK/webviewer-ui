@@ -9,7 +9,8 @@ import { isIOS, isMobile } from 'helpers/device';
 import cropImageFromCanvas from 'helpers/cropImageFromCanvas';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
-import { COMMON_COLORS, BASIC_PALETTE } from 'constants/commonColors';
+import { SIGNATURE_MODAL_COLORS } from 'constants/commonColors';
+import { isSignatureColorAvailable } from 'components/SignatureModal/signatureColorHelpers';
 
 import './TextSignature.scss';
 import getRootNode from 'helpers/getRootNode';
@@ -21,12 +22,14 @@ const propTypes = {
   disableCreateButton: PropTypes.func,
   enableCreateButton: PropTypes.func,
   isInitialsModeEnabled: PropTypes.bool,
+  signatureModalColors: PropTypes.arrayOf(PropTypes.string),
+  selectedSignatureColor: PropTypes.object,
+  onSignatureColorChange: PropTypes.func,
 };
 
 const FONT_SIZE = 72;
 const TYPED_SIGNATURE_FONT_SIZE = (FONT_SIZE * 2) / 3;
 const MAX_SIGNATURE_LENGTH = 350;
-const DEFAULT_FONT_COLOR = COMMON_COLORS['black'];
 const CANVAS_MULTIPLIER = window.Core.getCanvasMultiplier();
 const TEXT_CLIP_PADDING = 100;
 
@@ -110,6 +113,9 @@ const TextSignature = ({
   disableCreateButton,
   enableCreateButton,
   isInitialsModeEnabled = false,
+  signatureModalColors = SIGNATURE_MODAL_COLORS,
+  selectedSignatureColor,
+  onSignatureColorChange,
 }) => {
   const { core } = useCore();
   const fonts = useSelector((state) => selectors.getSignatureFonts(state));
@@ -117,7 +123,7 @@ const TextSignature = ({
   const [fullSignature, setFullSiganture] = useState('');
   const [initials, setInitials] = useState('');
   const [isDefaultValue, setIsDefaultValue] = useState(true);
-  const [fontColor, setFontColor] = useState(new window.Core.Annotations.Color(DEFAULT_FONT_COLOR));
+  const [localFontColor, setLocalFontColor] = useState(() => new window.Core.Annotations.Color(signatureModalColors[0]));
   const [fontSize, setFontSize] = useState(TYPED_SIGNATURE_FONT_SIZE);
   const inputRef = useRef();
   const fullSignatureHiddenCanvasRef = useRef();
@@ -127,8 +133,20 @@ const TextSignature = ({
   const [t] = useTranslation();
 
   const [selectedFontFamily, setSelectedFontFamily] = useState(fonts[0]);
+  const fontColor = selectedSignatureColor || localFontColor;
 
   const forceUpdate = useForceUpdate();
+
+  useEffect(() => {
+    if (!isSignatureColorAvailable(fontColor, signatureModalColors)) {
+      const firstAvailableColor = new window.Core.Annotations.Color(signatureModalColors[0]);
+      if (onSignatureColorChange) {
+        onSignatureColorChange(firstAvailableColor);
+      } else {
+        setLocalFontColor(firstAvailableColor);
+      }
+    }
+  }, [signatureModalColors]);
 
   // Create button is only enabled when there's a signature
   // if initials are enabled, then those must also be filled in
@@ -187,7 +205,6 @@ const TextSignature = ({
   }, [isTabPanelSelected, fullSignature, fonts, fontColor, selectedFontFamily]);
 
   useEffect(() => {
-    setFontColor(fontColor);
     if (isModalOpen && isTabPanelSelected) {
       const currentUser = core.getDisplayAuthor(core.getCurrentUser());
       setFullSiganture(currentUser);
@@ -273,7 +290,11 @@ const TextSignature = ({
   };
 
   const handleColorInputChange = (property, value) => {
-    setFontColor(value);
+    if (onSignatureColorChange) {
+      onSignatureColorChange(value);
+    } else {
+      setLocalFontColor(value);
+    }
     // hack for tool styles for signature not being on state
     // Note from ADBG : But why tho?
     forceUpdate();
@@ -419,8 +440,7 @@ const TextSignature = ({
             color={fontColor}
             property="fontColor"
             onStyleChange={(property, value) => handleColorInputChange(property, value)}
-            /* eslint-disable-next-line custom/no-hex-colors */
-            overridePalette2={[COMMON_COLORS['black'], BASIC_PALETTE[12], BASIC_PALETTE[7]]}
+            overridePalette2={signatureModalColors}
           />
         </div>
       </div>

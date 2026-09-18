@@ -68,10 +68,10 @@
         box-shadow: none;
       }
 
-      &.active,
-      &:hover.active {
+      &.active {
         border: 1px solid var(--tab-color-selected);
         background: var(--tab-color-selected) !important;
+        color: var(--tab-text-color-selected);
         z-index: 1;
         box-shadow: none;
         cursor: default;

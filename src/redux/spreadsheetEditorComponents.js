@@ -21,7 +21,7 @@ const defaultSpreadsheetEditorHeaders = {
       'editorDropdown',
       'divider-0.1',
       'searchPanelToggle',
-      // 'notesPanelToggle',
+      'notesPanelToggle',
     ]
   },
   'tools-header': {
@@ -124,7 +124,8 @@ const defaultSpreadsheetEditorComponents = {
 
   'zoom-container': {
     dataElement: 'zoom-container',
-    type: 'zoom'
+    type: 'zoom',
+    label: 'action.zoom',
   },
   'divider-0.1': {
     dataElement: 'divider-0.1',
@@ -277,13 +278,13 @@ const defaultSpreadsheetEditorComponents = {
     img: 'icon-header-search',
     toggleElement: 'searchPanel',
   },
-  // notesPanelToggle: {
-  //   dataElement: 'notesPanelToggle',
-  //   title: 'component.notesPanel',
-  //   type: 'toggleButton',
-  //   img: 'icon-header-chat-line',
-  //   toggleElement: DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL,
-  // },
+  notesPanelToggle: {
+    dataElement: 'notesPanelToggle',
+    title: 'component.notesPanel',
+    type: 'toggleButton',
+    img: 'icon-header-chat-line',
+    toggleElement: DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL,
+  },
 
   /** Cell Border Style */
   borderStyleToggleButton: {
@@ -400,11 +401,11 @@ const defaultSpreadsheetEditorPanels = [
     render: 'searchPanel',
     location: 'right'
   },
-  // {
-  //   dataElement: DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL,
-  //   render: 'notesPanel',
-  //   location: 'right'
-  // },
+  {
+    dataElement: DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL,
+    render: 'notesPanel',
+    location: 'right'
+  },
 ];
 
 const adjustmentButtons = CELL_ADJUSTMENT_FLYOUT_ITEMS.map((item) => {
@@ -445,11 +446,6 @@ const defaultSpreadsheetFlyoutMap = {
   [DataElements.MAIN_MENU]: {
     dataElement: DataElements.MAIN_MENU,
     'items': [
-      {
-        'dataElement': 'mainMenuLabel',
-        'type': 'label',
-        'label': 'component.mainMenu',
-      },
       {
         'dataElement': 'newSpreadsheetButton',
         'type': 'presetButton',

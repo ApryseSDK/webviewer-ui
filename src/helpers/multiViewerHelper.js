@@ -20,6 +20,7 @@ import { createWrappedCore } from 'hooks/useCore/useCore';
 import DataElements from 'constants/dataElement';
 import ComparisonButton from 'components/MultiViewer/ComparisonButton';
 import defaultTool from 'constants/defaultTool';
+import setViewportRelativeAnnotationPositioning from 'helpers/setViewportRelativeAnnotationPositioning';
 
 const multiViewerHelper = {
   matchedPages: null,
@@ -334,6 +335,7 @@ export const setupMultiViewer = (store, isAlreadyMultiTab = false, deferReady = 
   setupFormSubmissionHandler(newDocViewer, store);
 
   syncDocumentViewers(1, 2);
+  setViewportRelativeAnnotationPositioning(state, 2);
   // Flip the MultiViewer-mode mirror before registering the second pane's event handlers.
   dispatch(actions.setIsMultiViewerMode(true));
   const { addEventHandlers, removeEventHandlers } = eventHandler(store, 2, true);

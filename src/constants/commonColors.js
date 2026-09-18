@@ -6,6 +6,8 @@ const COMMON_COLORS = {
   'blue1DarkDarkMode': '#192530',
   'blue5': '#2B73AB',
   'blue6': '#1A466B',
+  'signatureBlue': '#4E7DE9',
+  'signatureRed': '#E44234',
   'gray0': '#FFFFFF',
   'gray2': '#F1F3F5',
   'gray4': '#CFD4DA',
@@ -30,12 +32,12 @@ const BASIC_PALETTE = [
   '#92E8E8',
   '#A6A1E6',
   '#E2A1E6',
-  '#E44234', // red for signature modals
+  COMMON_COLORS['signatureRed'],
   '#FF8D00',
   '#FFCD45',
   '#00CC63',
   '#25D2D1',
-  '#4E7DE9', // blue for signature modals
+  COMMON_COLORS['signatureBlue'],
   '#C544CE',
   '#88271F',
   '#B54800',
@@ -53,6 +55,8 @@ const BASIC_PALETTE = [
   'transparency',
 ];
 
+const SIGNATURE_MODAL_COLORS = [COMMON_COLORS['black'], COMMON_COLORS['signatureBlue'], COMMON_COLORS['signatureRed']];
+
 const COLOR_PALETTE_STYLES = {
   TextColor:   { type: 'TextColor',   stateKey: 'textColors',   customKey: 'customTextColors',   action: 'SET_TEXT_COLORS', customAction: 'SET_CUSTOM_TEXT_COLORS' },
   StrokeColor: { type: 'StrokeColor', stateKey: 'strokeColors', customKey: 'customStrokeColors', action: 'SET_STROKE_COLORS', customAction: 'SET_CUSTOM_STROKE_COLORS' },
@@ -64,5 +68,6 @@ export {
   COMMON_COLORS,
   CUSTOM_UI_VARS,
   BASIC_PALETTE,
+  SIGNATURE_MODAL_COLORS,
   COLOR_PALETTE_STYLES
 };

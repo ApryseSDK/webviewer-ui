@@ -57,7 +57,8 @@
       }
     }
 
-    &.notesPanel {
+    &.notesPanel,
+    &.spreadsheetEditorCommentPanel {
       padding: 0px;
 
       .notes-panel-container {

@@ -31,7 +31,7 @@ function createUIInstance(instanceRootNode) {
 
   normalizeWebViewerPath();
 
-  const { store, persistor, instanceId } = createInstanceStoreAndPersistor();
+  const { store, persistor, instanceId } = createInstanceStoreAndPersistor(instanceRootNode);
   setupHotModuleReplacement(typeof module === 'undefined' ? undefined : module, store, instanceId);
 
   // Create a per-instance i18next so language changes in one viewer don't bleed into another. Falls back to the global singleton for single-instance / iframe mode (backward compat).

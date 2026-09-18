@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NoteStateContainer from './NoteStateContainer';
-import { noteStateFlyoutItems } from '../ModularComponents/NoteStateFlyout/NoteStateFlyout';
+import { noteStateFlyoutItems } from 'constants/flyoutConstants';
 import core from 'core';
 import { createStateAnnotation } from 'helpers/NoteStateUtils';
 
@@ -55,7 +55,7 @@ jest.mock('./NoteState', () => {
       <button
         aria-label="Status"
         type="button"
-        onClick={() => props.handleStateChange('Accepted')}
+        onClick={() => props.handleStateChange(props.annotation.getCustomData?.('spreadsheetThreadId') ? 'resolved' : 'Accepted')}
       >
         Status
       </button>
@@ -66,6 +66,7 @@ jest.mock('./NoteState', () => {
 
 describe('NoteStateContainer', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     core.getDocumentViewer = () => ({
       addEventListener: noop,
       removeEventListener: noop,
@@ -95,6 +96,7 @@ describe('NoteStateContainer', () => {
       PageNumber: 1,
       ToolName: 'AnnotationCreateRectangle',
       getStatus: () => 'None',
+      getCustomData: () => null,
       _replies: [],
       addReply: jest.fn(function(reply) {
         this._replies.push(reply);
@@ -127,4 +129,29 @@ describe('NoteStateContainer', () => {
     expect(mockAnnotationManager.addAnnotation).toHaveBeenCalledTimes(1);
     expect(mockAnnotationManager.trigger).not.toHaveBeenCalled();
   });
+
+  it('sets a resolved spreadsheet comment state through CommentManager', async function() {
+    const setCommentState = jest.fn();
+    const mockAnnotation = {
+      Id: '123',
+      getCustomData: (key) => key === 'spreadsheetThreadId' ? 'thread-123' : null,
+    };
+    core.getDocumentViewer = () => ({
+      getSpreadsheetEditorManager: () => ({
+        getCommentManager: () => ({ setCommentState }),
+      }),
+    });
+
+    render(
+      <Provider store={store}>
+        <NoteStateContainer annotation={mockAnnotation} />
+      </Provider>
+    );
+    const stateButton = await screen.findByRole('button', { name: /^Status$/i });
+    userEvent.click(stateButton);
+
+    expect(setCommentState).toHaveBeenCalledWith('123', 'resolved');
+    expect(createStateAnnotation).not.toHaveBeenCalled();
+  });
+
 });

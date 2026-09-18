@@ -1,19 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import selectors from 'selectors';
 import CollapsibleSection from 'components/CollapsibleSection';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { PANEL_SIZES } from 'constants/panel';
 import isNull from 'lodash/isNull';
 import PropTypes from 'prop-types';
-// TODO: Remove this enum and utilize real categories once categories are added
-const STANDARD_STAMP_CATEGORY = {
-  CATEGORY_1: 'Category 1',
-  LEGAL: 'Legal',
-  VERSATILE: 'Versatile',
-};
+import { getCategoryLabel } from 'helpers/stamps';
+import LoadingScreenStyles from 'constants/loadingScreenStyles';
+import Spinner from 'components/Spinner';
+
+const VirtualizedStampList = React.lazy(() => import('./VirtualizedStampList'));
+
+const STAMPS_PER_ROW = 2;
 
 const RubberStamp = React.memo(({ imgSrc, annotation, index, onClick, isActive }) => {
   const [t] = useTranslation();
@@ -45,79 +46,127 @@ RubberStamp.propTypes = {
   isActive: PropTypes.bool,
 };
 
-const StandardRubberStamps = ({ standardStamps, selectedStampIndex, setSelectedRubberStamp, isFlyout }) => {
-  const [t] = useTranslation();
+const StandardRubberStamps = (
+  {
+    selectedStampIndex,
+    setSelectedRubberStamp,
+    isFlyout,
+    scrollParent,
+    searchResults,
+    isDocumentStampsLoading,
+  }) => {
   const isMobile = isMobileSize();
   const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
   const lastSelectedStampIndex = useSelector(selectors.getLastSelectedStampIndex);
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
+  const categories = Object.keys(searchResults || {});
+  const stampsPerRow = STAMPS_PER_ROW;
+  const loadingScreenStyle = useSelector(selectors.getLoadingScreenStyle);
 
-  const rubberStamps = standardStamps.map(({ imgSrc, annotation }, index) => {
-    const isStampActive = selectedStampIndex === index;
-    const lastStampToShow = lastSelectedStampIndex || 0;
-    const shouldShowOnlyFirstStamp = index === lastStampToShow && isNull(selectedStampIndex);
+  const stampRowsByCategory = useMemo(() => {
+    const rowsByCategory = new Map();
+    categories.forEach((category) => {
+      const categoryStamps = (searchResults[category] || []).map(({ imgSrc, annotation, index }) => {
+        const isStampActive = selectedStampIndex === index;
+        const lastStampToShow = lastSelectedStampIndex || 0;
+        const shouldShowOnlyFirstStamp = index === lastStampToShow && isNull(selectedStampIndex);
 
-    const shouldRenderStamp = (!isMobile || (isMobile && mobilePanelSize !== PANEL_SIZES.SMALL_SIZE)) ||
-      (isMobile && mobilePanelSize === PANEL_SIZES.SMALL_SIZE && (isStampActive || shouldShowOnlyFirstStamp)) || isFlyout;
+        const shouldRenderStamp = (!isMobile || (isMobile && mobilePanelSize !== PANEL_SIZES.SMALL_SIZE)) ||
+          (isMobile && mobilePanelSize === PANEL_SIZES.SMALL_SIZE && (isStampActive || shouldShowOnlyFirstStamp)) || isFlyout;
 
-    return shouldRenderStamp ? (
-      <RubberStamp
-        key={index}
-        index={index}
-        imgSrc={imgSrc}
-        annotation={annotation}
-        onClick={setSelectedRubberStamp}
-        isActive={isStampActive}
-      />
-    ) : null;
-  });
+        if (!shouldRenderStamp) {
+          return null;
+        }
 
-  const header = useCallback(() => {
+        return {
+          index,
+          imgSrc,
+          annotation,
+          isStampActive,
+        };
+      }).filter(Boolean);
+      const rows = [];
+      for (let index = 0; index < categoryStamps.length; index += stampsPerRow) {
+        rows.push(categoryStamps.slice(index, index + stampsPerRow));
+      }
+      rowsByCategory.set(category, rows);
+    });
+    return rowsByCategory;
+  }, [categories, searchResults, selectedStampIndex, lastSelectedStampIndex, isMobile, mobilePanelSize, isFlyout, stampsPerRow]);
+
+  const renderStampRow = useCallback((_, row) => {
+    const rowItems = row || [];
     return (
-      t('rubberStampPanel.standard')
-    );
-  }, [t]);
-  const ariaControls = 'rubber-stamps-list';
-
-  const sections = Object.values(STANDARD_STAMP_CATEGORY)
-    .map((category) => ({
-      key: category,
-      header: category,
-      expansionDescription: category,
-    }));
-
-  return (featureFlags.newStampPanel ?
-    (<>
-      {sections.map(({ key, header, expansionDescription }) => {
-        const ariaControls = `rubber-stamps-list-${key}`;
-
-        return (
-          <CollapsibleSection
-            key={key}
-            header={() => header}
-            headingLevel={2}
-            ariaControls={ariaControls}
-            expansionDescription={expansionDescription}
-          >
-            <div className='rubber-stamps-list standard-rubber-stamps-list' id={ariaControls}>
-              {rubberStamps}
-            </div>
-          </CollapsibleSection>
-        );
-      })}
-    </>
-    ) :
-    (<CollapsibleSection
-      header={header}
-      headingLevel={2}
-      ariaControls={ariaControls}
-      expansionDescription={t('rubberStampPanel.standard')}
-    >
-      <div className='rubber-stamps-list' id={ariaControls}>
-        {rubberStamps}
+      <div className={classNames('rubber-stamp-virtual-row', 'standard-rubber-stamps-list')}>
+        {rowItems.map(({ index, imgSrc, annotation, isStampActive }) => (
+          <RubberStamp
+            key={index}
+            index={index}
+            imgSrc={imgSrc}
+            annotation={annotation}
+            onClick={setSelectedRubberStamp}
+            isActive={isStampActive}
+          />
+        ))}
       </div>
-    </CollapsibleSection>));
+    );
+  }, [setSelectedRubberStamp]);
+
+  const testModeProps = process.env.NODE_ENV === 'test' ? { initialItemCount: 10 } : {};
+
+  if (categories.length === 0) {
+    return null;
+  }
+
+  let documentStampsLoadingIndicator = null;
+  if (isDocumentStampsLoading) {
+    documentStampsLoadingIndicator = loadingScreenStyle === LoadingScreenStyles.LEGACY
+      ? <div className='document-stamps-loading document-stamps-loading-legacy' data-testid='document-stamps-loading'><Spinner inPanel width='40px' height='40px' /></div>
+      : <div className='document-stamps-loading' data-testid='document-stamps-loading' aria-hidden='true'>
+        <div className='document-stamp-skeleton' />
+        <div className='document-stamp-skeleton' />
+      </div>;
+  }
+
+  return (<>
+    {categories.map((category, categoryIndex) => {
+      const sectionAriaControls = `rubber-stamps-list-${categoryIndex}`;
+      const categoryLabel = getCategoryLabel(category);
+      const categoryStampRows = stampRowsByCategory.get(category) || [];
+      if (categoryStampRows.length === 0) {
+        return null;
+      }
+      return (
+        <CollapsibleSection
+          key={category}
+          header={() => categoryLabel}
+          headingLevel={2}
+          ariaControls={sectionAriaControls}
+          expansionDescription={categoryLabel}
+        >
+          <React.Suspense fallback={null}>
+            <VirtualizedStampList
+              rowData={categoryStampRows}
+              renderStampRow={renderStampRow}
+              testModeProps={testModeProps}
+              ariaControls={sectionAriaControls}
+              scrollParent={scrollParent}
+            />
+          </React.Suspense>
+        </CollapsibleSection>
+      );
+    })}
+    {documentStampsLoadingIndicator}
+  </>
+  );
 };
 
 StandardRubberStamps.displayName = 'StandardRubberStamps';
+StandardRubberStamps.propTypes = {
+  selectedStampIndex: PropTypes.number,
+  setSelectedRubberStamp: PropTypes.func,
+  isFlyout: PropTypes.bool,
+  scrollParent: PropTypes.object,
+  searchResults: PropTypes.object,
+  isDocumentStampsLoading: PropTypes.bool,
+};
 export default React.memo(StandardRubberStamps);

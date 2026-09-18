@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -53,17 +53,29 @@ function createStore(initialState) {
   });
 }
 
+const defaultButtonState = {
+  viewer: { disabledElements: {}, customElementOverrides: {}, activeDocumentViewerKey: 1 },
+};
+
+function renderLayersPanel(props, state = defaultButtonState) {
+  return render(
+    <Provider store={createStore(state)}>
+      <TestLayersPanel {...props} />
+    </Provider>
+  );
+}
+
 describe('Test for Layers Panel', () => {
   it('should be able to render without any props', () => {
     expect(() => {
-      render(<TestLayersPanel />);
+      renderLayersPanel();
     }).not.toThrow();
   });
   it('should not be able to render Layers component with empty layers array props', () => {
     const layers = [
 
     ];
-    const { container } = render(<TestLayersPanel layers={layers}/>);
+    const { container } = renderLayersPanel({ layers });
     const mockLayerComponents = container.querySelectorAll(`.${MOCK_LAYER_CLASS_NAME}`);
     expect(mockLayerComponents).toHaveLength(layers.length);
   });
@@ -74,7 +86,7 @@ describe('Test for Layers Panel', () => {
         id: 'a'
       }
     ];
-    const { container } = render(<TestLayersPanel layers={layers}/>);
+    const { container } = renderLayersPanel({ layers });
     const mockLayerComponents = container.querySelectorAll(`.${MOCK_LAYER_CLASS_NAME}`);
     expect(mockLayerComponents).toHaveLength(layers.length);
   });
@@ -88,9 +100,41 @@ describe('Test for Layers Panel', () => {
         id: 'b'
       }
     ];
-    const { container } = render(<TestLayersPanel layers={layers}/>);
+    const { container } = renderLayersPanel({ layers });
     const mockLayerComponents = container.querySelectorAll(`.${MOCK_LAYER_CLASS_NAME}`);
     expect(mockLayerComponents).toHaveLength(layers.length);
+  });
+});
+
+describe('Layers Panel - restore defaults button', () => {
+  const mockLayers = [{ id: 'a' }];
+
+  it('is disabled when layersHaveChanged is false and enabled when true', () => {
+    const store = createStore(defaultButtonState);
+    const { container, rerender } = render(
+      <Provider store={store}>
+        <TestLayersPanel layers={mockLayers} layersHaveChanged={false} restoreDefaultLayers={() => {}} />
+      </Provider>
+    );
+    const restoreButton = container.querySelector('[data-element="layersPanelRestoreDefaultsButton"]');
+    expect(restoreButton).toBeDisabled();
+
+    rerender(
+      <Provider store={store}>
+        <TestLayersPanel layers={mockLayers} layersHaveChanged restoreDefaultLayers={() => {}} />
+      </Provider>
+    );
+    expect(restoreButton).not.toBeDisabled();
+  });
+
+  it('calls restoreDefaultLayers when clicked', () => {
+    const restoreDefaultLayers = jest.fn();
+    const { container } = renderLayersPanel({ layers: mockLayers, layersHaveChanged: true, restoreDefaultLayers });
+    const restoreButton = container.querySelector('[data-element="layersPanelRestoreDefaultsButton"]');
+
+    fireEvent.click(restoreButton);
+
+    expect(restoreDefaultLayers).toHaveBeenCalledTimes(1);
   });
 });
 

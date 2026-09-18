@@ -6,18 +6,39 @@
   padding-inline-start: 15px;
   display: flex;
   flex-direction: column;
+  flex: 1;
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 
-  // we don't want to style its recursive subchild
-  > .Layer:first-child {
-    margin-top: 0;
+  .empty-panel-container {
+    flex: 0;
   }
 
   .spinner {
     align-self: center;
+  }
+
+  .layers-panel-row {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+
+    // we don't want to style its recursive subchild
+    > .Layer:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .layers-panel-footer {
+    border-top: 1.5px solid var(--gray-4);
+    padding-top: var(--padding-medium);
+    padding-bottom: var(--padding-medium);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   @include mobile {

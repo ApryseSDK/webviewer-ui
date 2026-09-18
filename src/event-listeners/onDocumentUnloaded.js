@@ -98,6 +98,7 @@ export default (store, documentViewerKey) => () => {
   dispatch(actions.setBookmarks({}, documentViewerKey));
   dispatch(actions.setOutlines(null, documentViewerKey));
   dispatch(actions.setLayers(null, documentViewerKey));
+  dispatch(actions.setInitialLayers(null, documentViewerKey));
   dispatch(actions.setVerificationResult({}, documentViewerKey));
   dispatch(actions.setPortfolio([], documentViewerKey));
   dispatch(actions.setDocumentLoaded(false, documentViewerKey));

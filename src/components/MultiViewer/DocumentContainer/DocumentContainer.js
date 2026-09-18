@@ -14,6 +14,7 @@ import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { createTouchEventManager } from 'helpers/TouchEventManager';
 import { buildTabUpdateForViewer, getTargetTabId } from 'helpers/multiViewerTabUpdate';
 import getZoomToMouseOffsets from 'helpers/getZoomToMouseOffsets';
+import LoadingSkeleton from 'components/LoadingSkeleton';
 import { css } from '@emotion/react';
 
 import './DocumentContainer.scss';
@@ -22,6 +23,7 @@ const propTypes = {
   documentViewerKey: PropTypes.number.isRequired,
   activeDocumentViewerKey: PropTypes.number.isRequired,
   container: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 // TODO compare: check display mode scrolling
@@ -30,6 +32,7 @@ const DocumentContainer = ({
   activeDocumentViewerKey,
   container,
   docLoaded,
+  isLoading = false,
 }) => {
   const { core } = useCore(documentViewerKey);
   const documentViewer = core.getDocumentViewer();
@@ -154,7 +157,7 @@ const DocumentContainer = ({
     const pagesToNavigate = getNumberOfPagesToNavigate();
     _setCurrentPage(currentPage + pagesToNavigate, documentViewerKey);
   };
-  const style = (docLoaded) ? undefined : css({ position: 'relative' });
+  const style = (docLoaded && !isLoading) ? undefined : css({ position: 'relative' });
   return (
     <div
       className={classNames('DocumentContainer', {
@@ -167,6 +170,7 @@ const DocumentContainer = ({
       tabIndex="-1"
     >
       <div className={'document'} ref={document} id={`Document${documentViewerKey}`} />
+      {isLoading && <LoadingSkeleton variant="viewer" />}
     </div>
   );
 };

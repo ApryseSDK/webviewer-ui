@@ -1,3 +1,4 @@
+import core from 'core';
 import defaultTouchEventManager, { createTouchEventManager } from './TouchEventManager';
 
 jest.mock('core');
@@ -11,8 +12,11 @@ function makeContainer(overrides = {}) {
     removeEventListener: jest.fn(),
     scrollLeft: 0,
     scrollTop: 0,
+    offsetLeft: 0,
+    offsetTop: 0,
     clientWidth: 800,
     clientHeight: 600,
+    getBoundingClientRect: jest.fn(() => ({ left: 0, top: 0 })),
     ...overrides,
   };
 }
@@ -29,6 +33,14 @@ function makeDocument(overrides = {}) {
 }
 
 describe('createTouchEventManager', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('returns an object with initialize and terminate methods', () => {
     const manager = createTouchEventManager();
     expect(typeof manager.initialize).toBe('function');
@@ -59,5 +71,49 @@ describe('createTouchEventManager', () => {
     const created = createTouchEventManager();
     created.initialize(makeDocument(), makeContainer(), 3);
     expect(defaultTouchEventManager).not.toBe(created);
+  });
+
+  it('keeps the pinch zoom focus independent of the viewer position on the page', () => {
+    const container = makeContainer({
+      scrollLeft: 20,
+      scrollTop: 30,
+      offsetLeft: 100,
+      offsetTop: 50,
+      getBoundingClientRect: jest.fn(() => ({ left: 340, top: 210 })),
+    });
+    const document = makeDocument({
+      offsetLeft: 150,
+      offsetTop: 80,
+    });
+    const documentViewer = {
+      isStylusModeEnabled: jest.fn(() => false),
+      getScrollViewElement: jest.fn(() => container),
+      getDisplayModeManager: jest.fn(() => ({
+        getDisplayMode: jest.fn(() => ({
+          getScale: jest.fn(() => ({ scaleX: 1, scaleY: 1 })),
+        })),
+      })),
+    };
+    core.getToolMode.mockReturnValue({ name: 'Pan' });
+    core.getDocumentViewer.mockReturnValue(documentViewer);
+    core.getZoom.mockReturnValue(1);
+    jest.spyOn(window, 'getComputedStyle').mockReturnValue({ marginTop: '0' });
+
+    const manager = createTouchEventManager();
+    manager.initialize(document, container);
+    manager.handleTouchStart({
+      cancelable: true,
+      preventDefault: jest.fn(),
+      touches: [
+        { clientX: 590, clientY: 460 },
+        { clientX: 690, clientY: 560 },
+      ],
+    });
+    manager.touch.type = 'pinch';
+    manager.touch.scale = 1.5;
+
+    manager.handleTouchEnd({});
+
+    expect(core.zoomTo).toHaveBeenCalledWith(1.5, 105, 150, 1);
   });
 });

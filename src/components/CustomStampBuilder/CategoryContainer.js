@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CreatableDropdown from 'components/CreatableDropdown';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getDefaultStampCategory } from 'helpers/stamps';
+import { getDefaultCustomStampCategory } from 'helpers/stamps';
 import selectors from 'selectors';
 import PropTypes from 'prop-types';
 
@@ -14,18 +14,18 @@ const CategoryContainer = ({
   const [inputValue, setInputValue] = useState(category || '');
   const categories = useSelector((state) => selectors.getCustomStampCategories(state));
   const categoryInputLabel = t('option.customStampModal.category');
-  const dropdownLabel = category === getDefaultStampCategory() ? t('option.customStampModal.customStamp') : category;
+  const dropdownLabel = category === getDefaultCustomStampCategory() ? t('option.customStampModal.customStamp') : category;
   const dropdownValue = category ? { value: category, label: dropdownLabel } : null;
 
   const categoryOptions = categories.map((category) => {
-    if (category === getDefaultStampCategory()) {
+    if (category === getDefaultCustomStampCategory()) {
       return { value: category, label: t('option.customStampModal.customStamp') };
     }
     return { value: category, label: category };
   });
 
   const categoryContainer = <div className="category-container">
-    <label className="category-label"> {categoryInputLabel}</label>
+    <label className="category-label" id="custom-stamp-category-label"> {categoryInputLabel}</label>
     <div className="category-dropdown">
       <CreatableDropdown
         options={categoryOptions}
@@ -36,7 +36,9 @@ const CategoryContainer = ({
         onChange={handleCategoryChange}
         value={dropdownValue}
         isValid={Boolean(inputValue)}
-        textPlaceholder={''} />
+        textPlaceholder={''}
+        isClearable
+        labelledById="custom-stamp-category-label" />
     </div>
     <p className="category-instructions-text">{t('option.customStampModal.categoryInstructions')}</p>
   </div>;

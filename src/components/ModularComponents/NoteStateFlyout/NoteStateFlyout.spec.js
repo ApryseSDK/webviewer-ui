@@ -16,9 +16,10 @@ jest.mock('selectors', () => ({
 
 // Must import after mocks are set up
 const selectors = require('selectors');
-const NoteStateFlyout = require('./NoteStateFlyout').default;
+const { spreadsheetNoteStateFlyoutItems } = require('constants/flyoutConstants');
+const { default: NoteStateFlyout } = require('./NoteStateFlyout');
 
-function renderWithStatusList(statusList) {
+function renderWithStatusList(statusList, items) {
   selectors.getFlyout.mockReturnValue(null);
   selectors.getStatusList.mockReturnValue(statusList);
 
@@ -29,7 +30,7 @@ function renderWithStatusList(statusList) {
 
   render(
     <Provider store={store}>
-      <NoteStateFlyout noteId="test-123" />
+      <NoteStateFlyout noteId="test-123" items={items} />
     </Provider>
   );
 }
@@ -70,5 +71,16 @@ describe('NoteStateFlyout', () => {
 
     const options = flyout.items.map((item) => item.option);
     expect(options).toEqual(['Accepted', 'Rejected']);
+  });
+
+  it('should use spreadsheet comment states without applying the PDF status list', () => {
+    renderWithStatusList(['Accepted'], spreadsheetNoteStateFlyoutItems);
+
+    const flyout = actions.addFlyout.mock.calls[0][0];
+    expect(flyout.items).toEqual(expect.arrayContaining([
+      expect.objectContaining({ option: 'open', icon: 'icon-annotation-status-none' }),
+      expect.objectContaining({ option: 'resolved', icon: 'icon-annotation-status-completed' }),
+    ]));
+    expect(flyout.items).toHaveLength(2);
   });
 });

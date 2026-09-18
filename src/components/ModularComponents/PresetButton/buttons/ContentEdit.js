@@ -10,7 +10,6 @@ import DataElements from 'constants/dataElement';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
-import { useTranslation } from 'react-i18next';
 /**
  * A button that toggles Content Edit Mode.
  * @name contentEditButton
@@ -27,54 +26,33 @@ const ContentEditButton = forwardRef((props, ref) => {
   } = props;
   const resolvedButtonStyle = buttonStyle ?? props.style;
   const areContentEditWorkersLoaded = useSelector((state) => selectors.areContentEditWorkersLoaded(state));
-  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const dispatch = useDispatch();
   const { core } = useCore();
-  const [active, setActive] = useState(core.getContentEditManager().isInContentEditMode());
-  const [t] = useTranslation();
+  const [active, setActive] = useState(core.getContentEditManager()?.isInContentEditMode() ?? false);
 
   useEffect(() => {
     const contentEditManager = core.getContentEditManager();
-    if (contentEditManager) {
-      const documentViewer = core.getDocumentViewer();
 
-      const showWarningModalHandler = () => {
-        const message = t('option.contentEdit.deletionModal.message');
-        const title = t('option.contentEdit.deletionModal.title');
-        const confirmBtnText = t('action.ok');
-
-        const warning = {
-          message,
-          title,
-          confirmBtnText,
-          onConfirm: () => {
-            core.deleteAnnotations(
-              core.getSelectedAnnotations(activeDocumentViewerKey),
-              undefined,
-              activeDocumentViewerKey,
-            );
-          },
-        };
-
-        dispatch(actions.showWarningMessage(warning));
-      };
-
-      documentViewer.addEventListener('showWarningModal', showWarningModalHandler);
-
-      const updateState = () => setActive(contentEditManager.isInContentEditMode());
-      contentEditManager.addEventListener('contentEditModeStarted', updateState);
-      contentEditManager.addEventListener('contentEditModeEnded', updateState);
-
-      return () => {
-        contentEditManager.removeEventListener('contentEditModeStarted', updateState);
-        contentEditManager.removeEventListener('contentEditModeEnded', updateState);
-        documentViewer.removeEventListener('showWarningModal', showWarningModalHandler);
-      };
+    if (!contentEditManager) {
+      return;
     }
-  }, [activeDocumentViewerKey, dispatch, t]);
+
+    const updateState = () => setActive(contentEditManager.isInContentEditMode());
+
+    contentEditManager.addEventListener('contentEditModeStarted', updateState);
+    contentEditManager.addEventListener('contentEditModeEnded', updateState);
+
+    return () => {
+      contentEditManager.removeEventListener('contentEditModeStarted', updateState);
+      contentEditManager.removeEventListener('contentEditModeEnded', updateState);
+    };
+  }, [core, areContentEditWorkersLoaded]);
 
   const handleClick = () => {
     const contentEditManager = core.getContentEditManager();
+    if (!contentEditManager) {
+      return;
+    }
     const beginContentEditMode = () => {
       // loading modal for the delay when switching to content edit mode
       // but only if the workers are not loaded

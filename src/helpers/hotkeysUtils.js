@@ -3,6 +3,7 @@ import { isMac } from './device';
 export const EditorModes = {
   DEFAULT: 'viewer',
   SPREADSHEET: 'spreadsheet',
+  CONTENT_EDIT: 'contentEdit',
 };
 
 export const Shortcuts = {
@@ -15,6 +16,10 @@ export const Shortcuts = {
   CUT: 'cut',
   UNDO: 'undo',
   REDO: 'redo',
+  CONTENT_EDIT_BOLD: 'contentEditBold',
+  CONTENT_EDIT_ITALIC: 'contentEditItalic',
+  CONTENT_EDIT_UNDERLINE: 'contentEditUnderline',
+  CONTENT_EDIT_STRIKEOUT: 'contentEditStrikeout',
   OPEN_FILE: 'openFile',
   SEARCH: 'search',
   ZOOM_IN: 'zoomIn',
@@ -164,9 +169,22 @@ export const SpreadsheetConfig = [
   [Shortcuts.DELETE, 'option.settings.spreadsheetEditor.delete'],
 ];
 
+export const ContentEditConfig = [
+  [Shortcuts.COPY, 'option.settings.contentEdit.copyText'],
+  [Shortcuts.CUT, 'option.settings.contentEdit.cutText'],
+  [Shortcuts.PASTE, 'option.settings.contentEdit.pasteText'],
+  [Shortcuts.UNDO, 'option.settings.contentEdit.undoChange'],
+  [Shortcuts.REDO, 'option.settings.contentEdit.redoChange'],
+  [Shortcuts.CONTENT_EDIT_BOLD, 'option.settings.contentEdit.bold'],
+  [Shortcuts.CONTENT_EDIT_ITALIC, 'option.settings.contentEdit.italic'],
+  [Shortcuts.CONTENT_EDIT_UNDERLINE, 'option.settings.contentEdit.underline'],
+  [Shortcuts.CONTENT_EDIT_STRIKEOUT, 'option.settings.contentEdit.strikeout'],
+];
+
 export const SHORTCUT_CONFIGS = {
   [EditorModes.DEFAULT]: PDFViewerConfig,
   [EditorModes.SPREADSHEET]: SpreadsheetConfig,
+  [EditorModes.CONTENT_EDIT]: ContentEditConfig,
 };
 
 // prettier-ignore
@@ -332,6 +350,12 @@ export const Keys = {
   COMMAND_P: 'command+p',
   CTRL_B: 'ctrl+b',
   COMMAND_B: 'command+b',
+  CTRL_I: 'ctrl+i',
+  COMMAND_I: 'command+i',
+  CTRL_U: 'ctrl+u',
+  COMMAND_U: 'command+u',
+  CTRL_K: 'ctrl+k',
+  COMMAND_K: 'command+k',
   ENTER: 'enter',
   PAGE_UP: 'pageup',
   PAGE_DOWN: 'pagedown',
@@ -440,9 +464,58 @@ export const ShortcutKeys = {
   [Shortcuts.HIGHLIGHT]: Keys.H,
   [Shortcuts.STRIKEOUT]: Keys.K,
   [Shortcuts.UNDERLINE]: Keys.U,
+  [Shortcuts.CONTENT_EDIT_BOLD]: concatKeys(Keys.CTRL_B, Keys.COMMAND_B),
+  [Shortcuts.CONTENT_EDIT_ITALIC]: concatKeys(Keys.CTRL_I, Keys.COMMAND_I),
+  [Shortcuts.CONTENT_EDIT_UNDERLINE]: concatKeys(Keys.CTRL_U, Keys.COMMAND_U),
+  [Shortcuts.CONTENT_EDIT_STRIKEOUT]: concatKeys(Keys.CTRL_K, Keys.COMMAND_K),
   [Shortcuts.HOME]: Keys.HOME,
   [Shortcuts.END]: Keys.END,
   [Shortcuts.CLOSE]: Keys.X,
+};
+
+export const ContentEditShortcutKeyMap = {
+  [Shortcuts.CONTENT_EDIT_BOLD]: concatKeys(Keys.CTRL_B, Keys.COMMAND_B),
+  [Shortcuts.CONTENT_EDIT_ITALIC]: concatKeys(Keys.CTRL_I, Keys.COMMAND_I),
+  [Shortcuts.CONTENT_EDIT_UNDERLINE]: concatKeys(Keys.CTRL_U, Keys.COMMAND_U),
+  [Shortcuts.CONTENT_EDIT_STRIKEOUT]: concatKeys(Keys.CTRL_K, Keys.COMMAND_K),
+};
+
+export const CONTENT_EDIT_SHORTCUTS = [
+  Shortcuts.COPY,
+  Shortcuts.CUT,
+  Shortcuts.PASTE,
+  Shortcuts.UNDO,
+  Shortcuts.REDO,
+  Shortcuts.CONTENT_EDIT_BOLD,
+  Shortcuts.CONTENT_EDIT_ITALIC,
+  Shortcuts.CONTENT_EDIT_UNDERLINE,
+  Shortcuts.CONTENT_EDIT_STRIKEOUT,
+];
+
+/**
+ * Gets the resolved shortcut key map for content edit mode, taking into account any custom overrides in the provided shortcutKeyMap.
+ * @param {Object} shortcutKeyMap - The current shortcut key map from the store
+ * @returns {Object} The resolved shortcut key map for content edit mode
+ * @ignore
+ */
+export const getContentEditShortcutKeyMap = (shortcutKeyMap = {}) => {
+  const resolvedMap = {};
+
+  [
+    Shortcuts.COPY,
+    Shortcuts.CUT,
+    Shortcuts.PASTE,
+    Shortcuts.UNDO,
+    Shortcuts.REDO,
+  ].forEach((shortcut) => {
+    resolvedMap[shortcut] = shortcutKeyMap[shortcut] || ShortcutKeys[shortcut];
+  });
+
+  Object.entries(ContentEditShortcutKeyMap).forEach(([shortcut, defaultCommand]) => {
+    resolvedMap[shortcut] = defaultCommand;
+  });
+
+  return resolvedMap;
 };
 
 export const ToolNameHotkeyMap = {

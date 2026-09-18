@@ -51,7 +51,18 @@ export const createCleanDocumentCopy = async (document) => {
 export const prepareAnnotations = (annotationManager, pagesToPrint, printingOptions) => {
   const includeComments = printingOptions?.includeComments;
   const includeAnnotations = includeComments ? true : printingOptions?.includeAnnotations;
-  return extractXFDF(annotationManager, pagesToPrint, includeAnnotations);
+  const flattenGroupedAnnotationRepliesForComments =
+    !!includeComments && !!printingOptions?.includeAnnotations;
+
+  return extractXFDF(
+    annotationManager,
+    pagesToPrint,
+    includeAnnotations,
+    {
+      flattenGroupedAnnotationRepliesForComments,
+      includeComments,
+    },
+  );
 };
 
 /**
@@ -88,6 +99,8 @@ export const applyWatermark = async (document, watermarkModalOptions) => {
  * Embedded print process that handles the print option of Comments
  * @param {window.Core.Document} document Document object
  * @param {object} printingOptions object with printing options
+ * @param {boolean} [printingOptions.preserveGroupedAnnotationReplies] when true,
+ * skips DocumentAndAnnotations formatting because that core path removes grouped replies.
  * @returns {window.Core.Document} Document object with the comments formatted
  * @ignore
  * @remarks
@@ -95,10 +108,19 @@ export const applyWatermark = async (document, watermarkModalOptions) => {
  * exclusively tied to fullAPI being enabled.
  */
 export const formatFinalDocument = async (document, printingOptions) => {
-  const { includeComments, includeAnnotations } = printingOptions;
+  const {
+    includeComments,
+    includeAnnotations,
+    preserveGroupedAnnotationReplies,
+  } = printingOptions;
   const pagesArray = getPageArray(document.getPageCount());
 
   if (!includeComments && includeAnnotations) {
+    // Core DocumentAndAnnotations formatting currently removes grouped reply
+    // children, so preserve the extracted annotation state for grouped prints.
+    if (preserveGroupedAnnotationReplies) {
+      return document;
+    }
     const formattedDoc = await document.formatDocumentForPrint(pagesArray, FORMAT_DOCUMENT_FOR_PRINT_OPTION.DocumentAndAnnotations);
     return formattedDoc;
   } else if (!includeComments) {
@@ -197,6 +219,359 @@ export const getRemovePagesArray = (currentPageNumber, numPages) => {
 
 };
 
+const getDocumentViewerFromAnnotationManager = (annotationManager) => {
+  if (annotationManager.getDocumentViewer) {
+    return annotationManager.getDocumentViewer();
+  }
+
+  return annotationManager.docViewer;
+};
+
+const ensureAnnotationsLoaded = async (annotationManager) => {
+  const documentViewer = getDocumentViewerFromAnnotationManager(annotationManager);
+  if (!documentViewer?.getAnnotationsLoadedPromise) {
+    return;
+  }
+
+  const annotationsLoadedPromise = documentViewer.getAnnotationsLoadedPromise();
+  if (!annotationsLoadedPromise) {
+    return;
+  }
+
+  documentViewer.downloadRemainingAnnotations?.();
+  await annotationsLoadedPromise;
+};
+
+const isStickyReplyAnnotation = (annotation) => {
+  const StickyAnnotation = window.Core?.Annotations?.StickyAnnotation;
+  const isStickyAnnotation = typeof annotation?.isType === 'function'
+    ? annotation.isType('StickyAnnotation')
+    : (StickyAnnotation && annotation instanceof StickyAnnotation);
+
+  return (
+    isStickyAnnotation &&
+    typeof annotation?.isReply === 'function' &&
+    annotation.isReply()
+  );
+};
+
+const shouldExcludeFromPrintAnnotationList = (annotation, includeComments = false) => {
+  const isStickyReply = isStickyReplyAnnotation(annotation);
+
+  return !!isStickyReply && !includeComments;
+};
+
+/**
+ * Adds an annotation to the grouped annotations list for embedded print, if it meets the criteria.
+ * Mutates the groupedAnnotations and seenAnnotationIds arrays.
+ * @param {window.Core.Annotation} annotation
+ * @param {boolean} forceInclude
+ * @param {boolean} includeComments
+ * @param {Set<number>} pagesToPrintSet
+ * @param {Array<window.Core.Annotation>} groupedAnnotations
+ * @param {Set<string>} seenAnnotationIds
+ * @returns {void}
+ * @ignore
+ */
+const addAnnotationForEmbeddedPrint = (
+  annotation,
+  forceInclude,
+  includeComments,
+  pagesToPrintSet,
+  groupedAnnotations,
+  seenAnnotationIds,
+) => {
+  if (
+    !annotation ||
+    shouldExcludeFromPrintAnnotationList(annotation, includeComments) ||
+    (!forceInclude && !pagesToPrintSet.has(annotation.PageNumber))
+  ) {
+    return;
+  }
+
+  const annotationId = annotation.Id;
+  if (!annotationId) {
+    if (!groupedAnnotations.includes(annotation)) {
+      groupedAnnotations.push(annotation);
+    }
+    return;
+  }
+
+  if (!seenAnnotationIds.has(annotationId)) {
+    seenAnnotationIds.add(annotationId);
+    groupedAnnotations.push(annotation);
+  }
+};
+
+/**
+ * Builds a map of grouped reply children by their parent annotation ID for embedded print.
+ * This function filters out annotations that should be excluded from the print annotation list.
+ * @param {Array<window.Core.Annotation>} annotations
+ * @param {boolean} includeComments
+ * @returns {Map<string, Array<window.Core.Annotation>>}
+ * @ignore
+ */
+const buildGroupedReplyChildrenByParentId = (annotations, includeComments) => {
+  const groupedReplyChildrenByParentId = new Map();
+
+  annotations.forEach((annotation) => {
+    if (
+      annotation?.ReplyType === 'group' &&
+      annotation?.InReplyTo &&
+      !shouldExcludeFromPrintAnnotationList(annotation, includeComments)
+    ) {
+      const children = groupedReplyChildrenByParentId.get(annotation.InReplyTo) || [];
+      children.push(annotation);
+      groupedReplyChildrenByParentId.set(annotation.InReplyTo, children);
+    }
+  });
+
+  return groupedReplyChildrenByParentId;
+};
+
+/**
+ * Adds grouped reply descendants for embedded print, including comments if specified.
+ * This function recursively traverses the grouped reply hierarchy and adds the descendants to the grouped annotations list.
+ * @param {string} parentAnnotationId
+ * @param {boolean} includeComments
+ * @param {Set<number>} pagesToPrintSet
+ * @param {Map<string, Array<window.Core.Annotation>>} groupedReplyChildrenByParentId
+ * @param {Array<window.Core.Annotation>} groupedAnnotations
+ * @param {Set<string>} seenAnnotationIds
+ * @param {Set<string>} visitedGroupedReplyParentIds
+ * @ignore
+ */
+const addGroupedReplyDescendantsForEmbeddedPrint = (
+  parentAnnotationId,
+  includeComments,
+  pagesToPrintSet,
+  groupedReplyChildrenByParentId,
+  groupedAnnotations,
+  seenAnnotationIds,
+  visitedGroupedReplyParentIds,
+) => {
+  if (!parentAnnotationId) {
+    return;
+  }
+
+  const pendingParentIds = [parentAnnotationId];
+
+  while (pendingParentIds.length) {
+    const currentParentId = pendingParentIds.pop();
+    if (!currentParentId || visitedGroupedReplyParentIds.has(currentParentId)) {
+      continue;
+    }
+
+    visitedGroupedReplyParentIds.add(currentParentId);
+    const groupedReplyChildren = groupedReplyChildrenByParentId.get(currentParentId) || [];
+    groupedReplyChildren.forEach((groupedReplyChild) => {
+      addAnnotationForEmbeddedPrint(
+        groupedReplyChild,
+        true,
+        includeComments,
+        pagesToPrintSet,
+        groupedAnnotations,
+        seenAnnotationIds,
+      );
+      if (groupedReplyChild?.Id) {
+        pendingParentIds.push(groupedReplyChild.Id);
+      }
+    });
+  }
+};
+
+/**
+ * Collects grouped annotations for the specified pages, including comments if specified.
+ * Filters out annotations that should be excluded from the print annotation list.
+ * @param {window.Core.AnnotationManager} annotationManager
+ * @param {Array<window.Core.Annotation>} annotations
+ * @param {Set<number>} pagesToPrintSet
+ * @param {boolean} includeComments
+ * @param {Map<string, Array<window.Core.Annotation>>} groupedReplyChildrenByParentId
+ * @returns {Array<window.Core.Annotation>}
+ * @ignore
+ */
+const collectGroupedAnnotationsForPages = (
+  annotationManager,
+  annotations,
+  pagesToPrintSet,
+  includeComments,
+  groupedReplyChildrenByParentId,
+) => {
+  const groupedAnnotations = [];
+  const seenAnnotationIds = new Set();
+  const visitedGroupedReplyParentIds = new Set();
+
+  annotations.forEach((annotation) => {
+    if (
+      !pagesToPrintSet.has(annotation.PageNumber) ||
+      shouldExcludeFromPrintAnnotationList(annotation, includeComments)
+    ) {
+      return;
+    }
+
+    const group = annotationManager.getGroupAnnotations(annotation);
+    if (!group.length) {
+      addAnnotationForEmbeddedPrint(
+        annotation,
+        false,
+        includeComments,
+        pagesToPrintSet,
+        groupedAnnotations,
+        seenAnnotationIds,
+      );
+      addGroupedReplyDescendantsForEmbeddedPrint(
+        annotation.Id,
+        includeComments,
+        pagesToPrintSet,
+        groupedReplyChildrenByParentId,
+        groupedAnnotations,
+        seenAnnotationIds,
+        visitedGroupedReplyParentIds,
+      );
+      return;
+    }
+
+    group.forEach((groupAnnotation) => {
+      addAnnotationForEmbeddedPrint(
+        groupAnnotation,
+        true,
+        includeComments,
+        pagesToPrintSet,
+        groupedAnnotations,
+        seenAnnotationIds,
+      );
+      addGroupedReplyDescendantsForEmbeddedPrint(
+        groupAnnotation.Id,
+        includeComments,
+        pagesToPrintSet,
+        groupedReplyChildrenByParentId,
+        groupedAnnotations,
+        seenAnnotationIds,
+        visitedGroupedReplyParentIds,
+      );
+    });
+  });
+
+  return groupedAnnotations;
+};
+
+/**
+ * Gets grouped annotations for the specified pages, including comments if specified.
+ * @param {window.Core.AnnotationManager} annotationManager The annotation manager instance
+ * @param {Array<number>} pagesToPrint The pages to print
+ * @param {object} options Options for getting grouped annotations
+ * @param {boolean} [options.includeComments=false] Whether to include comments in the grouped annotations
+ * @returns {Array<object>} The grouped annotations for the specified pages
+ * @ignore
+ */
+const getGroupedAnnotationsForPages = (
+  annotationManager,
+  pagesToPrint,
+  options = {},
+) => {
+  const { includeComments = false } = options;
+  const annotations = annotationManager.getAnnotationsList();
+  if (!pagesToPrint.length || !annotations.length) {
+    return [];
+  }
+
+  const pagesToPrintSet = new Set(pagesToPrint);
+  const groupedReplyChildrenByParentId = buildGroupedReplyChildrenByParentId(
+    annotations,
+    includeComments,
+  );
+
+  return collectGroupedAnnotationsForPages(
+    annotationManager,
+    annotations,
+    pagesToPrintSet,
+    includeComments,
+    groupedReplyChildrenByParentId,
+  );
+};
+
+/**
+ * Checks if there are any grouped annotations on the specified pages.
+ * @param {window.Core.AnnotationManager} annotationManager The annotation manager instance
+ * @param {Array<number>} pagesToPrint The pages to print
+ * @returns {boolean} True if there are any grouped annotations on the specified pages, false otherwise
+ * @ignore
+ */
+export const hasGroupedAnnotationsOnPages = (annotationManager, pagesToPrint) => {
+  const pagesToPrintSet = new Set(pagesToPrint);
+
+  return annotationManager.getAnnotationsList().some((annotation) => {
+    if (
+      !pagesToPrintSet.has(annotation.PageNumber) ||
+      shouldExcludeFromPrintAnnotationList(annotation)
+    ) {
+      return false;
+    }
+
+    const group = annotationManager.getGroupAnnotations(annotation);
+    if (group.length > 1) {
+      return true;
+    }
+
+    // Grouped child annotations may be represented as replies in some flows.
+    if (annotation.ReplyType === 'group') {
+      return true;
+    }
+
+    return group.some((groupAnnotation) => groupAnnotation?.ReplyType === 'group');
+  });
+};
+
+/**
+ * Flattens grouped replies for comments export.
+ * This is necessary because the core's exportAnnotations method does not include grouped replies in the exported XFDF when exporting comments.
+ * @param {*} annotationManager The annotation manager instance
+ * @param {*} annotationList The list of annotations to be exported
+ * @returns The modified annotation list with flattened grouped replies
+ * @ignore
+ */
+const flattenRepliesForCommentsExport = (annotationManager, annotationList) => {
+  return annotationList.reduce((acc, annotation) => {
+    if (annotation?.ReplyType === 'group' && annotation?.InReplyTo) {
+      acc.push({
+        annotation,
+        originalInReplyTo: annotation.InReplyTo,
+        originalReplyType: annotation.ReplyType,
+      });
+      annotation.InReplyTo = null;
+      annotation.ReplyType = null;
+      return acc;
+    }
+
+    if (isStickyReplyAnnotation(annotation) && annotation?.InReplyTo) {
+      const parentAnnotation = annotationManager.getAnnotationById(annotation.InReplyTo);
+      const parentIsReply = typeof parentAnnotation?.isReply === 'function' && parentAnnotation.isReply();
+
+      if (parentIsReply) {
+        const rootAnnotation = annotationManager.getRootAnnotation?.(annotation);
+        if (rootAnnotation?.Id && rootAnnotation.Id !== annotation.InReplyTo) {
+          acc.push({
+            annotation,
+            originalInReplyTo: annotation.InReplyTo,
+            originalReplyType: annotation.ReplyType,
+          });
+          annotation.InReplyTo = rootAnnotation.Id;
+        }
+      }
+    }
+
+    return acc;
+  }, []);
+};
+
+const restoreGroupedRepliesAfterExport = (groupedReplyMetadata) => {
+  groupedReplyMetadata.forEach(({ annotation, originalInReplyTo, originalReplyType }) => {
+    annotation.InReplyTo = originalInReplyTo;
+    annotation.ReplyType = originalReplyType;
+  });
+};
+
 /**
  * This uses the annotation manager from the viewer and extracts an xfdf string
  * from the annotations that are on the pages to print.
@@ -206,8 +581,20 @@ export const getRemovePagesArray = (currentPageNumber, numPages) => {
  * @returns {string} xfdf string
  * @ignore
  */
-export const extractXFDF = async (annotationManager, pagesToPrint, includeAnnotations) => {
+export const extractXFDF = async (
+  annotationManager,
+  pagesToPrint,
+  includeAnnotations,
+  options = {},
+) => {
+  const {
+    flattenGroupedAnnotationRepliesForComments = false,
+    includeComments = false,
+  } = options;
+
   if (includeAnnotations) {
+    await ensureAnnotationsLoaded(annotationManager);
+
     const map = annotationManager.getRegisteredAnnotationTypes();
     const customAnnotationTypes = Object.keys(map).reduce((acc, key) => {
       const customTypes = map[key];
@@ -223,13 +610,25 @@ export const extractXFDF = async (annotationManager, pagesToPrint, includeAnnota
       });
       return acc;
     }, []);
-    const annotationList = annotationManager.getAnnotationsList().filter((annotation) => pagesToPrint.indexOf(annotation.PageNumber) > -1);
-    const xfdfString = await annotationManager.exportAnnotations({ annotationList: annotationList, widgets: true, links: true, fields: true, generateInlineAppearances: true });
-    // Later, we restore the original setting
-    customAnnotationTypes.forEach((type) => {
-      type.customType.SerializationType = type.originalSerializationMode;
-    });
-    return xfdfString;
+    const exportOptions = { widgets: true, links: true, fields: true, generateInlineAppearances: true };
+    const annotationList = getGroupedAnnotationsForPages(
+      annotationManager,
+      pagesToPrint,
+      { includeComments },
+    );
+    const groupedReplyMetadata = flattenGroupedAnnotationRepliesForComments
+      ? flattenRepliesForCommentsExport(annotationManager, annotationList)
+      : [];
+
+    try {
+      return await annotationManager.exportAnnotations({ ...exportOptions, annotationList });
+    } finally {
+      restoreGroupedRepliesAfterExport(groupedReplyMetadata);
+      // Later, we restore the original setting
+      customAnnotationTypes.forEach((type) => {
+        type.customType.SerializationType = type.originalSerializationMode;
+      });
+    }
   }
   // removes annotations from document
   return '<?xml version="1.0" encoding="UTF-8" ?><xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve"></xfdf>';
@@ -398,8 +797,10 @@ export const applyPrintOptions = async (core, modifiedDoc, xfdfString, printingO
     pagesToPrint,
     xfdfString,
   );
+
   if (printingOptions.isCurrentView) {
     processedDoc = await createCropDocument(core, processedDoc);
   }
+
   return formatFinalDocument(processedDoc, printingOptions);
 };

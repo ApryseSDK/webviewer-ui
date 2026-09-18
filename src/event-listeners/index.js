@@ -71,6 +71,8 @@ import onWidgetHighlightingChanged from './onWidgetHighlightingChanged';
 import onSelectedRangeStyleChanged from './onSelectedRangeStyleChanged';
 import onOfficeEditorCommentAdded from './onOfficeEditorCommentAdded';
 
+export { onDocumentLoadingStarted, onDocumentUIReady } from './onDocumentLoading';
+
 export {
   onSignatureSaved,
   onSignatureDeleted,

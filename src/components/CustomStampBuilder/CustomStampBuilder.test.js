@@ -70,9 +70,6 @@ const initialState = {
   stampTool: {
     drawCustomStamp: noop,
   },
-  featureFlags: {
-    newStampPanel: true,
-  },
 };
 
 const ModalBodyWithI18n = withProviders(CustomStampBuilder, initialState);

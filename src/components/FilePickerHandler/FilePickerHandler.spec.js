@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import FilePickerHandler from './FilePickerHandler';
 import * as loadDocumentHelper from 'helpers/loadDocument';
+import actions from 'actions';
 
 jest.mock('helpers/loadDocument', () => jest.fn());
 
@@ -36,6 +37,10 @@ describe('FilePickerHandler', () => {
     jest.clearAllMocks();
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('allows selecting the same file multiple times by clearing the input value', () => {
     const fileInput = renderFilePickerHandler(createMockState());
 
@@ -53,7 +58,8 @@ describe('FilePickerHandler', () => {
     expect(loadDocumentHelper).not.toHaveBeenCalled();
   });
 
-  it('handles files with different types', () => {
+  it('uses the document loading screen for DOCX files', () => {
+    const openDocumentLoadingScreenSpy = jest.spyOn(actions, 'openDocumentLoadingScreen');
     const mockDocxFile = new File(['test content'], 'test.docx', {
       type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     });
@@ -61,6 +67,7 @@ describe('FilePickerHandler', () => {
 
     selectFile(fileInput, mockDocxFile);
     expect(loadDocumentHelper).toHaveBeenCalledWith(expect.anything(), mockDocxFile, {}, 1);
+    expect(openDocumentLoadingScreenSpy).toHaveBeenCalled();
   });
 
   it('calls loadDocument with activeDocumentViewerKey when file is selected', () => {
@@ -95,9 +102,11 @@ describe('FilePickerHandler', () => {
     });
 
     it('allows selecting the same file multiple times by clearing the input value', () => {
+      const openDocumentLoadingScreenSpy = jest.spyOn(actions, 'openDocumentLoadingScreen');
       const fileInput = renderFilePickerHandler(mockState);
 
       selectFile(fileInput, mockFile);
+      expect(openDocumentLoadingScreenSpy).toHaveBeenCalled();
       expect(mockTabManager.addTab).toHaveBeenCalledTimes(1);
       expect(mockTabManager.addTab).toHaveBeenCalledWith(mockFile, {
         saveCurrentActiveTabState: true,
@@ -116,6 +125,7 @@ describe('FilePickerHandler', () => {
     });
 
     it('updates document2 when active document viewer key is 2', () => {
+      const openDocumentLoadingScreenSpy = jest.spyOn(actions, 'openDocumentLoadingScreen');
       const updateTab = jest.fn().mockResolvedValue(undefined);
       const fileInput = renderFilePickerHandler(createMockState({
         viewer: {
@@ -133,6 +143,7 @@ describe('FilePickerHandler', () => {
       selectFile(fileInput, mockFile);
 
       expect(updateTab).toHaveBeenCalledWith(13, { document2: { src: mockFile } });
+      expect(openDocumentLoadingScreenSpy).not.toHaveBeenCalled();
       expect(loadDocumentHelper).not.toHaveBeenCalled();
     });
   });

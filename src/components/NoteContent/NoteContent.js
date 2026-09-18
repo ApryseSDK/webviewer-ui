@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { shallowEqual, useDispatch, useSelector, useStore } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -23,9 +23,11 @@ import setReactQuillContent from 'helpers/setReactQuillContent';
 import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
 import { updateOfficeEditorCommentMessage } from 'helpers/officeEditorCommentHelper';
+import updateSpreadsheetEditorCommentMessage from 'helpers/spreadsheetEditor/updateSpreadsheetEditorCommentMessage';
 import { isMobile } from 'helpers/device';
 import useCore from 'hooks/useCore';
 import { getDataWithKey, mapAnnotationToKey, annotationMapKeys } from 'constants/map';
+import { SPREADSHEET_THREAD_ID_KEY } from 'constants/spreadsheetEditor';
 import Theme from 'constants/theme';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
@@ -63,6 +65,15 @@ const editSessionBaselineByAnnotationId = new Map();
 const pendingBaselineCleanupTimeoutByAnnotationId = new Map();
 
 const makeBaselineKey = (viewerKey, annotationId) => `${viewerKey}:${annotationId}`;
+
+const hasCommentText = (value = '') => {
+  if (!isString(value)) {
+    return false;
+  }
+
+  const parsedDocument = new DOMParser().parseFromString(value, 'text/html');
+  return Boolean(parsedDocument.body.textContent.replaceAll('\u00a0', ' ').trim());
+};
 
 const clearEditSessionBaseline = (viewerKey, annotationId) => {
   const key = makeBaselineKey(viewerKey, annotationId);
@@ -163,7 +174,7 @@ const NoteContent = ({
     const baselineKey = makeBaselineKey(activeDocumentViewerKey, annotation.Id);
     const existingBaseline = editSessionBaselineByAnnotationId.get(baselineKey);
     const existingBaselineIsForCurrentAnnotation = existingBaseline && existingBaseline.annotationId === annotation.Id;
-    if (isEditing && (!existingBaseline || !existingBaselineIsForCurrentAnnotation)) {
+    if (isEditing && isSelected && (!existingBaseline || !existingBaselineIsForCurrentAnnotation)) {
       const baselineContents = annotation.getContents() || '';
       editSessionBaselineByAnnotationId.set(baselineKey, {
         annotationId: annotation.Id,
@@ -171,7 +182,15 @@ const NoteContent = ({
         mentionData: annotation.getCustomData('trn-mention'),
       });
     }
-  }, [isEditing, annotation, activeDocumentViewerKey]);
+  }, [isEditing, isSelected, annotation, activeDocumentViewerKey]);
+
+  useEffect(() => {
+    cancelPendingBaselineCleanup(activeDocumentViewerKey, annotation.Id);
+
+    return () => {
+      scheduleEditSessionBaselineCleanup(activeDocumentViewerKey, annotation.Id);
+    };
+  }, [annotation.Id, activeDocumentViewerKey]);
 
   useEffect(() => {
     if (!isEditing) {
@@ -603,26 +622,26 @@ const ContentArea = ({
     clearAttachments,
     addAttachments,
     isOfficeEditorCommentAnnotation,
+    isSpreadsheetEditorCommentAnnotation,
     setPendingEditText,
   } = useContext(NoteContext);
+  const isSpreadsheetComment = isSpreadsheetEditorCommentAnnotation
+    || !!annotation.getCustomData?.(SPREADSHEET_THREAD_ID_KEY);
   const [localValue, setLocalValue] = useState(textAreaValue || '');
+  const hasCommentContent = hasCommentText(localValue);
   const editSessionBaselineRef = useRef(editSessionBaseline);
   const syncedAnnotationIdRef = useRef(annotation.Id);
 
   const shouldNotFocusOnInput = !isInlineCommentDisabled && isInlineCommentOpen && isMobile();
   const autoFocusNoteOnAnnotationSelection =
-    autoFocusNoteOnAnnotationSelectionEnabled && (!isOfficeEditorCommentAnnotation || isNoteEditingTriggeredByAnnotationPopup);
+    autoFocusNoteOnAnnotationSelectionEnabled &&
+    ((!isOfficeEditorCommentAnnotation && !isSpreadsheetEditorCommentAnnotation) || isNoteEditingTriggeredByAnnotationPopup);
   const { core } = useCore();
   const autosaveContextRef = useRef({});
   const isMountedRef = useRef(true);
-
-  useEffect(() => {
-    cancelPendingBaselineCleanup(activeDocumentViewerKey, annotation.Id);
-
-    return () => {
-      scheduleEditSessionBaselineCleanup(activeDocumentViewerKey, annotation.Id);
-    };
-  }, [annotation.Id, activeDocumentViewerKey]);
+  const pendingAutosaveRef = useRef(null);
+  const editorRef = useRef(null);
+  const isAutosaveCancelledRef = useRef(false);
 
   autosaveContextRef.current = {
     annotation,
@@ -635,10 +654,11 @@ const ContentArea = ({
     localValue,
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
+      pendingAutosaveRef.current?.flush();
     };
   }, []);
 
@@ -675,7 +695,8 @@ const ContentArea = ({
 
   const stripNewLineFromEndOfText = useCallback((value = '') => {
     const normalizedValue = value;
-    if (normalizedValue.length > 1 && normalizedValue.endsWith('\n')) {
+
+    if (normalizedValue.endsWith('\n')) {
       return normalizedValue.slice(0, normalizedValue.length - 1);
     }
     return normalizedValue;
@@ -704,14 +725,28 @@ const ContentArea = ({
     }
   };
 
-  const checkOfficeEditorCommentAndUpdate = async (annotation, textAreaValue) => {
+  const checkOfficeEditorCommentAndUpdate = (annotation, textAreaValue) => {
+    return updateOfficeEditorCommentMessage({
+      annotation,
+      text: textAreaValue,
+      core,
+    });
+  };
+
+  const checkSpreadsheetEditorCommentAndUpdate = (annotation, textAreaValue) => {
+    return updateSpreadsheetEditorCommentMessage({
+      annotation,
+      text: textAreaValue,
+      core,
+    });
+  };
+
+  const checkCommentAndUpdate = async (annotation, textAreaValue) => {
     if (isOfficeEditorCommentAnnotation) {
-      const didUpdate = await updateOfficeEditorCommentMessage({
-        annotation,
-        text: textAreaValue,
-        core,
-      });
-      return didUpdate;
+      return checkOfficeEditorCommentAndUpdate(annotation, textAreaValue);
+    }
+    if (isSpreadsheetComment) {
+      return checkSpreadsheetEditorCommentAndUpdate(annotation, textAreaValue);
     }
     return true;
   };
@@ -797,6 +832,9 @@ const ContentArea = ({
       return;
     }
     const autosave = debounce(async () => {
+      if (isAutosaveCancelledRef.current) {
+        return;
+      }
       const {
         annotation,
         isMentionEnabled,
@@ -809,7 +847,10 @@ const ContentArea = ({
       } = autosaveContextRef.current;
 
       // Update annotation as single source of truth, but do NOT close editor
-      const editor = textareaRef.current.getEditor();
+      const editor = textareaRef.current?.getEditor?.() || editorRef.current;
+      if (!editor) {
+        return;
+      }
       let textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
       const editorPlainText = getEditorPlainText(editor);
 
@@ -828,7 +869,7 @@ const ContentArea = ({
 
       skipAutoLink(annotation);
 
-      const didUpdate = await checkOfficeEditorCommentAndUpdate(annotation, textAreaValue);
+      const didUpdate = await checkCommentAndUpdate(annotation, textAreaValue);
       if (!didUpdate) {
         return;
       }
@@ -849,6 +890,8 @@ const ContentArea = ({
       setPendingEditText(undefined, annotation.Id);
     }, autosaveInterval);
 
+    editorRef.current = textareaRef.current?.getEditor?.() || editorRef.current;
+    pendingAutosaveRef.current = autosave;
     autosave();
     return () => autosave.cancel();
   }, [localValue, autosaveEnabled, autosaveInterval, getEditorPlainText, stripNewLineFromEndOfText, syncMentionDataToAnnotation, triggerAnnotationChangedForEditor]);
@@ -874,6 +917,7 @@ const ContentArea = ({
     if (inputPlainText === localPlainText) {
       return;
     }
+    isAutosaveCancelledRef.current = false;
     setLocalValue(value);
     onTextAreaValueChange(value, annotationId);
   };
@@ -884,16 +928,15 @@ const ContentArea = ({
 
     const editor = textareaRef.current.getEditor();
     textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
-    setAnnotationRichTextStyle(editor, annotation);
-
-    const hasTrailingNewlineToRemove = textAreaValue.length > 1 && textAreaValue[textAreaValue.length - 1] === '\n';
-    if (hasTrailingNewlineToRemove) {
-      textAreaValue = textAreaValue.slice(0, textAreaValue.length - 1);
+    textAreaValue = stripNewLineFromEndOfText(textAreaValue);
+    if (!textAreaValue.trim()) {
+      return;
     }
+    setAnnotationRichTextStyle(editor, annotation);
 
     skipAutoLink(annotation);
 
-    const didUpdate = await checkOfficeEditorCommentAndUpdate(annotation, textAreaValue);
+    const didUpdate = await checkCommentAndUpdate(annotation, textAreaValue);
     if (!didUpdate) {
       return;
     }
@@ -924,7 +967,9 @@ const ContentArea = ({
   };
 
   const onBlur = (e) => {
-    if (e.relatedTarget?.getAttribute('data-element')?.includes('annotationCommentButton')) {
+    const relatedTargetDataElement = e.relatedTarget?.getAttribute('data-element');
+    const isSpreadsheetEditorAddCommentButton = relatedTargetDataElement === DataElements.SPREADSHEET_EDITOR_COMMENT_ADD_NEW_BUTTON;
+    if (relatedTargetDataElement?.includes('annotationCommentButton') || isSpreadsheetEditorAddCommentButton) {
       e.target.focus();
       return;
     }
@@ -965,6 +1010,11 @@ const ContentArea = ({
           onClick={(e) => {
             e.stopPropagation();
 
+            // Drop any in-flight autosave so the cancelled edit is not written back
+            // by the debounce or by the flush that runs when this editor unmounts.
+            isAutosaveCancelledRef.current = true;
+            pendingAutosaveRef.current?.cancel();
+
             const baselineFromMap = editSessionBaselineByAnnotationId.get(
               makeBaselineKey(activeDocumentViewerKey, annotation.Id),
             );
@@ -994,8 +1044,8 @@ const ContentArea = ({
           }}
         />
         <Button
-          className={`save-button${localValue ? '' : ' disabled'}`}
-          disabled={!localValue}
+          className={`save-button${hasCommentContent ? '' : ' disabled'}`}
+          disabled={!hasCommentContent}
           label={t('action.save')}
           onClick={(e) => {
             e.stopPropagation();

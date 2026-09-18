@@ -20,14 +20,31 @@ WebViewer(...)
 
 import i18next from 'i18next';
 
-export default (language, translationObject) => {
-  i18next.on('loaded', () => {
-    i18next.addResources(
-      language,
-      'translation',
-      translationObject
-    );
-  });
 
-  i18next.reloadResources([language]);
+const overridesByInstance = new WeakMap();
+
+const applyOverrides = (i18n, language) => {
+  const overrides = overridesByInstance.get(i18n)?.get(language);
+  if (!overrides) {
+    return;
+  }
+  i18n.addResources(language, 'translation', overrides);
+  if (i18n !== i18next && i18next.isInitialized) {
+    i18next.addResources(language, 'translation', overrides);
+  }
+};
+
+export default (instanceI18n) => (language, translationObject) => {
+  const i18n = instanceI18n || i18next;
+
+  let overrides = overridesByInstance.get(i18n);
+  if (!overrides) {
+    overrides = new Map();
+    overridesByInstance.set(i18n, overrides);
+    i18n.on('loaded', () => overrides.forEach((_, lng) => applyOverrides(i18n, lng)));
+  }
+
+  overrides.set(language, { ...overrides.get(language), ...translationObject });
+  i18n.reloadResources([language]);
+  applyOverrides(i18n, language);
 };

@@ -181,6 +181,29 @@ describe('NotesPanel', () => {
       );
     };
 
+    it('does not crash when annotationSelected fires with an empty or missing payload', () => {
+      const originalAddEventListener = core.addEventListener;
+      const originalRemoveEventListener = core.removeEventListener;
+      let capturedHandler;
+      core.addEventListener = jest.fn((event, handler) => {
+        if (event === 'annotationSelected') {
+          capturedHandler = handler;
+        }
+        return originalAddEventListener.call(core, event, handler);
+      });
+      core.removeEventListener = jest.fn((event, handler) => originalRemoveEventListener.call(core, event, handler));
+
+      try {
+        renderNotesPanel();
+        expect(capturedHandler).toBeInstanceOf(Function);
+        expect(() => capturedHandler([], 'selected')).not.toThrow();
+        expect(() => capturedHandler(undefined, 'selected')).not.toThrow();
+      } finally {
+        core.addEventListener = originalAddEventListener;
+        core.removeEventListener = originalRemoveEventListener;
+      }
+    });
+
     it('NotesPanel should render default header and empty content', () => {
       render(
         <Provider store={store}>
@@ -634,7 +657,7 @@ describe('NotesPanel', () => {
       });
     });
 
-    it('should not render an empty spreadsheet separator when sheet name metadata is missing', () => {
+    it('should render the active sort strategy separator in spreadsheet mode', () => {
       const spreadsheetNote = new window.Core.Annotations.StickyAnnotation();
       spreadsheetNote.Id = 'spreadsheet-note-1';
       spreadsheetNote.Author = 'Guest';
@@ -657,7 +680,7 @@ describe('NotesPanel', () => {
         viewer: {
           ...initialState.viewer,
           isSpreadsheetEditorModeEnabled: true,
-          sortStrategy: 'createdDate',
+          sortStrategy: 'spreadsheetPosition',
         },
       };
 
@@ -677,7 +700,7 @@ describe('NotesPanel', () => {
         </Provider>
       );
 
-      expect(container.querySelector('h4.ListSeparator')).not.toBeInTheDocument();
+      expect(container.querySelector('h4.ListSeparator')).toHaveTextContent('Sheet 2');
     });
 
     it('should render the Add Comment button in SSE Editing mode for comment panel', () => {
@@ -778,7 +801,7 @@ describe('NotesPanel', () => {
           return 'thread-a2';
         }
         if (key === SPREADSHEET_SHEET_INDEX_KEY) {
-          return '1';
+          return '0';
         }
         if (key === SPREADSHEET_SHEET_NAME_KEY) {
           return 'Sheet 1';
@@ -804,7 +827,7 @@ describe('NotesPanel', () => {
           return 'thread-b1';
         }
         if (key === SPREADSHEET_SHEET_INDEX_KEY) {
-          return '1';
+          return '0';
         }
         if (key === SPREADSHEET_SHEET_NAME_KEY) {
           return 'Sheet 1';
@@ -818,19 +841,42 @@ describe('NotesPanel', () => {
         return '';
       };
 
+      const sheetNoteC1 = new window.Core.Annotations.StickyAnnotation();
+      sheetNoteC1.Id = 'spreadsheet-note-c1';
+      sheetNoteC1.Author = 'Guest';
+      sheetNoteC1.DateCreated = 3;
+      sheetNoteC1.setContents('Second sheet note');
+      sheetNoteC1.getReplies = () => [];
+      sheetNoteC1.getAssociatedNumber = () => 1;
+      sheetNoteC1.getCustomData = (key) => {
+        if (key === SPREADSHEET_THREAD_ID_KEY) {
+          return 'thread-c1';
+        }
+        if (key === SPREADSHEET_SHEET_INDEX_KEY) {
+          return '1';
+        }
+        if (key === SPREADSHEET_SHEET_NAME_KEY) {
+          return 'Sheet 2';
+        }
+        if (key === SPREADSHEET_ROW_KEY || key === SPREADSHEET_COLUMN_KEY) {
+          return '0';
+        }
+        return '';
+      };
+
       const spreadsheetState = {
         ...initialState,
         viewer: {
           ...initialState.viewer,
           isSpreadsheetEditorModeEnabled: true,
-          sortStrategy: 'createdDate',
+          sortStrategy: 'spreadsheetPosition',
         },
       };
 
       const { container } = render(
         <Provider store={configureStore({ reducer: () => spreadsheetState })}>
           <NotesPanel
-            notes={[sheetNoteA2, sheetNoteB1]}
+            notes={[sheetNoteA2, sheetNoteC1, sheetNoteB1]}
             selectedNoteIds={{}}
             setSelectedNoteIds={jest.fn()}
             searchInput={''}
@@ -846,6 +892,12 @@ describe('NotesPanel', () => {
       const noteItems = container.querySelectorAll('[role="listitem"]');
       expect(noteItems[0]).toHaveTextContent('B1 note');
       expect(noteItems[1]).toHaveTextContent('A2 note');
+      expect(noteItems[2]).toHaveTextContent('Second sheet note');
+
+      const separators = container.querySelectorAll('h4.ListSeparator');
+      expect(separators).toHaveLength(2);
+      expect(separators[0]).toHaveTextContent('Sheet 1');
+      expect(separators[1]).toHaveTextContent('Sheet 2');
     });
 
     it('should render the Add Comment button in SSE Editing mode for comment panel', () => {

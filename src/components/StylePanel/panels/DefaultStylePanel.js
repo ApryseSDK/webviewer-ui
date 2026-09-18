@@ -16,10 +16,12 @@ const DefaultStylePanel = ({ currentTool, selectedAnnotations }) => {
     annotationStyle,
     panelTitle,
     strokeStyle,
+    fillStyle,
     startLineStyle,
     endLineStyle,
     onStyleChange,
     onLineStyleChange,
+    onFillStyleChange,
     showLineStyleOptions,
   } = useStylePanel({ currentTool, selectedAnnotations });
 
@@ -46,7 +48,9 @@ const DefaultStylePanel = ({ currentTool, selectedAnnotations }) => {
           startLineStyle={startLineStyle}
           endLineStyle={endLineStyle}
           strokeStyle={strokeStyle}
+          fillStyle={fillStyle}
           onLineStyleChange={onLineStyleChange}
+          onFillStyleChange={onFillStyleChange}
         />
       )}
     </>

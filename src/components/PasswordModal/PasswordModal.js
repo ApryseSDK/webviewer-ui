@@ -48,7 +48,7 @@ const PasswordModal = () => {
 
   useEffect(() => {
     if (isOpen) {
-      dispatch(actions.closeElement(DataElements.PROGRESS_MODAL));
+      dispatch(actions.closeLoadingScreen());
       passwordInput.current?.focus();
       window.addEventListener('keydown', (e) => escapePressListener(e, closeModal));
     } else {

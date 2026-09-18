@@ -7,6 +7,8 @@ import { PANEL_SIZES } from 'constants/panel';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 
+const VirtualizedSignatureList = React.lazy(() => import('./VirtualizedSignatureList'));
+
 const SignatureRowContent = React.memo(({
   index,
   onFullSignatureSetHandler,
@@ -70,51 +72,69 @@ const SavedSignatures = (props) => {
 
   const isMobile = isMobileSize();
 
+  const visibleSignatures = React.useMemo(() => savedSignatures
+    // Need to keep the index information from the original signature list
+    .map((signatureObject, index) => [signatureObject, index])
+    .filter((_, savedSignatureIndex) => {
+      const isPanelSizeLarge = !panelSize || panelSize !== PANEL_SIZES.SMALL_SIZE;
+      const isMobileSizeWithSmallPanel = isMobile && panelSize === PANEL_SIZES.SMALL_SIZE;
+      return isPanelSizeLarge || (isMobileSizeWithSmallPanel && currentlySelectedSignature === savedSignatureIndex);
+    }),
+  [savedSignatures, panelSize, isMobile, currentlySelectedSignature]);
+
+  const renderSignatureRow = React.useCallback((_, signatureData) => {
+    if (!signatureData) {
+      return null;
+    }
+    const [{ fullSignature, initials }, savedSignatureIndex] = signatureData;
+    return (
+      <div
+        key={savedSignatureIndex}
+        className="signature-row"
+      >
+        <SignatureRowContent
+          index={savedSignatureIndex}
+          fullSignature={fullSignature}
+          initials={initials}
+          onFullSignatureSetHandler={onFullSignatureSetHandler}
+          onInitialsSetHandler={onInitialsSetHandler}
+          isActive={currentlySelectedSignature === savedSignatureIndex}
+          altText={`${t('option.toolsOverlay.signatureAltText')} ${savedSignatureIndex + 1}`}
+          isHoveredForDeletion={hoveredIndexToDelete === savedSignatureIndex}
+          signatureMode={signatureMode}
+        />
+        {!isDeleteDisabled && (
+          <Button
+            className="icon-button"
+            img="icon-delete-line"
+            ariaLabel={t('action.delete')}
+            dataElement="defaultSignatureDeleteButton"
+            onMouseOver={() => setHoveredIndexToDelete(savedSignatureIndex)}
+            onMouseLeave={() => setHoveredIndexToDelete(null)}
+            onClick={() => {
+              deleteHandler(savedSignatureIndex);
+              setHoveredIndexToDelete(null);
+            }}
+          />
+        )}
+      </div>
+    );
+  }, [onFullSignatureSetHandler, onInitialsSetHandler, currentlySelectedSignature, hoveredIndexToDelete, signatureMode, isDeleteDisabled, t, deleteHandler]);
+
+  const testModeProps = process.env.NODE_ENV === 'test' ? { initialItemCount: 10 } : {};
+
   if (savedSignatures.length > 0) {
     return (<div className='signature-list'>
       {renderSignatureListHeader()}
-      {
-        savedSignatures
-          // Need to keep the index information from the original signature list
-          .map((signatureObject, index) => [signatureObject, index])
-          .map(([{ fullSignature, initials }, savedSignatureIndex]) => {
-            const isPanelSizeLarge = !panelSize || panelSize !== PANEL_SIZES.SMALL_SIZE;
-            const isMobileSizeWithSmallPanel = isMobile && panelSize === PANEL_SIZES.SMALL_SIZE;
-            if (isPanelSizeLarge || (isMobileSizeWithSmallPanel && currentlySelectedSignature === savedSignatureIndex)) {
-              return (<div
-                key={savedSignatureIndex}
-                className="signature-row"
-              >
-                <SignatureRowContent
-                  index={savedSignatureIndex}
-                  fullSignature={fullSignature}
-                  initials={initials}
-                  onFullSignatureSetHandler={onFullSignatureSetHandler}
-                  onInitialsSetHandler={onInitialsSetHandler}
-                  isActive={currentlySelectedSignature === savedSignatureIndex}
-                  altText={`${t('option.toolsOverlay.signatureAltText')} ${savedSignatureIndex + 1}`}
-                  isHoveredForDeletion={hoveredIndexToDelete === savedSignatureIndex}
-                  signatureMode={signatureMode}
-                />
-                {!isDeleteDisabled && (
-                  <Button
-                    className="icon-button"
-                    img="icon-delete-line"
-                    ariaLabel={t('action.delete')}
-                    dataElement="defaultSignatureDeleteButton"
-                    onMouseOver={() => setHoveredIndexToDelete(savedSignatureIndex)}
-                    onMouseLeave={() => setHoveredIndexToDelete(null)}
-                    onClick={() => {
-                      deleteHandler(savedSignatureIndex);
-                      setHoveredIndexToDelete(null);
-                    }}
-                  />
-                )}
-              </div>);
-            }
-            return null;
-          })
-      }
+      <div className='saved-signatures-virtuoso-container'>
+        <React.Suspense fallback={null}>
+          <VirtualizedSignatureList
+            visibleSignatures={visibleSignatures}
+            renderSignatureRow={renderSignatureRow}
+            testModeProps={testModeProps}
+          />
+        </React.Suspense>
+      </div>
     </div>);
   }
   return null;

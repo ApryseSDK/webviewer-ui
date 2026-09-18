@@ -4,8 +4,9 @@ import { isAndroid, isIOS } from 'helpers/device';
 import selectors from 'selectors';
 import core from 'core';
 import DataElements from 'constants/dataElement';
+import LoadingScreenContexts from 'constants/loadingScreenContexts';
 import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
-import { setToolbarGroup, openElement } from './exposedActions';
+import { closeElement, openElement, setToolbarGroup } from './exposedActions';
 import { panelNames } from 'constants/panel';
 
 // viewer
@@ -133,6 +134,51 @@ export const setIsElementHidden = (dataElement, isHidden) => ({
   type: 'SET_IS_ELEMENT_HIDDEN',
   payload: { dataElement, isHidden }
 });
+export const setLoadingScreenContext = (loadingScreenContext) => ({
+  type: 'SET_LOADING_SCREEN_CONTEXT',
+  payload: { loadingScreenContext },
+});
+export const setLoadingScreenStyle = (loadingScreenStyle) => ({
+  type: 'SET_LOADING_SCREEN_STYLE',
+  payload: { loadingScreenStyle },
+});
+export const setDocumentViewerLoading = (documentViewerKey, isLoading) => ({
+  type: 'SET_DOCUMENT_VIEWER_LOADING',
+  payload: { documentViewerKey, isLoading },
+});
+export const openDocumentLoadingScreen = (documentViewerKey = null) => (dispatch, getState) => {
+  const state = getState();
+  const isLegacyProgressOpen = selectors.isElementOpen(state, DataElements.PROGRESS_MODAL)
+    && selectors.getLoadingScreenContext(state) === LoadingScreenContexts.DEFAULT;
+  if (isLegacyProgressOpen) {
+    return;
+  }
+
+  if (documentViewerKey != null) {
+    dispatch(setDocumentViewerLoading(documentViewerKey, true));
+  }
+  dispatch(setLoadingScreenContext(LoadingScreenContexts.DOCUMENT));
+  dispatch(openElement(DataElements.LOADING_MODAL));
+  dispatch(openElement(DataElements.PROGRESS_MODAL));
+};
+export const closeDocumentLoadingScreen = (documentViewerKey = null) => (dispatch, getState) => {
+  if (documentViewerKey != null) {
+    dispatch(setDocumentViewerLoading(documentViewerKey, false));
+
+    const loadingDocumentViewerKeys = selectors.getLoadingDocumentViewerKeys(getState());
+    const hasLoadingViewer = Object.values(loadingDocumentViewerKeys).some(Boolean);
+    if (hasLoadingViewer) {
+      return;
+    }
+  }
+
+  dispatch(closeLoadingScreen());
+};
+export const closeLoadingScreen = () => (dispatch) => {
+  dispatch(closeElement(DataElements.LOADING_MODAL));
+  dispatch(closeElement(DataElements.PROGRESS_MODAL));
+  dispatch(setLoadingScreenContext(LoadingScreenContexts.DEFAULT));
+};
 export const setThumbnailMerging = (useThumbnailMerging = true) => ({
   type: 'SET_THUMBNAIL_MERGING',
   payload: { useThumbnailMerging },
@@ -206,6 +252,22 @@ export const setActiveToolNameAndStyle = (toolObject) => (dispatch, getState) =>
 export const setActiveToolStyles = (toolStyles = {}) => ({
   type: 'SET_ACTIVE_TOOL_STYLES',
   payload: { toolStyles },
+});
+export const registerCustomFillStyle = (style) => ({
+  type: 'REGISTER_CUSTOM_FILL_STYLE',
+  payload: { style },
+});
+export const unregisterCustomFillStyle = (key) => ({
+  type: 'UNREGISTER_CUSTOM_FILL_STYLE',
+  payload: { key },
+});
+export const registerCustomLineStyle = (style) => ({
+  type: 'REGISTER_CUSTOM_LINE_STYLE',
+  payload: { style },
+});
+export const unregisterCustomLineStyle = (key, section) => ({
+  type: 'UNREGISTER_CUSTOM_LINE_STYLE',
+  payload: { key, section },
 });
 export const setCustomColor = (customColor = {}) => ({
   type: 'SET_CUSTOM_COLOR',
@@ -587,6 +649,10 @@ export const setPortfolio = (portfolio, documentViewerKey = 1) => ({
 export const setLayers = (layers, documentViewerKey = 1) => ({
   type: 'SET_LAYERS',
   payload: { layers, documentViewerKey },
+});
+export const setInitialLayers = (initialLayers, documentViewerKey = 1) => ({
+  type: 'SET_INITIAL_LAYERS',
+  payload: { initialLayers, documentViewerKey },
 });
 export const setPasswordAttempts = (attempt) => ({
   type: 'SET_PASSWORD_ATTEMPTS',

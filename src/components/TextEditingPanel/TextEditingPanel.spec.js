@@ -194,9 +194,29 @@ describe('TextEditingPanel', () => {
     const fontSizeDropdown = screen.getByRole('combobox', { name: /Font Size/i });
     fireEvent.click(fontSizeDropdown);
 
-    const fontSizeItem24 = screen.getByRole('option', { name: '196' });
+    const fontSizeItem24 = screen.getByRole('option', { name: '24' });
 
     fireEvent.click(fontSizeItem24);
     expect(checkIsCalled).toHaveBeenCalled();
+  });
+
+  it('should call handleZOrderChange with the correct action for each z-order button', () => {
+    const handleZOrderChange = jest.fn();
+    render(
+      <TestTextEditingPanel
+        {...mockProps}
+        handleZOrderChange={handleZOrderChange}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /send to back/i }));
+    fireEvent.click(screen.getByRole('button', { name: /send backward/i }));
+    fireEvent.click(screen.getByRole('button', { name: /bring forward/i }));
+    fireEvent.click(screen.getByRole('button', { name: /bring to front/i }));
+
+    expect(handleZOrderChange).toHaveBeenNthCalledWith(1, 'sendToBack');
+    expect(handleZOrderChange).toHaveBeenNthCalledWith(2, 'sendBackward');
+    expect(handleZOrderChange).toHaveBeenNthCalledWith(3, 'bringForward');
+    expect(handleZOrderChange).toHaveBeenNthCalledWith(4, 'bringToFront');
   });
 });

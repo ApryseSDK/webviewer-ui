@@ -17,16 +17,19 @@ import Choice from 'components/Choice';
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import getNotesPanelSortStrategy from 'helpers/getNotesPanelSortStrategy';
+import { prioritizeNotesByAnnotationNumber, createNoteFilter, shouldExpandNoteForReplyMatch } from 'helpers/notesPanelSearchHelpers';
+import getSingleSelectedNoteIndex from 'helpers/getSingleSelectedNoteIndex';
 import { OfficeEditorEditMode } from 'constants/officeEditor';
-import { SpreadsheetEditorEditMode, SPREADSHEET_SHEET_NAME_KEY, SPREADSHEET_SHEET_INDEX_KEY, SPREADSHEET_ROW_KEY, SPREADSHEET_COLUMN_KEY, SPREADSHEET_THREAD_ID_KEY } from 'constants/spreadsheetEditor';
+import { SpreadsheetEditorEditMode, SPREADSHEET_THREAD_ID_KEY } from 'constants/spreadsheetEditor';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { isIE } from 'helpers/device';
-import findExistingSpreadsheetCommentAtCell from 'helpers/findExistingSpreadsheetCommentAtCell';
+import findExistingSpreadsheetCommentAtCell from 'helpers/spreadsheetEditor/findExistingSpreadsheetCommentAtCell';
 import useSpreadsheetActiveSheetIndex from 'hooks/useSpreadsheetActiveSheetIndex';
+import useSpreadsheetCellCommentSelection from 'hooks/useSpreadsheetCellCommentSelection';
 import ReplyAttachmentPicker from './ReplyAttachmentPicker';
 import CommentPanelFooter from './CommentPanelFooter';
 import PropTypes from 'prop-types';
@@ -74,6 +77,7 @@ const NotesPanel = ({
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
   const activeCellRangeTopLeftRow = useSelector(selectors.getActiveCellRangeTopLeftRow);
   const activeCellRangeTopLeftColumn = useSelector(selectors.getActiveCellRangeTopLeftColumn);
+  const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, parentDataElement || dataElement));
   const notesPanelConfig = getNotesPanelConfig(dataElement);
 
   const dispatch = useDispatch();
@@ -99,7 +103,7 @@ const NotesPanel = ({
 
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
-      if (action === 'selected') {
+      if (action === 'selected' && annotations?.length) {
         setCurAnnotId(annotations[0].Id);
       }
     };
@@ -120,114 +124,11 @@ const NotesPanel = ({
     dispatch(actions.closeElement('annotationNoteConnectorLine'));
   };
 
-  const noteMatchesSearchNumber = (note, searchedNumber) => {
-    const annotationNumber = note.getCustomData('trn-associated-number', activeDocumentViewerKey);
-
-    if (
-      annotationNumber === null ||
-      annotationNumber === undefined ||
-      (typeof annotationNumber === 'string' && annotationNumber.trim() === '')
-    ) {
-      return false;
-    }
-
-    const parsedAnnotationNumber = Number(annotationNumber);
-
-    return !Number.isNaN(parsedAnnotationNumber) && parsedAnnotationNumber === searchedNumber;
-  };
-
-  const prioritizeNotesBySearchedNumber = (notes) => {
-    if (!showAnnotationNumbering) {
-      return notes;
-    }
-
-    const normalizedSearchInput = String(searchInput ?? '').trim();
-    if (normalizedSearchInput === '') {
-      return notes;
-    }
-
-    const searchedNumber = Number(normalizedSearchInput);
-    if (Number.isNaN(searchedNumber)) {
-      return notes;
-    }
-
-    const matched = [];
-    const unmatched = [];
-
-    for (const note of notes) {
-      (noteMatchesSearchNumber(note, searchedNumber) ? matched : unmatched).push(note);
-    }
-
-    return [...matched, ...unmatched];
-  };
-
-  const filterNotesWithSearch = (note) => {
-    const content = note.getContents();
-    const authorName = core.getDisplayAuthor(note['Author']);
-    const annotationPreview = note.getCustomData('trn-annot-preview');
-    const annotationNumber = note.getCustomData('trn-associated-number', activeDocumentViewerKey);
-    const annotationNumberText = annotationNumber === null || annotationNumber === undefined ? '' : String(annotationNumber);
-
-    // didn't use regex here because the search input may form an invalid regex, e.g. *
-    return (
-      content?.toLowerCase().includes(searchInput.toLowerCase()) ||
-      authorName?.toLowerCase().includes(searchInput.toLowerCase()) ||
-      annotationPreview?.toLowerCase().includes(searchInput.toLowerCase()) ||
-      annotationNumberText.toLowerCase().includes(searchInput.toLowerCase())
-    );
-  };
-
-  const filterNote = (note) => {
-    let shouldRender = true;
-
-    if (customNoteFilter) {
-      shouldRender = shouldRender && customNoteFilter(note);
-    }
-
-    if (internalNoteFilter) {
-      shouldRender = shouldRender && internalNoteFilter(note);
-    }
-
-    if (searchInput) {
-      const replies = note.getReplies();
-      // reply is also a kind of annotation
-      // https://docs.apryse.com/api/web/Core.AnnotationManager.html#createAnnotationReply__anchor
-      const noteAndReplies = [note, ...replies];
-
-      shouldRender = shouldRender && noteAndReplies.some(filterNotesWithSearch);
-    }
-    return shouldRender;
-  };
-
   const activeSortStrategy = getNotesPanelSortStrategy(sortStrategy);
   const sortOptions = { pageLabels, t, documentViewerKey: activeDocumentViewerKey };
+  const filterNote = createNoteFilter({ customNoteFilter, internalNoteFilter, searchInput, documentViewerKey: activeDocumentViewerKey });
   const filteredSortedNotes = activeSortStrategy.getSortedNotes(notes, sortOptions).filter(filterNote);
-  if (isSpreadsheetEditorMode) {
-    // Spreadsheet comments are sorted top-to-bottom, left-to-right within a sheet,
-    // using the numeric row/column indices the annotation already carries (no need to
-    // re-derive them from the display cell string, e.g. "A1").
-    filteredSortedNotes.sort((a, b) => {
-      const sheetIndexA = Number.parseInt(a.getCustomData(SPREADSHEET_SHEET_INDEX_KEY), 10) || 0;
-      const sheetIndexB = Number.parseInt(b.getCustomData(SPREADSHEET_SHEET_INDEX_KEY), 10) || 0;
-
-      if (sheetIndexA !== sheetIndexB) {
-        return sheetIndexA - sheetIndexB;
-      }
-
-      const rowA = Number.parseInt(a.getCustomData(SPREADSHEET_ROW_KEY), 10) || 0;
-      const rowB = Number.parseInt(b.getCustomData(SPREADSHEET_ROW_KEY), 10) || 0;
-
-      if (rowA !== rowB) {
-        return rowA - rowB;
-      }
-
-      const columnA = Number.parseInt(a.getCustomData(SPREADSHEET_COLUMN_KEY), 10) || 0;
-      const columnB = Number.parseInt(b.getCustomData(SPREADSHEET_COLUMN_KEY), 10) || 0;
-
-      return columnA - columnB;
-    });
-  }
-  const notesToRender = prioritizeNotesBySearchedNumber(filteredSortedNotes);
+  const notesToRender = prioritizeNotesByAnnotationNumber(filteredSortedNotes, { showAnnotationNumbering, searchInput, documentViewerKey: activeDocumentViewerKey });
 
   // The existing comment thread's root note at the cell that would receive a new comment
   // (the top-left cell of the current selection, whether it's a single cell or a
@@ -248,6 +149,12 @@ const NotesPanel = ({
     });
   }, [isSpreadsheetEditorMode, notes, activeSheetIndex, activeCellRangeTopLeftRow, activeCellRangeTopLeftColumn]);
 
+  useSpreadsheetCellCommentSelection({
+    isEnabled: isSpreadsheetEditorMode && !isDisabled && (isPanelOpen || isCustomPanelOpen || notesInLeftPanel),
+    comment: existingCommentAtSelectedCell,
+    documentViewerKey: activeDocumentViewerKey,
+  });
+
   useEffect(() => {
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
       setTimeout(() => {
@@ -256,21 +163,6 @@ const NotesPanel = ({
       }, 0);
     }
   }, [selectedNoteIds]);
-
-  // expand a reply note when search content is match
-  const onlyReplyContainsSearchInput = (currNote) => {
-    if (Object.keys(selectedNoteIds).length) {
-      return false;
-    }
-    return (
-      searchInput &&
-      notesToRender
-        .filter((note) => {
-          return note.getReplies().some(filterNotesWithSearch);
-        })
-        .some((replies) => replies.Id === currNote.Id)
-    );
-  };
 
   const [pendingEditTextMap, setPendingEditTextMap] = useState({});
   const setPendingEditText = useCallback(
@@ -350,16 +242,7 @@ const NotesPanel = ({
     const prevNote = index === 0 ? null : notes[index - 1];
     const currNote = notes[index];
 
-    if (isSpreadsheetEditorMode) {
-      const prevSheetIndex = prevNote ? prevNote.getCustomData(SPREADSHEET_SHEET_INDEX_KEY) : null;
-      const currSheetIndex = currNote.getCustomData(SPREADSHEET_SHEET_INDEX_KEY);
-      if (!prevNote || prevSheetIndex !== currSheetIndex) {
-        const sheetName = currNote.getCustomData(SPREADSHEET_SHEET_NAME_KEY);
-        if (sheetName) {
-          listSeparator = <ListSeparator renderContent={() => sheetName} />;
-        }
-      }
-    } else if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote, sortOptions, activeDocumentViewerKey))) {
+    if (shouldRenderSeparator && getSeparatorContent && (!prevNote || shouldRenderSeparator(prevNote, currNote, sortOptions, activeDocumentViewerKey))) {
       listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, sortOptions, activeDocumentViewerKey)} />;
     }
 
@@ -389,7 +272,7 @@ const NotesPanel = ({
       setPendingReply,
       isDocumentReadOnly,
       onTopNoteContentClicked: handleNoteClicked,
-      isExpandedFromSearch: onlyReplyContainsSearchInput(currNote),
+      isExpandedFromSearch: shouldExpandNoteForReplyMatch(currNote, { notesToRender, selectedNoteIds, searchInput, documentViewerKey: activeDocumentViewerKey }),
       scrollToSelectedAnnot,
       sortStrategy,
       showAnnotationNumbering,
@@ -503,18 +386,7 @@ const NotesPanel = ({
 
   // keep track of the index of the single selected note in the sorted and filtered list
   // in order to scroll it into view in this render effect
-  const ids = Object.keys(selectedNoteIds);
-  if (ids.length === 1) {
-    singleSelectedNoteIndex = notesToRender.findIndex((note) => note.Id === ids[0]);
-  } else if (ids.length) {
-    // when selecting annotations that are grouped together, scroll to parent annotation that is in "notesToRender"
-    // selectedNoteIds will have every ID in the group, while only the parent is in notesToRender
-    const existingSelectedNotes = notesToRender.filter((note) => selectedNoteIds[note.Id]);
-
-    if (existingSelectedNotes.length) {
-      singleSelectedNoteIndex = notesToRender.findIndex((note) => note.Id === curAnnotId);
-    }
-  }
+  singleSelectedNoteIndex = getSingleSelectedNoteIndex(notesToRender, { selectedNoteIds, curAnnotId });
 
   const panelWidthVars = !isCustomPanel && (isInDesktopOnlyMode || !isMobile)
     ? css({ '--panel-width': currentWidth ? `${currentWidth}px` : '100%' })

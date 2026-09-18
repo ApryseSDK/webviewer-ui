@@ -6,12 +6,20 @@ import useReplyAutosave from 'hooks/useReplyAutosave/useReplyAutosave';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
 import Events from 'constants/events';
 
+const mockSpreadsheetAddReply = jest.fn();
+const mockTextareaFocus = jest.fn();
+
 jest.mock('hooks/useCore', () => () => ({
   core: {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     getOfficeEditor: jest.fn(() => ({
       getCommentManager: jest.fn(() => ({ addCommentReply: jest.fn() })),
+    })),
+    getDocumentViewer: jest.fn(() => ({
+      getSpreadsheetEditorManager: jest.fn(() => ({
+        getCommentManager: jest.fn(() => ({ addReply: mockSpreadsheetAddReply })),
+      })),
     })),
     createAnnotationReply: jest.fn(() => ({})),
     getAnnotationManager: jest.fn(() => ({ trigger: jest.fn() })),
@@ -34,11 +42,12 @@ jest.mock('components/NoteTextarea', () => {
     getContents: jest.fn(() => ({ ops: [] })),
     getLength: jest.fn(() => 1),
     setText: jest.fn(),
+    setSelection: jest.fn(),
   };
   const MockNoteTextarea = React.forwardRef(({ value, onChange }, ref) => {
     const mockTextarea = {
       getEditor: jest.fn(() => mockEditor),
-      focus: jest.fn(),
+      focus: mockTextareaFocus,
       editor: {
         setSelection: jest.fn(),
       },
@@ -74,6 +83,7 @@ jest.mock('components/Button', () => {
 const createContextValue = (overrides = {}) => ({
   isContentEditable: false,
   isSelected: true,
+  pendingReplyMap: {},
   setPendingReply: jest.fn(),
   isExpandedFromSearch: false,
   scrollToSelectedAnnot: false,
@@ -104,7 +114,7 @@ const createAutosaveValue = (overrides = {}) => ({
   ...overrides,
 });
 
-const renderComponent = (autosaveValue, contextValue, props = {}) => {
+const renderComponent = (autosaveValue, contextValue, props = {}, stateOverrides = {}) => {
   useReplyAutosave.mockReturnValue(autosaveValue);
   const TestReplyArea = withProviders(ReplyArea, {
     viewer: {
@@ -114,6 +124,10 @@ const renderComponent = (autosaveValue, contextValue, props = {}) => {
     officeEditor: {
       editMode: 'editing',
     },
+    spreadsheetEditor: {
+      editMode: 'editing',
+    },
+    ...stateOverrides,
   });
 
   return render(
@@ -126,6 +140,79 @@ const renderComponent = (autosaveValue, contextValue, props = {}) => {
 describe('ReplyArea autosave integration', () => {
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  it('keeps focus on spreadsheet cells during automatic comment expansion', () => {
+    const contextValue = createContextValue({
+      scrollToSelectedAnnot: true,
+      isSpreadsheetEditorCommentAnnotation: true,
+    });
+
+    renderComponent(createAutosaveValue(), contextValue);
+
+    expect(mockTextareaFocus).not.toHaveBeenCalled();
+  });
+
+  it('focuses the reply input when note editing is explicitly triggered', () => {
+    const contextValue = createContextValue({
+      scrollToSelectedAnnot: true,
+      isSpreadsheetEditorCommentAnnotation: true,
+    });
+
+    renderComponent(createAutosaveValue(), contextValue, {}, {
+      viewer: {
+        isNoteEditing: true,
+        autoFocusNoteOnAnnotationSelection: true,
+      },
+    });
+
+    expect(mockTextareaFocus).toHaveBeenCalled();
+  });
+
+  it('submits spreadsheet replies through CommentManager.addReply', async () => {
+    mockSpreadsheetAddReply.mockReturnValue({});
+    const setPendingReply = jest.fn();
+    const clearAttachments = jest.fn();
+    const DRAFT_REPLY_VALUE = 'draft reply';
+    const contextValue = createContextValue({
+      isSpreadsheetEditorCommentAnnotation: true,
+      isOfficeEditorCommentAnnotation: false,
+      pendingReplyMap: { a1: DRAFT_REPLY_VALUE },
+      setPendingReply,
+      clearAttachments,
+    });
+
+    renderComponent(createAutosaveValue({ localReplyValue: DRAFT_REPLY_VALUE }), contextValue, {}, {
+      spreadsheetEditor: {
+        editMode: 'editing',
+      },
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'action.submit' }));
+
+    await waitFor(() => {
+      expect(mockSpreadsheetAddReply).toHaveBeenCalledWith('a1', 'reply text');
+    });
+
+    expect(setPendingReply).toHaveBeenCalledWith('', 'a1');
+    expect(clearAttachments).toHaveBeenCalledWith('a1');
+  });
+
+  it('hides reply input for spreadsheet comments in view mode', () => {
+    const contextValue = createContextValue({
+      isSpreadsheetEditorCommentAnnotation: true,
+      isOfficeEditorCommentAnnotation: false,
+      pendingReplyMap: { a1: '' },
+    });
+
+    renderComponent(createAutosaveValue({ localReplyValue: '' }), contextValue, {}, {
+      spreadsheetEditor: {
+        editMode: 'viewOnly',
+      },
+    });
+
+    expect(screen.queryByTestId('note-textarea')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'action.submit' })).not.toBeInTheDocument();
   });
 
   it('dispatches autosaved event when autosave is enabled and hook marks saved state', async () => {
@@ -250,6 +337,7 @@ describe('ReplyArea autosave integration', () => {
     const contextValue = createContextValue({
       setPendingReply,
       clearAttachments,
+      pendingReplyMap: { a1: 'draft reply' },
     });
     const error = new Error('Failed to attach files');
 

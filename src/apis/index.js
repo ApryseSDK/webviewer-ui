@@ -9,6 +9,7 @@ import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import RedactionSearchPatterns from 'constants/redactionSearchPatterns';
 import ReaderModePageMode from 'constants/readerModePageMode';
+import ElementTagTarget from 'constants/elementTagTarget';
 import { languageEnum } from 'constants/languages';
 import { panelNames } from 'constants/panel';
 import addSearchListener from './addSearchListener';
@@ -115,6 +116,7 @@ import setDisplayedSignaturesFilterFunction from './setDisplayedSignaturesFilter
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
 import setSignatureFonts from './setSignatureFonts';
+import setSignatureModalColors from './setSignatureModalColors';
 import disableReplyForAnnotations from './disableReplyForAnnotations';
 import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
@@ -195,6 +197,8 @@ import setPresetNewPageDimensions from './setPresetNewPageDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
 import addRedactionSearchPattern from './addRedactionSearchPattern';
 import removeRedactionSearchPattern from './removeRedactionSearchPattern';
+import { registerCustomFillStyle, unregisterCustomFillStyle } from './registerCustomFillStyle';
+import { registerCustomLineStyle, unregisterCustomLineStyle } from './registerCustomLineStyle';
 import getAnnotationStylePopupTabs from './getAnnotationStylePopupTabs';
 import setAnnotationStylePopupTabs from './setAnnotationStylePopupTabs';
 import { AnnotationKeys, AnnotationStylePopupTabs } from '../constants/map';
@@ -268,6 +272,7 @@ import setPanelWidth from './setPanelWidth';
 import setModularHeaders from './setModularHeaders';
 import importModularComponents from './importModularComponents';
 import setScaleOverlayPosition from './setScaleOverlayPosition';
+import setElementTag from './setElementTag';
 import setPanels from './setPanels';
 import getPanels from './getPanels';
 import getActiveRibbonItem from './getActiveRibbonItem';
@@ -293,6 +298,8 @@ import {
 } from 'src/apis/viewOnlyMode';
 import { Shortcuts } from 'helpers/hotkeysUtils';
 import setReaderPageMode from './setReaderPageMode';
+import enableSignatureDisclaimer from './enableSignatureDisclaimer';
+import disableSignatureDisclaimer from './disableSignatureDisclaimer';
 
 export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => {
   const CORE_NAMESPACE = 'Core';
@@ -315,6 +322,7 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
     Theme,
     RedactionSearchPatterns,
     ReaderModePageMode,
+    ElementTagTarget,
     JustifyContent: JUSTIFY_CONTENT,
     PRESET_BUTTON_TYPES: PRESET_BUTTON_TYPES,
     addSearchListener,
@@ -374,7 +382,7 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
     setFitMode,
     setIconColor: setIconColor(store),
     setLanguage: setLanguage(store, instanceI18n),
-    setTranslations,
+    setTranslations: setTranslations(instanceI18n),
     setLayoutMode,
     setMaxZoomLevel: setMaxZoomLevel(store),
     setMinZoomLevel: setMinZoomLevel(store),
@@ -413,6 +421,7 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
     mentions: mentions(store, instanceDocViewerKey),
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
+    setSignatureModalColors: setSignatureModalColors(store),
     setSelectedTab: setSelectedTab(store),
     setActiveTabInPanel: setActiveTabInPanel(store),
     setActiveGroupedItems: setActiveGroupedItems(store),
@@ -426,6 +435,10 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
     setAutosaveInterval: setAutosaveInterval(store),
 
     setReaderPageMode: setReaderPageMode(store),
+
+    enableSignatureDisclaimer: enableSignatureDisclaimer(store),
+    disableSignatureDisclaimer: disableSignatureDisclaimer(store),
+
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
@@ -543,6 +556,10 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
     addDateTimeFormat: addDateTimeFormat(store),
     addRedactionSearchPattern: addRedactionSearchPattern(store),
     removeRedactionSearchPattern: removeRedactionSearchPattern(store),
+    registerCustomFillStyle: registerCustomFillStyle(store),
+    unregisterCustomFillStyle: unregisterCustomFillStyle(store),
+    registerCustomLineStyle: registerCustomLineStyle(store),
+    unregisterCustomLineStyle: unregisterCustomLineStyle(store),
     setThumbnailSelectionMode: setThumbnailSelectionMode(store),
     enableBookmarkIconShortcutVisibility: enableBookmarkIconShortcutVisibility(store),
     disableBookmarkIconShortcutVisibility: disableBookmarkIconShortcutVisibility(store),
@@ -573,6 +590,7 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
     disableFeatureFlag: disableFeatureFlag(store),
     setPanelWidth: setPanelWidth(store),
     setScaleOverlayPosition: setScaleOverlayPosition(store),
+    setElementTag: setElementTag(store),
     enableViewOnlyMode: enableViewOnlyMode(store),
     disableViewOnlyMode: disableViewOnlyMode(store),
     addToViewOnlyWhitelist: addToViewOnlyWhitelist(store),

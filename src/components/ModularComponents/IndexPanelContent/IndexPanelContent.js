@@ -48,6 +48,7 @@ const IndexPanelContent = forwardRef(({
   const [isValid, setIsValid] = useState(true);
   const [validationMessage, setValidationMessage] = useState('');
   const inputRef = useRef();
+  const isEditingButtonClicked = useRef(false);
   const dispatch = useDispatch();
 
   const handleKeyDown = (e) => {
@@ -97,11 +98,29 @@ const IndexPanelContent = forwardRef(({
   const handleOnBlur = (e) => {
     const isClickBtn = e.relatedTarget && (e.relatedTarget.className.includes('index-panel-save-button') ||
     e.relatedTarget.className.includes('index-panel-cancel-button'));
-    if (isClickBtn) {
+    if (isClickBtn || isEditingButtonClicked.current) {
       e.preventDefault();
       return;
     }
     onCloseRenaming();
+  };
+
+  const handleEditingButtonClickStart = (event) => {
+    isEditingButtonClicked.current = Boolean(event.target.closest('.index-panel-save-button, .index-panel-cancel-button'));
+  };
+
+  const handleEditingButtonClickCancel = () => {
+    isEditingButtonClicked.current = false;
+  };
+
+  const handleSaveButtonClick = () => {
+    onSaveFieldName();
+    isEditingButtonClicked.current = false;
+  };
+
+  const handleCancelButtonClick = () => {
+    onCloseRenaming();
+    isEditingButtonClicked.current = false;
   };
 
   useEffect(() => {
@@ -234,17 +253,23 @@ const IndexPanelContent = forwardRef(({
                 message={!isValid ? 'warning' : 'default'}
               />
             </div>
-            <div className="index-panel-editing-controls">
+            <div
+              className="index-panel-editing-controls"
+              onTouchStart={handleEditingButtonClickStart}
+              onTouchCancel={handleEditingButtonClickCancel}
+            >
               <Button
                 className="index-panel-cancel-button"
                 label={t('action.cancel')}
-                onClick={onCloseRenaming}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={handleCancelButtonClick}
               />
               <Button
                 className="index-panel-save-button"
                 label={t('action.save')}
                 isSubmitType
-                onClick={onSaveFieldName}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={handleSaveButtonClick}
                 disabled={!isValid || fieldName === defaultFiledName}
               />
             </div>

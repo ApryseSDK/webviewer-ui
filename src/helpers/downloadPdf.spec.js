@@ -59,11 +59,19 @@ jest.mock('constants/types', () => ({
 
 jest.mock('./officeEditor', () => ({
   isOfficeEditorMode: jest.fn(() => false),
+}));
+
+jest.mock('./spreadsheetEditor/isSpreadsheetEditorMode', () => ({
   isSpreadsheetEditorMode: jest.fn(() => false),
 }));
 
 jest.mock('src/constants/dataElement', () => ({
   LOADING_MODAL: 'loadingModal',
+  NotesPanel: {
+    DefaultHeader: {
+      FILTER_ANNOTATION_BUTTON: 'filterAnnotationButton',
+    },
+  },
 }));
 
 jest.mock('./downloadHelper', () => ({
@@ -81,6 +89,7 @@ describe('downloadPdf', () => {
   let doc;
   let documentViewer;
   let annotationManager;
+  let contentEditManager;
 
   const setupCoreMocks = () => {
     const existingAnnotation = {
@@ -95,10 +104,17 @@ describe('downloadPdf', () => {
       exportAnnotations: jest.fn(() => Promise.resolve('xfdf-with-drafts')),
     };
 
+    contentEditManager = {
+      isInContentEditMode: jest.fn(() => false),
+      endContentEditMode: jest.fn(() => Promise.resolve()),
+      startContentEditMode: jest.fn(() => Promise.resolve()),
+    };
+
     documentViewer = {
       getWatermark: jest.fn(() => Promise.resolve({})),
       setWatermark: jest.fn(),
       getAnnotationManager: jest.fn(() => annotationManager),
+      getContentEditManager: jest.fn(() => contentEditManager),
     };
 
     doc = {
@@ -208,6 +224,32 @@ describe('downloadPdf', () => {
     expect(annotationManager.exportAnnotations).not.toHaveBeenCalled();
   });
 
+  it('uses incremental saving when a signature widget has a cryptographic signature', async () => {
+    getReplyDraftsForExport.mockReturnValue([]);
+    const signatureWidget = new window.Core.Annotations.SignatureWidgetAnnotation();
+    signatureWidget.hasCryptographicSignature = jest.fn().mockResolvedValue(true);
+    core.getAnnotationsList.mockReturnValue([signatureWidget]);
+
+    await downloadPdf(dispatch, {}, documentViewerKey);
+
+    expect(signatureWidget.hasCryptographicSignature).toHaveBeenCalledTimes(1);
+    expect(doc.getFileData.mock.calls[0][0].flags).toBe(window.Core.SaveOptions.INCREMENTAL);
+  });
+
+  it('does not use incremental saving for an appearance-only signature widget', async () => {
+    getReplyDraftsForExport.mockReturnValue([]);
+    const signatureWidget = new window.Core.Annotations.SignatureWidgetAnnotation();
+    signatureWidget.isSignedByAppearance = jest.fn(() => true);
+    signatureWidget.hasCryptographicSignature = jest.fn().mockResolvedValue(false);
+    core.getAnnotationsList.mockReturnValue([signatureWidget]);
+
+    await downloadPdf(dispatch, {}, documentViewerKey);
+
+    expect(signatureWidget.hasCryptographicSignature).toHaveBeenCalledTimes(1);
+    expect(signatureWidget.isSignedByAppearance).not.toHaveBeenCalled();
+    expect(doc.getFileData.mock.calls[0][0].flags).toBeUndefined();
+  });
+
   it('emits a pre-download event with the active documentViewerKey', async () => {
     getReplyDraftsForExport.mockReturnValue([]);
     const onBeforeDownload = jest.fn();
@@ -261,6 +303,44 @@ describe('downloadPdf', () => {
     } finally {
       window.removeEventListener('wv-after-file-download', onAfterDownload);
     }
+  });
+
+  it('ends Content Edit mode preserving history before download and restarts it after, when active', async () => {
+    getReplyDraftsForExport.mockReturnValue([]);
+    contentEditManager.isInContentEditMode.mockReturnValue(true);
+
+    await downloadPdf(dispatch, {}, documentViewerKey);
+
+    expect(contentEditManager.endContentEditMode).toHaveBeenCalledWith({ preserveHistory: true });
+    expect(contentEditManager.endContentEditMode.mock.invocationCallOrder[0])
+      .toBeLessThan(doc.getFileData.mock.invocationCallOrder[0]);
+    expect(contentEditManager.startContentEditMode).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not touch Content Edit mode when it is not active', async () => {
+    getReplyDraftsForExport.mockReturnValue([]);
+    contentEditManager.isInContentEditMode.mockReturnValue(false);
+
+    await downloadPdf(dispatch, {}, documentViewerKey);
+
+    expect(contentEditManager.endContentEditMode).not.toHaveBeenCalled();
+    expect(contentEditManager.startContentEditMode).not.toHaveBeenCalled();
+  });
+
+  it('does not throw when restarting Content Edit mode after download fails', async () => {
+    getReplyDraftsForExport.mockReturnValue([]);
+    contentEditManager.isInContentEditMode.mockReturnValue(true);
+    contentEditManager.startContentEditMode.mockRejectedValue(new Error('restart failed'));
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    await downloadPdf(dispatch, {}, documentViewerKey);
+    // startContentEditMode's rejection is handled fire-and-forget; flush microtasks to observe it.
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(warnSpy).toHaveBeenCalledWith(new Error('restart failed'));
+
+    warnSpy.mockRestore();
   });
 
   afterEach(() => {

@@ -45,17 +45,17 @@ const SpreadsheetSwitcher = (props) => {
   } = props;
   const activeSheetLabel = tabs.find((tab) => tab.sheetIndex === activeSheetIndex)?.name || '';
   const { width } = useWindowDimensions();
-  const breakpoint = useMemo(() => Math.floor((width - 80) / 170), [width]);
+  const visibleTabCount = useMemo(() => Math.max(1, Math.floor((width - 80) / 170)), [width]);
   const { t } = useTranslation();
   const [labelBeingEdited, setLabelBeingEdited] = useState('');
 
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
   const isReadOnlyMode = spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
 
-  const updateActiveTab = (newActiveLabel, tabIndex) => {
+  const updateActiveTab = useCallback((newActiveLabel, tabIndex) => {
     setLabelBeingEdited(null);
     setActiveSheet(newActiveLabel, tabIndex);
-  };
+  }, [setActiveSheet]);
 
   const handleTabNameClick = (e, label, index) => {
     e.preventDefault();
@@ -63,10 +63,23 @@ const SpreadsheetSwitcher = (props) => {
     updateActiveTab(label, index);
   };
 
+  const displayTabs = useMemo(() => {
+    const activeTabIndex = tabs.findIndex((tab) => tab.sheetIndex === activeSheetIndex);
+    if (activeTabIndex < visibleTabCount) {
+      return tabs;
+    }
+
+    const reorderedTabs = [...tabs];
+    const [activeTab] = reorderedTabs.splice(activeTabIndex, 1);
+    reorderedTabs.splice(visibleTabCount - 1, 0, activeTab);
+
+    return reorderedTabs;
+  }, [tabs, activeSheetIndex, visibleTabCount]);
+
   // Break the sheet tabs into two, one regular view, and one into flyout
   const [slicedTabs, flyoutTabs] = useMemo(() => {
-    return [tabs.slice(0, breakpoint), tabs.slice(breakpoint)];
-  }, [tabs, breakpoint]);
+    return [displayTabs.slice(0, visibleTabCount), displayTabs.slice(visibleTabCount)];
+  }, [displayTabs, visibleTabCount]);
 
   const shouldIgnoreKeydown = useCallback((e) => isEditableElement(e.target), []);
 
@@ -89,7 +102,7 @@ const SpreadsheetSwitcher = (props) => {
       setActiveSheet={setActiveSheet}
       deleteSheet={deleteSheet}
       renameSheet={renameSheet}
-      noRightBorder={tabs[item.sheetIndex + 1] && tabs[item.sheetIndex + 1].name === activeSheetLabel}
+      noRightBorder={slicedTabs[i + 1]?.name === activeSheetLabel}
       checkIsSheetNameDuplicated={checkIsSheetNameDuplicated}
       isReadOnlyMode={isReadOnlyMode}
       skipDeleteWarning={skipDeleteWarning}
@@ -134,7 +147,6 @@ const SpreadsheetSwitcher = (props) => {
             <AdditionalTabsFlyout
               id={DataElements.ADDITIONAL_SPREADSHEET_TABS_MENU}
               additionalTabs={flyoutTabs}
-              tabsForReference={tabs}
               onClick={updateActiveTab}
               activeItem={activeSheetLabel}
             />

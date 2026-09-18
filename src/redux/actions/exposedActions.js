@@ -31,6 +31,7 @@ import { areConfigsEquivalent } from 'helpers/compareObjects';
 import i18next from 'i18next';
 import { panelNames } from 'src/constants/panel';
 import { getInstanceID } from 'helpers/getRootNode';
+import { getStandardStampCategoryFromAnnotation } from 'helpers/stamps';
 import Theme from 'constants/theme';
 
 const getSafeDir = () => {
@@ -143,10 +144,19 @@ export const setStandardStamps = (t) => async (dispatch) => {
     imgSrc: previews[i],
   }));
 
+  const standardStampCategories = annotations.reduce((categories, annotation) => {
+    const category = getStandardStampCategoryFromAnnotation(annotation);
+    if (!categories.includes(category)) {
+      categories.push(category);
+    }
+    return categories;
+  }, []);
+
   dispatch({
     type: 'SET_STANDARD_STAMPS',
     payload: { standardStamps },
   });
+  dispatch(setStandardStampCategories(standardStampCategories));
 };
 
 export const setCustomStamps = (t) => async (dispatch) => {
@@ -157,8 +167,7 @@ export const setCustomStamps = (t) => async (dispatch) => {
   const annotations = await rubberStampTool.getCustomStampAnnotations();
   await Promise.all(
     annotations.map((annotation) => {
-      const text = t(`rubberStamp.${annotation['Icon']}`);
-
+      const text = annotation.getStampText?.() || t(`rubberStamp.${annotation['Icon']}`);
       const options = {
         canvasWidth,
         canvasHeight,
@@ -186,6 +195,11 @@ export const setCustomStamps = (t) => async (dispatch) => {
 export const setCustomStampCategories = (customStampCategories) => ({
   type: 'SET_CUSTOM_STAMP_CATEGORIES',
   payload: { customStampCategories },
+});
+
+export const setStandardStampCategories = (standardStampCategories) => ({
+  type: 'SET_STANDARD_STAMP_CATEGORIES',
+  payload: { standardStampCategories },
 });
 
 const stashEnabledRibbons = (ribbonItems) => (
@@ -424,6 +438,10 @@ export const setDocumentContainerWidth = (width) => ({
 export const setDocumentContainerHeight = (height) => ({
   type: 'SET_DOCUMENT_CONTAINER_HEIGHT',
   payload: { height },
+});
+export const setElementTag = (dataElement, tag) => ({
+  type: 'SET_ELEMENT_TAG',
+  payload: { dataElement, tag },
 });
 
 export const setGapBetweenHeaderItems = (dataElement, gap) => updateHeaderProperty(dataElement, 'gap', gap);
@@ -967,6 +985,10 @@ export const setMaxSignaturesCount = (maxSignaturesCount) => ({
   type: 'SET_MAX_SIGNATURES_COUNT',
   payload: { maxSignaturesCount },
 });
+export const setSignatureModalColors = (signatureModalColors) => ({
+  type: 'SET_SIGNATURE_MODAL_COLORS',
+  payload: { signatureModalColors },
+});
 export const setUserData = (userData) => ({
   type: 'SET_USER_DATA',
   payload: { userData },
@@ -1293,4 +1315,9 @@ export const setAutosaveInterval = (ms) => ({
 export const setReaderPageMode = (readerPageMode) => ({
   type: 'SET_READER_PAGE_MODE',
   payload: { readerPageMode },
+});
+
+export const setSignatureDisclaimerEnabled = (enabled) => ({
+  type: 'SET_SIGNATURE_DISCLAIMER_ENABLED',
+  payload: { enabled },
 });

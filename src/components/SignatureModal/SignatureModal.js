@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import InkSignature from 'components/SignatureModal/InkSignature';
@@ -13,15 +13,32 @@ import actions from 'actions';
 import selectors from 'selectors';
 import SignatureModes from 'constants/signatureModes';
 import DataElements from 'constants/dataElement';
+import { SIGNATURE_MODAL_COLORS } from 'constants/commonColors';
 import useDidUpdate from 'hooks/useDidUpdate';
 import ModalWrapper from 'components/ModalWrapper';
 import useFocusOnClose from 'hooks/useFocusOnClose';
+import getSignatureTools from 'components/SignatureModal/getSignatureTools';
+import { isSignatureColorAvailable } from 'components/SignatureModal/signatureColorHelpers';
 
 import './SignatureModal.scss';
 
+const selectSignatureModalState = (state) => ({
+  isDisabled: selectors.isElementDisabled(state, DataElements.SIGNATURE_MODAL),
+  isOpen: selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL),
+  activeToolName: selectors.getActiveToolName(state),
+  signatureMode: selectors.getSignatureMode(state),
+  activeDocumentViewerKey: selectors.getActiveDocumentViewerKey(state),
+  isInitialsModeEnabled: selectors.getIsInitialsModeEnabled(state),
+  isSavedTabDisabled: selectors.isElementDisabled(state, DataElements.SAVED_SIGNATURES_TAB),
+  selectedTab: selectors.getSelectedTab(state, DataElements.SIGNATURE_MODAL),
+  savedInitials: selectors.getSavedInitials(state),
+  signatureModalColors: selectors.getSignatureModalColors(state) || SIGNATURE_MODAL_COLORS,
+  isMultiViewerMode: selectors.isMultiViewerMode(state),
+});
+
 const SignatureModal = () => {
-  const { core } = useCore();
-  const [
+  const { core, documentViewer } = useCore();
+  const {
     isDisabled,
     isOpen,
     activeToolName,
@@ -30,28 +47,24 @@ const SignatureModal = () => {
     isInitialsModeEnabled,
     isSavedTabDisabled,
     selectedTab,
-    displayedSignatures,
     savedInitials,
-  ] = useSelector((state) => [
-    selectors.isElementDisabled(state, DataElements.SIGNATURE_MODAL),
-    selectors.isElementOpen(state, DataElements.SIGNATURE_MODAL),
-    selectors.getActiveToolName(state),
-    selectors.getSignatureMode(state),
-    selectors.getActiveDocumentViewerKey(state),
-    selectors.getIsInitialsModeEnabled(state),
-    selectors.isElementDisabled(state, DataElements.SAVED_SIGNATURES_TAB),
-    selectors.getSelectedTab(state, DataElements.SIGNATURE_MODAL),
-    selectors.getDisplayedSignatures(state),
-    selectors.getSavedInitials(state),
-  ]);
+    signatureModalColors,
+    isMultiViewerMode,
+  } = useSelector(selectSignatureModalState, shallowEqual);
+  const displayedSignatures = useSelector(selectors.getDisplayedSignatures, shallowEqual);
+  const isSignatureDisclaimerEnabled = useSelector(selectors.getSignatureDisclaimerEnabled, shallowEqual);
 
-  const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
+  const signatureToolArray = getSignatureTools(core, documentViewer, isMultiViewerMode);
   const [createButtonDisabled, setCreateButtonDisabled] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedSignatureColor, setSelectedSignatureColor] = useState(
+    () => new window.Core.Annotations.Color(signatureModalColors[0])
+  );
 
   const dispatch = useDispatch();
   const [t] = useTranslation();
 
+  const signatureDisclaimerText = t('message.signatureDisclaimer');
   // Hack to close modal if hotkey to open other tool is used.
   useDidUpdate(() => {
     if (activeToolName !== 'AnnotationCreateSignature') {
@@ -76,6 +89,12 @@ const SignatureModal = () => {
       );
     }
   }, [dispatch, isOpen]);
+
+  useEffect(() => {
+    if (!isSignatureColorAvailable(selectedSignatureColor, signatureModalColors)) {
+      setSelectedSignatureColor(new window.Core.Annotations.Color(signatureModalColors[0]));
+    }
+  }, [signatureModalColors]);
 
   const closeModal = () => {
     for (const signatureTool of signatureToolArray) {
@@ -239,6 +258,10 @@ const SignatureModal = () => {
                 enableCreateButton={enableCreateButton}
                 disableCreateButton={disableCreateButton}
                 isInitialsModeEnabled={isInitialsModeEnabled}
+                signatureModalColors={signatureModalColors}
+                selectedSignatureColor={selectedSignatureColor}
+                onSignatureColorChange={setSelectedSignatureColor}
+                isMultiViewerMode={isMultiViewerMode}
               />
             </TabPanel>
             <TabPanel dataElement="textSignaturePanel">
@@ -247,6 +270,9 @@ const SignatureModal = () => {
                 enableCreateButton={enableCreateButton}
                 disableCreateButton={disableCreateButton}
                 isInitialsModeEnabled={isInitialsModeEnabled}
+                signatureModalColors={signatureModalColors}
+                selectedSignatureColor={selectedSignatureColor}
+                onSignatureColorChange={setSelectedSignatureColor}
               />
             </TabPanel>
             <TabPanel dataElement="imageSignaturePanel">
@@ -258,6 +284,11 @@ const SignatureModal = () => {
               />
             </TabPanel>
             <div className="footer">
+              {isSignatureDisclaimerEnabled && (
+                <div className="signature-disclaimer">
+                  {signatureDisclaimerText}
+                </div>
+              )}
               <button className="signature-create" onClick={useFocusOnClose(isSavedTabSelected ? () => setSignature(selectedIndex) : createSignatures)}
                 disabled={isSavedTabSelected ? (!isSavedTabSelected || !displayedSignatures.length || !isOpen) : (!(isOpen) || createButtonDisabled)}
                 title={isInitialsModeEnabled ? t('message.signatureRequired') : ''}>

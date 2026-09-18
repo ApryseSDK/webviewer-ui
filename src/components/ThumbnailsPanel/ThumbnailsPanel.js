@@ -34,7 +34,7 @@ const MAX_COLUMNS = 16;
 
 const hoverAreaHeight = 25;
 
-const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
+const ThumbnailsPanel = ({ dataElement, panelSelector = dataElement, parentDataElement }) => {
   const { core } = useCore();
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'thumbnailsPanel'));
@@ -627,7 +627,7 @@ const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
       columnsOfThumbnails: numberOfColumns > 1,
       row: true,
     });
-    const allowPageOperationsUI = !(isReaderMode || isDocumentReadOnly || isViewOnly);
+    const allowPageOperationsUI = !(isReaderMode || isDocumentReadOnly || isViewOnly || isContentEditingEnabled);
     return (
       <div role="row" aria-label="row" className={className} key={key} css={ style }>
         {new Array(numberOfColumns).fill().map((_, columnIndex) => {

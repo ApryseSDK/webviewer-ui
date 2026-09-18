@@ -35,3 +35,9 @@ export const defaultEndLineStyles = [
 ];
 
 export const cloudyStrokeStyle = { className: 'linestyle-image shift-alignment', key: 'cloudy', src: 'icon-linestyle-cloudy-line' };
+
+export const SOLID_FILL_STYLE_KEY = 'solid';
+
+export const defaultFillStyles = [
+  { className: 'linestyle-image', key: SOLID_FILL_STYLE_KEY, src: 'icon-fillstyle-solid' },
+];

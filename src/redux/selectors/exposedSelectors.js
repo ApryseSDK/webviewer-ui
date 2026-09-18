@@ -231,6 +231,7 @@ export const getSelectedStamp = (state) => {
   return selectedStamp;
 };
 export const getCustomStampCategories = (state) => state.viewer.customStampCategories || [];
+export const getStandardStampCategories = (state) => state.viewer.standardStampCategories || [];
 export const getSavedSignatures = (state) => state.viewer.savedSignatures;
 export const getDisplayedSignatures = (state) => state.viewer.savedSignatures.filter(state.viewer.displayedSignaturesFilterFunction);
 export const getSelectedDisplayedSignatureIndex = (state) => state.viewer.selectedDisplayedSignatureIndex;
@@ -313,10 +314,15 @@ export const getIsNotesPanelMultiSelectEnabled = (state) => state.viewer.isNotes
 
 export const getDocumentContainerWidth = (state) => state.viewer.documentContainerWidth;
 export const getDocumentContainerHeight = (state) => state.viewer.documentContainerHeight;
+export const getElementTag = (state, dataElement) => state.viewer.elementTags?.[dataElement];
 
 export const isElementDisabled = (state, dataElement) => state.viewer?.disabledElements[dataElement]?.disabled;
 
 export const isElementOpen = (state, dataElement) => !!(state.viewer?.openElements[dataElement] && !state.viewer?.disabledElements[dataElement]?.disabled);
+export const getLoadingScreenContext = (state) => state.viewer.loadingScreenContext;
+export const getLoadingScreenStyle = (state) => state.viewer.loadingScreenStyle;
+export const getLoadingDocumentViewerKeys = (state) => state.viewer.loadingDocumentViewerKeys || {};
+export const isDocumentViewerLoading = (state, documentViewerKey) => !!getLoadingDocumentViewerKeys(state)[documentViewerKey];
 
 export const isElementHidden = (state, dataElement) => state.viewer?.hiddenElements[dataElement];
 
@@ -807,6 +813,11 @@ export const getActiveToolStyles = (state) => state.viewer.activeToolStyles;
 
 export const getCustomColor = (state) => state.viewer.customColor;
 
+export const getCustomFillStyles = (state) => state.viewer.customFillStyles || [];
+
+const EMPTY_CUSTOM_LINE_STYLES = { start: [], middle: [], end: [] };
+export const getCustomLineStyles = (state) => state.viewer.customLineStyles || EMPTY_CUSTOM_LINE_STYLES;
+
 export const getCustomColors = (state, type) => {
   return state.viewer?.[COLOR_PALETTE_STYLES[type]?.customKey] || [];
 };
@@ -924,6 +935,8 @@ export const getUserData = (state) => state.viewer.userData;
 export const getIsMentionEnabled = (state) => !!state.viewer.userData;
 
 export const getSignatureFonts = (state) => state.viewer.signatureFonts;
+
+export const getSignatureModalColors = (state) => state.viewer.signatureModalColors;
 
 export const getSelectedTab = (state, id) => state.viewer.tab[id];
 
@@ -1052,6 +1065,7 @@ export const getBookmarks = (state, documentViewerKey = 1) => state.document.boo
 export const getPortfolio = (state, documentViewerKey = 1) => state.document?.portfolio?.[documentViewerKey] ?? [];
 
 export const getLayers = (state, documentViewerKey = 1) => state.document?.layers?.[documentViewerKey] ?? null;
+export const getInitialLayers = (state, documentViewerKey = 1) => state.document?.initialLayers?.[documentViewerKey] ?? null;
 
 export const getLoadingProgress = (state) => state.document.loadingProgress;
 
@@ -1328,3 +1342,5 @@ export const getAutosaveInterval = (state) => state.viewer.autosaveInterval;
 export const getReaderPageMode = (state) => {
   return state.viewer.readerPageMode;
 };
+
+export const getSignatureDisclaimerEnabled = (state) => state.viewer.signatureDisclaimerEnabled;

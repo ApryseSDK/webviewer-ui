@@ -476,8 +476,7 @@ ToggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
     payload: { dataElement: ['fillColorContainer'] },
   });
 
-  const buttons = await canvas.getAllByText(getTranslatedText('option.annotationColor.StrokeColor'));
-  const strokeSectionToggleButton = buttons[0];
+  const strokeSectionToggleButton = await canvas.findByRole('button', { name: getTranslatedText('option.annotationColor.StrokeColor') });
   await waitFor(() => {
     // expect the stroke section is expanded initially
     expect(strokeSectionToggleButton.getAttribute('aria-expanded')).toBe('true');
@@ -489,20 +488,20 @@ ToggleAllSectionsInShapeTool.play = async ({ canvasElement }) => {
     expect(strokeSectionToggleButton.getAttribute('aria-expanded')).toBe('false');
   });
 
-  const FillToggleButton = await canvas.getByText(getTranslatedText('option.annotationColor.FillColor'));
-  await userEvent.click(FillToggleButton);
+  const fillToggleButton = await canvas.findByRole('button', { name: getTranslatedText('option.annotationColor.FillColor') });
+  await userEvent.click(fillToggleButton);
   await waitFor(() => {
-    expect(FillToggleButton.getAttribute('aria-expanded')).toBe('true');
+    expect(fillToggleButton.getAttribute('aria-expanded')).toBe('true');
   });
   // eslint-disable-next-line custom/no-hex-colors
   const firstColorLabel = `${getTranslatedText('option.annotationColor.FillColor')} ${getTranslatedText('option.colorPalette.colorLabel')} #E44234`;
   const firstColorInColorPalette = await canvas.getByLabelText(new RegExp(firstColorLabel));
   expect(firstColorInColorPalette).toBeInTheDocument();
 
-  const OpacityToggleButton = await canvas.getByText(getTranslatedText('option.slider.opacity'));
-  await userEvent.click(OpacityToggleButton);
+  const opacityToggleButton = await canvas.findByRole('button', { name: getTranslatedText('option.slider.opacity') });
+  await userEvent.click(opacityToggleButton);
   await waitFor(() => {
-    expect(OpacityToggleButton.getAttribute('aria-expanded')).toBe('true');
+    expect(opacityToggleButton.getAttribute('aria-expanded')).toBe('true');
     expect(canvas.getByRole('textbox', { name: new RegExp(getTranslatedText('option.slider.opacity')) })).toBeInTheDocument();
   });
 };
@@ -512,7 +511,7 @@ ToggleAllSectionsInShapeTool.parameters = disableRtlModeParameters;
 export const ToggleAllSectionsInFreeTextTool = StylePanelTextTool.bind({});
 ToggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const textStyleButton = await canvas.findByText(getTranslatedText('option.stylePopup.textStyle'));
+  const textStyleButton = await canvas.findByRole('button', { name: getTranslatedText('option.stylePopup.textStyle') });
   await waitFor(() => {
     expect(textStyleButton.getAttribute('aria-expanded')).toBe('true');
   });
@@ -531,18 +530,17 @@ ToggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
     payload: { dataElement: ['fillColorContainer'] },
   });
 
-  let buttons = await canvas.findAllByText(getTranslatedText('option.annotationColor.StrokeColor'));
-  const strokeSectionToggleButton = buttons[0];
+  const strokeSectionToggleButton = await canvas.findByRole('button', { name: getTranslatedText('option.annotationColor.StrokeColor') });
   await userEvent.click(strokeSectionToggleButton);
   // expect the stroke section is expanded initially
   await waitFor(async () => {
-    buttons = await canvas.findAllByText(getTranslatedText('option.annotationColor.StrokeColor'));
+    const buttons = await canvas.findAllByText(getTranslatedText('option.annotationColor.StrokeColor'));
     expect(strokeSectionToggleButton.getAttribute('aria-expanded')).toBe('true');
     expect(buttons.length).toBe(2);
   });
 
 
-  const fillToggleButton = await canvas.findByText(getTranslatedText('option.annotationColor.FillColor'));
+  const fillToggleButton = await canvas.findByRole('button', { name: getTranslatedText('option.annotationColor.FillColor') });
   await userEvent.click(fillToggleButton);
   await waitFor(() => {
     expect(fillToggleButton.getAttribute('aria-expanded')).toBe('true');
@@ -550,7 +548,7 @@ ToggleAllSectionsInFreeTextTool.play = async ({ canvasElement }) => {
     expect(colorPaletts.length).toBe(3);
   });
 
-  const opacityToggleButton = await canvas.findByText(getTranslatedText('option.slider.opacity'));
+  const opacityToggleButton = await canvas.findByRole('button', { name: getTranslatedText('option.slider.opacity') });
   await userEvent.click(opacityToggleButton);
   await waitFor(() => {
     expect(opacityToggleButton.getAttribute('aria-expanded')).toBe('true');

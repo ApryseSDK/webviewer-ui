@@ -298,10 +298,13 @@ export default class TabManager {
       return;
     }
     this.skipLoadCapture = true;
+    const stopListeningForPasswordErrors = this.listenToPasswordError();
     try {
       this.tabLoadPromise = newTab.load(this.store, this.db, viewerState);
       await this.tabLoadPromise;
     } finally {
+      stopListeningForPasswordErrors();
+      this.store.dispatch(actions.closeElement(DataElements.PROGRESS_MODAL));
       this.skipLoadCapture = false;
       this.attachAllListeners();
     }
@@ -552,9 +555,11 @@ export default class TabManager {
 
   async runWithLoadCapture(loadAction) {
     this.skipLoadCapture = true;
+    const stopListeningForPasswordErrors = this.listenToPasswordError();
     try {
       await loadAction();
     } finally {
+      stopListeningForPasswordErrors();
       this.skipLoadCapture = false;
       this.attachAllListeners();
     }
@@ -710,14 +715,19 @@ export default class TabManager {
   };
 
   listenToPasswordError = () => {
-    const onPasswordError = () => {
+    const onPasswordError = (error) => {
+      const isPasswordError = error?.type === 'PasswordAttemptsExceeded' || error?.type === 'PasswordUserCancelled';
+      if (!isPasswordError) {
+        return;
+      }
       this.tabLoadPromise = Promise.resolve();
     };
-    getEventHandler().addEventListener(Events.LOAD_ERROR, onPasswordError, { once: true });
+    getEventHandler().addEventListener(Events.LOAD_ERROR, onPasswordError);
     const removeListeners = () => {
       getEventHandler().removeEventListener(Events.LOAD_ERROR, onPasswordError);
     };
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
+    return removeListeners;
   };
 
   // eslint-disable-next-line generator-star-spacing

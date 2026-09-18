@@ -18,6 +18,7 @@ WebViewer(...)
 import loadDocument from 'helpers/loadDocument';
 import { buildTabUpdateForViewer, getTargetTabId } from 'helpers/multiViewerTabUpdate';
 import selectors from 'selectors';
+import core from 'core';
 
 const VALID_DOCUMENT_VIEWER_KEYS = new Set([1, 2]);
 
@@ -41,7 +42,9 @@ export default (store) => async (src, options, documentViewerKey) => {
   const canUseTabManager = isMultiTab && !!tabManager;
 
   if (!canUseTabManager) {
-    return loadDocument(store.dispatch, src, options, targetDocumentViewerKey);
+    const documentViewer = core.getDocumentViewer?.(targetDocumentViewerKey);
+    const documentViewerId = documentViewer?.getID?.() || documentViewer?.id;
+    return loadDocument(store.dispatch, src, options, targetDocumentViewerKey, documentViewerId);
   }
 
   const activeTab = selectors.getActiveTab(state);

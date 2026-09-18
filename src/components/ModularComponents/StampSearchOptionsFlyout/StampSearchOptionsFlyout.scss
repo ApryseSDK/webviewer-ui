@@ -1,0 +1,46 @@
+.StampSearchOptionsFlyout {
+  max-width: 328px;
+
+  .CustomElement {
+    padding: 0 8px 0 8px;
+
+    span:first-of-type {
+      margin: 4px 4px 4px 0;
+    }
+
+    .CustomElement {
+      font-size: 14px;
+    }
+  }
+
+  .stamp-category-choice {
+    display: flex;
+    min-width: 0;
+
+    .ui__choice__label {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .stamp-search-options-title {
+    font-weight: 700;
+    font-size: 14px;
+    padding: 4px 0;
+  }
+
+  &--nested {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 40px;
+    inset-inline-end: 0;
+    min-width: 180px;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--component-background);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 16%);
+  }
+}

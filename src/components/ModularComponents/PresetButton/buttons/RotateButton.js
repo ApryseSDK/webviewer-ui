@@ -25,8 +25,9 @@ const RotateButton = forwardRef((props, ref) => {
 
   const { core } = useCore();
   const isReaderMode = useSelector(selectors.isReaderMode);
+  const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
 
-  const shouldShow = !isReaderMode;
+  const shouldShow = !isReaderMode && !isContentEditingEnabled;
 
   let icon;
   let label;

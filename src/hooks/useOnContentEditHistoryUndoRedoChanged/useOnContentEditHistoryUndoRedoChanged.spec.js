@@ -21,6 +21,10 @@ describe('useOnContentEditHistoryUndoRedoChanged hook', () => {
 
     core.addEventListener = jest.fn();
     core.getDocumentViewer = jest.fn().mockReturnValue({
+      getContentEditManager: jest.fn().mockReturnValue({
+        undo: jest.fn(),
+        redo: jest.fn(),
+      }),
       getContentEditHistoryManager: jest.fn().mockReturnValue({
         undo: jest.fn(),
         redo: jest.fn(),
@@ -30,9 +34,11 @@ describe('useOnContentEditHistoryUndoRedoChanged hook', () => {
 
     });
   });
+
   afterAll(() => {
     delete window.Core;
   });
+
   it('adds event listeners to Undo Redo Status Changed', () => {
     // Mocking addEventListener
     const { result } = renderHook(function() {

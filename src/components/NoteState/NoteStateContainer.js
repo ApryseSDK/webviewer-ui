@@ -4,6 +4,7 @@ import useCore from 'hooks/useCore';
 
 import NoteState from './NoteState';
 import { createStateAnnotation } from 'helpers/NoteStateUtils';
+import { SpreadsheetCommentState, SPREADSHEET_THREAD_ID_KEY } from 'constants/spreadsheetEditor';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import useFocusOnClose from 'hooks/useFocusOnClose';
@@ -20,6 +21,17 @@ function NoteStateContainer(props) {
   const { annotation } = props;
 
   const handleStateChange = useFocusOnClose(useCallback(function handleStateChangeCallback(newValue) {
+    if (annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY)) {
+      if (!Object.values(SpreadsheetCommentState).includes(newValue)) {
+        return;
+      }
+      const commentManager = core
+        .getDocumentViewer()
+        .getSpreadsheetEditorManager()
+        .getCommentManager();
+      commentManager.setCommentState(annotation.Id, newValue);
+      return;
+    }
     const stateAnnotation = createStateAnnotation(annotation, newValue, activeDocumentViewerKey);
     annotation.addReply(stateAnnotation);
     const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);

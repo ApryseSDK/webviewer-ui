@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
+import { isGlyphSource } from 'components/Icon/iconHelper';
 import { shortcutAria } from 'helpers/hotkeysUtils';
 import selectors from 'selectors';
 import { getClickMiddleWare, ClickedItemTypes } from 'helpers/clickTracker';
@@ -31,6 +32,7 @@ const propTypes = {
   style: PropTypes.object,
   onClick: PropTypes.func,
   onDoubleClick: PropTypes.func,
+  onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
   isSubmitType: PropTypes.bool,
   /** Will override translated title if both given. */
@@ -68,6 +70,7 @@ const Button = (props) => {
     dataElement,
     onClick,
     onDoubleClick,
+    onMouseDown,
     onMouseUp,
     className,
     title,
@@ -108,8 +111,6 @@ const Button = (props) => {
   const shortcutKey = title ? title.slice(title.indexOf('.') + 1) : undefined;
   const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
 
-  const isBase64 = img?.trim().startsWith('data:');
-
   const imgToShow = img;
 
   // for backwards compatibility
@@ -134,8 +135,7 @@ const Button = (props) => {
   }
 
   // if there is no file extension then assume that this is a glyph
-  const isGlyph =
-    img && !isBase64 && (!img.includes('.') || img.startsWith('<svg'));
+  const isGlyph = isGlyphSource(img);
   const shouldRenderTooltip = !!title;
   const children = (
     <button
@@ -159,6 +159,7 @@ const Button = (props) => {
       // so that we can show the button tooltip
       onClick={actuallyDisabled ? NOOP : onClickHandler}
       onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
+      onMouseDown={actuallyDisabled ? NOOP : onMouseDown}
       onMouseUp={actuallyDisabled ? NOOP : onMouseUp}
       onKeyDown={actuallyDisabled ? NOOP : onKeyDownHandler}
       aria-label={aLabel}

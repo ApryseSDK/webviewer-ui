@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
@@ -8,6 +9,7 @@ import DataElements from 'constants/dataElement';
 import './ProgressModal.scss';
 
 const ProgressModal = () => {
+  const { t } = useTranslation();
   const [isDisabled, isOpen, loadingProgress] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, DataElements.PROGRESS_MODAL),
@@ -70,7 +72,18 @@ const ProgressModal = () => {
       data-element={DataElements.PROGRESS_MODAL}
     >
       <div className="container">
-        <svg className="progress-ring" width="54" height="54">
+        <progress
+          aria-label={t('message.loadingDocument')}
+          className="visually-hidden"
+          max="100"
+          value={Math.round(loadingProgress * 100)}
+        />
+        <svg
+          aria-hidden="true"
+          className="progress-ring"
+          width="54"
+          height="54"
+        >
           <circle
             className="progress-ring__fill"
             r="25"

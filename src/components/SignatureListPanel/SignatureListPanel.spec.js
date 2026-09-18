@@ -2,8 +2,21 @@ import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignatureListPanel from './SignatureListPanel';
+import SavedSignatures from './SavedSignatures';
+import SignatureModes from 'constants/signatureModes';
 
 const SignatureListPanelWithRedux = withProviders(SignatureListPanel);
+const SavedSignaturesWithRedux = withProviders(SavedSignatures);
+const STRESS_TEST_ITEM_COUNT = 50;
+
+const createSavedSignatures = (count) => Array.from({ length: count }, (_, index) => ({
+  fullSignature: {
+    imgSrc: `full-signature-${index}`,
+  },
+  initials: {
+    imgSrc: `initials-${index}`,
+  },
+}));
 
 describe('SignatureListPanel component', () => {
   it('renders the component correctly', () => {
@@ -46,5 +59,23 @@ describe('SignatureListPanel component', () => {
     expect(button).not.toHaveStyle({
       borderWidth: '2px'
     });
+  });
+
+  it('virtualizes saved signatures under stress', async () => {
+    const savedSignatures = createSavedSignatures(STRESS_TEST_ITEM_COUNT);
+
+    render(
+      <SavedSignaturesWithRedux
+        savedSignatures={savedSignatures}
+        onFullSignatureSetHandler={jest.fn()}
+        onInitialsSetHandler={jest.fn()}
+        deleteHandler={jest.fn()}
+        currentlySelectedSignature={0}
+        isDeleteDisabled={false}
+        signatureMode={SignatureModes.FULL_SIGNATURE}
+      />
+    );
+
+    expect((await screen.findAllByRole('button', { name: 'Delete' })).length).toBeLessThan(savedSignatures.length);
   });
 });

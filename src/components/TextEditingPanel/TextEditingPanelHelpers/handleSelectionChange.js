@@ -35,10 +35,6 @@ const handleSelectionChange = async ({
     handleColorChange(null, color);
   }
 
-  // remove the fontName attribute so that we don't override the fontName when we set the text attributes
-  delete attribute.fontName;
-  instance.Core.ContentEdit.setTextAttributes(attribute);
-
   setTextEditProperties(fontObject);
   setFormat({ ...attribute, color });
   setSelectionMode(instance.Core.ContentEdit.Types.TEXT);

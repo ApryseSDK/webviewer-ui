@@ -2,6 +2,7 @@ import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
 import { ITEM_TYPE, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import { COLOR_PALETTE_STYLES } from 'constants/commonColors';
+import { FALLBACK_LINE_STYLES } from 'constants/customStyleDefaults';
 import { defaultPanels } from '../modularComponents';
 import {
   defaultOfficeEditorModularHeaders,
@@ -16,6 +17,8 @@ import {
   defaultSpreadsheetEditorPanels,
   defaultSpreadsheetFlyoutMap,
 } from '../spreadsheetEditorComponents';
+
+const DEFAULT_CUSTOM_LINE_STYLES = { start: [], middle: [], end: [] };
 
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
@@ -386,6 +389,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         customStampCategories: payload.customStampCategories,
       };
+    case 'SET_STANDARD_STAMP_CATEGORIES':
+      return {
+        ...state,
+        standardStampCategories: payload.standardStampCategories,
+      };
     case 'SET_SAVED_SIGNATURES':
       return {
         ...state,
@@ -450,6 +458,14 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         documentContainerHeight: payload.height,
+      };
+    case 'SET_ELEMENT_TAG':
+      return {
+        ...state,
+        elementTags: {
+          ...state.elementTags,
+          [payload.dataElement]: payload.tag,
+        },
       };
     case 'SET_ACTIVE_THEME':
       return {
@@ -516,6 +532,42 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         openElements: { ...state.openElements, [payload.dataElement]: false },
       };
+    case 'SET_LOADING_SCREEN_CONTEXT':
+      return {
+        ...state,
+        loadingScreenContext: payload.loadingScreenContext,
+      };
+    case 'SET_LOADING_SCREEN_STYLE':
+      return {
+        ...state,
+        loadingScreenStyle: payload.loadingScreenStyle,
+      };
+    case 'SET_DOCUMENT_VIEWER_LOADING':
+    {
+      if (payload.documentViewerKey == null) {
+        return {
+          ...state,
+          loadingDocumentViewerKeys: {},
+        };
+      }
+
+      if (!payload.isLoading) {
+        const loadingDocumentViewerKeys = { ...state.loadingDocumentViewerKeys };
+        delete loadingDocumentViewerKeys[payload.documentViewerKey];
+        return {
+          ...state,
+          loadingDocumentViewerKeys,
+        };
+      }
+
+      return {
+        ...state,
+        loadingDocumentViewerKeys: {
+          ...state.loadingDocumentViewerKeys,
+          [payload.documentViewerKey]: true,
+        },
+      };
+    }
     case 'SET_IS_ELEMENT_HIDDEN':
       return {
         ...state,
@@ -825,6 +877,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, customMeasurementOverlay: payload.customMeasurementOverlay };
     case 'SET_SIGNATURE_FONTS':
       return { ...state, signatureFonts: payload.signatureFonts };
+    case 'SET_SIGNATURE_MODAL_COLORS':
+      return { ...state, signatureModalColors: payload.signatureModalColors };
     case 'SET_SELECTED_TAB':
       return { ...state, tab: { ...state.tab, [payload.id]: payload.dataElement } };
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
@@ -847,6 +901,98 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, customMultiViewerSyncHandler: payload.customMultiViewerSyncHandler };
     case 'SET_CUSTOM_MULTI_VIEWER_ACCEPTED_FILE_FORMATS':
       return { ...state, customMultiViewerAcceptedFileFormats: payload.customMultiViewerAcceptedFileFormats };
+    case 'REGISTER_CUSTOM_FILL_STYLE': {
+      const style = payload?.style;
+      const key = style?.key;
+      if (!key) {
+        return state;
+      }
+      const filteredFillStyles = (state.customFillStyles || []).filter((s) => s.key !== key);
+      return {
+        ...state,
+        customFillStyles: [...filteredFillStyles, style],
+      };
+    }
+    case 'UNREGISTER_CUSTOM_FILL_STYLE': {
+      const { key } = payload;
+      const nextActiveToolStyles = state.activeToolStyles?.FillStyle === key
+        ? { ...state.activeToolStyles, FillStyle: '' }
+        : state.activeToolStyles;
+      return {
+        ...state,
+        activeToolStyles: nextActiveToolStyles,
+        customFillStyles: (state.customFillStyles || []).filter((s) => s.key !== key),
+      };
+    }
+    case 'REGISTER_CUSTOM_LINE_STYLE': {
+      const { style } = payload;
+      const { section, key } = style;
+      const validSections = ['start', 'middle', 'end'];
+      if (!key || !validSections.includes(section)) {
+        return state;
+      }
+
+      const customLineStyles = state.customLineStyles || DEFAULT_CUSTOM_LINE_STYLES;
+      const sectionStyles = customLineStyles[section] || [];
+      return {
+        ...state,
+        customLineStyles: {
+          ...customLineStyles,
+          [section]: [...sectionStyles.filter((registeredStyle) => registeredStyle.key !== key), style],
+        },
+      };
+    }
+    case 'UNREGISTER_CUSTOM_LINE_STYLE': {
+      const { key, section } = payload;
+      const validSections = ['start', 'middle', 'end'];
+      if (section && !validSections.includes(section)) {
+        return state;
+      }
+
+      const customLineStyles = state.customLineStyles || DEFAULT_CUSTOM_LINE_STYLES;
+      let nextActiveToolStyles = state.activeToolStyles;
+      if (nextActiveToolStyles) {
+        const activeMiddle = nextActiveToolStyles.StrokeStyle?.split?.(',')?.[0];
+        let hasChanged = false;
+        const updatedStyles = { ...nextActiveToolStyles };
+        if ((!section || section === 'start') && updatedStyles.StartLineStyle === key) {
+          updatedStyles.StartLineStyle = FALLBACK_LINE_STYLES.start;
+          hasChanged = true;
+        }
+        if ((!section || section === 'middle') && (updatedStyles.StrokeStyle === key || activeMiddle === key)) {
+          updatedStyles.StrokeStyle = FALLBACK_LINE_STYLES.middle;
+          hasChanged = true;
+        }
+        if ((!section || section === 'end') && updatedStyles.EndLineStyle === key) {
+          updatedStyles.EndLineStyle = FALLBACK_LINE_STYLES.end;
+          hasChanged = true;
+        }
+        if (hasChanged) {
+          nextActiveToolStyles = updatedStyles;
+        }
+      }
+
+      if (section) {
+        return {
+          ...state,
+          activeToolStyles: nextActiveToolStyles,
+          customLineStyles: {
+            ...customLineStyles,
+            [section]: (customLineStyles[section] || []).filter((style) => style.key !== key),
+          },
+        };
+      }
+
+      return {
+        ...state,
+        activeToolStyles: nextActiveToolStyles,
+        customLineStyles: {
+          start: (customLineStyles.start || []).filter((style) => style.key !== key),
+          middle: (customLineStyles.middle || []).filter((style) => style.key !== key),
+          end: (customLineStyles.end || []).filter((style) => style.key !== key),
+        },
+      };
+    }
     case 'ADD_CUSTOM_MODAL': {
       const { dataElement } = payload;
 
@@ -1422,6 +1568,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         readerPageMode: payload.readerPageMode,
+      };
+    case 'SET_SIGNATURE_DISCLAIMER_ENABLED':
+      return {
+        ...state,
+        signatureDisclaimerEnabled: payload.enabled,
       };
     default:
       return state;

@@ -5,7 +5,7 @@ import './SearchResult.scss';
 import { List as VirtualizedList, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 import ListSeparator from 'components/ListSeparator';
 import classNames from 'classnames';
-import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
+import { isSpreadsheetEditorMode } from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import { useTranslation } from 'react-i18next';
 import useIsRTL from 'src/hooks/useIsRTL';
 

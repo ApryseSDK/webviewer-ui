@@ -155,6 +155,7 @@ const defaultModularComponents = {
   },
   'zoom-container': {
     type: 'zoom',
+    label: 'action.zoom',
   },
   'divider-0.2': {
     type: 'divider',

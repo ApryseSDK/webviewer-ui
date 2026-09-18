@@ -7,7 +7,14 @@ import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import getCurrentT from 'helpers/getCurrentT';
+import getSpreadsheetCustomDataInt from 'helpers/getSpreadsheetCustomDataInt';
 import { COMMON_COLORS } from './commonColors';
+import {
+  SPREADSHEET_COLUMN_KEY,
+  SPREADSHEET_ROW_KEY,
+  SPREADSHEET_SHEET_INDEX_KEY,
+  SPREADSHEET_SHEET_NAME_KEY,
+} from './spreadsheetEditor';
 import './sortStrategies.scss';
 
 function normalizeSortOptions(optionsOrDocumentViewerKey = {}) {
@@ -319,10 +326,38 @@ const sortStrategies = {
   },
 };
 
+// Sort by sheet index → row → column using SSE annotation custom data
+const getSpreadsheetSheetIndex = (note) => getSpreadsheetCustomDataInt(note, SPREADSHEET_SHEET_INDEX_KEY);
+
+const spreadsheetPositionSortStrategy = {
+  getSortedNotes: (notes) => notes.slice().sort((a, b) => {
+    const sheetIndexA = getSpreadsheetSheetIndex(a);
+    const sheetIndexB = getSpreadsheetSheetIndex(b);
+    if (sheetIndexA !== sheetIndexB) {
+      return sheetIndexA - sheetIndexB;
+    }
+
+    const rowA = getSpreadsheetCustomDataInt(a, SPREADSHEET_ROW_KEY);
+    const rowB = getSpreadsheetCustomDataInt(b, SPREADSHEET_ROW_KEY);
+    if (rowA !== rowB) {
+      return rowA - rowB;
+    }
+
+    const columnA = getSpreadsheetCustomDataInt(a, SPREADSHEET_COLUMN_KEY);
+    const columnB = getSpreadsheetCustomDataInt(b, SPREADSHEET_COLUMN_KEY);
+    return columnA - columnB;
+  }),
+  shouldRenderSeparator: (prevNote, currNote) =>
+    prevNote.getCustomData(SPREADSHEET_SHEET_INDEX_KEY) !== currNote.getCustomData(SPREADSHEET_SHEET_INDEX_KEY),
+  getSeparatorContent: (_prevNote, currNote, options = {}) =>
+    currNote.getCustomData(SPREADSHEET_SHEET_NAME_KEY) || `${getTranslator(options)('option.shared.sheetIndex')} ${getSpreadsheetSheetIndex(currNote) + 1}`,
+};
+
 export const getSortStrategies = () => sortStrategies;
-export const getExtendedSortStrategies = () => ({ // Sort strategies extended for office editor
+export const getExtendedSortStrategies = () => ({ // Sort strategies extended for office editor and spreadsheet editor
   ...sortStrategies,
   linePosition: linePositionSortStrategy,
+  spreadsheetPosition: spreadsheetPositionSortStrategy,
 });
 
 export const addSortStrategy = (newStrategy) => {
@@ -372,5 +407,10 @@ export const OfficeEditorNotesPanelSortStrategy = {
   LINE_POSITION: 'linePosition',
 };
 
+export const SpreadsheetEditorNotesPanelSortStrategy = {
+  SPREADSHEET_POSITION: 'spreadsheetPosition',
+};
+
 export const BASE_SORT_STRATEGIES = Object.values(baseStrategies);
 export const OFFICE_EDITOR_SORT_STRATEGIES = [OfficeEditorNotesPanelSortStrategy.LINE_POSITION, NotesPanelSortStrategy.CREATED_DATE, NotesPanelSortStrategy.AUTHOR];
+export const SPREADSHEET_EDITOR_SORT_STRATEGIES = [SpreadsheetEditorNotesPanelSortStrategy.SPREADSHEET_POSITION, NotesPanelSortStrategy.AUTHOR, NotesPanelSortStrategy.STATUS, NotesPanelSortStrategy.CREATED_DATE, NotesPanelSortStrategy.MODIFIED_DATE];

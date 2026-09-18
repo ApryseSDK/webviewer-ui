@@ -16,6 +16,7 @@ import core from 'core';
 import actions from 'actions';
 import App from 'components/App';
 import Theme from 'constants/theme';
+import LoadingScreenStyles from 'constants/loadingScreenStyles';
 import { workerTypes } from 'constants/types';
 import defaultTool from 'constants/defaultTool';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
@@ -40,6 +41,7 @@ import {
   setupFormSubmissionHandler,
 } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
+import setViewportRelativeAnnotationPositioning from 'helpers/setViewportRelativeAnnotationPositioning';
 import getRootNode, { getInstanceID } from 'helpers/getRootNode';
 import { createHotkeysManager, setHotkeysManagerForStore } from 'helpers/hotkeysManager';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
@@ -69,7 +71,7 @@ export function normalizeWebViewerPath() {
   }
 }
 
-export function createInstanceStoreAndPersistor() {
+export function createInstanceStoreAndPersistor(instanceRootNode) {
   const middleware = [thunk];
   let composeEnhancer = noopStoreComposeEnhancer;
 
@@ -89,6 +91,16 @@ export function createInstanceStoreAndPersistor() {
   const instanceId = getInstanceID();
   const rootReducer = createRootReducer(instanceId);
   const store = createStore(rootReducer, composeEnhancer(applyMiddleware(...middleware)));
+  const wcHost = window.isApryseWebViewerWebComponent
+    ? (instanceRootNode?.host || instanceRootNode)
+    : null;
+  const loadingScreen = wcHost
+    ? getHashParameterFromHost(wcHost, 'loadingScreen', LoadingScreenStyles.SKELETON)
+    : getHashParameters('loadingScreen', LoadingScreenStyles.SKELETON);
+  const loadingScreenStyle = Object.values(LoadingScreenStyles).includes(loadingScreen)
+    ? loadingScreen
+    : LoadingScreenStyles.SKELETON;
+  store.dispatch(actions.setLoadingScreenStyle(loadingScreenStyle));
   const persistor = persistStore(store);
 
   if (!window.isApryseWebViewerWebComponent) {
@@ -626,9 +638,10 @@ export function initializeCanvasInstance({ store, persistor, instanceI18n, insta
   const { documentViewer, instanceDocViewerKey } = createInstanceDocumentViewer(store, instanceI18n, resolvedRootNode);
 
   const removeActivationHandlers = setupMultiInstanceActivation(instanceDocViewerKey);
-  setupI18n(state, instanceI18n);
+  setupI18n(state, instanceI18n, documentViewer);
   setEnableAnnotationNumbering(state);
   setUserPermission(state, instanceDocViewerKey);
+  setViewportRelativeAnnotationPositioning(state, instanceDocViewerKey);
   setAutoSwitch();
   documentViewer.setToolMode(documentViewer.getTool(defaultTool));
 

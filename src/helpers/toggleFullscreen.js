@@ -3,8 +3,8 @@ import Events from 'constants/events';
 import isFullscreen from './isFullscreen';
 import getRootNode from './getRootNode';
 
-export default () => {
-  const rootNode = getRootNode();
+export default (instanceRootNode) => {
+  const rootNode = instanceRootNode || getRootNode();
   const targetElement = rootNode instanceof ShadowRoot ? rootNode.host : rootNode.documentElement;
   if (isFullscreen()) {
     if (document.exitFullscreen) {

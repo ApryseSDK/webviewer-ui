@@ -1,5 +1,106 @@
 import DOMPurify from 'dompurify';
 
+// Matches inline SVG markup, optionally preceded by an XML preamble (e.g. `<?xml ...?><svg ...>`).
+const INLINE_SVG_MARKUP_REGEX = /^(?:<\?xml[^>]*\?>\s*)?<svg\b/i;
+
+/**
+ * Determines whether a source string is raw inline SVG markup.
+ * @param {string} source The `glyph`/`img` value to classify
+ * @returns {boolean} Whether the source is inline SVG markup
+ * @ignore
+ */
+export const isInlineSvgMarkup = (source) => typeof source === 'string' && INLINE_SVG_MARKUP_REGEX.test(source.trim());
+
+/**
+ * Determines whether a source string should be treated as a bundled/inline glyph (rendered by
+ * injecting SVG markup) rather than an external image source (rendered via an `<img>` tag).
+ * Glyph sources are either raw inline SVG markup, or a bundled icon name with no file extension.
+ * Anything else - a relative/absolute file path, a URL, or a data URI - is treated as an external
+ * image source so it can be loaded with `<img src>` instead of being required from the icon bundle.
+ * @param {string} source The `glyph`/`img` value to classify
+ * @returns {boolean} Whether the source should be treated as a glyph
+ * @ignore
+ */
+export const isGlyphSource = (source) => {
+  if (typeof source !== 'string') {
+    return false;
+  }
+
+  const trimmedSource = source.trim();
+  if (!trimmedSource) {
+    return false;
+  }
+
+  if (isInlineSvgMarkup(trimmedSource)) {
+    return true;
+  }
+
+  return !trimmedSource.includes('.') && !trimmedSource.startsWith('data:');
+};
+
+/**
+ * Sanitizes SVG markup before it is injected into the DOM. Custom style registrations
+ * (e.g. `registerCustomLineStyle`/`registerCustomFillStyle`) allow customers to supply raw SVG
+ * markup, so this strips scripts and event handler attributes before rendering.
+ * @param {string} svgMarkup The SVG markup to sanitize
+ * @returns {string} The sanitized SVG markup
+ * @ignore
+ */
+export const sanitizeSvgMarkup = (svgMarkup) => {
+  if (!svgMarkup) {
+    return svgMarkup;
+  }
+  return DOMPurify.sanitize(svgMarkup, { USE_PROFILES: { svg: true, svgFilters: true } });
+};
+
+/**
+ * Determines whether an external (non-glyph) source points at an SVG file. These are fetched and
+ * injected as markup rather than rendered with `<img>`, so that `currentColor` fills/strokes and
+ * the CSS rules that size icon markup (e.g. `.linestyle-image svg`) keep working the same way they
+ * do for bundled/inline glyphs. Non-SVG externals (png/jpg/data URIs, etc.) fall back to `<img>`.
+ * @param {string} source The `glyph` value to classify
+ * @returns {boolean} Whether the source is an external SVG file
+ * @ignore
+ */
+export const isExternalSvgSource = (source) => {
+  if (typeof source !== 'string' || isGlyphSource(source)) {
+    return false;
+  }
+  const withoutQueryOrHash = source.split(/[?#]/)[0].trim().toLowerCase();
+  return withoutQueryOrHash.endsWith('.svg');
+};
+
+// Caps memory growth from long-lived sessions/apps that reference many unique external icon URLs.
+const SVG_FETCH_CACHE_MAX_SIZE = 100;
+const svgFetchCache = new Map();
+
+/**
+ * Fetches and caches the text contents of an external SVG file, so multiple Icons referencing the
+ * same path/URL (e.g. repeated dropdown swatches) only trigger a single network request. Evicts the
+ * oldest entry once the cache exceeds `SVG_FETCH_CACHE_MAX_SIZE`.
+ * @param {string} url The SVG file path or URL to fetch
+ * @returns {Promise<string|null>} The SVG markup, or `null` if it could not be loaded
+ * @ignore
+ */
+export const fetchSvgMarkup = (url) => {
+  if (!svgFetchCache.has(url)) {
+    const request = fetch(url)
+      .then((response) => (response.ok ? response.text() : Promise.reject(new Error(`${response.status} ${response.statusText}`))))
+      .catch((error) => {
+        console.warn(`Icon: unable to load SVG from "${url}": ${error}`);
+        svgFetchCache.delete(url);
+        return null;
+      });
+
+    if (svgFetchCache.size >= SVG_FETCH_CACHE_MAX_SIZE) {
+      const oldestKey = svgFetchCache.keys().next().value;
+      svgFetchCache.delete(oldestKey);
+    }
+    svgFetchCache.set(url, request);
+  }
+  return svgFetchCache.get(url);
+};
+
 /**
  * Checks if the provided attribute value is a candidate for color override.
  * Values that are not candidates for override include:
@@ -73,39 +174,6 @@ const shouldUseCurrentColorChannel = ({ attributeValue, hasColorProp }) => {
 };
 
 /**
- * Replaces the values of a specified attribute in the SVG markup by applying a replacer function to the current attribute value
- * @param {string} markup The SVG markup to transform
- * @param {string} attributeName The name of the attribute to replace
- * @param {function} replacer A function that takes the current attribute value and returns the new value
- * @returns {string} The transformed SVG markup
- * @ignore
- */
-const replaceAttributeValues = (markup, attributeName, replacer) => {
-  const attrRegex = new RegExp(String.raw`\b${attributeName}\s*=\s*(['"])(.*?)\1`, 'gi');
-
-  return markup.replace(attrRegex, (match, quote, attributeValue) => {
-    const nextValue = replacer(attributeValue);
-    if (typeof nextValue !== 'string' || nextValue === attributeValue) {
-      return match;
-    }
-
-    return `${attributeName}=${quote}${nextValue}${quote}`;
-  });
-};
-
-/**
- * Escapes special characters in the provided value and returns the escaped string
- * @param {*} value The value to escape
- * @returns {string} The escaped value
- * @ignore
- */
-const escapeAttributeValue = (value = '') => `${value}`
-  .replace(/&/g, '&amp;')
-  .replace(/"/g, '&quot;')
-  .replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;');
-
-/**
  * Wraps String.fromCodePoint to safely return the default backup value if the code point is invalid
  * @param {number} codePoint
  * @param {string} defaultValue
@@ -137,35 +205,6 @@ const decodeHtmlEntities = (value = '') => `${value}`
   .replace(/&amp;/g, '&');
 
 /**
- * Sets the specified attribute to the provided value in the root <svg> tag of the markup.
- * If the attribute already exists, its value will be replaced, otherwise the attribute will be added to the tag.
- * @param {string} markup The SVG markup in which to set the attribute
- * @param {string} attributeName The name of the attribute to set
- * @param {string} attributeValue The value to set for the attribute
- * @returns {string} The transformed SVG markup with the attribute set to the provided value
- * @ignore
- */
-const setSvgAttribute = (markup, attributeName, attributeValue) => {
-  if (!markup || !attributeName) {
-    return markup;
-  }
-
-  const svgTagRegex = /<svg\b([^>]*)>/i;
-  return markup.replace(svgTagRegex, (svgTag, attrs = '') => {
-    const attrPresenceRegex = new RegExp(String.raw`\b${attributeName}\s*=\s*(['"]).*?\1`, 'i');
-    const escapedValue = escapeAttributeValue(attributeValue);
-
-    if (attrPresenceRegex.test(attrs)) {
-      const replacementAttr = `${attributeName}="${escapedValue}"`;
-      const updatedAttrs = attrs.replace(attrPresenceRegex, replacementAttr);
-      return `<svg${updatedAttrs}>`;
-    }
-
-    return `<svg${attrs} ${attributeName}="${escapedValue}">`;
-  });
-};
-
-/**
  * Transforms the provided SVG markup by applying various attribute modifications based on the provided options.
  * @param {string} svgMarkup The SVG markup to transform
  * @param {object} options
@@ -190,49 +229,59 @@ export const transformSvgMarkup = (svgMarkup, {
   if (!/<svg\b/i.test(svgMarkup)) {
     return svgMarkup;
   }
+  if (disabled && !ariaLabel) {
+    return svgMarkup;
+  }
 
-  let transformedSvgMarkup = svgMarkup;
+  const svgDocument = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
+  if (svgDocument.querySelector('parsererror')) {
+    return svgMarkup;
+  }
+
+  const svgElement = svgDocument.documentElement;
+  const elementsWithAttributes = (attributeName) => [
+    ...(svgElement.matches(`[${attributeName}]`) ? [svgElement] : []),
+    ...svgElement.querySelectorAll(`[${attributeName}]`),
+  ];
 
   if (!disabled) {
-    transformedSvgMarkup = replaceAttributeValues(transformedSvgMarkup, 'fill', (fillValue) => {
+    elementsWithAttributes('fill').forEach((element) => {
+      const fillValue = element.getAttribute('fill');
       if (fillValue && fillValue !== 'default' && shouldUseCurrentColorChannel({ attributeValue: fillValue, hasColorProp: !!color })) {
-        return 'currentColor';
+        element.setAttribute('fill', 'currentColor');
       }
-      return fillValue;
     });
 
-    transformedSvgMarkup = replaceAttributeValues(transformedSvgMarkup, 'stroke', (strokeValue) => {
+    elementsWithAttributes('stroke').forEach((element) => {
+      const strokeValue = element.getAttribute('stroke');
       if (strokeValue && strokeValue !== 'default' && shouldUseCurrentColorChannel({ attributeValue: strokeValue, hasColorProp: !!color })) {
-        return 'currentColor';
+        element.setAttribute('stroke', 'currentColor');
       }
-      return strokeValue;
     });
   }
 
   if (!disabled && fillColor) {
     const fillColorValue = `#${fillColor}`;
-    transformedSvgMarkup = replaceAttributeValues(transformedSvgMarkup, 'fill', (fillValue) => {
-      if (`${fillValue}`.trim().toLowerCase() === 'none') {
-        return fillColorValue;
+    elementsWithAttributes('fill').forEach((element) => {
+      if (element.getAttribute('fill').trim().toLowerCase() === 'none') {
+        element.setAttribute('fill', fillColorValue);
       }
-      return fillValue;
     });
   }
 
   if (!disabled && strokeColor) {
     const strokeColorValue = `#${strokeColor}`;
-    transformedSvgMarkup = replaceAttributeValues(transformedSvgMarkup, 'fill', (fillValue) => {
-      if (`${fillValue}`.trim().toLowerCase() === 'stroke') {
-        return strokeColorValue;
+    elementsWithAttributes('fill').forEach((element) => {
+      if (element.getAttribute('fill').trim().toLowerCase() === 'stroke') {
+        element.setAttribute('fill', strokeColorValue);
       }
-      return fillValue;
     });
   }
 
   if (ariaLabel) {
     const sanitizedAriaLabel = DOMPurify.sanitize(ariaLabel, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
-    transformedSvgMarkup = setSvgAttribute(transformedSvgMarkup, 'aria-label', decodeHtmlEntities(sanitizedAriaLabel));
+    svgElement.setAttribute('aria-label', decodeHtmlEntities(sanitizedAriaLabel));
   }
 
-  return transformedSvgMarkup;
+  return new XMLSerializer().serializeToString(svgElement);
 };

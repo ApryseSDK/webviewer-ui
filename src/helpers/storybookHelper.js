@@ -339,3 +339,21 @@ export const defaultSpreadSheetEditorState = {
     }
   }
 };
+
+export const createCustomStamp = ({ title, category, author = 'Guest' }) => {
+  const customStampData = JSON.stringify({
+    title,
+    subtitle: '[By $currentUser at] h:mm:ss a, MMMM D, YYYY',
+    id: `${title}-${category}`,
+    author,
+    category,
+  });
+  const img = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="58" viewBox="0 0 160 58"><rect width="160" height="58" fill="%23ffffff" stroke="%236b7280"/><text x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="14" fill="%231f2937">${title}</text></svg>`;
+  return {
+    imgSrc: img,
+    annotation: {
+      DateCreated: 'D:20240101000000Z',
+      getCustomData: (key) => key === 'trn-custom-stamp' ? customStampData : '',
+    },
+  };
+};

@@ -35,10 +35,6 @@ const initialStateWithCategory = {
     customStampCategories: ['Category 1', 'Category 2'],
     isMultiViewerMode: false,
   },
-  featureFlags: {
-    ...initialState.featureFlags,
-    newStampPanel: true,
-  },
 };
 
 function rootReducer(state = initialState, action) {

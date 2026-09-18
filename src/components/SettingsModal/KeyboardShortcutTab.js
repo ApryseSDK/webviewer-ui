@@ -23,8 +23,8 @@ const KeyboardShortcutTab = ({ editorMode = EditorModes.DEFAULT }) => {
   const { keyboardShortcuts, shortcutKeyMap } = useKeyboardShortcuts(editorMode);
   const [currentShortcut, setCurrentShortcut] = useState(undefined);
   const isEditingDisabled = useMemo(() => {
-    return editorMode !== EditorModes.DEFAULT || isViewOnly;
-  }, [editorMode]);
+    return [EditorModes.SPREADSHEET, EditorModes.CONTENT_EDIT].includes(editorMode) || isViewOnly;
+  }, [editorMode, isViewOnly]);
 
   const getCommandStrings = (command) => {
     if (!command) {
@@ -49,7 +49,10 @@ const KeyboardShortcutTab = ({ editorMode = EditorModes.DEFAULT }) => {
   };
 
   const focusHandler = useFocusHandler((e) => {
-    const shortcut = e.currentTarget.getAttribute('data-element').replace('edit-button-', '');
+    const shortcut = e.currentTarget?.dataset?.element?.replace('edit-button-', '');
+    if (!shortcut) {
+      return;
+    }
     editShortcut(shortcut);
   });
 
@@ -69,7 +72,7 @@ const KeyboardShortcutTab = ({ editorMode = EditorModes.DEFAULT }) => {
             <div className="shortcut-table-item">
               <div className="shortcut-table-item-command">
                 {getCommandStrings(shortcutKeyMap[command]).map((str, i) => (
-                  <span key={i}>{str}</span>
+                  <span key={`${str}-${i}`}>{str}</span>
                 ))}
               </div>
               <div className="shortcut-table-item-description">

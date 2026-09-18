@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch, shallowEqual, useStore } from 'react-redux';
 import selectors from 'selectors';
@@ -9,9 +9,9 @@ import DataElements from 'constants/dataElement';
 import { PANEL_SIZES, panelNames } from 'constants/panel';
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
+import { getCustomStampCategory, getCustomStampsByCategory, getStandardStampCategory, getStandardStampsByCategory } from 'helpers/stamps';
 import DataElementWrapper from 'components/DataElementWrapper';
 import CreateRubberStampButton from './CreateRubberStampButton';
-import Divider from '../ModularComponents/Divider';
 import './RubberStampPanel.scss';
 import StandardRubberStamps from './StandardRubberStamps';
 import CustomRubberStamps from './CustomRubberStamps';
@@ -22,6 +22,8 @@ import { getEventHandler } from 'helpers/fireEvent';
 import StampSearchOverlay from './StampSearchOverlay';
 import HorizontalDivider from 'components/HorizontalDivider';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
+import useStampSearch from 'hooks/useStampSearch/useStampSearch';
+import useStampSearchOptionsFlyout from 'hooks/useStampSearchOptionsFlyout';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const DOCUMENT_TEMPLATE_ID_CUSTOM_DATA_KEY = 'trn-pdf-stamp-template-id';
@@ -33,15 +35,84 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
   const isMobile = isMobileSize();
 
+  const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, dataElement), shallowEqual);
   const standardStamps = useSelector(selectors.getStandardStamps, shallowEqual);
   const customStamps = useSelector(selectors.getCustomStamps, shallowEqual);
+  const [isDocumentStampsLoading, setIsDocumentStampsLoading] = useState(() => (
+    stampToolArray.some((tool) => tool['isDocumentStampsLoading']?.())
+  ));
+  const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const selectedStampIndex = useSelector(selectors.getSelectedStampIndex);
   const mobilePanelSize = useSelector(selectors.getMobilePanelSize);
-  const featureFlags = useSelector(selectors.getFeatureFlags, shallowEqual);
   const selectedTab = useSelector((state) => selectors.getSelectedTab(state, DataElements.RUBBER_STAMP_PANEL));
   const isInitialTabSelection = useRef(true);
+  const customCategories = useSelector((state) => selectors.getCustomStampCategories(state));
+  const standardCategories = useSelector((state) => selectors.getStandardStampCategories(state));
+  const {
+    categoryMap: customCategoryMap,
+    visibleCategories: visibleCustomCategories,
+    onCheckboxChange: onCustomCheckboxChange,
+  } = useStampSearchOptionsFlyout({
+    stamps: customStamps,
+    categories: customCategories,
+    getStampsByCategory: getCustomStampsByCategory,
+  });
+  const {
+    categoryMap: standardCategoryMap,
+    visibleCategories: visibleStandardCategories,
+    onCheckboxChange: onStandardCheckboxChange,
+  } = useStampSearchOptionsFlyout({
+    stamps: standardStamps,
+    categories: standardCategories,
+    getStampsByCategory: getStandardStampsByCategory,
+  });
+  const isStandardStampsTabOpen = selectedTab === DataElements.RUBBER_STAMP_PANEL_PRESET_TAB;
+  const { searchValue, setSearchValue, searchResults } = useStampSearch({
+    stamps: isStandardStampsTabOpen ? standardStamps : customStamps,
+    visibleCategories: isStandardStampsTabOpen ? visibleStandardCategories : visibleCustomCategories,
+    getStampCategory: isStandardStampsTabOpen ? getStandardStampCategory : getCustomStampCategory,
+  });
+  const [rubberStampsScrollParent, setRubberStampsScrollParent] = useState(null);
 
   const store = useStore();
+
+  useEffect(() => {
+    const updateDocumentStampsLoading = () => {
+      setIsDocumentStampsLoading(stampToolArray.some((tool) => tool['isDocumentStampsLoading']?.()));
+    };
+
+    stampToolArray.forEach((tool) => {
+      tool.addEventListener?.('documentStampsLoadingChanged', updateDocumentStampsLoading);
+    });
+    updateDocumentStampsLoading();
+
+    return () => {
+      stampToolArray.forEach((tool) => {
+        tool.removeEventListener?.('documentStampsLoadingChanged', updateDocumentStampsLoading);
+      });
+    };
+  }, [core, isMultiViewerMode]);
+
+  const setRubberStampsContainerRef = useCallback((node) => {
+    setRubberStampsScrollParent(node || null);
+  }, []);
+
+  useEffect(() => {
+    if (!rubberStampsScrollParent) {
+      return;
+    }
+
+    const dispatchScrollEvent = () => {
+      rubberStampsScrollParent.dispatchEvent(new Event('scroll'));
+    };
+
+    const observer = new MutationObserver(() => {
+      requestAnimationFrame(dispatchScrollEvent);
+    });
+    observer.observe(rubberStampsScrollParent, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, [rubberStampsScrollParent]);
 
   const getDocumentStampText = (annotation, translate) => {
     const icon = annotation?.Icon || '';
@@ -61,6 +132,7 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
         && src.filename === other.filename
         && src.extension === other.extension
         && src.cropVisibleContent === other.cropVisibleContent
+        && src.category === other.category
         && JSON.stringify(src.pages) === JSON.stringify(other.pages);
     });
   };
@@ -141,7 +213,16 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
     };
   }, []);
 
-  const newStampPanel =
+  const categoryMap = selectedTab === DataElements.RUBBER_STAMP_PANEL_CUSTOM_TAB ? customCategoryMap : standardCategoryMap;
+  const onCategoryCheckboxChange = useCallback((category) => {
+    if (selectedTab === DataElements.RUBBER_STAMP_PANEL_CUSTOM_TAB) {
+      onCustomCheckboxChange(category);
+    } else {
+      onStandardCheckboxChange(category);
+    }
+  }, [selectedTab, onCustomCheckboxChange, onStandardCheckboxChange]);
+
+  const stampPanel =
     (<DataElementWrapper dataElement={dataElement} className={classNames({
       'Panel': true,
       'RubberStampPanel': true,
@@ -165,20 +246,30 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
             </button>
           </Tab>
         </div>
-        <StampSearchOverlay />
+        <StampSearchOverlay
+          categoryMap={categoryMap}
+          onCategoryCheckboxChange={onCategoryCheckboxChange}
+          isPanelOpen={isPanelOpen}
+          isFlyout={isFlyout}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
         <HorizontalDivider />
         <div className={
           classNames({
             'rubber-stamps-container': true,
             [mobilePanelSize]: isMobile,
             isFlyout: isFlyout,
-          })}>
+          })}
+        ref={setRubberStampsContainerRef}>
           <TabPanel dataElement={DataElements.RUBBER_STAMP_PANEL_PRESET}>
             <StandardRubberStamps
               setSelectedRubberStamp={setSelectedRubberStamp}
-              standardStamps={standardStamps}
               selectedStampIndex={selectedStampIndex}
               isFlyout={isFlyout}
+              scrollParent={rubberStampsScrollParent}
+              searchResults={isStandardStampsTabOpen ? searchResults : {}}
+              isDocumentStampsLoading={isDocumentStampsLoading}
             />
           </TabPanel>
           <TabPanel dataElement={DataElements.RUBBER_STAMP_PANEL_CUSTOM}>
@@ -186,8 +277,9 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
               selectedStampIndex={selectedStampIndex}
               standardStampsOffset={standardStamps.length}
               setSelectedRubberStamp={setSelectedRubberStamp}
-              customStamps={customStamps}
               isFlyout={isFlyout}
+              scrollParent={rubberStampsScrollParent}
+              searchResults={isStandardStampsTabOpen ? {} : searchResults}
             />
           </TabPanel>
         </div>
@@ -199,42 +291,7 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
       </Tabs>
     </DataElementWrapper>);
 
-  const originalStampPanel =
-    (<DataElementWrapper dataElement={dataElement} className={classNames({
-      'Panel': true,
-      'RubberStampPanel': true,
-      [mobilePanelSize]: isMobile,
-      'modular-ui-panel': true,
-      'isFlyout': isFlyout,
-    })}>
-      <h1 className='rubber-stamp-panel-header'>
-        {t('rubberStampPanel.header')}
-      </h1>
-      <CreateRubberStampButton />
-      <div className={
-        classNames({
-          'rubber-stamps-container': true,
-          [mobilePanelSize]: isMobile,
-          isFlyout: isFlyout,
-        })}>
-        <CustomRubberStamps
-          selectedStampIndex={selectedStampIndex}
-          standardStampsOffset={standardStamps.length}
-          setSelectedRubberStamp={setSelectedRubberStamp}
-          customStamps={customStamps}
-          isFlyout={isFlyout}
-        />
-        <Divider />
-        <StandardRubberStamps
-          setSelectedRubberStamp={setSelectedRubberStamp}
-          standardStamps={standardStamps}
-          selectedStampIndex={selectedStampIndex}
-          isFlyout={isFlyout}
-        />
-      </div>
-    </DataElementWrapper>);
-
-  return (featureFlags.newStampPanel ? newStampPanel : originalStampPanel);
+  return stampPanel;
 };
 
 RubberStampPanel.propTypes = {

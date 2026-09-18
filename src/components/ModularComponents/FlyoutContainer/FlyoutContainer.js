@@ -62,7 +62,7 @@ const FlyoutContainer = () => {
     setMaxHeightValue(app.height - horizontalHeadersUsedHeight);
     const next = { x: position.x, y: position.y };
 
-    if (toggleElement && refEl) {
+    if (toggleElement && refEl && flyoutRef.current) {
       const { x, y } = getFlyoutPositionOnElement(toggleElement, flyoutRef);
       next.x = x;
       next.y = y;

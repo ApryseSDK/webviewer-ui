@@ -3,21 +3,22 @@ import core from 'core';
 
 export default function useOnContentEditHistoryUndoRedoChanged() {
   const contentEditHistoryManager = core.getDocumentViewer().getContentEditHistoryManager();
+  const contentEditManager = core.getDocumentViewer().getContentEditManager();
 
   const [isUndoEnabled, setIsUndoEnabled] = useState(false);
   const [isRedoEnabled, setIsRedoEnabled] = useState(false);
 
-  const handleUndo = useCallback(() => {
+  const handleUndo = useCallback(async () => {
     if (isUndoEnabled) {
-      contentEditHistoryManager.undo();
+      await contentEditManager.undo?.();
     }
-  }, [isUndoEnabled]);
+  }, [isUndoEnabled, contentEditManager]);
 
-  const handleRedo = useCallback(() => {
+  const handleRedo = useCallback(async () => {
     if (isRedoEnabled) {
-      contentEditHistoryManager.redo();
+      await contentEditManager.redo?.();
     }
-  }, [isRedoEnabled]);
+  }, [isRedoEnabled, contentEditManager]);
 
   useEffect(() => {
     const onUndoRedoStateChanged = () => {
@@ -27,7 +28,11 @@ export default function useOnContentEditHistoryUndoRedoChanged() {
 
     window.Core.ContentEdit.addEventListener('undoRedoStatusChanged', onUndoRedoStateChanged);
     return () => window.Core.ContentEdit.removeEventListener('undoRedoStatusChanged', onUndoRedoStateChanged);
-  }, []);
+    // contentEditHistoryManager is included to satisfy the exhaustive-deps lint rule.
+    // It is a stable reference (created once on DocumentViewer construction) so this
+    // effect never actually re-runs because of it. onUndoRedoStateChanged closes over
+    // it at render time and reads canUndo/canRedo() directly when the event fires.
+  }, [contentEditHistoryManager]);
 
   return { canUndo: isUndoEnabled, canRedo: isRedoEnabled, handleUndo, handleRedo };
 }

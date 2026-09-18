@@ -79,7 +79,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
           panelsToRender[panelRenderer] = {
             title: panelInfo.title,
             label: panel.label ?? panelInfo.label,
-            icon: panel.icon ?? panelInfo.icon,
+            icon: panel.useIcon !== false ? panel.icon ?? panelInfo.icon : undefined,
             sortIndex: index,
             tabPanel: tabPanelDataElement,
             render: renderPanel(customPanel.render, `${customPanel.dataElement}-tab-panel`)
@@ -87,6 +87,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
         } else {
           panelsToRender[panelRenderer] = {
             ...customPanel,
+            label: panel.label ?? customPanel.label,
+            icon: panel.useIcon !== false ? panel.icon ?? customPanel.icon : undefined,
             render: createCustomElement(customPanel),
             sortIndex: index,
           };
@@ -96,7 +98,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
         panelsToRender[panel.dataElement] = {
           title: panel.title,
           label: panel.label,
-          icon: panel.icon,
+          icon: panel.useIcon !== false ? panel.icon : undefined,
           render: createCustomElement(panel),
           sortIndex: index,
         };
@@ -131,7 +133,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement, redactionAnnotationsList }
           sortIndex: panelsObject[item].sortIndex,
           tabPanel: tabPanelDataElement,
           dataElement: item,
-          label: panelsObject[item].title,
+          label: panelsObject[item].label ?? panelsObject[item].title,
         };
         flyout.items.push(flyoutItem);
       }

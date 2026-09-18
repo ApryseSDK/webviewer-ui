@@ -1,0 +1,2 @@
+import useViewportRelativeAnnotationPositioningSync from './useViewportRelativeAnnotationPositioningSync';
+export default useViewportRelativeAnnotationPositioningSync;

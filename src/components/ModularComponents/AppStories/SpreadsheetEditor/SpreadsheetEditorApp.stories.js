@@ -29,6 +29,8 @@ const editingModeTemplate = {
     disabledElements: {
       'newSpreadsheetButton': { disabled: false },
       'logoBar': { disabled: true },
+      [DataElements.NOTE_MULTI_SELECT_MODE_BUTTON]: { disabled: true },
+      [DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON]: { disabled: true },
     },
     isSpreadsheetEditorModeEnabled: true,
     genericPanels: [{
@@ -221,6 +223,7 @@ const commentPanelWithFormulaBarConfig = {
 
 export const SSECommentPanelHeightWithFormulaBar = createTemplate(commentPanelWithFormulaBarConfig);
 SSECommentPanelHeightWithFormulaBar.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
   const appRootElement = canvasElement.querySelector('.App');
   const appComputedStyle = getComputedStyle(appRootElement);
   const topHeadersOffset = parseFloat(appComputedStyle.getPropertyValue('--panel-top-headers-height')) || 0;
@@ -230,6 +233,8 @@ SSECommentPanelHeightWithFormulaBar.play = async ({ canvasElement }) => {
   expect(topHeadersOffset).toBeGreaterThan(0);
   expect(formulaBarOffset).toBeGreaterThan(0);
   expect(bottomHeadersOffset).toBeGreaterThan(0);
+  expect(canvas.queryByRole('button', { name: getTranslatedText('component.filter') })).not.toBeInTheDocument();
+  expect(canvas.queryByRole('button', { name: getTranslatedText('component.multiSelectButton') })).not.toBeInTheDocument();
 };
 
 const commentPanelFormulaBarDisabledConfig = {

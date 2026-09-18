@@ -138,7 +138,7 @@ export default (store, instanceI18n) => async (language) => {
         }
 
         updateTextToolDefaults(i18n);
-        updateArcMeasurementLabels(t);
+        updateArcMeasurementLabels(t, store);
 
         fireEvent(Events['LANGUAGE_CHANGED'], [prev, language]);
       }
@@ -209,10 +209,43 @@ const updateTextToolDefaults = (i18n) => {
   }
 };
 
-const updateArcMeasurementLabels = (t) => {
-  window.Core.Tools.ArcMeasurementCreateTool?.setMeasurementLabelsHandler?.(() => ({
+export const updateArcMeasurementLabels = (t, store) => {
+  // Scope the handler to this instance's own DocumentViewer. Without this, in multi-instance
+  // WebViewer Web Component mode, `ArcMeasurementCreateTool` is a single shared class across
+  // all instances, so setting the language in one instance would leak its translated labels
+  // into every other instance's arc annotation tooltips.
+  //
+  // Use `setDefaultMeasurementLabelsHandler` (not the public `setMeasurementLabelsHandler`) so
+  // that these WebViewer-managed translation defaults never shadow an explicit customer call to
+  // the public API (e.g. the legacy global `setMeasurementLabelsHandler(handler)`, with no
+  // documentViewer, made after viewer init). See ArcMeasurementCreateTool.ts for the full
+  // priority order.
+  const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(store.getState());
+  const documentViewer = core.hasDocumentViewer(activeDocumentViewerKey)
+    ? core.getDocumentViewer(activeDocumentViewerKey)
+    : undefined;
+
+  if (!documentViewer) {
+    // `setDefaultMeasurementLabelsHandler` treats an `undefined` documentViewer as "override the
+    // default handler for every instance" (see its `documentViewer !== undefined` check). In
+    // multi-instance Web Component mode that would reintroduce the cross-instance leak this
+    // function exists to prevent (e.g. if the active DocumentViewer key is temporarily
+    // unresolvable during init/teardown), so skip registering a handler entirely instead of
+    // falling back to the shared/global default. In single-instance (non-Web Component) mode
+    // there's only ever one DocumentViewer, so the global default is safe to set.
+    if (!window.isApryseWebViewerWebComponent) {
+      window.Core.Tools.ArcMeasurementCreateTool?.setDefaultMeasurementLabelsHandler?.(() => ({
+        length: t('option.measurementOverlay.length'),
+        radius: t('option.measurementOverlay.radius'),
+        angle: t('option.measurementOverlay.angle'),
+      }));
+    }
+    return;
+  }
+
+  window.Core.Tools.ArcMeasurementCreateTool?.setDefaultMeasurementLabelsHandler?.(() => ({
     length: t('option.measurementOverlay.length'),
     radius: t('option.measurementOverlay.radius'),
     angle: t('option.measurementOverlay.angle'),
-  }));
+  }), documentViewer);
 };

@@ -345,6 +345,11 @@ $container-margin: 16px;
     }
 
     .Dropdown__wrapper {
+      &.open {
+        // Keep upward-opening font options above the category container (101).
+        z-index: 102;
+      }
+
       .Dropdown {
         margin-inline-end: 4px;
         height: 32px;

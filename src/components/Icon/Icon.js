@@ -4,7 +4,23 @@ import classNames from 'classnames';
 
 import './Icon.scss';
 import { css } from '@emotion/react';
-import { transformSvgMarkup } from './iconHelper';
+import { transformSvgMarkup, sanitizeSvgMarkup, isGlyphSource, isExternalSvgSource, isInlineSvgMarkup, fetchSvgMarkup } from './iconHelper';
+
+const getIconFilter = (color) => {
+  // eslint-disable-next-line custom/no-hex-colors
+  return color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)') ? 'drop-shadow(0 0 .5px #333)' : undefined;
+};
+
+const getFetchedMarkup = (glyph, fetchedFor, fetchedMarkup) => (
+  isExternalSvgSource(glyph) && fetchedFor === glyph && fetchedMarkup
+);
+
+const hasDefaultMarkers = (svgElement) => !!svgElement && (
+  /\bfill\s*=\s*(['"])default\1/i.test(svgElement)
+  || /\bstroke\s*=\s*(['"])default\1/i.test(svgElement)
+  || /\bclass=(['"])[^'"]*\bicon-default\b[^'"]*\1/i.test(svgElement)
+  || /\bclass=(['"])[^'"]*\bicon-default-stroke\b[^'"]*\1/i.test(svgElement)
+);
 
 class Icon extends React.PureComponent {
   static propTypes = {
@@ -19,26 +35,86 @@ class Icon extends React.PureComponent {
     ariaLabel: PropTypes.string,
   };
 
-  isInlineSvg() {
+  state = {
+    fetchedMarkup: null,
+    fetchedFor: null,
+  };
+
+  componentDidMount() {
+    this._mounted = true;
+    this.fetchExternalSvgIfNeeded();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.glyph !== this.props.glyph) {
+      this.fetchExternalSvgIfNeeded();
+    }
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+  }
+
+  getSvgElement = (glyph, fetchedMarkup) => {
+    if (fetchedMarkup) {
+      return fetchedMarkup;
+    }
+
+    try {
+      // eslint-disable-next-line global-require,import/no-dynamic-require
+      const result = isInlineSvgMarkup(glyph) ? glyph : require(`../../../assets/icons/${glyph}.svg`);
+      // Vite/ESM shim returns an object with a 'default' property.
+      // Webpack (depending on config) often returned just the string.
+      return (result && typeof result === 'object' && result.default) ? result.default : result;
+    } catch {
+      console.warn(`Icon not found: ${glyph}`);
+      return undefined;
+    }
+  };
+
+  fetchExternalSvgIfNeeded() {
     const { glyph } = this.props;
-    return glyph && glyph.indexOf('<svg') === 0;
+    if (!isExternalSvgSource(glyph)) {
+      return;
+    }
+    fetchSvgMarkup(glyph).then((markup) => {
+      if (this._mounted && this.props.glyph === glyph) {
+        this.setState({ fetchedMarkup: markup, fetchedFor: glyph });
+      }
+    });
   }
 
   render() {
     const { className = '', color, glyph, fillColor = '', strokeColor = '', disabled, dataElement, ariaHidden, ariaLabel } = this.props;
-    // eslint-disable-next-line custom/no-hex-colors
-    const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
-    let svgElement;
+    const filter = getIconFilter(color);
+    const fetchedMarkup = getFetchedMarkup(glyph, this.state.fetchedFor, this.state.fetchedMarkup);
 
-    try {
-      // eslint-disable-next-line global-require,import/no-dynamic-require
-      const result = this.isInlineSvg() ? glyph : require(`../../../assets/icons/${this.props.glyph}.svg`);
-      // Vite/ESM shim returns an object with a 'default' property.
-      // Webpack (depending on config) often returned just the string.
-      svgElement = (result && typeof result === 'object' && result.default) ? result.default : result;
-    } catch {
-      svgElement = undefined;
-      console.warn(`Icon not found: ${this.props.glyph}`);
+    // File paths, URLs, and data URIs aren't bundled/inline glyphs. Render them as an image unless
+    // we've already fetched their SVG markup, so currentColor and icon-sizing CSS keep working.
+    if (glyph && !isGlyphSource(glyph) && !fetchedMarkup) {
+      return (
+        <div
+          className={classNames({
+            Icon: true,
+            [className]: true,
+            [fillColor]: true,
+            disabled,
+          })}
+          css={css({ '&&&&&&': {
+            ...(filter && { filter }),
+          } })}
+          data-element={dataElement}
+        >
+          <img src={glyph} alt={ariaLabel || ''} aria-hidden={ariaHidden} />
+        </div>
+      );
+    }
+
+    let svgElement = this.getSvgElement(glyph, fetchedMarkup);
+
+    const isUntrustedMarkup = !!fetchedMarkup || isInlineSvgMarkup(glyph);
+    if (isUntrustedMarkup) {
+      svgElement = sanitizeSvgMarkup(svgElement);
     }
 
     svgElement = transformSvgMarkup(svgElement, {
@@ -49,18 +125,11 @@ class Icon extends React.PureComponent {
       ariaLabel,
     });
 
-    const hasDefaultMarkers = !!svgElement && (
-      /\bfill\s*=\s*(['"])default\1/i.test(svgElement)
-      || /\bstroke\s*=\s*(['"])default\1/i.test(svgElement)
-      || /\bclass=(['"])[^'"]*\bicon-default\b[^'"]*\1/i.test(svgElement)
-      || /\bclass=(['"])[^'"]*\bicon-default-stroke\b[^'"]*\1/i.test(svgElement)
-    );
-
     return (
       <div
         className={classNames({
           Icon: true,
-          'has-default-markers': hasDefaultMarkers,
+          'has-default-markers': hasDefaultMarkers(svgElement),
           [className]: true,
           [fillColor]: true,
           disabled,

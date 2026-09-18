@@ -26,6 +26,8 @@ export const LIST_OPTIONS = {
 
 export const TRANSPARENT_COLOR = 'none';
 
+export const DEFAULT_HIGHLIGHT_COLORS = Object.values(window.Core.Document.OfficeEditor.HighlightColors);
+
 export const DEFAULT_POINT_SIZE = 11;
 export const DEFAULT_COLOR = new window.Core.Annotations.Color(0, 0, 0, 1);
 

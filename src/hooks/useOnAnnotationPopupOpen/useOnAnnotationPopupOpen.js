@@ -63,9 +63,8 @@ export default function useOnAnnotationPopupOpen() {
   const groupedLinkAnnotations = (annotation) => getGroupedLinkAnnotations(annotation);
 
   const isInContentEditFocusMode = (annotation) => {
-    // for annotations that are placeholders of content edit, when they are focused, the popup will not open
     const contentEditManager = core.getContentEditManager();
-    return annotation.isInContentEditFocusMode(contentEditManager);
+    return contentEditManager?.isContentBoxEditorActive(annotation);
   };
 
   useEffect(() => {
@@ -305,7 +304,7 @@ export default function useOnAnnotationPopupOpen() {
           core.selectAnnotation(annotUnderMouse, activeDocumentViewerKey);
           setFocusedAnnotation(annotUnderMouse);
         }
-        if (annotUnderMouse === focusedAnnotation && !isInContentEditFocusMode(annotUnderMouse)) {
+        if (annotUnderMouse === focusedAnnotation && !isInContentEditFocusMode(focusedAnnotation)) {
           openPopup();
         }
       } else {

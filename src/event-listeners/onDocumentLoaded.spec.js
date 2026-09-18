@@ -3,10 +3,12 @@ import { workerTypes } from '../constants/types';
 import * as useCore from '../hooks/useCore/useCore';
 import * as portfolioHelpers from '../helpers/portfolio';
 import * as officeEditorHelpers from '../helpers/officeEditor';
+import * as spreadsheetEditorHelpers from '../helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
+import DataElements from 'constants/dataElement';
 
 describe('shouldDisableLayersPanel', function() {
   it('should return true if document is not client side initialized (forceClientSideInit is false) and WebViewer Server is running', async () => {
@@ -235,7 +237,7 @@ describe('configureEditorMode', () => {
     jest.restoreAllMocks();
   });
 
-  it('dispatches setIsOfficeEditorHeaderEnabled(false) when spreadsheet mode is configured', () => {
+  it('configures spreadsheet-specific header elements', () => {
     const dispatched = [];
     const mockStore = {
       dispatch: (action) => dispatched.push(action),
@@ -254,9 +256,10 @@ describe('configureEditorMode', () => {
     });
 
     jest.spyOn(officeEditorHelpers, 'isOfficeEditorMode').mockReturnValue(false);
-    jest.spyOn(officeEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
+    jest.spyOn(spreadsheetEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
     jest.spyOn(selectors, 'getUIConfiguration').mockReturnValue(VIEWER_CONFIGURATIONS.DEFAULT);
     jest.spyOn(selectors, 'getSpreadsheetEditorEditMode').mockReturnValue('viewOnly');
+    const disableElementsSpy = jest.spyOn(actions, 'disableElements');
 
     configureEditorMode(mockStore, 1)();
 
@@ -264,6 +267,10 @@ describe('configureEditorMode', () => {
       type: 'SET_IS_OFFICE_EDITOR_HEADER_ENABLED',
       payload: { isOfficeEditorHeaderEnabled: false },
     });
+    expect(disableElementsSpy).toHaveBeenCalledWith(expect.arrayContaining([
+      DataElements.NOTE_MULTI_SELECT_MODE_BUTTON,
+      DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON,
+    ]));
   });
 
   it('falls back to editing mode when spreadsheet initialEditMode is invalid', () => {
@@ -285,7 +292,37 @@ describe('configureEditorMode', () => {
     });
 
     jest.spyOn(officeEditorHelpers, 'isOfficeEditorMode').mockReturnValue(false);
-    jest.spyOn(officeEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
+    jest.spyOn(spreadsheetEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
+    jest.spyOn(selectors, 'getUIConfiguration').mockReturnValue(VIEWER_CONFIGURATIONS.DEFAULT);
+    jest.spyOn(selectors, 'getSpreadsheetEditorEditMode').mockReturnValue(undefined);
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    configureEditorMode(mockStore, 1)();
+
+    expect(warnSpy).toHaveBeenCalledWith('Invalid initialEditMode parameter: not-a-valid-mode. Default to Editing mode.');
+    expect(dispatched).toContainEqual(actions.setSpreadsheetEditorEditMode('editing'));
+  });
+
+  it('falls back to editing mode when spreadsheet initialEditMode is invalid', () => {
+    const dispatched = [];
+    const mockStore = {
+      dispatch: (action) => dispatched.push(action),
+      getState: () => ({}),
+    };
+
+    jest.spyOn(core, 'getDocument').mockReturnValue({});
+    jest.spyOn(core, 'getTool').mockReturnValue({
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    });
+    jest.spyOn(core, 'getDocumentViewer').mockReturnValue({
+      getSpreadsheetEditorManager: () => ({
+        getEditMode: () => 'not-a-valid-mode',
+      }),
+    });
+
+    jest.spyOn(officeEditorHelpers, 'isOfficeEditorMode').mockReturnValue(false);
+    jest.spyOn(spreadsheetEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
     jest.spyOn(selectors, 'getUIConfiguration').mockReturnValue(VIEWER_CONFIGURATIONS.DEFAULT);
     jest.spyOn(selectors, 'getSpreadsheetEditorEditMode').mockReturnValue(undefined);
     const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});

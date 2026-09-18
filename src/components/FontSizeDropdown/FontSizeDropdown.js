@@ -22,6 +22,7 @@ const propTypes = {
   width: PropTypes.number,
   disableFocusing: PropTypes.bool,
   displayEmpty: PropTypes.bool, // If true and fontSize is undefined/null, render a blank box instead of defaulting to 12pt
+  displayCurrentFontSizeAboveMax: PropTypes.bool,
 };
 
 const MIN_FONT_SIZE = 1;
@@ -48,16 +49,18 @@ const FontSizeDropdown = ({
   width,
   disableFocusing = false,
   displayEmpty = false,
+  displayCurrentFontSizeAboveMax = false,
 }) => {
   const { core } = useCore();
   // Only treat the size as "empty" when the caller explicitly opts in via displayEmpty,
   // so other consumers that never pass it keep defaulting a missing fontSize to 12pt.
   const isEmpty = displayEmpty && (fontSizeProp === undefined || fontSizeProp === null);
   const fontSize = fontSizeProp ?? 12;
+  const shouldDisplayCurrentFontSize = fontSize <= maxFontSize || displayCurrentFontSizeAboveMax;
   let normalizedFontSize = '';
 
   if (!isEmpty) {
-    normalizedFontSize = fontSize <= maxFontSize ? fontSize : 1;
+    normalizedFontSize = shouldDisplayCurrentFontSize ? fontSize : MIN_FONT_SIZE;
   }
 
   const [sizes, setSizes] = useState([]);
@@ -70,13 +73,12 @@ const FontSizeDropdown = ({
       return;
     }
 
-    // update the font size indicator in Text Editing Panel
     if (core.getContentEditManager().isInContentEditMode()) {
-      setCurrentFontSize(fontSize <= maxFontSize ? fontSize : 1);
+      setCurrentFontSize(shouldDisplayCurrentFontSize ? fontSize : MIN_FONT_SIZE);
     } else {
       setCurrentFontSize(fontSize);
     }
-  }, [fontSize, isEmpty]);
+  }, [fontSize, isEmpty, shouldDisplayCurrentFontSize]);
 
   useEffect(() => {
     incrementMap[maxFontSize] = 12;
@@ -90,7 +92,7 @@ const FontSizeDropdown = ({
         }
         isValidFontSize(higher, startArr) && startArr.push(higher);
       }
-      if (!startArr.includes(curr)) {
+      if (!startArr.includes(curr) && (!displayCurrentFontSizeAboveMax || curr <= maxFontSize)) {
         startArr.push(curr);
         startArr.sort((a, b) => a - b);
       }
@@ -121,7 +123,7 @@ const FontSizeDropdown = ({
     // pull that unclamped value into the options list. Only isEmpty toggling
     // should trigger a recompute.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEmpty]);
+  }, [isEmpty, displayCurrentFontSizeAboveMax]);
 
   const sizeChange = (newSize) => {
     //Check for NAN and outside the range
@@ -141,7 +143,7 @@ const FontSizeDropdown = ({
     if (applyOnlyOnBlur) {
       const annot = core.getAnnotationManager().getSelectedAnnotations()[0];
       const id = annot?.getCustomData?.('contentEditBoxId');
-      const editor = core.getContentEditManager().getContentBoxById(id)?.editor;
+      const editor = core.getContentEditManager().getContentBoxById(id)?.getEditor();
       editor && keepTextEditSelectionOnInputFocus(core);
     }
   };

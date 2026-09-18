@@ -1,4 +1,5 @@
 import { SPREADSHEET_SHEET_INDEX_KEY, SPREADSHEET_ROW_KEY, SPREADSHEET_COLUMN_KEY } from 'constants/spreadsheetEditor';
+import getSpreadsheetCustomDataInt from 'helpers/getSpreadsheetCustomDataInt';
 
 /**
  * Finds the existing comment thread's root note at a spreadsheet cell, if any.
@@ -15,12 +16,10 @@ const findExistingSpreadsheetCommentAtCell = ({ notes, activeSheetIndex, topLeft
     return undefined;
   }
 
-  const parseCustomDataInt = (note, key) => Number.parseInt(note.getCustomData(key), 10) || 0;
-
   return notes.find((note) => (
-    parseCustomDataInt(note, SPREADSHEET_SHEET_INDEX_KEY) === activeSheetIndex
-    && parseCustomDataInt(note, SPREADSHEET_ROW_KEY) === topLeftRow
-    && parseCustomDataInt(note, SPREADSHEET_COLUMN_KEY) === topLeftColumn
+    getSpreadsheetCustomDataInt(note, SPREADSHEET_SHEET_INDEX_KEY) === activeSheetIndex
+    && getSpreadsheetCustomDataInt(note, SPREADSHEET_ROW_KEY) === topLeftRow
+    && getSpreadsheetCustomDataInt(note, SPREADSHEET_COLUMN_KEY) === topLeftColumn
   ));
 };
 

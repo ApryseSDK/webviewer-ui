@@ -129,14 +129,14 @@ describe('NoteHeader Component', () => {
       initialState.viewer.isSpreadsheetEditorModeEnabled = true;
     });
 
-    it('does not render status button for spreadsheet comments', () => {
-      const { container } = render(
+    it('renders status button for spreadsheet comments', () => {
+      render(
         <TestNoteHeader
           {...notSelectedProps}
           annotation={testPropsSpreadsheetComment.annotation}
         />
       );
-      expect(screen.queryByRole('button', { name: getTranslatedText('option.notesOrder.status') })).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: getTranslatedText('option.notesOrder.status') })).toBeInTheDocument();
     });
 
     it('renders status button for non-spreadsheet comments', () => {

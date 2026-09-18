@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import DataElements from 'constants/dataElement';
-import { TRANSPARENT_COLOR } from 'constants/officeEditor';
+import { TRANSPARENT_COLOR, DEFAULT_HIGHLIGHT_COLORS } from 'constants/officeEditor';
 
 const propTypes = {
   isFlyoutItem: PropTypes.bool,
@@ -102,6 +102,7 @@ const HighlightColorPickerButton = forwardRef((props, ref) => {
           />
         )}
       <ColorPickerOverlay
+        colorPaletteOverride={DEFAULT_HIGHLIGHT_COLORS}
         onStyleChange={handleStyleChange}
         onDefaultColorReset={handleDefaultColorReset}
         color={activeColor}

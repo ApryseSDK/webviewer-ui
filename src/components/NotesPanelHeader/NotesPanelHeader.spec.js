@@ -168,10 +168,14 @@ describe('NotesPanelHeader', () => {
       viewer: {
         ...initialState.viewer,
         isSpreadsheetEditorModeEnabled: true,
+        disabledElements: {
+          [DataElements.NOTE_MULTI_SELECT_MODE_BUTTON]: { disabled: true },
+          [DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON]: { disabled: true },
+        },
       },
     };
 
-    it('should not render sort, filter, or multiselect controls', () => {
+    it('should render sort but not filter or multiselect controls', () => {
       const store = configureStore({ reducer: () => spreadsheetState });
       render(
         <Provider store={store}>
@@ -184,7 +188,7 @@ describe('NotesPanelHeader', () => {
         </Provider>
       );
 
-      expect(screen.queryByText('Sort:')).not.toBeInTheDocument();
+      expect(screen.getByText('Sort:')).toBeInTheDocument();
       expect(screen.queryByRole('button', { name: 'Filter' })).not.toBeInTheDocument();
       expect(screen.queryByRole('button', { name: 'Select Multiple' })).not.toBeInTheDocument();
     });

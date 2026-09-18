@@ -23,6 +23,8 @@ import SignatureModes from 'constants/signatureModes';
 import { PRESET_BUTTON_TYPES, VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import defaultToolsWithInlineComment from 'constants/defaultToolsWithInlineCommentOnAnnotationSelected';
 import { PANEL_SIZES } from 'constants/panel';
+import LoadingScreenContexts from 'constants/loadingScreenContexts';
+import LoadingScreenStyles from 'constants/loadingScreenStyles';
 import { ShortcutKeys } from 'helpers/hotkeysUtils';
 import { SYNC_MODES } from 'constants/multiViewerContants';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
@@ -38,6 +40,7 @@ import {
 import { addDataElementFromKey } from 'helpers/modularComponentsHelper';
 import viewOnlyWhitelist from './viewOnlyWhitelist';
 import { AUTO_SAVE_DEFAULT_TIMEOUT } from 'constants/autosave';
+import { SIGNATURE_MODAL_COLORS } from 'constants/commonColors';
 
 const { ToolNames } = window.Core.Tools;
 const instanceId = getInstanceID();
@@ -125,6 +128,9 @@ export default {
       [DataElements.FORMULA_BAR]: true,
       [DataElements.SPREADSHEET_SWITCHER]: true,
     },
+    loadingScreenContext: LoadingScreenContexts.DEFAULT,
+    loadingScreenStyle: LoadingScreenStyles.SKELETON,
+    loadingDocumentViewerKeys: {},
     hiddenElements: {},
     panelWidths: {
       leftPanel: 264,
@@ -146,6 +152,9 @@ export default {
     mobilePanelSize: PANEL_SIZES.SMALL_SIZE,
     documentContainerWidth: null,
     documentContainerHeight: null,
+    elementTags: {
+      [DataElements.DOCUMENT_CONTAINER]: 'main',
+    },
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
     lastActiveToolForRibbon: {},
@@ -1389,6 +1398,8 @@ export default {
     viewOnlyWhitelist,
     customModals: [],
     customPanels: [],
+    customFillStyles: [],
+    customLineStyles: { start: [], middle: [], end: [] },
     genericPanels: defaultPanels,
     useEmbeddedPrint: false,
     useClientSidePrint: false,
@@ -1424,11 +1435,13 @@ export default {
     isMultipleScalesMode: true,
     maxSignaturesCount: 10,
     signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
+    signatureModalColors: SIGNATURE_MODAL_COLORS,
     isReplyDisabledFunc: null,
     userData: [],
     customMeasurementOverlay: [],
     noteTransformFunction: null,
     standardStamps: [],
+    standardStampCategories: [],
     customStamps: [],
     customStampCategories: [],
     selectedStampIndex: 0,
@@ -1549,6 +1562,7 @@ export default {
     isKeyboardOpen: false,
     autosaveEnabled: false,
     autosaveInterval: AUTO_SAVE_DEFAULT_TIMEOUT,
+    signatureDisclaimerEnabled: false,
   },
   search: {
     value: '',
@@ -1604,6 +1618,7 @@ export default {
       1: null,
       2: null,
     },
+    initialLayers: {},
     printQuality: 1,
     passwordAttempts: -1,
     maxPasswordAttempts: 3,
@@ -1631,7 +1646,6 @@ export default {
   },
   featureFlags: {
     customizableUI: true,
-    newStampPanel: false,
   },
   officeEditor: {
     canUndo: false,

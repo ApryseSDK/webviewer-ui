@@ -4,10 +4,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 const noop = () => { };
+let mockIsInContentEditMode = false;
 
 jest.mock('core', () => ({
   getContentEditManager: () => ({
-    isInContentEditMode: () => false,
+    isInContentEditMode: () => mockIsInContentEditMode,
   }),
   getDocumentViewer: () => ({}),
   getScrollViewElement: () => ({
@@ -18,6 +19,10 @@ jest.mock('core', () => ({
 const FontSizeDropdownWithProviders = withProviders(FontSizeDropdown);
 
 describe('FontSizeDropdown component', () => {
+  beforeEach(() => {
+    mockIsInContentEditMode = false;
+  });
+
   it('Should select items and input correctly', () => {
     const mockOnFontSizeChange = jest.fn();
     render(<FontSizeDropdownWithProviders onFontSizeChange={mockOnFontSizeChange} />);
@@ -66,6 +71,38 @@ describe('FontSizeDropdown component', () => {
 
     const options = screen.getAllByRole('option');
     expect(options.length).toEqual(20);
+  });
+
+  it('Should display an existing font size above the maximum without allowing it as input', () => {
+    mockIsInContentEditMode = true;
+    const mockOnFontSizeChange = jest.fn();
+    render(
+      <FontSizeDropdownWithProviders
+        onFontSizeChange={mockOnFontSizeChange}
+        fontSize={80}
+        maxFontSize={72}
+        displayCurrentFontSizeAboveMax
+      />
+    );
+
+    const comboBox = screen.getByRole('combobox');
+    expect(comboBox).toHaveTextContent('80');
+    userEvent.click(comboBox);
+
+    expect(screen.queryByRole('option', { name: '80' })).not.toBeInTheDocument();
+    const input = screen.getAllByRole('combobox')[1];
+    userEvent.clear(input);
+    userEvent.type(input, '80');
+    userEvent.type(input, '{enter}');
+
+    expect(mockOnFontSizeChange).not.toHaveBeenCalled();
+  });
+
+  it('Should retain the default fallback for an existing font size above the maximum', () => {
+    mockIsInContentEditMode = true;
+    render(<FontSizeDropdownWithProviders onFontSizeChange={noop} fontSize={80} maxFontSize={72} />);
+
+    expect(screen.getByRole('combobox')).toHaveTextContent('1');
   });
 
   it('Should render blank instead of defaulting to 12 when displayEmpty is true and fontSize is undefined', () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
+import debounce from 'lodash/debounce';
 import useReplyAutosave, { replyDraftByAnnotationId } from './useReplyAutosave';
 import useCore from 'hooks/useCore';
 import selectors from 'selectors';
@@ -24,13 +25,29 @@ const mockCore = {
   addAnnotations: jest.fn(),
   createAnnotationReply: jest.fn((annotation, text) => ({ ...annotation, text })),
 };
-
 jest.mock('lodash/debounce', () => {
-  return (fn) => {
-    const debounced = (...args) => fn(...args);
-    debounced.cancel = jest.fn();
+  const debounceMock = (fn) => {
+    let pending = null;
+    const runPending = () => {
+      const run = pending;
+      pending = null;
+      return run?.();
+    };
+    const debounced = (...args) => {
+      pending = () => fn(...args);
+      if (debounceMock.deferred) {
+        return undefined;
+      }
+      return runPending();
+    };
+    debounced.cancel = jest.fn(() => {
+      pending = null;
+    });
+    debounced.flush = jest.fn(runPending);
     return debounced;
   };
+  debounceMock.deferred = false;
+  return debounceMock;
 });
 
 jest.mock('helpers/MentionsManager', () => ({
@@ -112,6 +129,7 @@ describe('useReplyAutosave', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    debounce.deferred = false;
     selectors.getAutosaveEnabled.mockReturnValue(true);
     replyDraftByAnnotationId.clear();
     clearReplyDraftForExport(viewerKey, annotationId);
@@ -251,5 +269,33 @@ describe('useReplyAutosave', () => {
     await waitFor(() => {
       expect(result.current.localReplyValue).toBe('Pending draft autosave off');
     });
+  });
+
+  it('autosaves a draft when the annotation is deselected before the autosave interval elapses', async () => {
+    debounce.deferred = true;
+    const annotation = makeAnnotation();
+    const textareaRef = makeTextareaRef();
+    const { core } = useCore();
+    const annotationManager = core.getAnnotationManager(viewerKey);
+
+    const { result, unmount } = renderUseReplyAutosave({ annotation, textareaRef });
+
+    await act(async () => {
+      result.current.setLocalReplyValue('Draft reply');
+    });
+
+    // Nothing is persisted yet because the debounce interval has not elapsed.
+    expect(replyDraftByAnnotationId.get(`${viewerKey}:${annotationId}`)).toBeUndefined();
+
+    await act(async () => {
+      unmount();
+    });
+
+    expect(annotationManager.addAnnotations).toHaveBeenCalled();
+    expect(annotationManager.trigger).toHaveBeenCalledWith(
+      'annotationChanged',
+      [[expect.anything()], 'modify', expect.objectContaining({ source: expect.any(String) })],
+    );
+    expect(replyDraftByAnnotationId.get(`${viewerKey}:${annotationId}`)).toBeUndefined();
   });
 });

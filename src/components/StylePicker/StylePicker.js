@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import './StylePicker.scss';
-import ColorPicker from './ColorPicker';
 import Slider from 'components/Slider';
 import DataElements from 'constants/dataElement';
-import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 import { getStrokeSliderSteps, getStrokeDisplayValue } from 'constants/slider';
+import { defaultFillStyles, SOLID_FILL_STYLE_KEY } from 'constants/strokeStyleIcons';
 import SnapModeToggle from './SnapModeToggle';
 import actions from 'actions';
+import selectors from 'selectors';
 import {
   hasFillColorAndCollapsablePanelSections,
-  stylePanelSectionTitles,
   shouldHideStrokeDropdowns,
   shouldHideStrokeSlider,
   shouldHideOpacitySlider,
   hasSnapModeCheckbox,
-  shouldHideTransparentFillColor,
   shouldHideStrokeStyle,
   shouldHideFillColorAndCollapsablePanelSections,
   useStylePanelSections,
   shouldHideCloudyLineStyle,
 } from 'helpers/stylePanelHelper';
-import CollapsibleSection from '../CollapsibleSection';
 import StrokePanelSection from './StrokePanelSection/StrokePanelSection';
 import OpacityPanelSection from './OpacityPanelSection';
+import FillColorPanelSection from './FillColorPanelSection';
 import NoSharedStylePanel from '../StylePanel/panels/NoSharedStylePanel';
 import DataElementWrapper from '../DataElementWrapper';
+import { toDropdownEntry, styleAppliesToContext, getAnnotationContext } from 'helpers/customStyleDropdown';
 
 const propTypes = {
   activeType: PropTypes.string,
@@ -45,6 +43,8 @@ const propTypes = {
   sliderProperties: PropTypes.arrayOf(PropTypes.string),
   startLineStyle: PropTypes.string,
   strokeStyle: PropTypes.string,
+  fillStyle: PropTypes.string,
+  onFillStyleChange: PropTypes.func,
   annotationStyle: PropTypes.object.isRequired,
   toolName: PropTypes.string,
   annotationTypes: PropTypes.arrayOf(PropTypes.string),
@@ -63,7 +63,9 @@ const StylePicker = ({
   startLineStyle,
   endLineStyle,
   strokeStyle,
+  fillStyle,
   onLineStyleChange,
+  onFillStyleChange,
   activeTool,
   hasParentPicker,
   annotationTypes,
@@ -75,13 +77,14 @@ const StylePicker = ({
       StrokeThickness: null,
     }
     : annotationStyle;
-  const [t] = useTranslation();
   const dispatch = useDispatch();
   const [strokeColor, setStrokeColor] = useState(adjustedAnnotationStyle.StrokeColor);
   const [startingLineStyle, setStartingLineStyle] = useState(startLineStyle);
   const [endingLineStyle, setEndingLineStyle] = useState(endLineStyle);
   const [strokeLineStyle, setStrokeLineStyle] = useState(strokeStyle);
+  const [fillPatternStyle, setFillPatternStyle] = useState(fillStyle);
   const [fillColor, setFillColor] = useState(adjustedAnnotationStyle.FillColor);
+  const customFillStyles = useSelector(selectors.getCustomFillStyles);
 
   const checkAnyAnnotationTypes = (checkFunction) => {
     if (annotationTypes && annotationTypes.length > 0) {
@@ -122,7 +125,8 @@ const StylePicker = ({
     setStartingLineStyle(startLineStyle);
     setStrokeLineStyle(strokeStyle);
     setEndingLineStyle(endLineStyle);
-  }, [startLineStyle, endLineStyle, strokeStyle]);
+    setFillPatternStyle(fillStyle);
+  }, [startLineStyle, endLineStyle, strokeStyle, fillStyle]);
 
   const onStrokeColorChange = (color) => {
     onStyleChange?.('StrokeColor', color);
@@ -149,6 +153,11 @@ const StylePicker = ({
     setFillColor(color);
   };
 
+  const onFillPatternStyleChange = (style) => {
+    onFillStyleChange?.(style);
+    setFillPatternStyle(style);
+  };
+
   const onSliderChange = (property, value, doneStyleChange = true) => {
     onStyleChange?.(property, value, doneStyleChange);
   };
@@ -164,6 +173,14 @@ const StylePicker = ({
     openFillColorContainer,
     openOpacityContainer,
   } = useStylePanelSections();
+
+  const annotationContext = getAnnotationContext(showLineStyleOptions, activeTool, annotationTypes);
+  const filteredCustomFillStyles = customFillStyles.filter((style) => styleAppliesToContext(style, annotationContext));
+  const hasCustomFillStyles = filteredCustomFillStyles.length > 0;
+  const fillStyleEntries = [...defaultFillStyles, ...filteredCustomFillStyles.map(toDropdownEntry)];
+  const selectedFillStyleKey = fillStyleEntries.some((entry) => entry.key === fillPatternStyle)
+    ? fillPatternStyle
+    : SOLID_FILL_STYLE_KEY;
 
   const getSliderProps = (type) => {
     const { Opacity, StrokeThickness, FontSize } = adjustedAnnotationStyle;
@@ -304,27 +321,18 @@ const StylePicker = ({
       {hideStrokeStyle && !hideStrokeSlider && strokethicknessComponent && (strokethicknessComponent)}
       {showFillColorAndCollapsablePanelSections && !hideFillColorAndCollapsablePanelSections && (
         <DataElementWrapper className="PanelSection" dataElement={DataElements.StylePanel.FILL_COLOR_CONTAINER}>
-          <CollapsibleSection
-            header={t(stylePanelSectionTitles(activeTool, 'FillColor') || 'option.annotationColor.FillColor')}
-            headingLevel={2}
-            isInitiallyExpanded={false}
-            isExpanded={isFillColorContainerActive}
-            onToggle={openFillColorContainer}>
-            <div className="panel-section-wrapper">
-              <div className="menu-items">
-                <ColorPicker
-                  dataElement={DataElements.StylePanel.FILL_COLOR_PICKER}
-                  onColorChange={onFillColorChange}
-                  onStyleChange={onStyleChange}
-                  color={fillColor}
-                  hasTransparentColor={!shouldHideTransparentFillColor(activeTool)}
-                  activeTool={activeTool}
-                  type={COLOR_PALETTE_STYLES.FillColor.type}
-                  ariaTypeLabel={t('option.annotationColor.FillColor')}
-                />
-              </div>
-            </div>
-          </CollapsibleSection>
+          <FillColorPanelSection
+            activeTool={activeTool}
+            onStyleChange={onStyleChange}
+            onFillColorChange={onFillColorChange}
+            fillColor={fillColor}
+            hasCustomFillStyles={hasCustomFillStyles}
+            fillStyleEntries={fillStyleEntries}
+            onFillPatternStyleChange={onFillPatternStyleChange}
+            selectedFillStyleKey={selectedFillStyleKey}
+            isFillColorContainerActive={isFillColorContainerActive}
+            openFillColorContainer={openFillColorContainer}
+          />
           {!hideOpacitySlider && renderDivider(DataElements.StylePanel.FILL_COLOR_PICKER)}
         </DataElementWrapper>
       )}

@@ -21,7 +21,8 @@ import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import { parseRecordId } from 'helpers/officeEditorCommentHelper';
 import { OfficeEditorEditMode, OFFICE_EDITOR_TRACKED_CHANGE_KEY, OFFICE_EDITOR_COMMENT_KEY } from 'constants/officeEditor';
-import { SPREADSHEET_THREAD_ID_KEY, SPREADSHEET_SHEET_NAME_KEY, SPREADSHEET_CELL_KEY } from 'constants/spreadsheetEditor';
+import { SpreadsheetCommentState, SPREADSHEET_THREAD_ID_KEY, SPREADSHEET_SHEET_NAME_KEY, SPREADSHEET_CELL_KEY, SPREADSHEET_COMMENT_STATE_KEY } from 'constants/spreadsheetEditor';
+import { navigateToSpreadsheetComment } from 'helpers/spreadsheetEditorCommentHelper';
 
 import './Note.scss';
 import { isAnnotationRenderedInDisplayMode } from 'src/helpers/isAnnotationRenderedInDisplayMode';
@@ -107,8 +108,31 @@ const Note = ({
     shallowEqual,
   );
   const isOfficeEditorCommentAnnotation = mapAnnotationToKey(annotation) === annotationMapKeys.OFFICE_EDITOR_COMMENT;
+  const isSpreadsheetEditorCommentAnnotation = isSpreadsheetEditorMode && !!annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY);
+
+  useEffect(() => {
+    if (!isSelected || !isSpreadsheetEditorCommentAnnotation) {
+      return;
+    }
+    const noteContainer = containerRef.current;
+    if (typeof noteContainer?.scrollIntoView === 'function') {
+      noteContainer.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+  }, [isSelected, isSpreadsheetEditorCommentAnnotation]);
+
+  const rootAnnotation = isSpreadsheetEditorCommentAnnotation && annotation?.isReply?.()
+    ? core.getAnnotationManager(documentViewerKey).getAnnotationById(annotation.InReplyTo)
+    : annotation;
+  const rootCommentState = rootAnnotation?.getCustomData(SPREADSHEET_COMMENT_STATE_KEY);
+  const isSSECommentEditable = !annotation?.isReply?.() || rootCommentState === SpreadsheetCommentState.OPEN;
   const canModifyAnnotation = core.canModify(annotation, documentViewerKey);
   const canModifyAnnotationContents = core.canModifyContents(annotation, documentViewerKey);
+  const canEditAnnotation = isSpreadsheetEditorCommentAnnotation
+    ? isSSECommentEditable
+    : canModifyAnnotation || isOfficeEditorCommentAnnotation;
+  const canEditAnnotationContents = isSpreadsheetEditorCommentAnnotation
+    ? isSSECommentEditable
+    : canModifyAnnotationContents || isOfficeEditorCommentAnnotation;
 
   const setIsEditing = useCallback(
     (isEditing, editingKey) => {
@@ -198,21 +222,18 @@ const Note = ({
   useEffect(() => {
     // If this is not a new one, rebuild the isEditing map
     const pendingText = pendingEditTextMap[annotation.Id];
-    const canEditAnnotation = canModifyAnnotation || isOfficeEditorCommentAnnotation;
     const shouldEnterEditMode = !isMultiSelectMode && pendingText !== '' && isContentEditable && canEditAnnotation && !isDocumentReadOnly;
     if (shouldEnterEditMode && !isEditingMap[annotation.Id]) {
       setIsEditing(true, annotation.Id);
     }
-  }, [isDocumentReadOnly, isContentEditable, canModifyAnnotation, setIsEditing, annotation, isMultiSelectMode, pendingEditTextMap, isEditingMap, isOfficeEditorCommentAnnotation]);
+  }, [isDocumentReadOnly, isContentEditable, canEditAnnotation, setIsEditing, annotation, isMultiSelectMode, pendingEditTextMap, isEditingMap]);
   const isNoteCurrentlyEditing = Boolean(isEditingMap[annotation.Id]);
   useDidUpdate(() => {
-    const canEditAnnotation = canModifyAnnotation || isOfficeEditorCommentAnnotation;
-    const canEditAnnotationContents = canModifyAnnotationContents || isOfficeEditorCommentAnnotation;
     const shouldExitEditMode = isDocumentReadOnly || !canEditAnnotation || !canEditAnnotationContents;
     if (shouldExitEditMode && isNoteCurrentlyEditing) {
       setIsEditing(false, annotation.Id);
     }
-  }, [isDocumentReadOnly, canModifyAnnotation, canModifyAnnotationContents, setIsEditing, isNoteCurrentlyEditing, isOfficeEditorCommentAnnotation, annotation]);
+  }, [isDocumentReadOnly, canEditAnnotation, canEditAnnotationContents, setIsEditing, isNoteCurrentlyEditing, annotation]);
 
   const handleNoteClick = async (e) => {
     // stop bubbling up otherwise the note will be closed
@@ -249,6 +270,10 @@ const Note = ({
       dispatch(actions.triggerNoteEditing());
       if (!isRightClickAnnotationPopupEnabled) {
         dispatch(actions.openElement(DataElements.ANNOTATION_POPUP));
+      }
+      if (isSpreadsheetEditorMode && annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY)) {
+        navigateToSpreadsheetComment({ comment: annotation, core, documentViewerKey });
+        return;
       }
       if (!isOfficeEditorMode) {
         return;
@@ -350,9 +375,8 @@ const Note = ({
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
   const isRenderableInCurrentDisplayMode =  isAnnotationRenderedInDisplayMode(core, annotation);
   const isRenderingConnectorLine = isSelected && (isInNotesPanel || isCustomPanelOpen) && !shouldHideConnectorLine && isRenderableInCurrentDisplayMode;
-  const isSpreadsheetComment = isSpreadsheetEditorMode && !!annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY);
-  const spreadsheetSheetName = isSpreadsheetComment ? annotation.getCustomData(SPREADSHEET_SHEET_NAME_KEY) : null;
-  const spreadsheetCell = isSpreadsheetComment ? annotation.getCustomData(SPREADSHEET_CELL_KEY) : null;
+  const spreadsheetSheetName = isSpreadsheetEditorCommentAnnotation ? annotation.getCustomData(SPREADSHEET_SHEET_NAME_KEY) : null;
+  const spreadsheetCell = isSpreadsheetEditorCommentAnnotation ? annotation.getCustomData(SPREADSHEET_CELL_KEY) : null;
   const shouldRenderSpreadsheetCellLocation = spreadsheetSheetName && spreadsheetCell;
 
   return (
@@ -407,6 +431,7 @@ const Note = ({
                     key={reply.Id}
                     annotation={reply}
                     setIsEditing={setIsEditing}
+                    isSelected={isSelected}
                     isEditing={isEditingMap[reply.Id]}
                     onReplyClicked={handleReplyClicked}
                     isUnread={unreadAnnotationIdSet.has(reply.Id)}

@@ -30,9 +30,17 @@
       cursor: pointer;
       padding: 0 4px;
 
+      .collapsible-section-header-text {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
       .Icon {
         width: 22px;
         height: 22px;
+        flex-shrink: 0;
         pointer-events: none;
         color: var(--icon-color);
       }

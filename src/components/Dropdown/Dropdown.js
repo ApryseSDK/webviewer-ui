@@ -228,7 +228,7 @@ function Dropdown({
         overlayRef.current.style.top = `-${overlayHeight - offset}px`;
         overlayRef.current.style.maxHeight = maxHeight ? `${maxHeight}px` : ''; // Use prop if available
       } else {
-        const spaceAbove = buttonBounds.top;
+        const spaceAbove = buttonBounds.top - scrollBounds.top;
         const spaceBelow = scrollBounds.bottom - buttonBounds.bottom;
         const SMALLEST_HEIGHT = 24;
         const getMaxHeight = (availableSpace) => {
@@ -361,20 +361,23 @@ function Dropdown({
 
   const renderDropdownImages = () => images.map((image, i) => {
     const key = getKey(image);
+    const itemContent = image.src
+      ? <Icon glyph={image.src} className={image.className} />
+      : <span className={classNames('linestyle-label', image.className)}>{image.title || key}</span>;
     return (
       <DataElementWrapper
         key={key}
         id={`${id}-${key}`}
         role="option"
-        aria-label={key}
+        aria-label={image.title || key}
         aria-selected={key === currentSelectionKey}
         dataElement={`dropdown-item-${key}`}
         ref={(el) => optionRefs.current[i] = el}
         className={classNames('Dropdown__item', { selected: key === currentSelectionKey, active: i === activeIndex })}
         tabIndex={isOpen ? undefined : -1} // Just to be safe.
-        onClick={(e) => onClickDropdownItem(e, key)}
+        onClick={(e) => onClickDropdownItem(e, key, i, image.title || key)}
       >
-        <Icon glyph={image.src} className={image.className} />
+        {itemContent}
       </DataElementWrapper>
     );
   });
@@ -459,10 +462,11 @@ function Dropdown({
   if (hasImages) {
     const glyph = selectedItem?.src || '';
     const className = selectedItem?.className || '';
+    const title = selectedItem?.title || '';
 
-    selectedItemDisplay = (
-      <Icon glyph={glyph} className={className} />
-    );
+    selectedItemDisplay = glyph
+      ? <Icon glyph={glyph} className={className} />
+      : <span className={classNames('linestyle-label', className)}>{title || currentSelectionKey}</span>;
   } else if (!children) {
     if (optionIsSelected) {
       selectedItemDisplay = renderSelectedItem(selectedItem, getTranslatedDisplayValue);

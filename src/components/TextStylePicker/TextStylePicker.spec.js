@@ -74,6 +74,27 @@ describe('TextStylePicker Component', () => {
     jest.useRealTimers();
   });
 
+  it('should reject input above the supplied maximum font size', () => {
+    jest.useFakeTimers();
+    const mockOnPropertyChange = jest.fn();
+    const props = {
+      onPropertyChange: mockOnPropertyChange,
+      maxFontSize: 72,
+    };
+    render(<TextStylePickerWithRedux {...props} />);
+    const comboBox = screen.getByRole('combobox', { name: 'Font Size' });
+    userEvent.click(comboBox);
+    const fontSizeInput = screen.getAllByRole('combobox')[2];
+    userEvent.clear(fontSizeInput);
+    userEvent.type(fontSizeInput, '80');
+    userEvent.type(fontSizeInput, '{enter}');
+
+    jest.advanceTimersByTime(DEBOUNCE_TIME + 5);
+    expect(comboBox).toHaveTextContent('12');
+    expect(mockOnPropertyChange).not.toHaveBeenCalled();
+    jest.useRealTimers();
+  });
+
   it('should disable vertical alignment when isFreeTextAutoSize is true', () => {
     const props = {
       onPropertyChange: noop,

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import ColorPicker from '../ColorPicker';
 import Dropdown from '../../Dropdown';
 import CollapsibleSection from 'src/components/CollapsibleSection';
@@ -14,6 +15,8 @@ import { stylePanelSectionTitles } from 'helpers/stylePanelHelper';
 import DataElementWrapper from 'src/components/DataElementWrapper';
 import DataElements from 'src/constants/dataElement';
 import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
+import { getLineStyleAnnotationContext, getLineStyleDropdownEntries } from 'helpers/customLineStyleUtils';
+import selectors from 'selectors';
 
 const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
 
@@ -44,6 +47,25 @@ const StrokePanelSection = ({
   hideCloudyLineStyle,
 }) => {
   const [t] = useTranslation();
+  const customLineStyles = useSelector(selectors.getCustomLineStyles);
+  const annotationContext = getLineStyleAnnotationContext(showLineStyleOptions, activeTool);
+
+  const startLineStyles = [
+    ...defaultStartLineStyles,
+    ...getLineStyleDropdownEntries(customLineStyles.start, annotationContext),
+  ];
+  const middleLineStyles = [
+    ...defaultStrokeStyles,
+    ...getLineStyleDropdownEntries(customLineStyles.middle, annotationContext),
+  ];
+  const endLineStyles = [
+    ...defaultEndLineStyles,
+    ...getLineStyleDropdownEntries(customLineStyles.end, annotationContext),
+  ];
+  const middleLineStylesWithCloudy = [
+    ...withCloudyStyle,
+    ...getLineStyleDropdownEntries(customLineStyles.middle, annotationContext),
+  ];
 
   const middleLineSegmentLabel = showLineStyleOptions ? 'stylePanel.lineEnding.middle' : 'stylePanel.borderStyle';
 
@@ -78,7 +100,7 @@ const StrokePanelSection = ({
                       translationPrefix="stylePanel.lineEnding.start"
                       className="StylePicker-StartLineStyleDropdown"
                       dataElement="startLineStyleDropdown"
-                      images={defaultStartLineStyles}
+                      images={startLineStyles}
                       onClickItem={onStartLineStyleChange}
                       currentSelectionKey={startingLineStyle}
                       showLabelInList
@@ -90,7 +112,7 @@ const StrokePanelSection = ({
                       translationPrefix={middleLineSegmentLabel}
                       className={`StylePicker-StrokeLineStyleDropdown${!!strokeStyle && !showLineStyleOptions ? ' StyleOptions' : ''}`}
                       dataElement="middleLineStyleDropdown"
-                      images={showLineStyleOptions || hideCloudyLineStyle ? defaultStrokeStyles : withCloudyStyle}
+                      images={showLineStyleOptions || hideCloudyLineStyle ? middleLineStyles : middleLineStylesWithCloudy}
                       onClickItem={onStrokeStyleChange}
                       currentSelectionKey={strokeLineStyle}
                       showLabelInList
@@ -102,7 +124,7 @@ const StrokePanelSection = ({
                       translationPrefix="stylePanel.lineEnding.end"
                       className="StylePicker-EndLineStyleDropdown"
                       dataElement="endLineStyleDropdown"
-                      images={defaultEndLineStyles}
+                      images={endLineStyles}
                       onClickItem={onEndLineStyleChange}
                       currentSelectionKey={endingLineStyle}
                       showLabelInList

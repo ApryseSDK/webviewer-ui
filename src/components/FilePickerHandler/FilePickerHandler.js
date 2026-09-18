@@ -23,8 +23,10 @@ const FilePickerHandler = () => {
   const openDocument = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
       dispatch(actions.closeElement(DataElements.MENU_OVERLAY));
+      if (!isMultiViewerMode) {
+        dispatch(actions.openDocumentLoadingScreen());
+      }
       if (isMultiTab) {
         if (isMultiViewerMode) {
           await TabManager.updateTab(activeTab, buildTabUpdateForViewer({

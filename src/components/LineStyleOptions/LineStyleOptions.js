@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import Dropdown from 'components/Dropdown';
 import { defaultStartLineStyles, defaultStrokeStyles, defaultEndLineStyles } from 'constants/strokeStyleIcons';
+import { getLineStyleDropdownEntries } from 'helpers/customLineStyleUtils';
+import selectors from 'selectors';
 
 import './LineStyleOptions.scss';
-
-const middleLineStyles = defaultStrokeStyles;
 
 function LineStyleOptions({ properties, onLineStyleChange }) {
   const [t] = useTranslation();
   const [selectedStartLineStyle, setSelectedStartLineStyle] = useState(properties.StartLineStyle);
   const [selectedEndLineStyle, setSelectedEndLineStyle] = useState(properties.EndLineStyle);
   const [selectedMiddleLineStyle, setSelectedMiddleLineStyle] = useState(properties.StrokeStyle);
+  const customLineStyles = useSelector(selectors.getCustomLineStyles);
+
+  const startLineStyles = [
+    ...defaultStartLineStyles,
+    ...getLineStyleDropdownEntries(customLineStyles.start, 'line'),
+  ];
+  const middleLineStyles = [
+    ...defaultStrokeStyles,
+    ...getLineStyleDropdownEntries(customLineStyles.middle, 'line'),
+  ];
+  const endLineStyles = [
+    ...defaultEndLineStyles,
+    ...getLineStyleDropdownEntries(customLineStyles.end, 'line'),
+  ];
 
   function onClickStartLineStyle(key) {
     setSelectedStartLineStyle(key);
@@ -37,7 +52,7 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
         <Dropdown
           id="startLineStyleDropdown"
           dataElement="startLineStyleDropdown"
-          images={defaultStartLineStyles}
+          images={startLineStyles}
           width={lineEndingDropdownWidth}
           onClickItem={onClickStartLineStyle}
           currentSelectionKey={selectedStartLineStyle}
@@ -55,7 +70,7 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
         <Dropdown
           id="endLineStyleDropdown"
           dataElement="endLineStyleDropdown"
-          images={defaultEndLineStyles}
+          images={endLineStyles}
           width={lineEndingDropdownWidth}
           onClickItem={onClickEndLineStyle}
           currentSelectionKey={selectedEndLineStyle}

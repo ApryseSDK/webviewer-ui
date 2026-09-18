@@ -8,6 +8,9 @@ import core from 'core';
 import { panelNames } from 'src/constants/panel';
 import DataElements from 'src/constants/dataElement';
 import i18next from 'i18next';
+import pasteClipboardImage from 'helpers/pasteClipboardImage';
+import pasteClipboardText from 'helpers/pasteClipboardText';
+import isFocusingElement from 'helpers/isFocusingElement';
 
 jest.mock('hotkeys-js', () => {
   const fn = jest.fn();
@@ -19,6 +22,9 @@ jest.mock('./hotkeysUtils', () => ({
   ...jest.requireActual('./hotkeysUtils'),
   getViewOnlyShortcuts: jest.fn(() => []),
 }));
+jest.mock('helpers/pasteClipboardImage', () => jest.fn().mockResolvedValue(false));
+jest.mock('helpers/pasteClipboardText', () => jest.fn(() => false));
+jest.mock('helpers/isFocusingElement', () => jest.fn(() => false));
 
 describe('hotkeysManager', () => {
   const DEFAULT_SHORTCUT_KEY_MAP = {
@@ -45,10 +51,13 @@ describe('hotkeysManager', () => {
     });
     selectors.getShortcutKeyMap = jest.fn((state) => (state.shortcutKeyMap || {}));
     selectors.getActiveDocumentViewerKey = jest.fn(() => 1);
+    selectors.getIsOfficeEditorMode = jest.fn(() => false);
+    selectors.isSpreadsheetEditorModeEnabled = jest.fn(() => false);
     selectors.isViewportRelativeAnnotationPositioningEnabled = jest.fn(() => false);
     core.getToolModeMap = jest.fn(() => ({ 'AnnotationCreateRectangle': getTool() }));
     core.pasteCopiedAnnotations = jest.fn();
     core.getAnnotationManager = jest.fn().mockReturnValue({
+      getCopiedAnnotations: jest.fn().mockReturnValue([{}]),
       getEditBoxManager: jest.fn().mockReturnValue({
         getEditor: jest.fn().mockReturnValue(null),
       }),
@@ -58,6 +67,7 @@ describe('hotkeysManager', () => {
       isInContentEditMode: () => false,
     }));
     hotkeysManager.initialize(mockStore);
+    hotkeysManager.preferInternalAnnotationPaste = true;
   });
   afterEach(() => {
     hotkeysManager.off();
@@ -457,6 +467,28 @@ describe('hotkeysManager', () => {
       expect(typeof keyHandlerMap[ShortcutKeys[Shortcuts.ROTATE_CLOCKWISE]]).toBe('function');
     });
 
+    it('should prefer internal paste after copying a selected annotation', () => {
+      core.getSelectedText = jest.fn(() => '');
+      core.getSelectedAnnotations = jest.fn(() => [{}]);
+      core.updateCopiedAnnotations = jest.fn();
+      const keyHandlerMap = hotkeysManager.createKeyHandlerMap(mockStore);
+
+      keyHandlerMap[ShortcutKeys[Shortcuts.COPY]]();
+
+      expect(core.updateCopiedAnnotations).toHaveBeenCalled();
+      expect(hotkeysManager.preferInternalAnnotationPaste).toBe(true);
+    });
+
+    it('should clear internal paste preference when copying without an annotation selection', () => {
+      core.getSelectedText = jest.fn(() => '');
+      core.getSelectedAnnotations = jest.fn(() => []);
+      const keyHandlerMap = hotkeysManager.createKeyHandlerMap(mockStore);
+
+      keyHandlerMap[ShortcutKeys[Shortcuts.COPY]]();
+
+      expect(hotkeysManager.preferInternalAnnotationPaste).toBe(false);
+    });
+
     it('should pass viewportRelative paste options when the setting is enabled', () => {
       selectors.isViewportRelativeAnnotationPositioningEnabled.mockReturnValue(true);
       selectors.getActiveDocumentViewerKey.mockReturnValue(7);
@@ -483,6 +515,272 @@ describe('hotkeysManager', () => {
 
       expect(event.preventDefault).toHaveBeenCalledTimes(1);
       expect(core.pasteCopiedAnnotations).toHaveBeenCalledWith(3, undefined);
+    });
+
+    it('should allow external clipboard handling when no annotations are copied', () => {
+      core.getAnnotationManager().getCopiedAnnotations.mockReturnValue([]);
+      const keyHandlerMap = hotkeysManager.createKeyHandlerMap(mockStore);
+      const pasteHandler = keyHandlerMap[ShortcutKeys[Shortcuts.PASTE]];
+      const event = { preventDefault: jest.fn() };
+
+      pasteHandler(event);
+
+      expect(event.preventDefault).not.toHaveBeenCalled();
+      expect(core.pasteCopiedAnnotations).not.toHaveBeenCalled();
+      expect(hotkeysManager.externalClipboardPasteRequested).toBe(true);
+    });
+
+    it('should allow external clipboard handling after WebViewer loses focus', () => {
+      const keyHandlerMap = hotkeysManager.createKeyHandlerMap(mockStore);
+      const pasteHandler = keyHandlerMap[ShortcutKeys[Shortcuts.PASTE]];
+      const event = { preventDefault: jest.fn() };
+
+      hotkeysManager.handleWindowBlur();
+      pasteHandler(event);
+
+      expect(event.preventDefault).not.toHaveBeenCalled();
+      expect(core.pasteCopiedAnnotations).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('handleWindowClipboardPaste', () => {
+    it('handles a rootless paste for the active web component instance', async () => {
+      const originalIsWebComponent = window.isApryseWebViewerWebComponent;
+      window.isApryseWebViewerWebComponent = true;
+      core.getMultiInstanceActiveKey = jest.fn(() => 1);
+      const event = {
+        composedPath: () => [document.body, document, window],
+        currentTarget: window,
+        defaultPrevented: false,
+        target: document.body,
+      };
+      const handleClipboardPasteSpy = jest.spyOn(hotkeysManager, 'handleClipboardPaste').mockResolvedValue();
+
+      await hotkeysManager.handleWindowClipboardPaste(event);
+
+      expect(handleClipboardPasteSpy).toHaveBeenCalledWith(event);
+      window.isApryseWebViewerWebComponent = originalIsWebComponent;
+    });
+
+    it('ignores a rootless paste for an inactive web component instance', async () => {
+      const originalIsWebComponent = window.isApryseWebViewerWebComponent;
+      window.isApryseWebViewerWebComponent = true;
+      core.getMultiInstanceActiveKey = jest.fn(() => 2);
+      const event = {
+        composedPath: () => [document.body, document, window],
+        currentTarget: window,
+        defaultPrevented: false,
+        target: document.body,
+      };
+      const handleClipboardPasteSpy = jest.spyOn(hotkeysManager, 'handleClipboardPaste').mockResolvedValue();
+
+      await hotkeysManager.handleWindowClipboardPaste(event);
+
+      expect(handleClipboardPasteSpy).not.toHaveBeenCalled();
+      window.isApryseWebViewerWebComponent = originalIsWebComponent;
+    });
+
+    it('ignores a rootless paste when a host document input is focused', async () => {
+      const originalIsWebComponent = window.isApryseWebViewerWebComponent;
+      window.isApryseWebViewerWebComponent = true;
+      core.getMultiInstanceActiveKey = jest.fn(() => 1);
+      isFocusingElement.mockReturnValueOnce(true);
+      const event = {
+        composedPath: () => [document.body, document, window],
+        currentTarget: window,
+        defaultPrevented: false,
+        target: document.body,
+      };
+      const handleClipboardPasteSpy = jest.spyOn(hotkeysManager, 'handleClipboardPaste').mockResolvedValue();
+
+      await hotkeysManager.handleWindowClipboardPaste(event);
+
+      expect(handleClipboardPasteSpy).not.toHaveBeenCalled();
+      window.isApryseWebViewerWebComponent = originalIsWebComponent;
+    });
+
+    it('leaves paste handling to Office Editor in Office Editor mode', async () => {
+      selectors.getIsOfficeEditorMode.mockReturnValue(true);
+      const event = { defaultPrevented: false };
+      hotkeysManager.externalClipboardPasteRequested = true;
+
+      await hotkeysManager.handleWindowClipboardPaste(event);
+
+      expect(core.getAnnotationManager).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('leaves paste handling to Spreadsheet Editor in Spreadsheet Editor mode', async () => {
+      selectors.isSpreadsheetEditorModeEnabled.mockReturnValue(true);
+      const event = { defaultPrevented: false };
+      hotkeysManager.externalClipboardPasteRequested = true;
+
+      await hotkeysManager.handleWindowClipboardPaste(event);
+
+      expect(core.getAnnotationManager).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('handles a window paste requested by the external paste shortcut', async () => {
+      const event = { defaultPrevented: false };
+      hotkeysManager.externalClipboardPasteRequested = true;
+      const handleClipboardPasteSpy = jest.spyOn(hotkeysManager, 'handleClipboardPaste').mockResolvedValue();
+
+      await hotkeysManager.handleWindowClipboardPaste(event);
+
+      expect(handleClipboardPasteSpy).toHaveBeenCalledWith(event);
+    });
+
+    it('ignores window paste events not requested by this instance', async () => {
+      const handleClipboardPasteSpy = jest.spyOn(hotkeysManager, 'handleClipboardPaste').mockResolvedValue();
+
+      await hotkeysManager.handleWindowClipboardPaste({ defaultPrevented: false });
+
+      expect(handleClipboardPasteSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('handleClipboardPaste', () => {
+    it('leaves paste handling to Office Editor', async () => {
+      selectors.getIsOfficeEditorMode.mockReturnValue(true);
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+
+      await manager.handleClipboardPaste({});
+
+      expect(pasteClipboardImage).not.toHaveBeenCalled();
+      expect(pasteClipboardText).not.toHaveBeenCalled();
+    });
+
+    it('leaves paste handling to Spreadsheet Editor', async () => {
+      selectors.isSpreadsheetEditorModeEnabled.mockReturnValue(true);
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+
+      await manager.handleClipboardPaste({});
+
+      expect(pasteClipboardImage).not.toHaveBeenCalled();
+      expect(pasteClipboardText).not.toHaveBeenCalled();
+    });
+
+    it('leaves paste handling to a focused input', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      isFocusingElement.mockReturnValueOnce(true);
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+
+      await manager.handleClipboardPaste({});
+
+      expect(pasteClipboardImage).not.toHaveBeenCalled();
+      expect(pasteClipboardText).not.toHaveBeenCalled();
+    });
+
+    it('preserves internal annotation paste precedence', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+      manager.preferInternalAnnotationPaste = true;
+
+      await manager.handleClipboardPaste({});
+
+      expect(pasteClipboardImage).not.toHaveBeenCalled();
+      expect(pasteClipboardText).not.toHaveBeenCalled();
+    });
+
+    it('pastes plain text when the clipboard does not contain an image', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+      manager.preferInternalAnnotationPaste = false;
+      core.getAnnotationManager().getCopiedAnnotations.mockReturnValue([]);
+      const event = {
+        clipboardData: {
+          getData: jest.fn(() => 'Clipboard text'),
+        },
+      };
+
+      await manager.handleClipboardPaste(event);
+
+      expect(pasteClipboardImage).toHaveBeenCalledWith(event, 1);
+      expect(pasteClipboardText).toHaveBeenCalledWith(event, 1, 'Clipboard text');
+    });
+
+    it('captures plain text before awaiting image clipboard handling', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      let resolveImagePaste;
+      pasteClipboardImage.mockImplementationOnce(() => new Promise((resolve) => {
+        resolveImagePaste = resolve;
+      }));
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+      manager.preferInternalAnnotationPaste = false;
+      core.getAnnotationManager().getCopiedAnnotations.mockReturnValue([]);
+      const event = {
+        clipboardData: {
+          getData: jest.fn(() => 'Ephemeral clipboard text'),
+        },
+      };
+
+      const pastePromise = manager.handleClipboardPaste(event);
+      event.clipboardData.getData.mockReturnValue('');
+      resolveImagePaste(false);
+      await pastePromise;
+
+      expect(pasteClipboardText).toHaveBeenCalledWith(event, 1, 'Ephemeral clipboard text');
+    });
+
+    it('does not paste text when an image was pasted', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      pasteClipboardImage.mockResolvedValueOnce(true);
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+      manager.preferInternalAnnotationPaste = false;
+      core.getAnnotationManager().getCopiedAnnotations.mockReturnValue([]);
+
+      await manager.handleClipboardPaste({});
+
+      expect(pasteClipboardText).not.toHaveBeenCalled();
+    });
+
+    it('reports and consumes unexpected clipboard image failures', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+      manager.preferInternalAnnotationPaste = false;
+      core.getAnnotationManager().getCopiedAnnotations.mockReturnValue([]);
+      const error = new Error('Image processing failed');
+      pasteClipboardImage.mockRejectedValueOnce(error);
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      await expect(manager.handleClipboardPaste({})).resolves.toBeUndefined();
+
+      expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to paste an image from the clipboard.', error);
+      consoleWarnSpy.mockRestore();
+    });
+
+    it('reports unexpected clipboard text failures', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+      manager.preferInternalAnnotationPaste = false;
+      core.getAnnotationManager().getCopiedAnnotations.mockReturnValue([]);
+      const error = new Error('FreeText creation failed');
+      pasteClipboardText.mockImplementationOnce(() => {
+        throw error;
+      });
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      await expect(manager.handleClipboardPaste({})).resolves.toBeUndefined();
+
+      expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to paste text from the clipboard.', error);
+      consoleWarnSpy.mockRestore();
     });
   });
 

@@ -1,8 +1,13 @@
 import loadDocumentAPI from './loadDocument';
 import loadDocumentHelper from 'helpers/loadDocument';
 import selectors from 'selectors';
+import core from 'core';
 
 jest.mock('helpers/loadDocument', () => jest.fn());
+
+jest.mock('core', () => ({
+  getDocumentViewer: jest.fn(),
+}));
 
 jest.mock('selectors', () => ({
   getIsMultiTab: jest.fn(),
@@ -30,6 +35,7 @@ describe('UI.loadDocument API', () => {
     selectors.getActiveTab.mockReturnValue(0);
     selectors.getTabs.mockReturnValue([]);
     selectors.isMultiViewerMode.mockReturnValue(false);
+    core.getDocumentViewer.mockReturnValue({ getID: () => 'viewer-1' });
   });
 
   it('loads into the active viewer key when not in multi-tab mode', async () => {
@@ -37,7 +43,8 @@ describe('UI.loadDocument API', () => {
 
     await loadDocumentAPI(store)('doc.pdf', { filename: 'doc.pdf' });
 
-    expect(loadDocumentHelper).toHaveBeenCalledWith(store.dispatch, 'doc.pdf', { filename: 'doc.pdf' }, 2);
+    expect(core.getDocumentViewer).toHaveBeenCalledWith(2);
+    expect(loadDocumentHelper).toHaveBeenCalledWith(store.dispatch, 'doc.pdf', { filename: 'doc.pdf' }, 2, 'viewer-1');
   });
 
   it('updates document2 when target viewer key is 2 in multi-tab mode', async () => {

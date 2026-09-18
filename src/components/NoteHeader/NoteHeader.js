@@ -224,7 +224,7 @@ function NoteHeader(props) {
     core.getTrackedChangeManager().rejectTrackedChange(trackedChangeId);
   };
 
-  const showNoteState = !isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange && !isSpreadsheetComment;
+  const showNoteState = !isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && !isTrackedChange;
   const showNotePopup = !isEditing && isSelected && !isMultiSelectMode && !isGroupMember && !isTrackedChange && !isOfficeEditorViewOnly && !isSpreadsheetEditorViewOnly;
   const flyoutId = flyoutIdSuffix ? `${annotation.Id}-${flyoutIdSuffix}` : annotation.Id;
 

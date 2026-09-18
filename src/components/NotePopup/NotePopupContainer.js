@@ -7,7 +7,7 @@ import NoteContext from 'components/Note/Context';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
-import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
+import { SpreadsheetCommentState, SpreadsheetEditorEditMode, SPREADSHEET_COMMENT_STATE_KEY } from 'constants/spreadsheetEditor';
 
 function NotePopupContainer(props) {
   const { annotation, setIsEditing, editingKey, flyoutId } = props;
@@ -16,33 +16,45 @@ function NotePopupContainer(props) {
   const dispatch = useDispatch();
   const isReadOnly = core.getIsReadOnly();
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
-  const isSSEReadOnly = isReadOnly || spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
+  const rootAnnotation = isSpreadsheetEditorCommentAnnotation && annotation?.isReply?.()
+    ? core.getAnnotationManager().getAnnotationById(annotation.InReplyTo)
+    : annotation;
+  const rootCommentState = rootAnnotation?.getCustomData(SPREADSHEET_COMMENT_STATE_KEY);
+  const isSSECommentEditable = (!annotation?.isReply?.() || rootCommentState === (SpreadsheetCommentState?.OPEN ));
   const canModifyAnnotation = () => {
     const isOfficeEditorModifyEnabled = isOfficeEditorCommentAnnotation && !isReadOnly;
-    const isSpreadsheetEditorModifyEnabled = isSpreadsheetEditorCommentAnnotation && !isSSEReadOnly;
+    const isSpreadsheetEditorModifyEnabled = isSpreadsheetEditorCommentAnnotation
+      && !isReadOnly
+      && spreadsheetEditorEditMode !== SpreadsheetEditorEditMode.VIEW_ONLY;
     const isNonPDFAnnotation = isOfficeEditorCommentAnnotation || isSpreadsheetEditorCommentAnnotation;
     return isOfficeEditorModifyEnabled || isSpreadsheetEditorModifyEnabled || (!isNonPDFAnnotation && core.canModify(annotation));
   };
+  const canModifyAnnotationContents = () => {
+    if (isSpreadsheetEditorCommentAnnotation) {
+      return isSSECommentEditable;
+    }
+    return core.canModifyContents(annotation);
+  };
   const [canModify, setCanModify] = useState(canModifyAnnotation);
-  const [canModifyContents, setCanModifyContents] = useState(core.canModifyContents(annotation));
+  const [canModifyContents, setCanModifyContents] = useState(canModifyAnnotationContents);
 
   useEffect(() => {
     function onUpdateAnnotationPermission() {
       setCanModify(canModifyAnnotation());
-      setCanModifyContents(core.canModifyContents(annotation));
+      setCanModifyContents(canModifyAnnotationContents());
     }
 
     onUpdateAnnotationPermission();
     core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
     return () => core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
-  }, [annotation, isOfficeEditorCommentAnnotation, isSpreadsheetEditorCommentAnnotation, isReadOnly, spreadsheetEditorEditMode, core]);
+  }, [annotation, isOfficeEditorCommentAnnotation, isSpreadsheetEditorCommentAnnotation, isReadOnly, spreadsheetEditorEditMode, rootCommentState, core]);
 
   const handleEdit = useCallback(() => {
     const isFreeText = annotation instanceof window.Core.Annotations.FreeTextAnnotation;
     if (isFreeText && core.getAnnotationManager().isFreeTextEditingEnabled()) {
       core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
     } else {
-      if (isOfficeEditorCommentAnnotation) {
+      if (isOfficeEditorCommentAnnotation || isSpreadsheetEditorCommentAnnotation) {
         dispatch(actions.triggerNoteEditing());
       }
       setIsEditing(true, editingKey);

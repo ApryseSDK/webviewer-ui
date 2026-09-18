@@ -4,6 +4,22 @@ import viewerReducer from 'reducers/viewerReducer';
 import { defaultPanels, defaultPopups } from 'src/redux/modularComponents';
 import { defaultOfficeEditorPopups } from 'src/redux/officeEditorModularComponents';
 
+describe('viewerReducer document viewer loading', () => {
+  test('removes completed document viewer keys while preserving active viewers', () => {
+    const reducer = viewerReducer({
+      loadingDocumentViewerKeys: { 1: true, 2: true },
+    });
+    const state = reducer(undefined, { type: '@@INIT' });
+
+    const nextState = reducer(state, {
+      type: 'SET_DOCUMENT_VIEWER_LOADING',
+      payload: { documentViewerKey: 1, isLoading: false },
+    });
+
+    expect(nextState.loadingDocumentViewerKeys).toEqual({ 2: true });
+  });
+});
+
 describe('viewerReducer modularPopups mode stash/restore', () => {
   let state;
   let reducer;

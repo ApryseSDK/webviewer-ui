@@ -54,6 +54,7 @@ class DocumentContainer extends React.PureComponent {
     isSpreadsheetEditorModeEnabled: PropTypes.bool,
     documentContainerRightMargin: PropTypes.number,
     documentContainerLeftMargin: PropTypes.number,
+    documentContainerTag: PropTypes.string.isRequired,
     isMultiTab: PropTypes.bool,
     documentViewerKey: PropTypes.number,
     tabManager: PropTypes.shape({
@@ -73,29 +74,32 @@ class DocumentContainer extends React.PureComponent {
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  getSnapshotBeforeUpdate(prevProps) {
+    if (prevProps.documentContainerTag !== this.props.documentContainerTag) {
+      return this.container.current;
+    }
+
+    return null;
+  }
+
+  componentDidUpdate(prevProps, _prevState, previousContainer) {
+    if (previousContainer) {
+      this.detachContainer(previousContainer);
+      this.initializeContainer();
+    }
+
     if (isIE11) {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
   }
 
   componentDidMount() {
-    touchEventManager.initialize(this.document.current, this.container.current);
-    core.setScrollViewElement(this.container.current, this.props.activeDocumentViewerKey);
-    core.setViewerElement(this.document.current, this.props.activeDocumentViewerKey);
+    this.initializeContainer();
     this.props.closeElements([DataElements.MULTITABS_EMPTY_PAGE]);
 
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
     }
-
-    if (process.env.NODE_ENV === 'development') {
-      this.container.current.addEventListener('dragover', this.preventDefault);
-      this.container.current.addEventListener('drop', this.onDrop);
-    }
-
-    this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
-    this.updateContainerSize();
   }
 
   componentWillUnmount() {
@@ -106,19 +110,37 @@ class DocumentContainer extends React.PureComponent {
     if (this.debouncedHidePageNavigationOverlay && typeof this.debouncedHidePageNavigationOverlay.cancel === 'function') {
       this.debouncedHidePageNavigationOverlay.cancel();
     }
-    touchEventManager.terminate();
+    this.detachContainer(this.container.current);
     if (isIE) {
       window.removeEventListener('resize', this.handleWindowResize);
     }
-
-    if (process.env.NODE_ENV === 'development') {
-      this.container.current.removeEventListener('dragover', this.preventDefault);
-      this.container.current.removeEventListener('drop', this.onDrop);
-    }
-
-    this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
     this.props.closeElements([DataElements.MULTITABS_EMPTY_PAGE]);
   }
+
+  initializeContainer = () => {
+    touchEventManager.initialize(this.document.current, this.container.current);
+    core.setScrollViewElement(this.container.current, this.props.activeDocumentViewerKey);
+    core.setViewerElement(this.document.current, this.props.activeDocumentViewerKey);
+
+    if (process.env.NODE_ENV === 'development') {
+      this.container.current.addEventListener('dragover', this.preventDefault);
+      this.container.current.addEventListener('drop', this.onDrop);
+    }
+
+    this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
+    this.updateContainerSize();
+  };
+
+  detachContainer = (container) => {
+    touchEventManager.terminate();
+
+    if (process.env.NODE_ENV === 'development') {
+      container.removeEventListener('dragover', this.preventDefault);
+      container.removeEventListener('drop', this.onDrop);
+    }
+
+    container.removeEventListener('wheel', this.onWheel, { passive: false });
+  };
 
   preventDefault = (e) => e.preventDefault();
 
@@ -296,6 +318,7 @@ class DocumentContainer extends React.PureComponent {
       currentTabs,
       activeTab,
       t,
+      documentContainerTag: DocumentContainerTag,
     } = this.props;
 
     const style = {
@@ -337,17 +360,17 @@ class DocumentContainer extends React.PureComponent {
         <Measure onResize={this.handleResize}>
           {({ measureRef }) => (
             <div className="measurement-container" ref={measureRef}>
-              <main
+              <DocumentContainerTag
                 className={documentContainerClassName}
                 ref={this.container}
-                data-element="documentContainer"
+                data-element={DataElements.DOCUMENT_CONTAINER}
                 onScroll={this.handleScroll}
                 aria-label={t('accessibility.landmarks.documentContent')}
                 tabIndex="-1"
               >
                 {/* tabIndex="-1" to keep document focused when in single page mode */}
                 <div className={documentClassName} ref={this.document} tabIndex="-1" />
-              </main>
+              </DocumentContainerTag>
               {this.props.isReaderMode && <ReaderModeViewer />}
               <div
                 className="footer"
@@ -367,6 +390,7 @@ const mapStateToProps = (state) => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
   documentContainerLeftMargin: selectors.getDocumentContainerLeftMargin(state),
   documentContainerRightMargin: selectors.getDocumentContainerRightMargin(state),
+  documentContainerTag: selectors.getElementTag(state, DataElements.DOCUMENT_CONTAINER) ?? 'main',
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
   isMultiTab: selectors.getIsMultiTab(state),

@@ -3,6 +3,7 @@ import { isIOS } from 'helpers/device';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
+import { getScrollViewPointerPosition } from 'helpers/getZoomToMouseOffsets';
 import localStorageManager from './localStorageManager';
 
 // Determines swipe direction based on horizontal and vertical distances
@@ -133,9 +134,12 @@ const TouchEventManager = {
         const scrollWidth = this.container.clientWidth;
         const viewerWidth = this.document.clientWidth;
         const isDoubleTap = this.touch.type === touchType.TAP && this.getDistance(this.touch, touch) <= 10;
+        const { x: viewerX, y: viewerY } = this.getViewerPoint(touch.clientX, touch.clientY);
         this.touch = {
           clientX: touch.clientX,
           clientY: touch.clientY,
+          viewerX,
+          viewerY,
           distance: 0,
           scale: scrollWidth / viewerWidth,
           zoom: core.getZoom(this.documentViewerKey),
@@ -158,14 +162,17 @@ const TouchEventManager = {
         const t2 = e.touches[1];
         const clientX = (t1.clientX + t2.clientX) / 2;
         const clientY = (t1.clientY + t2.clientY) / 2;
-        const docX = clientX - this.document.offsetLeft + this.container.scrollLeft;
-        const docY = clientY - this.document.offsetTop + this.container.scrollTop;
+        const { x: viewerX, y: viewerY } = this.getViewerPoint(clientX, clientY);
+        const docX = viewerX - this.document.offsetLeft + this.container.scrollLeft;
+        const docY = viewerY - this.document.offsetTop + this.container.scrollTop;
         this.touch = {
           previousPinchScale: 0,
           marginLeft: this.document.offsetLeft,
           marginTop: parseFloat(window.getComputedStyle(this.document).marginTop),
           clientX,
           clientY,
+          viewerX,
+          viewerY,
           docX,
           docY,
           distance: this.getDistance(t1, t2),
@@ -495,9 +502,19 @@ const TouchEventManager = {
   getDistance(t1, t2) {
     return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
   },
+  getViewerPoint(clientX, clientY) {
+    const documentViewer = core.getDocumentViewer(this.documentViewerKey);
+    const { x, y } = getScrollViewPointerPosition(documentViewer, { clientX, clientY });
+
+    return {
+      x: x + this.container.offsetLeft,
+      y: y + this.container.offsetTop,
+    };
+  },
   getPointAfterScale() {
-    const x = (this.touch.clientX + this.container.scrollLeft - this.document.offsetLeft) * this.touch.scale - this.touch.clientX + this.container.offsetLeft;
-    const y = (this.touch.clientY + this.container.scrollTop - this.document.offsetTop) * this.touch.scale - this.touch.clientY + this.container.offsetTop;
+    const { viewerX, viewerY } = this.touch;
+    const x = (viewerX + this.container.scrollLeft - this.document.offsetLeft) * this.touch.scale - viewerX + this.container.offsetLeft;
+    const y = (viewerY + this.container.scrollTop - this.document.offsetTop) * this.touch.scale - viewerY + this.container.offsetTop;
 
     return { x, y };
   },

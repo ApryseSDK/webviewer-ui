@@ -6,9 +6,9 @@ const ReactSelectCustomArrowIndicator = (props) => {
   const { selectProps } = props;
   const { menuIsOpen } = selectProps;
   return (
-    <components.IndicatorsContainer {...props}>
+    <components.DropdownIndicator {...props}>
       <Icon className="arrow" glyph={`icon-chevron-${menuIsOpen ? 'up' : 'down'}`} />
-    </components.IndicatorsContainer>
+    </components.DropdownIndicator>
   );
 };
 

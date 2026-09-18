@@ -8,8 +8,8 @@
   &.isFlyout {
     padding: 8px;
     width: 264px;
-    max-height: 296px;
-    overflow-y: scroll;
+    max-height: 360px;
+    overflow: visible;
   }
 
   .rubber-stamp-panel-header {
@@ -53,7 +53,8 @@
 
       &.active,
       &.selected {
-        background: var(--tools-button-active);
+        background: var(--tab-color-selected);
+        color: var(--tab-text-color-selected);
         box-shadow: none;
       }
     }
@@ -101,6 +102,43 @@
     overflow: auto;
     padding: 0px 4px;
 
+    .document-stamps-loading {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding: 2px 0 16px;
+
+      .document-stamp-skeleton {
+        position: relative;
+        overflow: hidden;
+        height: 48px;
+        border-radius: 4px;
+        background-color: var(--gray-5);
+
+        &::after {
+          content: '';
+          position: absolute;
+          inset-block: 0;
+          inset-inline-start: 0;
+          width: 75%;
+          background: linear-gradient(
+            100deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.35) 35%,
+            rgba(255, 255, 255, 0.9) 50%,
+            rgba(255, 255, 255, 0.35) 65%,
+            transparent 100%
+          );
+          animation: document-stamp-shimmer 1.0s linear infinite;
+        }
+      }
+
+      &.document-stamps-loading-legacy {
+        display: flex;
+        justify-content: center;
+      }
+    }
+
     .collapsible-page-group-header {
       button {
         font-size: 14px;
@@ -116,10 +154,41 @@
       padding-top: 2px;
       padding-bottom: 16px;
 
-      &.standard-rubber-stamps-list {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .rubber-stamps-virtuoso {
+        &.rubber-stamps-virtuoso-test-height {
+          height: 560px;
+        }
+
+        [data-virtuoso-scroller='true'] {
+          padding-top: 2px;
+          padding-bottom: 16px;
+        }
+
+        [data-index] + [data-index] {
+          padding-top: 4px;
+        }
+
+        &.stamp-panel-virtuoso {
+          [data-index] + [data-index] {
+            padding-top: 8px;
+          }
+        }
+      }
+
+      .rubber-stamp-virtual-row {
+        display: flex;
         gap: 8px;
+
+        &.standard-rubber-stamps-list {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+        }
+      }
+
+      &.custom-rubber-stamps-list {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .rubber-stamp {
@@ -149,6 +218,22 @@
           background: var(--gray-2);
         }
       }
+    }
+  }
+
+  @keyframes document-stamp-shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(200%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .document-stamp-skeleton::after {
+      animation: none;
+      display: none;
     }
   }
 
@@ -219,6 +304,17 @@
 
       &.small-size {
         overflow: hidden;
+
+        .rubber-stamps-list {
+          padding-top: 0;
+
+          .rubber-stamps-virtuoso {
+            [data-virtuoso-scroller='true'] {
+              padding-top: 0;
+              padding-bottom: 8px;
+            }
+          }
+        }
       }
 
       &.isFlyout {
@@ -254,5 +350,9 @@
         outline: var(--focus-visible-outline) !important;
       }
     }
+  }
+
+  @include mobile {
+    padding: 12px 0 20px 0;
   }
 }

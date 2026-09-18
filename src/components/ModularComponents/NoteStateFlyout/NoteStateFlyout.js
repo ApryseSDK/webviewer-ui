@@ -4,30 +4,16 @@ import PropTypes from 'prop-types';
 import DataElements from 'src/constants/dataElement';
 import actions from 'actions';
 import selectors from 'selectors';
+import { noteStateFlyoutItems } from 'constants/flyoutConstants';
 
-const createFlyoutItem = (option, icon, dataElement) => ({
-  icon,
-  label: `option.state.${option.toLowerCase()}`,
-  title: `option.state.${option.toLowerCase()}`,
-  option,
-  dataElement,
-});
-
-export const noteStateFlyoutItems = [
-  createFlyoutItem('Accepted', 'icon-annotation-status-accepted', 'noteStateFlyoutAcceptedOption'),
-  createFlyoutItem('Rejected', 'icon-annotation-status-rejected', 'noteStateFlyoutRejectedOption'),
-  createFlyoutItem('Cancelled', 'icon-annotation-status-cancelled', 'noteStateFlyoutCancelledOption'),
-  createFlyoutItem('Completed', 'icon-annotation-status-completed', 'noteStateFlyoutCompletedOption'),
-  createFlyoutItem('None', 'icon-annotation-status-none', 'noteStateFlyoutNoneOption'),
-  createFlyoutItem('Marked', 'icon-annotation-status-marked', 'noteStateFlyoutMarkedOption'),
-  createFlyoutItem('Unmarked', 'icon-annotation-status-unmarked', 'noteStateFlyoutUnmarkedOption'),
-];
+const noop = () => {};
 
 const NoteStateFlyout = (props) => {
   const {
     noteId,
-    handleStateChange = () => {},
+    handleStateChange = noop,
     isMultiSelectMode = false,
+    items = noteStateFlyoutItems,
   } = props;
 
   const dispatch = useDispatch();
@@ -42,9 +28,9 @@ const NoteStateFlyout = (props) => {
   };
 
   useLayoutEffect(() => {
-    const filteredItems = statusList
-      ? noteStateFlyoutItems.filter((item) => statusList.includes(item.option))
-      : noteStateFlyoutItems;
+    const filteredItems = items === noteStateFlyoutItems && statusList
+      ? items.filter((item) => statusList.includes(item.option))
+      : items;
 
     const noteStateFlyout = {
       dataElement: flyoutSelector,
@@ -62,7 +48,7 @@ const NoteStateFlyout = (props) => {
     } else {
       dispatch(actions.updateFlyout(noteStateFlyout.dataElement, noteStateFlyout));
     }
-  }, [handleStateChange, statusList]);
+  }, [handleStateChange, items, statusList]);
 
   return null;
 };
@@ -71,6 +57,7 @@ NoteStateFlyout.propTypes = {
   noteId: PropTypes.string,
   handleStateChange: PropTypes.func,
   isMultiSelectMode: PropTypes.bool,
+  items: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default NoteStateFlyout;

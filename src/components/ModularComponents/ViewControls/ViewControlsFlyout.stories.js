@@ -229,3 +229,31 @@ export const ViewControlsFlyoutOnMobile = () => {
 ViewControlsFlyoutOnMobile.parameters = {
   ...mobileStoryParameters
 };
+
+const contentEditingPreloadedState = {
+  ...initialState,
+  viewer: {
+    ...initialState.viewer,
+    isContentEditingEnabled: true,
+  },
+};
+
+const contentEditingStore = configureStore({
+  reducer: (state = contentEditingPreloadedState) => state,
+});
+
+export const ViewControlsInContentEditingMode = () => (
+  <Provider store={contentEditingStore}>
+    <div>
+      <Flyout />
+    </div>
+  </Provider>
+);
+
+ViewControlsInContentEditingMode.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  expect(canvas.getByRole('button', { name: getTranslatedText('option.pageTransition.continuous') })).toBeInTheDocument();
+  expect(canvas.queryByRole('button', { name: getTranslatedText('action.rotateClockwise') })).not.toBeInTheDocument();
+  expect(canvas.queryByRole('button', { name: getTranslatedText('action.rotateCounterClockwise') })).not.toBeInTheDocument();
+};

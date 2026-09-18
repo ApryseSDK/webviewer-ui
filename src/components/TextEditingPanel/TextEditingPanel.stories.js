@@ -14,7 +14,12 @@ const noop = () => { };
 export default {
   title: 'Components/TextEditingPanel',
   component: TextEditingPanel,
-  includeStories: ['Basic', 'TextEditingUndoRedo', 'LeftSide', 'TextEditingPanelInMobile'],
+  includeStories: [
+    'Basic',
+    'TextEditingUndoRedo',
+    'LeftSide',
+    'TextEditingPanelInMobile',
+  ],
 };
 
 const textEditingPanelInitialState = {
@@ -51,6 +56,7 @@ const basicProps = {
   },
   handlePropertyChange: noop,
   handleTextFormatChange: noop,
+  handleZOrderChange: noop,
   textEditProperties: {},
   handleColorChange: noop,
   rgbColor: {
@@ -92,6 +98,7 @@ export const TextEditingUndoRedo = () => {
     },
     handlePropertyChange: noop,
     handleTextFormatChange: noop,
+    handleZOrderChange: noop,
     textEditProperties: {},
     handleColorChange: noop,
     undoRedoProperties: {

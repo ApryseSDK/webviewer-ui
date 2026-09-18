@@ -1,9 +1,10 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import actions from 'actions';
 import rootReducer from 'src/redux/reducers/rootReducer';
+import { panelNames } from 'constants/panel';
 import TabPanel from './TabPanel';
 
 let mockHeaderWidth = 0;
@@ -79,7 +80,7 @@ const createTabPanelDefinition = (enabledPanels) => ({
   render: 'testTabPanel',
 });
 
-const createTestStore = ({ enabledPanels = panels, activeTab = 'firstPanel' } = {}) => {
+const createTestStore = ({ enabledPanels = panels, activeTab = 'firstPanel', additionalPanels = [] } = {}) => {
   const reducer = rootReducer();
   const initialState = reducer(undefined, { type: '@@INIT' });
   const preloadedState = {
@@ -92,7 +93,7 @@ const createTestStore = ({ enabledPanels = panels, activeTab = 'firstPanel' } = 
       },
       disabledElements: {},
       flyoutMap: {},
-      genericPanels: [createTabPanelDefinition(enabledPanels)],
+      genericPanels: [createTabPanelDefinition(enabledPanels), ...additionalPanels],
     },
   };
 
@@ -117,6 +118,8 @@ const getPanelTabs = ({ hidden = false, iconOnly = false } = {}) => screen.query
   name: iconOnly ? /^Icon Panel \d+$/ : /^Panel \d+$/,
   hidden,
 });
+
+const getOverflowFlyoutItems = (store) => store.getState().viewer.flyoutMap['testTabPanel-flyout']?.items ?? [];
 
 describe('TabPanel overflow layout', () => {
   let originalGetBoundingClientRect;
@@ -203,6 +206,71 @@ describe('TabPanel overflow layout', () => {
     await waitFor(() => expect(getPanelTabs({ iconOnly: true })).toHaveLength(5));
   });
 
+  it.each([
+    { description: 'renders a preset panel with an icon only', options: {}, shouldShowIcon: true, expectedLabel: null },
+    { description: 'renders a preset panel with a label only', options: { useIcon: false, label: 'Thumbnails' }, shouldShowIcon: false, expectedLabel: 'Thumbnails' },
+    { description: 'renders a preset panel with an icon and label', options: { label: 'Thumbnails' }, shouldShowIcon: true, expectedLabel: 'Thumbnails' },
+  ])('$description', async ({ options, shouldShowIcon, expectedLabel }) => {
+    const presetPanel = {
+      dataElement: panelNames.THUMBNAIL,
+      render: panelNames.THUMBNAIL,
+    };
+    renderTabPanel({
+      enabledPanels: [{ render: panelNames.THUMBNAIL, ...options }],
+      activeTab: panelNames.THUMBNAIL,
+      additionalPanels: [presetPanel],
+    });
+
+    const tabButton = await screen.findByRole('button', { name: 'Thumbnails', hidden: true });
+    expect(!!tabButton.querySelector('.Icon')).toBe(shouldShowIcon);
+    if (expectedLabel) {
+      expect(within(tabButton).getByText(expectedLabel)).toBeInTheDocument();
+    } else {
+      expect(within(tabButton).queryByText('Thumbnails')).not.toBeInTheDocument();
+    }
+  });
+
+  it.each([
+    { description: 'renders a custom panel with an icon only', options: {}, shouldShowIcon: true, expectedLabel: null },
+    { description: 'renders a custom panel with a label only', options: { useIcon: false, label: 'Custom' }, shouldShowIcon: false, expectedLabel: 'Custom' },
+    { description: 'renders a custom panel with an icon and label', options: { label: 'Custom' }, shouldShowIcon: true, expectedLabel: 'Custom' },
+  ])('$description', async ({ options, shouldShowIcon, expectedLabel }) => {
+    const customPanel = {
+      dataElement: 'customPanel',
+      icon: 'ic-bookmark',
+      render: () => <div>Custom panel content</div>,
+      title: 'Custom panel',
+      ...options,
+    };
+    renderTabPanel({ enabledPanels: [customPanel], activeTab: customPanel.dataElement });
+
+    const tabButton = await screen.findByRole('button', { name: 'Custom panel', hidden: true });
+    expect(!!tabButton.querySelector('.Icon')).toBe(shouldShowIcon);
+    if (expectedLabel) {
+      expect(within(tabButton).getByText(expectedLabel)).toBeInTheDocument();
+    } else {
+      expect(within(tabButton).queryByText('Custom panel')).not.toBeInTheDocument();
+    }
+  });
+
+  it('applies icon and label options to a registered custom panel tab', async () => {
+    const registeredPanel = {
+      dataElement: 'registeredPanel',
+      icon: 'ic-bookmark',
+      render: () => <div>Registered panel content</div>,
+      title: 'Registered panel',
+    };
+    renderTabPanel({
+      enabledPanels: [{ render: registeredPanel.dataElement, useIcon: false, label: 'Registered' }],
+      activeTab: registeredPanel.dataElement,
+      additionalPanels: [registeredPanel],
+    });
+
+    const tabButton = await screen.findByRole('button', { name: 'Registered panel', hidden: true });
+    expect(tabButton.querySelector('.Icon')).not.toBeInTheDocument();
+    expect(within(tabButton).getByText('Registered')).toBeInTheDocument();
+  });
+
   it('updates the visible tabs when the enabled panel set changes', async () => {
     mockInitialHeaderWidth = 400;
     const { store } = renderTabPanel();
@@ -218,6 +286,26 @@ describe('TabPanel overflow layout', () => {
     expect(screen.getByRole('button', { name: 'Panel 4' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Panel 2' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Panel 3' })).not.toBeInTheDocument();
+  });
+
+  it('does not duplicate flyout items when the panel set refreshes', async () => {
+    mockInitialHeaderWidth = 100;
+    const { store } = renderTabPanel();
+
+    await waitFor(() => expect(getOverflowFlyoutItems(store).map(({ dataElement }) => dataElement)).toEqual([
+      'secondPanel',
+      'thirdPanel',
+    ]));
+
+    act(() => {
+      store.dispatch(actions.disableElements(['tabPanelTestRefresh']));
+      store.dispatch(actions.enableElements(['tabPanelTestRefresh']));
+    });
+
+    await waitFor(() => expect(getOverflowFlyoutItems(store).map(({ dataElement }) => dataElement)).toEqual([
+      'secondPanel',
+      'thirdPanel',
+    ]));
   });
 
   it('returns tabs from overflow on the first growing resize', async () => {

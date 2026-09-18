@@ -13,6 +13,7 @@ jest.mock('core', () => ({
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
   getDocument: jest.fn(() => ({ filename: 'test.pdf' })),
+  getDocumentViewer: jest.fn(() => undefined),
   zoomToMouse: jest.fn(),
   isContinuousDisplayMode: jest.fn(() => false),
   isScrollableDisplayMode: jest.fn(() => true),
@@ -94,6 +95,7 @@ describe('DocumentContainer', () => {
     activeTab: 0,
     documentContentContainerWidthStyle: '100%',
     documentContainerLeftMargin: 0,
+    documentContainerTag: 'main',
     isMultiTabEmptyPageOpen: false,
     isMobile: false,
     isSpreadsheetEditorModeEnabled: false,
@@ -112,6 +114,40 @@ describe('DocumentContainer', () => {
   test('should render without crashing', () => {
     const { container } = renderWithRedux(<DocumentContainer {...defaultProps} />);
     expect(container).toBeTruthy();
+  });
+
+  describe('document container tag', () => {
+    test('renders a main element by default', () => {
+      const { container } = renderWithRedux(<DocumentContainer {...defaultProps} />);
+
+      expect(container.querySelector('[data-element="documentContainer"]')).toHaveProperty('tagName', 'MAIN');
+    });
+
+    test('replaces and reinitializes the document container when the tag changes', () => {
+      const { container, rerender } = render(<DocumentContainer {...defaultProps} />);
+      const originalContainer = container.querySelector('[data-element="documentContainer"]');
+
+      jest.clearAllMocks();
+      rerender(<DocumentContainer {...defaultProps} documentContainerTag="div" />);
+
+      const replacementContainer = container.querySelector('[data-element="documentContainer"]');
+      const replacementDocument = replacementContainer.querySelector('.document');
+      expect(replacementContainer).toHaveProperty('tagName', 'DIV');
+      expect(replacementContainer).not.toBe(originalContainer);
+      expect(core.setScrollViewElement).toHaveBeenCalledWith(replacementContainer, 1);
+      expect(core.setViewerElement).toHaveBeenCalledWith(replacementDocument, 1);
+
+      replacementContainer.dispatchEvent(new WheelEvent('wheel', {
+        deltaX: 1,
+        cancelable: true,
+      }));
+      expect(defaultProps.closeElements).toHaveBeenCalledWith([
+        'annotationPopup',
+        'textPopup',
+        'annotationNoteConnectorLine',
+        'inlineCommentPopup',
+      ]);
+    });
   });
 
   describe('onTransitionEnd method', () => {

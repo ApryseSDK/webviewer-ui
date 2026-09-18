@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import useCore from 'hooks/useCore';
-import selectors from 'selectors';
 
 import './CustomStampBuilder.scss';
 import StampInputContainer from './StampInputContainer';
@@ -34,7 +32,6 @@ const CustomStampBuilder = ({
   const canvasContainerRef = useRef();
   const currentUser = core.getCurrentUser();
   const currentDateTime = new Date().toLocaleString();
-  const featureFlags = useSelector((state) => selectors.getFeatureFlags(state));
 
   const updateCanvasWithStamp = (newStamp) => {
     if (!canvasRef.current || !canvasContainerRef.current) {
@@ -133,9 +130,9 @@ const CustomStampBuilder = ({
     handleInputChange={handleInputChange}
   />;
 
-  const categoryContainer = featureFlags.newStampPanel ? <CategoryContainer
+  const categoryContainer = <CategoryContainer
     category={stamp.category}
-    handleCategoryChange={handleCategoryChange} /> : null;
+    handleCategoryChange={handleCategoryChange} />;
 
   const fontContainer = <FontContainer
     font={stamp.font}

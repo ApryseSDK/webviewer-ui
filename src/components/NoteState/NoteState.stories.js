@@ -6,7 +6,7 @@ import { userEvent, within, expect, screen } from 'storybook/test';
 import rootReducer from 'src/redux/reducers/rootReducer';
 import ToggleElementButton from '../ModularComponents/ToggleElementButton';
 import Flyout from '../ModularComponents/FlyoutContainer';
-import { noteStateFlyoutItems } from '../ModularComponents/NoteStateFlyout/NoteStateFlyout';
+import { noteStateFlyoutItems } from 'constants/flyoutConstants';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
 
@@ -20,6 +20,9 @@ function getAnnotationWithStatus(status) {
     Id: '123',
     getStatus: () => {
       return status;
+    },
+    getCustomData: () => {
+      return '';
     },
     isReply: () => {
       return false;

@@ -51,14 +51,18 @@ export default (dispatch, src, options = {}, documentViewerKey = 1, documentView
   };
   options.password = transformPasswordOption(options.password, dispatch);
   options.xodOptions = extractXodOptions(options);
+  const handleLoadError = (error) => {
+    dispatch(actions.closeDocumentLoadingScreen(documentViewerKey));
+    fireError(error, targetDocumentViewerId);
+  };
   if ('onError' in options) {
     const userDefinedOnErrorCallback = options.onError;
     options.onError = function(error) {
-      fireError(error, targetDocumentViewerId);
+      handleLoadError(error);
       userDefinedOnErrorCallback(error);
     };
   } else {
-    options.onError = (error) => fireError(error, targetDocumentViewerId);
+    options.onError = handleLoadError;
   }
 
   dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
@@ -75,6 +79,8 @@ export default (dispatch, src, options = {}, documentViewerKey = 1, documentView
     options.enableOfficeEditing = false;
   }
 
+  dispatch(actions.openDocumentLoadingScreen(documentViewerKey));
+
   let loadPromise;
   if (!src) {
     if (isXLSXEditorMode) {
@@ -86,8 +92,6 @@ export default (dispatch, src, options = {}, documentViewerKey = 1, documentView
     // ignore caught errors because they are already being handled in the onError callback
     loadPromise = core.loadDocument(src, options, documentViewerKey).catch(() => {});
   }
-
-  dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
 
   return loadPromise;
 };

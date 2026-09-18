@@ -7,6 +7,7 @@ import disableFeatures from 'src/apis/disableFeatures';
 import enableFeatures from 'src/apis/enableFeatures';
 import Feature from 'constants/feature';
 import { isOfficeEditorMode } from 'src/helpers/officeEditor';
+import { isSpreadsheetEditorMode } from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import selectors from 'selectors';
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 
@@ -43,7 +44,7 @@ export default (store) => () => {
     // clear the stash after re-enabling tools
     dispatch(actions.stashEnabledTools([]));
 
-    if (!isOfficeEditorMode()) {
+    if (!isOfficeEditorMode() && !isSpreadsheetEditorMode()) {
       enableFeatures(store)([Feature.Annotating]);
     }
   }

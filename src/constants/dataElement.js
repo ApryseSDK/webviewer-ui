@@ -8,6 +8,7 @@ const DataElements = {
   INLINE_COMMENT_POPUP_CLOSE_BUTTON: 'inlineCommentPopupCloseButton',
   INLINE_COMMENT_POPUP_TABS: 'inlineCommentPopupTabs',
 
+  DOCUMENT_CONTAINER: 'documentContainer',
   LOGO_BAR: 'logoBar',
   COLOR_PALETTE: 'colorPalette',
   OPACITY_SLIDER: 'opacitySlider',
@@ -65,6 +66,8 @@ const DataElements = {
   PORTFOLIO_PANEL_BUTTON: 'portfolioPanelButton',
   LAYERS_PANEL: 'layersPanel',
   LAYERS_PANEL_BUTTON: 'layersPanelButton',
+  LAYERS_PANEL_FOOTER: 'layersPanelFooter',
+  LAYERS_PANEL_RESTORE_DEFAULTS_BUTTON: 'layersPanelRestoreDefaultsButton',
   SIGNATURE_PANEL: 'signaturePanel',
   SIGNATURE_PANEL_BUTTON: 'signaturePanelButton',
   ATTACHMENT_PANEL: 'attachmentPanel',
@@ -87,6 +90,7 @@ const DataElements = {
     SNAP_MODE_CONTAINER: 'stylePanel-snapModeContainer',
     TEXT_STYLE_CONTAINER: 'stylePanel-textStyleContainer',
     LINE_STYLE_PICKER_CONTAINER: 'stylePanel-lineStylePickerContainer',
+    FILL_STYLE_PICKER_CONTAINER: 'stylePanel-fillStylePickerContainer',
     NO_STYLE_CONTAINER: 'stylePanel-noStyleContainer',
     NO_TOOL_SELECTED_CONTAINER: 'stylePanel-noToolSelectedContainer',
     NO_SHARED_STYLE_CONTAINER: 'stylePanel-noSharedStyleContainer',
@@ -94,6 +98,7 @@ const DataElements = {
     TEXT_COLOR_PICKER: 'stylePanel-textColorPicker',
     STROKE_COLOR_PICKER: 'stylePanel-strokeColorPicker',
     FILL_COLOR_PICKER: 'stylePanel-fillColorPicker',
+    FILL_STYLE_PICKER: 'stylePanel-fillStylePicker',
     NO_STYLE_ICON: 'stylePanel-noStyleIcon',
     NO_STYLE_MESSAGE: 'stylePanel-noStyleMessage',
     NO_TOOL_SELECTED_ICON: 'stylePanel-noToolSelectedIcon',
@@ -406,6 +411,7 @@ const DataElements = {
   // Rubber Stamp Panel
   CREATE_RUBBER_STAMP_BUTTON_WRAP: 'createRubberStampButtonWrap',
   CREATE_RUBBER_STAMP_BUTTON: 'createRubberStampButton',
+  STAMP_SEARCH_OPTIONS_FLYOUT: 'stampSearchOptionsFlyout',
 
   PREVIOUS_PAGE_BUTTON: 'previousPageButton',
   NEXT_PAGE_BUTTON: 'nextPageButton',

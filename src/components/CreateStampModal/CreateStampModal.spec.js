@@ -33,6 +33,7 @@ describe('CreateStampModal Component', () => {
 
     const closeButton = screen.getByRole('button', { name: /Close/i });
     const stampTextInput = screen.getByRole('textbox', { name: /Stamp Text/i });
+    const categoryDropdown = screen.getByRole('combobox', { name: /Category/i });
     const fontDropdown = screen.getByRole('combobox', { name: /Font Style/i });
     const boldButton = screen.getByRole('button', { name: /Bold/i });
     const italicButton = screen.getByRole('button', { name: /Italic/i });
@@ -55,6 +56,7 @@ describe('CreateStampModal Component', () => {
     const tabOrder = [
       closeButton,
       stampTextInput,
+      categoryDropdown,
       fontDropdown,
       boldButton,
       italicButton,

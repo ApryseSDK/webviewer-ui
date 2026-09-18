@@ -16,6 +16,10 @@ const mockMoveCursorToTrackedChange = jest.fn();
 const mockMoveCursorToComment = jest.fn();
 const mockSelectAnnotation = jest.fn();
 const mockJumpToAnnotation = jest.fn();
+const mockGetCellRange = jest.fn((cell) => ({ cell }));
+const mockSetActiveSheet = jest.fn();
+const mockSelectCellRange = jest.fn();
+let mockActiveSheetIndex = 0;
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => [(key) => key],
@@ -29,6 +33,7 @@ jest.mock('hooks/useCore', () => () => ({
     deselectAllAnnotations: jest.fn(),
     canModify: jest.fn(() => mockCanModify),
     canModifyContents: jest.fn(() => mockCanModifyContents),
+    getIsReadOnly: jest.fn(() => false),
     selectAnnotation: (...args) => mockSelectAnnotation(...args),
     jumpToAnnotation: (...args) => mockJumpToAnnotation(...args),
     getOfficeEditor: () => ({
@@ -40,6 +45,17 @@ jest.mock('hooks/useCore', () => () => ({
       selectAnnotation: jest.fn(),
       selectAnnotations: jest.fn(),
     }),
+    getDocumentViewer: () => ({
+      getSpreadsheetEditorManager: () => ({
+        getWorkbook: () => ({
+          activeSheetIndex: mockActiveSheetIndex,
+          getSheetAt: () => ({ name: 'Sheet 1' }),
+          setActiveSheet: (...args) => mockSetActiveSheet(...args),
+        }),
+        selectCellRange: (...args) => mockSelectCellRange(...args),
+      }),
+    }),
+    getCellRange: (...args) => mockGetCellRange(...args),
   },
 }));
 
@@ -62,6 +78,7 @@ jest.mock('selectors', () => ({
   getIsOfficeEditorMode: () => mockIsOfficeEditorMode,
   getOfficeEditorEditMode: () => 'editing',
   isSpreadsheetEditorModeEnabled: () => mockIsSpreadsheetEditorMode,
+  getSpreadsheetEditorEditMode: () => 'editing',
 }));
 
 jest.mock('components/NoteContent', () => {
@@ -149,6 +166,9 @@ describe('Note', () => {
     mockMoveCursorToComment.mockClear();
     mockSelectAnnotation.mockClear();
     mockJumpToAnnotation.mockClear();
+    mockGetCellRange.mockClear();
+    mockSetActiveSheet.mockClear();
+    mockSelectCellRange.mockClear();
     mockNoteTransformFunction = null;
     mockCustomNoteSelectionFunction = null;
     mockCanModify = true;
@@ -156,6 +176,7 @@ describe('Note', () => {
     mockIsOfficeEditorMode = false;
     mockIsSpreadsheetEditorMode = false;
     mockOfficeEditorCommentId = null;
+    mockActiveSheetIndex = 0;
   });
 
   it('should show the spreadsheet sheet and cell location for SSE comments', () => {
@@ -195,6 +216,62 @@ describe('Note', () => {
     );
 
     expect(screen.getByText('Sheet 1 | B4')).toBeInTheDocument();
+  });
+
+  it('should switch sheets and select an SSE comment cell when the note is clicked in the notes panel', async () => {
+    mockIsSpreadsheetEditorMode = true;
+    const annotation = {
+      ...createAnnotation(() => []),
+      getCustomData: (key) => ({
+        spreadsheetThreadId: 'thread-1',
+        spreadsheetSheetIndex: '1',
+        spreadsheetCell: 'D5',
+      }[key] || null),
+    };
+    render(
+      <NoteContext.Provider value={{ ...baseContext, isSelected: false }}>
+        <Note
+          annotation={annotation}
+          isMultiSelected={false}
+          isMultiSelectMode={false}
+          isInNotesPanel
+          isCustomPanelOpen={false}
+          shouldHideConnectorLine
+          handleMultiSelect={jest.fn()}
+        />
+      </NoteContext.Provider>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'expandNoteButton' }));
+
+    expect(mockSelectAnnotation).toHaveBeenCalledWith(annotation, 1);
+    expect(mockSetActiveSheet).toHaveBeenCalledWith(1);
+    expect(mockGetCellRange).toHaveBeenCalledWith('D5');
+    expect(mockSelectCellRange).toHaveBeenCalledWith({ cell: 'D5' });
+    expect(mockSetActiveSheet.mock.invocationCallOrder[0]).toBeLessThan(mockSelectCellRange.mock.invocationCallOrder[0]);
+  });
+
+  it('should not navigate when a non-SSE note is clicked in Spreadsheet Editor mode', async () => {
+    mockIsSpreadsheetEditorMode = true;
+    const annotation = createAnnotation(() => []);
+    render(
+      <NoteContext.Provider value={{ ...baseContext, isSelected: false }}>
+        <Note
+          annotation={annotation}
+          isMultiSelected={false}
+          isMultiSelectMode={false}
+          isInNotesPanel
+          isCustomPanelOpen={false}
+          shouldHideConnectorLine
+          handleMultiSelect={jest.fn()}
+        />
+      </NoteContext.Provider>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'expandNoteButton' }));
+
+    expect(mockSetActiveSheet).not.toHaveBeenCalled();
+    expect(mockSelectCellRange).not.toHaveBeenCalled();
   });
 
   it('should trigger custom note selection when note container is clicked', async () => {

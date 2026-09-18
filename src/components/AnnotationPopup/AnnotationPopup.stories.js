@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AnnotationPopup from './AnnotationPopup';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
@@ -6,7 +6,8 @@ import getAnnotationStyles from 'src/helpers/getAnnotationStyles';
 import core from 'core';
 import { BASIC_PALETTE } from 'constants/commonColors';
 import initialState from 'src/redux/initialState';
-import { disableRtlModeParameters } from 'helpers/storybookParams';
+import { disableRtlModeParameters, mobileStoryParameters } from 'helpers/storybookParams';
+import AnnotationPopupContainer from './AnnotationPopupContainer';
 const noop = () => { };
 
 export default {
@@ -19,10 +20,12 @@ const mockInitialState = {
     disabledElements: {},
     customElementOverrides: {},
     modularPopups: initialState.viewer.modularPopups,
+    genericPanels: [],
     customPanels: [],
     unreadAnnotationIdSet: new Set(),
     colorMap: [{ colorMapKey: () => BASIC_PALETTE[0] }],
     openElements: {
+      annotationPopup: true,
       stylePopupTextStyleContainer: false,
     },
     activeDocumentViewerKey: 1,
@@ -45,6 +48,7 @@ const mockAnnotation = {
   ToolName: '',
   Opacity: 1,
   StrokeThickness: 1,
+  isContentEditPlaceholder: () => false,
 };
 
 const basicHorizontalProps = {
@@ -201,3 +205,41 @@ export const CustomizedAnnotationPopup = () => {
 };
 
 CustomizedAnnotationPopup.parameters = disableRtlModeParameters;
+
+export const AnnotationPopupMobileWithMultipleSelectedAnnotations = () => {
+  useEffect(() => {
+    const originalGetSelectedAnnotations = core.getSelectedAnnotations;
+    const originalGetNumberOfGroups = core.getNumberOfGroups;
+    core.getSelectedAnnotations = () => [mockAnnotation, { ...mockAnnotation }];
+    core.getNumberOfGroups = () => 2;
+    return () => {
+      core.getSelectedAnnotations = originalGetSelectedAnnotations;
+      core.getNumberOfGroups = originalGetNumberOfGroups;
+    };
+  }, []);
+
+  const props = {
+    focusedAnnotation: mockAnnotation,
+    selectedMultipleAnnotations: true,
+    canModify: true,
+    focusedAnnotationStyle: {},
+    isDatePickerOpen: false,
+    setDatePickerOpen: () => {},
+    isDatePickerMount: false,
+    setDatePickerMount: () => {},
+    hasAssociatedLink: false,
+    includesFormFieldAnnotation: false,
+    closePopup: () => {},
+    widgetThatOpenedPopupRef: {},
+  };
+  return (
+    <Provider store={configureStore({ reducer: (state = mockInitialState) => state })}>
+      <AnnotationPopupContainer {...props} />
+    </Provider>
+  );
+};
+
+AnnotationPopupMobileWithMultipleSelectedAnnotations.parameters = {
+  ...mobileStoryParameters,
+  ...disableRtlModeParameters
+};

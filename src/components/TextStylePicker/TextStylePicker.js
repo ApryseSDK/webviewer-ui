@@ -7,7 +7,10 @@ import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
 import parseFontSize from 'helpers/parseFontSize';
 import { useTranslation } from 'react-i18next';
+import webFonts from 'constants/webFonts';
 import DataElementWrapper from '../DataElementWrapper';
+
+const DEFAULT_FALLBACK_FONTS = ['Helvetica', 'Times New Roman'];
 
 const TextStylePicker = ({
   onPropertyChange,
@@ -25,10 +28,13 @@ const TextStylePicker = ({
   isRichTextEditMode,
   isDisabled = false,
   isWidget = false,
+  maxFontSize,
 }) => {
   const [t] = useTranslation();
-  // List is not complete
-  const supportedFonts = fonts?.length ? fonts : ['Helvetica', 'Times New Roman'];
+  const baseFonts = fonts?.length ? fonts : DEFAULT_FALLBACK_FONTS;
+  const supportedFonts = fonts?.length
+    ? [...baseFonts, ...webFonts.filter((font) => !baseFonts.includes(font))]
+    : [...DEFAULT_FALLBACK_FONTS, ...webFonts.filter((font) => !DEFAULT_FALLBACK_FONTS.includes(font))];
   const font = isRichTextEditMode ? properties?.quillFont : properties?.Font;
   const changeFont = (font) => {
     if (isContentEditing || isRedaction) {
@@ -140,6 +146,12 @@ const TextStylePicker = ({
     onPropertyChange('TextAlign', xAlign);
   };
 
+  const normalizeTextAlign = (value) => (typeof value === 'string' ? value.toLowerCase() : '');
+  const isTextAlignActive = (value, candidates) => {
+    const normalized = normalizeTextAlign(value);
+    return candidates.some((candidate) => normalized === candidate.toLowerCase());
+  };
+
   const textVerticalAlign = properties?.TextVerticalAlign || 'top';
   const changeYAlign = (yAlign) => {
     onPropertyChange('TextVerticalAlign', yAlign);
@@ -225,17 +237,17 @@ const TextStylePicker = ({
     },
     leftAlign: {
       dataElement: 'richTextAlignLeftButton',
-      isActive: textEditFormat.textAlign === 'Start',
+      isActive: isTextAlignActive(textEditFormat.textAlign, ['Start', 'Left']),
       alignValue: 'Start'
     },
     centerAlign: {
       dataElement: 'richTextAlignCenterButton',
-      isActive: textEditFormat.textAlign === 'Center',
+      isActive: isTextAlignActive(textEditFormat.textAlign, ['Center']),
       alignValue: 'Center'
     },
     rightAlign: {
       dataElement: 'richTextAlignRightButton',
-      isActive: textEditFormat.textAlign === 'End',
+      isActive: isTextAlignActive(textEditFormat.textAlign, ['End', 'Right']),
       alignValue: 'End'
     },
   };
@@ -248,6 +260,8 @@ const TextStylePicker = ({
         key={fontSizePropsToUpdate}
         fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
         onFontSizeChange={changeFontSize}
+        maxFontSize={maxFontSize}
+        displayCurrentFontSizeAboveMax={isContentEditing}
         onError={setError}
         applyOnlyOnBlur={isContentEditing}
         disabled={isFreeTextAutoSize || isDisabled}
@@ -440,6 +454,7 @@ TextStylePicker.propTypes = {
   isRichTextEditMode: PropTypes.bool,
   isDisabled: PropTypes.bool,
   isWidget: PropTypes.bool,
+  maxFontSize: PropTypes.number,
 };
 
 export default TextStylePicker;

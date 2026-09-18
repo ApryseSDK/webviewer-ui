@@ -4,6 +4,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import NotesPanelHeader from './NotesPanelHeader';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
+import DataElements from 'constants/dataElement';
+import { expect, within } from 'storybook/test';
+import { getTranslatedText } from 'src/helpers/testTranslationHelper';
 
 export default {
   title: 'Components/NotesPanel/NotesPanelHeader',
@@ -88,6 +91,10 @@ export function SpreadsheetEditorMode() {
       ...initialState.viewer,
       isSpreadsheetEditorModeEnabled: true,
       notesPanelCustomHeaderOptions: null,
+      disabledElements: {
+        [DataElements.NOTE_MULTI_SELECT_MODE_BUTTON]: { disabled: true },
+        [DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON]: { disabled: true },
+      },
     },
   };
   const store = configureStore({ reducer: () => spreadsheetState });
@@ -104,6 +111,12 @@ export function SpreadsheetEditorMode() {
 }
 
 SpreadsheetEditorMode.parameters = disableRtlModeParameters;
+SpreadsheetEditorMode.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  expect(canvas.queryByRole('button', { name: getTranslatedText('component.filter') })).not.toBeInTheDocument();
+  expect(canvas.queryByRole('button', { name: getTranslatedText('component.multiSelectButton') })).not.toBeInTheDocument();
+};
 
 export function CustomHeaderPrependToDefault() {
   initialState.viewer.notesPanelCustomHeaderOptions = {

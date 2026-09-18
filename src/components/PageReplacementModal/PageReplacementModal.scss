@@ -17,7 +17,6 @@
     padding: 0;
     background: var(--component-background);
     overflow-y: visible;
-    width: 480px;
 
     @include mobile {
       border-radius: 0;
@@ -192,5 +191,13 @@
 
     @extend %tab-list;
     @include tab-border-defaults;
+  }
+}
+
+.PageReplacementModal .container.tabs {
+  width: 480px;
+
+  @include mobile {
+    width: 100%;
   }
 }

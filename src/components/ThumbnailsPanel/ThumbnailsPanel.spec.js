@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, act } from '@testing-library/react';
+import { render, act, screen } from '@testing-library/react';
 import ThumbnailsPanel from './ThumbnailsPanel';
 import useCore from 'hooks/useCore';
+import { getTranslatedText } from 'helpers/testTranslationHelper';
 
 // --- Event system mock ---
 // Simulates key-scoped addEventListener/removeEventListener like the real useCore wrapper.
@@ -44,6 +45,7 @@ function createMockCoreForKey(key) {
     getDocument: jest.fn(() => ({
       getType: () => 'pdf',
       getPageInfo: () => ({ width: 100, height: 100 }),
+      isWebViewerServerDocument: () => false,
     })),
     getPageWidth: jest.fn(() => 100),
     getPageHeight: jest.fn(() => 100),
@@ -93,7 +95,7 @@ jest.mock('components/Thumbnail', () => {
 
     const thumbId = `pageThumb${  props.index}`;
     return (
-      <div data-testid={`thumbnail-${  props.index}`}>
+      <div data-testid={`thumbnail-${  props.index}`} data-is-draggable={props.isDraggable}>
         <div id={thumbId} className="thumbnail">
           <canvas className="page-image" width="100" height="100" />
         </div>
@@ -127,7 +129,7 @@ jest.mock('react-measure', () => {
   };
 });
 
-jest.mock('helpers/device', () => ({ isIE11: false }));
+jest.mock('helpers/device', () => ({ isIE11: false, isMobile: () => false }));
 jest.mock('helpers/fireEvent', () => jest.fn());
 jest.mock('helpers/pageManipulation', () => ({
   extractPagesToMerge: jest.fn(),
@@ -152,6 +154,44 @@ const mockInitialState = {
 };
 
 const TestThumbnailsPanel = withProviders(ThumbnailsPanel, mockInitialState);
+const StandaloneTestThumbnailsPanel = withProviders(ThumbnailsPanel, {
+  viewer: {
+    ...mockInitialState.viewer,
+    panelWidths: {
+      leftPanel: 264,
+      standalonePanel: 400,
+    },
+    selectedThumbnailPageIndexes: [0],
+    thumbnailSelectingPages: true,
+    customPanels: [],
+    multiPageManipulationControls: [
+      { dataElement: 'leftPanelPageTabsRotate' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMove' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMore' },
+    ],
+  },
+});
+const ContentEditThumbnailsPanel = withProviders(ThumbnailsPanel, {
+  ...mockInitialState,
+  viewer: {
+    ...mockInitialState.viewer,
+    isContentEditingEnabled: true,
+  },
+});
+
+describe('ThumbnailsPanel page operations', () => {
+  beforeEach(() => {
+    useCore.mockReturnValue({ core: getMockCore(activeMockKey) });
+  });
+
+  it('should disable thumbnail dragging in content edit mode', () => {
+    render(<ContentEditThumbnailsPanel panelSelector="panel1" />);
+
+    expect(screen.getByTestId('thumbnail-0')).toHaveAttribute('data-is-draggable', 'false');
+  });
+});
 
 describe('ThumbnailsPanel annotation rendering', () => {
   beforeEach(() => {
@@ -172,6 +212,13 @@ describe('ThumbnailsPanel annotation rendering', () => {
 
   afterEach(() => {
     jest.useRealTimers();
+  });
+
+  it('shows expanded page controls based on the standalone panel width', () => {
+    render(<StandaloneTestThumbnailsPanel dataElement="standalonePanel" />);
+
+    expect(screen.getByRole('button', { name: getTranslatedText('action.insert') })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: getTranslatedText('action.more') })).not.toBeInTheDocument();
   });
 
   it('should cancel debounced annotation renders on viewer switch (core change)', () => {

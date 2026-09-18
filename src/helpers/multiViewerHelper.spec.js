@@ -31,6 +31,7 @@ jest.mock('selectors', () => ({
   getActiveTab: jest.fn(),
   getTabs: jest.fn().mockReturnValue([]),
   getActiveDocumentViewerKey: jest.fn().mockReturnValue(1),
+  isViewportRelativeAnnotationPositioningEnabled: jest.fn().mockReturnValue(false),
 }));
 jest.mock('hooks/useCore/useCore');
 jest.mock('core');
@@ -77,6 +78,7 @@ describe('cleanUpMultiViewer', () => {
   beforeEach(() => {
     mockAnnotationManager = {
       getFormFieldCreationManager: jest.fn(),
+      setViewportRelativeAnnotationPositioning: jest.fn(),
     };
 
     mockFormFieldCreationManager = {
@@ -141,6 +143,7 @@ describe('cleanUpMultiViewer', () => {
     selectors.getDefaultHeaderItems.mockReset().mockReturnValue([]);
     selectors.isMultiViewerMode.mockReset().mockReturnValue(true);
     selectors.getSyncViewer.mockReset().mockReturnValue(1);
+    selectors.isViewportRelativeAnnotationPositioningEnabled.mockReset().mockReturnValue(false);
 
     setupMultiViewer(mockStore);
 

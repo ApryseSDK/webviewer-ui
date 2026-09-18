@@ -4,17 +4,27 @@ import core from 'core';
 
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 import actions from 'actions';
+import { isOfficeEditorMode } from 'src/helpers/officeEditor';
+import { isSpreadsheetEditorMode } from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 
 jest.mock('selectors');
 jest.mock('core');
 jest.mock('helpers/getAnnotationCreateToolNames');
 jest.mock('actions');
+jest.mock('src/helpers/officeEditor', () => ({
+  isOfficeEditorMode: jest.fn(),
+}));
+jest.mock('src/helpers/spreadsheetEditor/isSpreadsheetEditorMode', () => ({
+  isSpreadsheetEditorMode: jest.fn(),
+}));
 
 const mockEnableTools = jest.fn();
 const mockDisableTools = jest.fn();
+const mockEnableFeatures = jest.fn();
 
 jest.mock('src/apis/enableTools', () => jest.fn(() => mockEnableTools));
 jest.mock('src/apis/disableTools', () => jest.fn(() => mockDisableTools));
+jest.mock('src/apis/enableFeatures', () => jest.fn(() => mockEnableFeatures));
 
 const mockToolButtonObjects = {
   AnnotationCreateRectangle: { dataElement: 'rectangleToolButton' },
@@ -39,6 +49,8 @@ beforeEach(() => {
   selectors.isElementDisabled.mockReturnValue(false);
   core.getIsReadOnly.mockReturnValue(false);
   core.setToolMode = jest.fn();
+  isOfficeEditorMode.mockReturnValue(false);
+  isSpreadsheetEditorMode.mockReturnValue(false);
 });
 
 
@@ -76,5 +88,17 @@ describe('onUpdateAnnotationPermission', () => {
     });
     onUpdateAnnotationPermission(store)();
     expect(actions.stashEnabledTools).not.toHaveBeenCalled();
+  });
+
+  it('should not re-enable annotating features in spreadsheet editor mode', () => {
+    isSpreadsheetEditorMode.mockReturnValue(true);
+    const store = makeStore({
+      enabledToolsStash: ['AnnotationCreateRectangle'],
+    });
+
+    onUpdateAnnotationPermission(store)();
+
+    expect(mockEnableTools).toHaveBeenCalledWith(['AnnotationCreateRectangle']);
+    expect(mockEnableFeatures).not.toHaveBeenCalled();
   });
 });

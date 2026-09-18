@@ -16,6 +16,7 @@ export default {
 };
 
 export const DefaultUI = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
+DefaultUI.tags = ['vitest'];
 
 DefaultUI.play = async ({ canvasElement }) => {
   const canvas = await within(canvasElement);

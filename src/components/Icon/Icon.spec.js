@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Basic as BasicStory, Colorized as ColorizedStory, Disabled as DisabledStory } from './Icon.stories';
 import Icon from './Icon';
 
@@ -74,6 +74,27 @@ describe('Icon component', () => {
 
     const icon = container.querySelector('.Icon svg');
     expect(icon).toBeInTheDocument();
+  });
+
+  it('Should render with whitespace-prefixed inline SVG', () => {
+    const svg = '  <svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z"/></svg>';
+    const { container } = render(<Icon glyph={svg}/>);
+
+    expect(container.querySelector('.Icon svg')).toBeInTheDocument();
+  });
+
+  it('Should render with uppercase inline SVG tag', () => {
+    const svg = '<SVG xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z"/></SVG>';
+    const { container } = render(<Icon glyph={svg}/>);
+
+    expect(container.querySelector('.Icon svg')).toBeInTheDocument();
+  });
+
+  it('Should render inline SVG with an XML preamble', () => {
+    const svg = '<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z"/></svg>';
+    const { container } = render(<Icon glyph={svg}/>);
+
+    expect(container.querySelector('.Icon svg')).toBeInTheDocument();
   });
 
   it('Disabled color should override the color prop', () => {
@@ -178,7 +199,7 @@ describe('Icon component', () => {
   });
 
   describe('Security tests', () => {
-    it.skip('Should not execute embedded scripts in SVG', () => {
+    it('Should not execute embedded scripts in SVG', () => {
       const maliciousSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10" fill="red"/>
         <script>window.svgScriptExecuted = true;</script>
@@ -227,6 +248,53 @@ describe('Icon component', () => {
 
       const ariaLabel = icon.getAttribute('aria-label');
       expect(ariaLabel).toBe(legitimateAriaLabel);
+    });
+  });
+
+  describe('External SVG sources', () => {
+    let originalFetch;
+    let consoleWarnSpy;
+    beforeEach(() => {
+      originalFetch = global.fetch;
+    });
+    afterEach(() => {
+      global.fetch = originalFetch;
+      consoleWarnSpy?.mockRestore();
+    });
+
+    it('Should render an <img> immediately for a non-SVG external source', () => {
+      global.fetch = jest.fn();
+      const { container } = render(<Icon glyph={'https://example.com/custom-style.png'} />);
+
+      expect(container.querySelector('.Icon img')).toHaveAttribute('src', 'https://example.com/custom-style.png');
+      expect(global.fetch).not.toHaveBeenCalled();
+    });
+
+    it('Should render inline SVG markup (with currentColor styling) once a .svg path is fetched', async () => {
+      const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 16"><line stroke="currentColor"/></svg>';
+      global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve(svg) });
+
+      const { container } = render(<Icon glyph={'./doubledash.svg'} />);
+
+      // Falls back to <img> while the fetch is in flight.
+      expect(container.querySelector('.Icon img')).toBeInTheDocument();
+
+      await waitFor(() => expect(container.querySelector('.Icon svg')).toBeInTheDocument());
+
+      expect(global.fetch).toHaveBeenCalledWith('./doubledash.svg');
+      expect(container.querySelector('.Icon img')).not.toBeInTheDocument();
+    });
+
+    it('Should keep rendering <img> if the .svg fetch fails', async () => {
+      global.fetch = jest.fn().mockResolvedValue({ ok: false, status: 404, statusText: 'Not Found' });
+      consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const { container } = render(<Icon glyph={'./missing.svg'} />);
+
+      await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+
+      expect(container.querySelector('.Icon img')).toBeInTheDocument();
+      expect(container.querySelector('.Icon svg')).not.toBeInTheDocument();
     });
   });
 });

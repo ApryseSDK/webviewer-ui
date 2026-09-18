@@ -15,7 +15,8 @@ import ToggleElementButton from 'components/ModularComponents/ToggleElementButto
 import Spinner from '../Spinner';
 import SearchOptionsFlyout from './SearchOptionsFlyout';
 import useDirectionalChevronIcons from 'hooks/useDirectionalChevronIcons';
-import { isOfficeEditorMode, isSpreadsheetEditorMode } from 'helpers/officeEditor';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
+import { isSpreadsheetEditorMode } from 'helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import './SearchOverlay.scss';
 import '../Button/Button.scss';
 

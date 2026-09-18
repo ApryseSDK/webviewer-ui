@@ -6,7 +6,7 @@ import DataElements from 'constants/dataElement';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 
-import { createTemplate, oePartialState } from 'helpers/storybookHelper';
+import { createTemplate, oePartialState, createCustomStamp } from 'helpers/storybookHelper';
 import { userEvent, within, expect, fireEvent, waitFor } from 'storybook/test';
 import { uiWithFlyout, panelsInFlyoutMap } from '../storyModularUIConfigs';
 import createItemsForBookmarkOutlineFlyout from 'src/helpers/createItemsForBookmarkOutlineFlyout';
@@ -747,6 +747,35 @@ RubberStampPanelInFlyout.play = async ({ canvasElement }) => {
     const rubberStampPanel = document.querySelector('[data-element="rubber-stamp-flyout"]');
     expect(rubberStampPanel).toBeInTheDocument();
   });
+};
+
+const customStamp = createCustomStamp({
+  title: 'Approved',
+  category: 'option.customStampModal.customStamp',
+});
+
+export const RubberStampPanelCustomTabInFlyout = createTemplate({
+  headers: mockHeadersNormalized,
+  components: mockModularComponents,
+  panels: {},
+  flyoutMap: panelsInFlyoutMap,
+  viewerRedux: {
+    tab: {
+      [DataElements.RUBBER_STAMP_PANEL]: DataElements.RUBBER_STAMP_PANEL_CUSTOM_TAB,
+    },
+    customStamps: [customStamp],
+    customStampCategories: ['option.customStampModal.customStamp'],
+  },
+});
+RubberStampPanelCustomTabInFlyout.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const insertRibbon = canvas.getByRole('button', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Insert') });
+  await userEvent.click(insertRibbon);
+  const rubberStampButton = canvas.getByRole('button', { name: getTranslatedText('annotation.rubberStamp') });
+  await userEvent.click(rubberStampButton);
+  const customTab = canvas.getByRole('button', { name: getTranslatedText('rubberStampPanel.custom') });
+  await userEvent.click(customTab);
 };
 
 export const SignatureListPanelInFlyout = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents, panels: {}, flyoutMap: panelsInFlyoutMap });

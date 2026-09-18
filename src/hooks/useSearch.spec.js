@@ -6,13 +6,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import useSearch from './useSearch';
 import core from 'core';
 import actions from 'actions';
-import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
+import { isSpreadsheetEditorMode } from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 
 jest.mock('core');
 jest.mock('lodash', () => ({
   debounce: (fn) => fn,
 }));
-jest.mock('src/helpers/officeEditor', () => ({
+jest.mock('src/helpers/spreadsheetEditor/isSpreadsheetEditorMode', () => ({
   isSpreadsheetEditorMode: jest.fn(() => false),
 }));
 jest.mock('src/helpers/search', () => ({

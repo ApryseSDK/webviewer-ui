@@ -6,7 +6,10 @@ import useStylePanel from './useStylePanel';
 jest.mock('core');
 
 describe('useStylePanel - applyFreeTextStyles', () => {
+  let activeToolStyles;
+
   beforeEach(() => {
+    activeToolStyles = {};
     core.isFullPDFEnabled = jest.fn(() => false);
     core.getToolMode = jest.fn(() => null);
 
@@ -21,6 +24,9 @@ describe('useStylePanel - applyFreeTextStyles', () => {
       }
       if (selectorString.includes('getActiveDocumentViewerKey')) {
         return 1;
+      }
+      if (selectorString.includes('getActiveToolStyles')) {
+        return activeToolStyles;
       }
       return undefined;
     });
@@ -85,6 +91,59 @@ describe('useStylePanel - applyFreeTextStyles', () => {
     const { result } = renderStylePanel(annotation);
 
     expect(result.current.annotationStyle.Font).toBeUndefined();
+  });
+
+  it('resets the selected fill style when the same annotation object is mutated back to the default solid fill', () => {
+    const selectedAnnotations = [];
+    const annotation = new window.Core.Annotations.RectangleAnnotation();
+    annotation.ToolName = 'AnnotationCreateRectangle';
+    annotation.FillStyle = 'custom-fill';
+    annotation.StrokeColor = null;
+    annotation.StrokeThickness = null;
+    annotation.Opacity = null;
+    annotation.FillColor = null;
+    annotation.isContentEditPlaceholder = () => false;
+    selectedAnnotations.push(annotation);
+
+    const { result, rerender } = renderHook(() => useStylePanel({ selectedAnnotations, currentTool: null }));
+
+    expect(result.current.fillStyle).toBe('custom-fill');
+
+    annotation.FillStyle = '';
+    rerender();
+
+    expect(result.current.fillStyle).toBe('');
+  });
+
+  it('updates line style dropdowns when active tool styles are reset', () => {
+    const selectedAnnotations = [];
+    const currentTool = {
+      name: 'AnnotationCreateLine',
+      defaults: {
+        StartLineStyle: 'custom-start',
+        StrokeStyle: 'custom-middle',
+        EndLineStyle: 'custom-end',
+      },
+    };
+    core.getTool = jest.fn(() => currentTool);
+
+    const { result, rerender } = renderHook(() => useStylePanel({ selectedAnnotations, currentTool }));
+
+    expect(result.current.startLineStyle).toBe('custom-start');
+    expect(result.current.strokeStyle).toBe('custom-middle');
+    expect(result.current.endLineStyle).toBe('custom-end');
+
+    Object.assign(currentTool.defaults, {
+      StartLineStyle: 'None',
+      StrokeStyle: 'solid',
+      EndLineStyle: 'None',
+    });
+    activeToolStyles = { ...currentTool.defaults };
+    rerender();
+
+    expect(result.current.startLineStyle).toBe('None');
+    expect(result.current.strokeStyle).toBe('solid');
+    expect(result.current.endLineStyle).toBe('None');
   });
 
   it('falls back to the annotation base Font when the rich text style has no font-family data', () => {

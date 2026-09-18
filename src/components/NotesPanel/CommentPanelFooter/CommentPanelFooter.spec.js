@@ -118,13 +118,12 @@ describe('CommentPanelFooter', () => {
       expect(screen.getByRole('button', { name: 'Add Comment' })).toBeEnabled();
     });
 
-    it('is enabled and calls the add-reply stub when a comment already exists at the selected cell', async () => {
-      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    it('is enabled and focuses the reply input when a comment already exists at the selected cell', async () => {
       const addComment = jest.fn();
       setUpSpreadsheetCore({ addComment });
-      const existingComment = { getId: () => 'existing-comment-id' };
+      const existingComment = { Id: 'existing-comment-id' };
 
-      renderCommentPanelFooter(
+      const dispatchedActions = renderCommentPanelFooter(
         { dataElement: DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL, existingCommentAtSelectedCell: existingComment },
         spreadsheetEditorState(),
       );
@@ -134,10 +133,10 @@ describe('CommentPanelFooter', () => {
 
       await userEvent.click(button);
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(expect.stringContaining('addReply'), existingComment);
+      expect(core.deselectAllAnnotations).toHaveBeenCalled();
+      expect(core.selectAnnotation).toHaveBeenCalledWith(existingComment, 1);
+      expect(dispatchedActions.some((action) => action.type === 'SET_NOTE_EDITING')).toBe(true);
       expect(addComment).not.toHaveBeenCalled();
-
-      consoleWarnSpy.mockRestore();
     });
 
     it('creates a comment at the selected cell, selects it, and triggers note editing on success', async () => {

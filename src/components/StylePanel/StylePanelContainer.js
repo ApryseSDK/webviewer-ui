@@ -23,7 +23,7 @@ const propTypes = {
 
 const StylePanelContainer = ({ dataElement = DataElements.STYLE_PANEL, isFlyout = false }) => {
   const { core } = useCore();
-  const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'stylePanel'));
+  const isPanelOpen = useSelector((state) => selectors.isElementOpen(state, dataElement));
   const annotationCreateToolNames = getAnnotationCreateToolNames();
 
   const [selectedAnnotations, setSelectedAnnotations] = useState(core.getSelectedAnnotations());

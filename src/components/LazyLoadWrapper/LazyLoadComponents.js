@@ -35,7 +35,6 @@ const CalibrationModal = lazy(() => import('components/CalibrationModal'));
 const SettingsModal = lazy(() => import('components/SettingsModal'));
 const SaveModal = lazy(() => import('components/SaveModal'));
 const InsertPageModal = lazy(() => import('components/InsertPageModal'));
-const LoadingModal = lazy(() => import('components/LoadingModal'));
 const WarningModal = lazy(() => import('components/WarningModal'));
 const ColorPickerModal = lazy(() => import('components/ColorPickerModal'));
 const OpenFileModal = lazy(() => import('components/OpenFileModal'));
@@ -98,7 +97,6 @@ const LazyLoadComponents = {
   SaveModal,
   IndexPanel,
   InsertPageModal,
-  LoadingModal,
   WarningModal,
   ColorPickerModal,
   OpenFileModal,

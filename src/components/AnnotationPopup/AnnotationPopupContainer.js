@@ -8,7 +8,6 @@ import useCore from 'hooks/useCore';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
-import { useTranslation } from 'react-i18next';
 import { getOpenedWarningModal, getOpenedColorPicker, getDatePicker } from 'helpers/getElements';
 import getGroupedLinkAnnotations from 'helpers/getGroupedLinkAnnotations';
 import getHashParameters from 'helpers/getHashParameters';
@@ -17,6 +16,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
+import FocusStackManager from 'helpers/focusStackManager';
 import { ITEM_RENDER_PREFIXES } from 'constants/customizationVariables';
 import AnnotationPopup from './AnnotationPopup';
 
@@ -25,6 +25,14 @@ import { isAnnotationRenderedInDisplayMode } from 'src/helpers/isAnnotationRende
 
 const { ToolNames } = window.Core.Tools;
 const { Annotations } = window.Core;
+
+const resetFocusStackToAnnotation = (annotation) => {
+  const dataElement = annotation.getInnerElement()?.dataset.element;
+  FocusStackManager.clear();
+  if (dataElement) {
+    FocusStackManager.push(dataElement);
+  }
+};
 
 const propTypes = {
   focusedAnnotation: PropTypes.object,
@@ -78,7 +86,6 @@ const AnnotationPopupContainer = ({
   const isStylePanelDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.STYLE_PANEL));
   const stylePanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.STYLE_PANEL, [DataElements.MULTI_SELECT_STYLE_PANEL_FLYOUT]));
   const isStylePanelFlyoutOpen = useSelector((state) => selectors.isElementOpen(state, stylePanelInFlyout?.dataElement));
-  const [t] = useTranslation();
   const dispatch = useDispatch();
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const [isVisible, setIsVisible] = useState(false);
@@ -218,8 +225,15 @@ const AnnotationPopupContainer = ({
     if (!popup) {
       return;
     }
-    if (widgetThatOpenedPopupRef?.current) {
-      const associatedSignatureAnnotation = widgetThatOpenedPopupRef.current.getAssociatedSignatureAnnotation();
+    const signatureWidget = widgetThatOpenedPopupRef?.current
+      || (focusedAnnotation instanceof Annotations.SignatureWidgetAnnotation
+        ? focusedAnnotation
+        : core.getAnnotationsList().find((annotation) => (
+          annotation instanceof Annotations.SignatureWidgetAnnotation
+          && annotation.getAssociatedSignatureAnnotation() === focusedAnnotation
+        )));
+    if (signatureWidget) {
+      const associatedSignatureAnnotation = signatureWidget.getAssociatedSignatureAnnotation();
       const handleKeyDown = (event) => {
         if (event.key === 'Escape' && isOpen) {
           event.preventDefault();
@@ -227,13 +241,15 @@ const AnnotationPopupContainer = ({
           if (associatedSignatureAnnotation === focusedAnnotation) {
             annotManager.deselectAnnotation(focusedAnnotation, activeDocumentViewerKey);
           }
+          resetFocusStackToAnnotation(signatureWidget);
           closePopup();
         }
         if (canModify && (event.key === 'Delete' || event.key === 'Backspace') && isOpen) {
           event.preventDefault();
           event.stopPropagation();
-          if (widgetThatOpenedPopupRef?.current?.isSignedByAppearance()) {
-            widgetThatOpenedPopupRef.current.clearSignature(annotManager);
+          if (signatureWidget.isSignedByAppearance()) {
+            signatureWidget.clearSignature(annotManager);
+            resetFocusStackToAnnotation(signatureWidget);
           } else if (associatedSignatureAnnotation) {
             annotManager.deleteAnnotation(associatedSignatureAnnotation, activeDocumentViewerKey);
           }
@@ -303,7 +319,6 @@ const AnnotationPopupContainer = ({
   const showAlignButton = (
     canModify
     && multipleAnnotationsSelected
-    && !isMobile()
   );
 
   const onOpenAlignmentModal = () => {
@@ -354,6 +369,7 @@ const AnnotationPopupContainer = ({
 
   const onClearAppearanceSignature = () => {
     focusedAnnotation.clearSignature(annotManager);
+    resetFocusStackToAnnotation(focusedAnnotation);
     closePopup();
   };
 
@@ -401,20 +417,6 @@ const AnnotationPopupContainer = ({
   const showClearSignatureButton = canModify && isAppearanceSignature && !showFormFieldButton;
   /* DELETE ANNOTATION */
   const showDeleteButton = canModify && !showClearSignatureButton;
-
-  const openContentEditDeleteWarningModal = () => {
-    const message = t('option.contentEdit.deletionModal.message');
-    const title = t('option.contentEdit.deletionModal.title');
-    const confirmBtnText = t('action.ok');
-
-    const warning = {
-      message,
-      title,
-      confirmBtnText,
-      onConfirm: () => onDeleteAnnotation(),
-    };
-    dispatch(actions.showWarningMessage(warning));
-  };
 
   const onDeleteAnnotation = () => {
     if (isFocusedAnnotationSelected) {
@@ -539,7 +541,6 @@ const AnnotationPopupContainer = ({
       showEditStyleButton={showEditStyleButton}
       showContentEditButton={showContentEditButton}
       onEditContent={onEditContent}
-      openContentEditDeleteWarningModal={openContentEditDeleteWarningModal}
 
       showClearSignatureButton={showClearSignatureButton}
       onClearAppearanceSignature={onClearAppearanceSignature}

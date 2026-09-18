@@ -43,7 +43,6 @@ const propTypes = {
   showEditStyleButton: PropTypes.bool,
   showContentEditButton: PropTypes.bool,
   onEditContent: PropTypes.func,
-  openContentEditDeleteWarningModal: PropTypes.func,
 
   showClearSignatureButton: PropTypes.bool,
   onClearAppearanceSignature: PropTypes.func,
@@ -111,7 +110,6 @@ const AnnotationPopup = ({
   showEditStyleButton,
   showContentEditButton,
   onEditContent,
-  openContentEditDeleteWarningModal,
 
   showClearSignatureButton,
   onClearAppearanceSignature,
@@ -158,7 +156,6 @@ const AnnotationPopup = ({
   const activeRoot = getShadowRootFromNode(document.activeElement);
   const popupRoot = getShadowRootFromNode(popupRef?.current);
   const isInstanceActive = !window.isApryseWebViewerWebComponent || Boolean(popupRoot && activeRoot === popupRoot);
-  const isContentEdit = focusedAnnotation.isContentEditPlaceholder?.();
   const isReadOnlySignature = focusedAnnotation instanceof window.Core.Annotations.SignatureWidgetAnnotation && focusedAnnotation.fieldFlags.get(window.Core.Annotations.WidgetFlags.READ_ONLY);
 
   const renderPopup = () => {
@@ -287,7 +284,7 @@ const AnnotationPopup = ({
                     label={isRightClickMenu ? 'action.delete' : ''}
                     title={!isRightClickMenu ? 'action.delete' : ''}
                     img="icon-delete-line"
-                    onClick={isContentEdit ? openContentEditDeleteWarningModal : onDeleteAnnotation}
+                    onClick={onDeleteAnnotation}
                   />
                 )}
                 {showCalibrateButton && (

@@ -55,7 +55,7 @@ const defaultCellStyle = {
   wrapText: 3,
   font: {
     fontFace: 'Arial',
-    pointSize: 8,
+    pointSize: 10,
     bold: false,
     italic: false,
     underline: false,

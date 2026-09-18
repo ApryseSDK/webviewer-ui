@@ -28,3 +28,19 @@ test('should collapse or expand when the header is clicked', () => {
 
   expect(queryByTestId('child-items')).not.toBeInTheDocument();
 });
+
+test('retains the complete long header text', () => {
+  const header = 'Once upon a time there was a lovely princess. But she had an enchantment upon her.';
+
+  const { container } = render(
+    <CollapsibleSection header={header}>
+      <div>Child items</div>
+    </CollapsibleSection>
+  );
+
+  const headerTextWrapper = container.querySelector('.collapsible-section-header-text');
+
+  expect(headerTextWrapper).toBeInTheDocument();
+  expect(headerTextWrapper).toHaveTextContent(header);
+  expect(screen.getByRole('button', { name: header })).toBeInTheDocument();
+});

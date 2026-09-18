@@ -10,10 +10,7 @@ import Icon from 'components/Icon';
 import getClassName from 'helpers/getClassName';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { addSearchListener, removeSearchListener } from 'helpers/search';
-import { isSpreadsheetEditorMode } from 'src/helpers/officeEditor';
-import getRootNode from 'helpers/getRootNode';
 import { css } from '@emotion/react';
-import useCore from 'hooks/useCore';
 
 import './SearchPanel.scss';
 import useSearch from 'hooks/useSearch';
@@ -49,8 +46,6 @@ function SearchPanel(props) {
     isCustomPanel = false,
   } = props;
 
-  const { core } = useCore();
-
   const { t } = useTranslation();
   const { searchStatus, searchResults, activeSearchResultIndex, setSearchStatus, setActiveSearchResultIndex } = useSearch(activeDocumentViewerKey);
   const dispatch = useDispatch();
@@ -76,35 +71,14 @@ function SearchPanel(props) {
     dispatch(actions.setSearchInProgress(false));
   };
 
-  const adjustSpreadsheetTableWidth = (isUnmounting) => {
-    if (isSpreadsheetEditorMode()) {
-      const editorWrapper = getRootNode().getElementById('editorWrapper');
-      if (isUnmounting) {
-        editorWrapper.style.removeProperty('width');
-      } else {
-        const newWidth = `${window.innerWidth - (currentWidth)}px`;
-        editorWrapper.style.width = newWidth;
-      }
-
-      const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
-      spreadsheetEditorManager.onEditorSizeChanged();
-    }
-  };
-
-  React.useEffect(() => {
-    adjustSpreadsheetTableWidth();
-  }, [currentWidth]);
-
   React.useEffect(() => {
     // componentDidMount
-    adjustSpreadsheetTableWidth();
     addSearchListener(searchEventListener);
   }, []);
 
   React.useEffect(() => {
     // componentWillUnmount
     return () => {
-      adjustSpreadsheetTableWidth(true);
       removeSearchListener(searchEventListener);
     };
   }, []);

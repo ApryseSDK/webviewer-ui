@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useStore } from 'react-redux';
 import SearchOverlay from './SearchOverlay';
 import { getOverrideSearchExecution, buildSearchModeArray } from 'helpers/search';
-import { isSpreadsheetEditorMode } from 'helpers/officeEditor';
+import { isSpreadsheetEditorMode } from 'helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import searchTextFullFactory from '../../apis/searchTextFull';
 // Helper functions
 // eslint-disable-next-line custom/use-core-hook-in-components

@@ -14,7 +14,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import CustomElement from 'components/CustomElement';
 
 import Events from 'constants/events';
-import { BASE_SORT_STRATEGIES, OFFICE_EDITOR_SORT_STRATEGIES, NotesPanelSortStrategy } from 'constants/sortStrategies';
+import { BASE_SORT_STRATEGIES, OFFICE_EDITOR_SORT_STRATEGIES, NotesPanelSortStrategy, SPREADSHEET_EDITOR_SORT_STRATEGIES } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
 import { OfficeEditorEditMode } from 'constants/officeEditor';
 import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
@@ -119,9 +119,13 @@ function NotesPanelHeader({
   }, 500);
 
 
-  const getNotesPanelSortStrategies = ({ isOfficeEditorMode, isAnnotationNumberingEnabled }) => {
+  const getNotesPanelSortStrategies = ({ isOfficeEditorMode, isAnnotationNumberingEnabled, isSpreadsheetEditorMode }) => {
     if (isOfficeEditorMode) {
       return OFFICE_EDITOR_SORT_STRATEGIES;
+    }
+
+    if (isSpreadsheetEditorMode) {
+      return SPREADSHEET_EDITOR_SORT_STRATEGIES;
     }
 
     if (isAnnotationNumberingEnabled) {
@@ -131,7 +135,7 @@ function NotesPanelHeader({
     return BASE_SORT_STRATEGIES;
   };
 
-  const sortStrategyItems = getNotesPanelSortStrategies({ isOfficeEditorMode, isAnnotationNumberingEnabled });
+  const sortStrategyItems = getNotesPanelSortStrategies({ isOfficeEditorMode, isAnnotationNumberingEnabled, isSpreadsheetEditorMode });
 
   useEffect(() => {
     if (!sortStrategyItems.includes(sortStrategy)) {
@@ -189,7 +193,7 @@ function NotesPanelHeader({
         <h2 className='main-comment'>{t(notesPanelConfig.title)} {`(${notes.length})`}</h2>
       </DataElementWrapper>
 
-      {!isSpreadsheetEditorMode && <DataElementWrapper
+      {<DataElementWrapper
         className="sort-row"
         dataElement={DataElements.NotesPanel.DefaultHeader.SORT_ROW}
       >

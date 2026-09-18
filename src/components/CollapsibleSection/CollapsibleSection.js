@@ -56,7 +56,7 @@ const CollapsibleSection = (props) => {
     <div className={classNames({ CollapsibleSection: true, [className]: !!className })} role={role}>
       <HeadingTag className="collapsible-page-group-header">
         <button onClick={handleToggle} aria-expanded={isExpanded} aria-controls={ariaControls} aria-label={ariaLabel}>
-          {headerContent}
+          <span className="collapsible-section-header-text">{headerContent}</span>
           <Icon
             className="arrow"
             glyph={`icon-chevron-${isExpanded ? 'up' : 'down'}`}

@@ -60,5 +60,55 @@ describe('LineStyleOptions', () => {
 
       expect(onLineStyleChangeMock).toBeCalled();
     });
+
+    it('shows custom styles that apply to line annotations', () => {
+      const CustomLineStyleOptions = withProviders(LineStyleOptions, {
+        viewer: {
+          customLineStyles: {
+            start: [],
+            middle: [
+              { key: 'line-style', title: 'Line Style', appliesTo: ['line'] },
+              { key: 'shape-style', title: 'Shape Style', appliesTo: ['shape'] },
+            ],
+            end: [],
+          },
+        },
+      });
+
+      render(
+        <CustomLineStyleOptions
+          properties={{ StartLineStyle: 'None', StrokeStyle: 'solid', EndLineStyle: 'None' }}
+          onLineStyleChange={noop}
+        />,
+      );
+
+      expect(screen.getByRole('option', { name: 'Line Style' })).toBeInTheDocument();
+      expect(screen.queryByRole('option', { name: 'Shape Style' })).not.toBeInTheDocument();
+    });
+
+    it('selects custom start and end styles', () => {
+      const onLineStyleChange = jest.fn();
+      const CustomLineStyleOptions = withProviders(LineStyleOptions, {
+        viewer: {
+          customLineStyles: {
+            start: [{ key: 'custom-start', title: 'Custom Start', appliesTo: ['line'] }],
+            middle: [],
+            end: [{ key: 'custom-end', title: 'Custom End', appliesTo: ['line'] }],
+          },
+        },
+      });
+      render(
+        <CustomLineStyleOptions
+          properties={{ StartLineStyle: 'None', StrokeStyle: 'solid', EndLineStyle: 'None' }}
+          onLineStyleChange={onLineStyleChange}
+        />,
+      );
+
+      fireEvent.click(screen.getByRole('option', { name: 'Custom Start' }));
+      fireEvent.click(screen.getByRole('option', { name: 'Custom End' }));
+
+      expect(onLineStyleChange).toHaveBeenCalledWith('start', 'custom-start');
+      expect(onLineStyleChange).toHaveBeenCalledWith('end', 'custom-end');
+    });
   });
 });

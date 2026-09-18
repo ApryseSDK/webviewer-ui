@@ -241,4 +241,40 @@ describe('Sort Strategies', () => {
       expect(separators[0]).toEqual(2);
     });
   });
+
+  describe('sort by spreadsheet position', () => {
+    it('should sort notes without mutating the input array', () => {
+      const spreadsheetNotes = [2, 0, 1].map((sheetIndex) => ({
+        getCustomData: (key) => key === 'spreadsheetSheetIndex' ? sheetIndex : 0,
+      }));
+
+      const sortedNotes = getExtendedSortStrategies().spreadsheetPosition.getSortedNotes(spreadsheetNotes);
+
+      expect(sortedNotes).not.toBe(spreadsheetNotes);
+      expect(sortedNotes).toEqual([spreadsheetNotes[1], spreadsheetNotes[2], spreadsheetNotes[0]]);
+      expect(spreadsheetNotes.map((note) => note.getCustomData('spreadsheetSheetIndex'))).toEqual([2, 0, 1]);
+    });
+
+    it('should render a separator when the sheet changes', () => {
+      const createNote = (sheetIndex) => ({
+        getCustomData: (key) => key === 'spreadsheetSheetIndex' ? String(sheetIndex) : undefined,
+      });
+      const shouldRenderSeparator = getExtendedSortStrategies().spreadsheetPosition.shouldRenderSeparator;
+
+      expect(shouldRenderSeparator(createNote(0), createNote(0))).toBe(false);
+      expect(shouldRenderSeparator(createNote(0), createNote(1))).toBe(true);
+    });
+
+    it.each([undefined, 'invalid'])('should fall back to the first sheet when the sheet index is %s', (sheetIndex) => {
+      const note = {
+        getCustomData: (key) => key === 'spreadsheetSheetIndex' ? sheetIndex : undefined,
+      };
+
+      const t = jest.fn(() => 'Translated Sheet');
+      const separatorContent = getExtendedSortStrategies().spreadsheetPosition.getSeparatorContent(null, note, { t });
+
+      expect(separatorContent).toBe('Translated Sheet 1');
+      expect(t).toHaveBeenCalledWith('option.shared.sheetIndex');
+    });
+  });
 });

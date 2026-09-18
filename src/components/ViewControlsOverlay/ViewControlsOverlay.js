@@ -3,7 +3,7 @@ import ActionButton from 'components/ActionButton';
 import Button from 'components/Button';
 import displayModeObjects from 'constants/displayModeObjects';
 import useCore from 'hooks/useCore';
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useStore } from 'react-redux';
 import selectors from 'selectors';
@@ -14,11 +14,13 @@ import toggleFullscreen from 'helpers/toggleFullscreen';
 import DataElements from 'src/constants/dataElement';
 import { isIE11, isIOS, isIOSFullScreenSupported } from 'helpers/device';
 import { cleanUpMultiViewer, setupMultiViewer } from 'helpers/multiViewerHelper';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 
 function ViewControlsOverlay() {
   const { core } = useCore();
   const [t] = useTranslation();
   const store = useStore();
+  const instanceRoot = useContext(InstanceRootNodeContext);
 
   const [
     totalPages,
@@ -30,6 +32,7 @@ function ViewControlsOverlay() {
     activeDocumentViewerKey,
     isMultiTab,
     isMultiViewerModeAvailable,
+    isContentEditingEnabled,
   ] = useSelector((state) => [
     selectors.getTotalPages(state),
     selectors.getDisplayMode(state),
@@ -40,6 +43,7 @@ function ViewControlsOverlay() {
     selectors.getActiveDocumentViewerKey(state),
     selectors.getIsMultiTab(state),
     selectors.getIsMultiViewerModeAvailable(state),
+    selectors.isContentEditingEnabled(state),
   ]);
 
   const totalPageThreshold = 1000;
@@ -78,6 +82,8 @@ function ViewControlsOverlay() {
     enterReaderMode(store);
   };
 
+  const handleFullScreenClick = useCallback(() => toggleFullscreen(instanceRoot), [instanceRoot]);
+
   if (isDisabled) {
     return null;
   }
@@ -105,7 +111,7 @@ function ViewControlsOverlay() {
         />
         <DataElementWrapper
           className="row"
-          onClick={toggleFullscreen}
+          onClick={handleFullScreenClick}
           dataElement="fullScreenButton"
         >
           <Button
@@ -182,7 +188,7 @@ function ViewControlsOverlay() {
           )}
         </>
       )}
-      {!isReaderMode && (
+      {!isReaderMode && !isContentEditingEnabled && (
         <>
           <DataElementWrapper
             dataElement="rotateHeader"

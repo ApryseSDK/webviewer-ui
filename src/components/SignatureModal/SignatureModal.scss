@@ -26,7 +26,8 @@
 
     @include mobile {
       border-radius: 0;
-      height: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     @include tiny-browser-height {
@@ -34,7 +35,7 @@
       height: 100%;
       position: fixed;
       inset-block-start: 0;
-      grid-template-rows: 100px auto 70px;
+      grid-template-rows: 100px 1fr auto;
       justify-content: normal;
     }
 
@@ -167,12 +168,20 @@
 
     .footer {
       display: flex;
+      flex-direction: column;
       padding: 16px;
-      align-items: center;
+      align-items: flex-end;
       justify-content: flex-end;
       width: 100%;
       box-shadow: inset 0px 1px 0px var(--modal-stroke-and-border);
       margin: 0;
+
+      .signature-disclaimer {
+        font-size: 11px;
+        color: var(--faded-text);
+        margin-bottom: 8px;
+        width: 100%;
+      }
 
       .signature-create {
         @include button-reset;

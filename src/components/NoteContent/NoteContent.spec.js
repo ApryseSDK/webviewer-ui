@@ -1,7 +1,9 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
+import debounce from 'lodash/debounce';
 import mentionsManager from 'helpers/MentionsManager';
+import updateSpreadsheetEditorCommentMessage from 'helpers/spreadsheetEditor/updateSpreadsheetEditorCommentMessage';
 import { testProps, testPropsWithSkipAutoLink } from './NoteContent.stories';
 import NoteContent from './NoteContent';
 import NoteContext from '../Note/Context';
@@ -9,11 +11,28 @@ import initialState from 'src/redux/initialState';
 import useCore from 'hooks/useCore';
 
 jest.mock('lodash/debounce', () => {
-  return (fn) => {
-    const debounced = (...args) => fn(...args);
-    debounced.cancel = jest.fn();
+  const debounceMock = (fn) => {
+    let pending = null;
+    const runPending = () => {
+      const run = pending;
+      pending = null;
+      return run?.();
+    };
+    const debounced = (...args) => {
+      pending = () => fn(...args);
+      if (debounceMock.deferred) {
+        return undefined;
+      }
+      return runPending();
+    };
+    debounced.cancel = jest.fn(() => {
+      pending = null;
+    });
+    debounced.flush = jest.fn(runPending);
     return debounced;
   };
+  debounceMock.deferred = false;
+  return debounceMock;
 });
 
 jest.mock('hooks/useCore', () => {
@@ -46,6 +65,8 @@ jest.mock('helpers/ReplyAttachmentManager', () => ({
 jest.mock('helpers/officeEditorCommentHelper', () => ({
   updateOfficeEditorCommentMessage: jest.fn(() => Promise.resolve(true)),
 }));
+
+jest.mock('helpers/spreadsheetEditor/updateSpreadsheetEditorCommentMessage', () => jest.fn(() => true));
 
 jest.mock('helpers/setAnnotationRichTextStyle', () => jest.fn());
 jest.mock('helpers/setReactQuillContent', () => jest.fn());
@@ -107,6 +128,7 @@ jest.mock('hooks/useCore', () => ({
 const BLACK_HEX = '#000000';
 
 const createAnnotation = ({
+  id = 'annot-1',
   initialContents = 'original note',
   initialMentionData = '',
 } = {}) => {
@@ -114,7 +136,7 @@ const createAnnotation = ({
   let mentionData = initialMentionData;
 
   return {
-    Id: 'annot-1',
+    Id: id,
     Author: 'Author',
     FillColor: { toString: () => BLACK_HEX, toHexString: () => BLACK_HEX },
     TextColor: null,
@@ -190,8 +212,8 @@ const renderWithAutosave = (annotation, contextValue, propOverrides = {}) => {
     },
   });
 
-  return render(
-    <NoteContext.Provider value={contextValue}>
+  const buildTree = (currentContextValue) => (
+    <NoteContext.Provider value={currentContextValue}>
       <AutosaveNoteContent
         annotation={annotation}
         isEditing
@@ -208,6 +230,13 @@ const renderWithAutosave = (annotation, contextValue, propOverrides = {}) => {
       />
     </NoteContext.Provider>
   );
+
+  const renderResult = render(buildTree(contextValue));
+
+  return {
+    ...renderResult,
+    rerenderWithContext: (nextContextValue) => renderResult.rerender(buildTree(nextContextValue)),
+  };
 };
 
 describe('NoteContent Component', () => {
@@ -288,6 +317,7 @@ describe('NoteContent Component', () => {
 
 describe('NoteContent autosave behavior', () => {
   beforeEach(() => {
+    debounce.deferred = false;
     const AnnotationFallback = class {};
     const EventHandler = class {
       triggerAsync = jest.fn(() => Promise.resolve());
@@ -390,6 +420,170 @@ describe('NoteContent autosave behavior', () => {
 
     expect(annotation.setContents).toHaveBeenCalledTimes(2);
     expect(annotation.setContents).toHaveBeenLastCalledWith('edited value');
+  });
+
+  it('autosaves a pending edit when the editor unmounts before the interval elapses', async () => {
+    debounce.deferred = true;
+    const annotation = createAnnotation();
+    const contextValue = createContextValue();
+
+    const { unmount } = renderWithAutosave(annotation, contextValue);
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'edited value' },
+    });
+
+    expect(annotation.setContents).not.toHaveBeenCalledWith('edited value');
+
+    unmount();
+
+    await waitFor(() => {
+      expect(annotation.setContents).toHaveBeenCalledWith('edited value');
+    });
+  });
+
+  it('does not autosave an edit that was cancelled before the interval elapsed', async () => {
+    debounce.deferred = true;
+    const annotation = createAnnotation();
+    const contextValue = createContextValue();
+    const setIsEditing = jest.fn();
+
+    const { unmount } = renderWithAutosave(annotation, contextValue, { setIsEditing });
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'edited value' },
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: /cancel/i }));
+    unmount();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(annotation.setContents).not.toHaveBeenCalledWith('edited value');
+    expect(annotation.setContents).toHaveBeenLastCalledWith('original note');
+    expect(setIsEditing).not.toHaveBeenCalledWith(true, 'edit-1');
+  });
+
+  it('does not autosave a blank comment when cancel empties the editor', async () => {
+    const annotation = createAnnotation({ initialContents: '' });
+    const contextValue = createContextValue();
+
+    renderWithAutosave(annotation, contextValue);
+
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('hello world');
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'hello world' },
+    });
+
+    await waitFor(() => {
+      expect(annotation.setContents).toHaveBeenCalledWith('hello world');
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: /cancel/i }));
+    expect(annotation.setContents).toHaveBeenLastCalledWith('');
+    expect(screen.getByRole('button', { name: /save/i })).toBeDisabled();
+
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('\n');
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: '<p><br></p>' },
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(annotation.setContents).not.toHaveBeenCalledWith('\n');
+    expect(annotation.getContents()).toBe('');
+    expect(screen.getByRole('button', { name: /save/i })).toBeDisabled();
+  });
+
+  it('disables Save when a cancelled empty comment retains Quill markup', async () => {
+    const annotation = createAnnotation({ id: 'empty-quill-comment', initialContents: '' });
+    const contextValue = createContextValue({
+      pendingEditTextMap: {
+        [annotation.Id]: '<p><br></p>',
+      },
+    });
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('\n');
+
+    renderWithAutosave(annotation, contextValue);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeDisabled();
+    });
+  });
+
+  it('disables Save when the editor contains only whitespace markup', async () => {
+    const annotation = createAnnotation({ id: 'whitespace-comment', initialContents: '' });
+    const contextValue = createContextValue({
+      pendingEditTextMap: {
+        [annotation.Id]: '<p>&nbsp; </p>',
+      },
+    });
+
+    renderWithAutosave(annotation, contextValue);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeDisabled();
+    });
+  });
+
+  it('routes autosave through updateSpreadsheetEditorCommentMessage for SSE comments', async () => {
+    const annotation = createAnnotation();
+    const contextValue = createContextValue({ isSpreadsheetEditorCommentAnnotation: true });
+    renderWithAutosave(annotation, contextValue);
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'edited value' },
+    });
+
+    await waitFor(() => {
+      expect(updateSpreadsheetEditorCommentMessage).toHaveBeenCalledWith(
+        expect.objectContaining({ annotation, text: 'edited value' })
+      );
+    });
+
+    expect(annotation.setContents).toHaveBeenCalledWith('edited value');
+  });
+
+  it('keeps the local annotation unchanged when the SSE comment update fails', async () => {
+    updateSpreadsheetEditorCommentMessage.mockReturnValueOnce(false);
+    const annotation = createAnnotation();
+    const contextValue = createContextValue({ isSpreadsheetEditorCommentAnnotation: true });
+    renderWithAutosave(annotation, contextValue);
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'edited value' },
+    });
+
+    await waitFor(() => {
+      expect(updateSpreadsheetEditorCommentMessage).toHaveBeenCalled();
+    });
+
+    expect(annotation.setContents).not.toHaveBeenCalledWith('edited value');
+  });
+
+  it('restores the original baseline after switching annotations before autosave completes', async () => {
+    debounce.deferred = true;
+    const annotation = createAnnotation({ id: 'switching-annotation', initialContents: '' });
+    const contextValue = createContextValue();
+    const { rerenderWithContext } = renderWithAutosave(annotation, contextValue);
+
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('my comment');
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'my comment' },
+    });
+
+    expect(annotation.setContents).not.toHaveBeenCalledWith('my comment');
+
+    // Selecting another annotation unmounts this editor and flushes its pending autosave.
+    rerenderWithContext({ ...contextValue, isSelected: false });
+    await waitFor(() => {
+      expect(annotation.setContents).toHaveBeenCalledWith('my comment');
+    });
+
+    rerenderWithContext({ ...contextValue, isSelected: true });
+    fireEvent.click(screen.getByRole('button', { name: /cancel/i }));
+
+    expect(annotation.setContents).toHaveBeenLastCalledWith('');
+    expect(annotation.getContents()).toBe('');
   });
 
   it('falls back to annotation content and mention data when baseline is unavailable', () => {

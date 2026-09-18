@@ -261,7 +261,8 @@ const defaultOfficeEditorModularComponents = {
   },
   'zoom-container': {
     dataElement: 'zoom-container',
-    type: 'zoom'
+    type: 'zoom',
+    label: 'action.zoom',
   },
   'divider-0.8': {
     dataElement: 'divider-0.8',
@@ -391,7 +392,7 @@ const defaultOfficeEditorModularComponents = {
       'italicButton',
       'underlineButton',
       'strikeoutButton',
-      // 'officeEditorHighlightColorPicker',
+      'officeEditorHighlightColorPicker',
       'divider-0.3',
       'officeEditorColorPicker',
       'divider-0.4',

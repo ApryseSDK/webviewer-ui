@@ -11,7 +11,8 @@ const getFontInfo = async (
   contentEditorRef,
   getFontName
 ) => {
-  const attribute = await contentEditorRef.current.getTextAttributes();
+  const attribute = contentEditorRef.current.getCachedTextAttributes()
+    ?? await contentEditorRef.current.getTextAttributes();
   const color = new instance.Core.Annotations.Color(attribute.fontColor);
 
   const fontObject = {

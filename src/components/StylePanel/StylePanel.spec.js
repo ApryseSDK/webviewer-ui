@@ -10,11 +10,12 @@ import actions from 'actions';
 import viewerReducer from 'reducers/viewerReducer';
 import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 
-const getTool = () => ({
+const getTool = (defaultOverrides = {}) => ({
   name: 'AnnotationCreateRectangle',
   defaults: {
     'StrokeThickness': 1,
     'Opacity': 1,
+    ...defaultOverrides,
   },
   setStyles: jest.fn(),
 });
@@ -100,6 +101,22 @@ describe('StylePanel', () => {
   it('should render correctly when a tool is active', () => {
     renderStylePanel();
     expect(screen.getByText('Rectangle Tool')).toBeInTheDocument();
+  });
+
+  it('should support string fill color defaults without prop type warnings', () => {
+    const customFillColorTool = getTool({ FillColor: '#333333' }); // eslint-disable-line custom/no-hex-colors
+    const getToolSpy = jest.spyOn(core, 'getTool').mockReturnValue(customFillColorTool);
+    const getToolModeSpy = jest.spyOn(core, 'getToolMode').mockReturnValue(customFillColorTool);
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    renderStylePanel();
+
+    const propTypeWarnings = consoleErrorSpy.mock.calls.filter((call) => call.join(' ').includes('Invalid prop `fillColor`'));
+    expect(propTypeWarnings).toHaveLength(0);
+
+    consoleErrorSpy.mockRestore();
+    getToolModeSpy.mockRestore();
+    getToolSpy.mockRestore();
   });
 
   it('should re-render when language changes', async () => {

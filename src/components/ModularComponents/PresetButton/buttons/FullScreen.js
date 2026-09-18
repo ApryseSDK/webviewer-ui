@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
@@ -7,6 +7,7 @@ import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import { isIOS, isIOSFullScreenSupported } from 'helpers/device';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 
 /**
  * A button that toggles fullscreen mode.
@@ -24,6 +25,8 @@ const FullScreenButton = forwardRef((props, ref) => {
   } = props;
   const isFullScreen = useSelector((state) => selectors.isFullScreen(state));
   const label = isFullScreen ? 'action.exitFullscreen' : 'action.enterFullscreen';
+  const instanceRoot = useContext(InstanceRootNodeContext);
+  const onFullScreenClick = () => toggleFullscreen(instanceRoot);
 
   const shouldShow = !isIOS || isIOSFullScreenSupported;
   if (!shouldShow) {
@@ -32,11 +35,11 @@ const FullScreenButton = forwardRef((props, ref) => {
 
   return (
     isFlyoutItem ?
-      <FlyoutItemContainer {...props} label={label} ref={ref} onClick={toggleFullscreen} />
+      <FlyoutItemContainer {...props} label={label} ref={ref} onClick={onFullScreenClick} />
       :
       getPresetButtonDOM({
         buttonType: PRESET_BUTTON_TYPES.FULLSCREEN,
-        onClick: toggleFullscreen,
+        onClick: onFullScreenClick,
         isFullScreen,
         dataElement,
         className,

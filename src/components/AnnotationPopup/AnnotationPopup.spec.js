@@ -207,4 +207,19 @@ describe('AnnotationPopup form field button', () => {
     userEvent.click(screen.getByRole('button', { name: /edit form field/i }));
     expect(onOpenFormField).toHaveBeenCalledTimes(1);
   });
+
+  it('calls onClearAppearanceSignature when the clear signature button is clicked', () => {
+    const onClearAppearanceSignature = jest.fn();
+
+    render(
+      <AnnotationPopupWithProviders
+        {...baseProps}
+        showClearSignatureButton
+        onClearAppearanceSignature={onClearAppearanceSignature}
+      />
+    );
+
+    userEvent.click(screen.getByRole('button', { name: /clear signature/i }));
+    expect(onClearAppearanceSignature).toHaveBeenCalledTimes(1);
+  });
 });

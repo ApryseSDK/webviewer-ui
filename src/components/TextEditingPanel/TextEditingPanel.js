@@ -10,6 +10,8 @@ import Button from 'components/Button';
 import HorizontalDivider from 'components/HorizontalDivider';
 import { COLOR_PALETTE_STYLES } from 'src/constants/commonColors';
 
+const MAX_CONTENT_EDIT_FONT_SIZE = 72;
+
 const TextEditingPanel = ({
   addActiveColor,
   contentSelectMode,
@@ -18,8 +20,10 @@ const TextEditingPanel = ({
   fonts,
   format,
   handleAddLinkToText,
+  handlePrepareAddLinkToText,
   handleColorChange,
   handlePropertyChange,
+  handleZOrderChange,
   handleTextFormatChange,
   rgbColor,
   textEditProperties = {},
@@ -73,12 +77,14 @@ const TextEditingPanel = ({
             textEditFormat={format}
             textEditHandleFormatChange={handleTextFormatChange}
             isDisabled={!contentSelectMode}
+            maxFontSize={MAX_CONTENT_EDIT_FONT_SIZE}
           />
         </div>
         <div className="link-section">
           <Button
             dataElement="textPanelAddLinkButton"
             onClick={handleAddLinkToText}
+            onMouseDown={handlePrepareAddLinkToText}
             img="icon-tool-link"
             title="link.urlLink"
             disabled={disableLinkButton}
@@ -129,6 +135,40 @@ const TextEditingPanel = ({
     </div>
   );
 
+  const zOrderSection = (
+    <div className="text-editing-panel-section">
+      <h2 className="text-editing-panel-heading">{t('stylePanel.headings.zOrder')}</h2>
+      <div className="text-editing-panel-menu-items">
+        <div className='text-editing-panel-menu-items-buttons z-order'>
+          <Button
+            img="icon-layer-send-back"
+            dataElement="textPanelSendToBackButton"
+            onClick={() => handleZOrderChange('sendToBack')}
+            title={t('action.sendToBack')}
+          />
+          <Button
+            img="icon-layer-send-backward"
+            dataElement="textPanelSendBackwardButton"
+            onClick={() => handleZOrderChange('sendBackward')}
+            title={t('action.sendBackward')}
+          />
+          <Button
+            img="icon-layer-send-forward"
+            dataElement="textPanelBringForwardButton"
+            onClick={() => handleZOrderChange('bringForward')}
+            title={t('action.bringForward')}
+          />
+          <Button
+            img="icon-layer-send-front"
+            dataElement="textPanelBringToFrontButton"
+            onClick={() => handleZOrderChange('bringToFront')}
+            title={t('action.bringToFront')}
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   const undoRedoSection = (
     <div className="text-editing-panel-section">
       <div className="text-editing-panel-menu-items">
@@ -159,6 +199,8 @@ const TextEditingPanel = ({
         <HorizontalDivider className='divider' />
         {colorPaletteSection}
         <HorizontalDivider className='divider' />
+        {zOrderSection}
+        <HorizontalDivider className='divider' />
         {undoRedoProperties ? undoRedoSection : undefined }
       </div>
     </>
@@ -173,8 +215,10 @@ TextEditingPanel.propTypes = {
   fonts: PropTypes.arrayOf(PropTypes.string),
   format: PropTypes.object,
   handleAddLinkToText: PropTypes.func,
+  handlePrepareAddLinkToText: PropTypes.func,
   handleColorChange: PropTypes.func,
   handlePropertyChange: PropTypes.func,
+  handleZOrderChange: PropTypes.func,
   handleTextFormatChange: PropTypes.func,
   rgbColor: PropTypes.object,
   textEditProperties: PropTypes.object,

@@ -7,7 +7,12 @@ import * as fireEvent from 'helpers/fireEvent';
 import { setupMultiViewer, cleanUpMultiViewer, finalizeMultiViewerSetup } from 'helpers/multiViewerHelper';
 import loadDocument from 'src/apis/loadDocument';
 import core from 'core';
+import Events from 'constants/events';
 
+const mockEventHandler = {
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
+};
 
 jest.mock('core', () => ({
   closeDocument: jest.fn(),
@@ -28,13 +33,6 @@ jest.mock('core', () => ({
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
 }));
-jest.mock('helpers/loadDocument', () => {
-  const coreModule = require('core');
-  return jest.fn((dispatch, src, options, viewerKey) => {
-    coreModule.loadDocument(src, options, viewerKey);
-    return Promise.resolve();
-  });
-});
 jest.mock('helpers/multiViewerHelper', () => {
   const actions = require('actions').default;
   return {
@@ -51,10 +49,8 @@ jest.mock('helpers/multiViewerHelper', () => {
 jest.mock('helpers/fireEvent', () => ({
   __esModule: true,
   default: jest.fn(),
-  getEventHandler: () => ({
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-  }),
+  fireError: jest.fn(),
+  getEventHandler: () => mockEventHandler,
 }));
 jest.mock('helpers/getHashParameters', () => ({
   __esModule: true,
@@ -684,6 +680,139 @@ describe('TabManager', () => {
 
       expect(core.closeDocument).toHaveBeenCalledWith();
       expect(core.closeDocument).toHaveBeenCalledWith(2);
+    });
+
+    it('should close the progress modal after switching tabs', async () => {
+      const currentTab = {
+        id: 1,
+        src: 'doc1.pdf',
+        options: { filename: 'doc1.pdf' },
+        changes: { annotations: false, hasUnsavedChanges: false },
+        saveCurrentActiveTabState: jest.fn(() => Promise.resolve()),
+      };
+      const nextTab = {
+        id: 2,
+        src: 'doc2.pdf',
+        options: { filename: 'doc2.pdf' },
+        changes: { annotations: false, hasUnsavedChanges: false },
+        load: jest.fn(() => Promise.resolve()),
+      };
+
+      store.dispatch(actions.setTabs([currentTab, nextTab]));
+      store.dispatch(actions.setActiveTab(1));
+
+      await tabManager.setActiveTab(2);
+
+      expect(store.getState().viewer.openElements.progressModal).toBe(false);
+      expect(mockEventHandler.removeEventListener).toHaveBeenCalledWith(Events.LOAD_ERROR, expect.any(Function));
+    });
+
+    it('should remove the password error listener after a captured load', async () => {
+      await tabManager.runWithLoadCapture(jest.fn(() => Promise.resolve()));
+
+      expect(mockEventHandler.removeEventListener).toHaveBeenCalledWith(Events.LOAD_ERROR, expect.any(Function));
+    });
+
+    it('should recover when cancelling password prompts for consecutive protected tabs', async () => {
+      let notifyFirstLoadStarted;
+      const firstLoadStarted = new Promise((resolve) => {
+        notifyFirstLoadStarted = resolve;
+      });
+      const currentTab = {
+        id: 1,
+        src: 'current.pdf',
+        options: { filename: 'current.pdf' },
+        changes: { annotations: false, hasUnsavedChanges: false },
+        saveCurrentActiveTabState: jest.fn(() => Promise.resolve()),
+      };
+      const firstProtectedTab = {
+        id: 2,
+        src: 'protected-one.pdf',
+        options: { filename: 'protected-one.pdf' },
+        changes: { annotations: false, hasUnsavedChanges: false },
+        saveCurrentActiveTabState: jest.fn(() => Promise.resolve()),
+        load: jest.fn(() => {
+          notifyFirstLoadStarted();
+          return new Promise(() => {});
+        }),
+      };
+      const secondProtectedTab = {
+        id: 3,
+        src: 'protected-two.pdf',
+        options: { filename: 'protected-two.pdf' },
+        changes: { annotations: false, hasUnsavedChanges: false },
+        load: jest.fn(() => Promise.resolve()),
+      };
+
+      store.dispatch(actions.setTabs([currentTab, firstProtectedTab, secondProtectedTab]));
+      store.dispatch(actions.setActiveTab(1));
+
+      const initialAddEventListenerCallCount = mockEventHandler.addEventListener.mock.calls.length;
+      tabManager.setActiveTab(2);
+      await firstLoadStarted;
+
+      const firstPasswordErrorHandler = mockEventHandler.addEventListener.mock.calls
+        .slice(initialAddEventListenerCallCount)
+        .find(([event]) => event === Events.LOAD_ERROR)[1];
+      firstPasswordErrorHandler({ type: 'PasswordUserCancelled' });
+
+      await tabManager.setActiveTab(3);
+
+      expect(secondProtectedTab.load).toHaveBeenCalled();
+      expect(store.getState().viewer.activeTab).toBe(3);
+    });
+
+    it('should call onError for consecutive failed tabs added with addTab', async () => {
+      const loadError = { type: 'Unauthorized' };
+      fireEvent.fireError.mockImplementation((error) => {
+        fireEvent.default(Events.LOAD_ERROR, error);
+      });
+      const firstOnError = jest.fn(() => {
+        expect(fireEvent.default).toHaveBeenCalledWith(Events.LOAD_ERROR, loadError);
+      });
+      const secondOnError = jest.fn(() => {
+        expect(fireEvent.default).toHaveBeenCalledWith(Events.LOAD_ERROR, loadError);
+      });
+      core.loadDocument.mockImplementation((src, options) => {
+        options.onError(loadError);
+        return Promise.reject(loadError);
+      });
+
+      await tabManager.addTab('failed-one.pdf', {
+        filename: 'failed-one.pdf',
+        load: true,
+        onError: firstOnError,
+        useDB: false,
+      });
+      const secondTabId = await tabManager.addTab('failed-two.pdf', {
+        filename: 'failed-two.pdf',
+        load: true,
+        onError: secondOnError,
+        useDB: false,
+      });
+
+      expect(firstOnError).toHaveBeenCalledWith(loadError);
+      expect(secondOnError).toHaveBeenCalledWith(loadError);
+      expect(store.getState().viewer.activeTab).toBe(secondTabId);
+    });
+
+    it('should preserve the password error listener after a non-password load error', async () => {
+      const pendingLoad = new Promise(() => {});
+      tabManager.tabLoadPromise = pendingLoad;
+      const initialAddEventListenerCallCount = mockEventHandler.addEventListener.mock.calls.length;
+      tabManager.listenToPasswordError();
+
+      const loadErrorHandler = mockEventHandler.addEventListener.mock.calls
+        .slice(initialAddEventListenerCallCount)
+        .find(([event]) => event === Events.LOAD_ERROR)[1];
+      loadErrorHandler({ type: 'InvalidPDF' });
+
+      expect(tabManager.tabLoadPromise).toBe(pendingLoad);
+
+      loadErrorHandler({ type: 'PasswordUserCancelled' });
+
+      await expect(tabManager.tabLoadPromise).resolves.toBeUndefined();
+      expect(mockEventHandler.addEventListener).toHaveBeenLastCalledWith(Events.LOAD_ERROR, loadErrorHandler);
     });
 
     it('should close progress modal and skip loading when active tab has no primary or secondary document', async () => {

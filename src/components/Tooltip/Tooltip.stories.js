@@ -6,7 +6,6 @@ import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import hotkeysManager, { getCloseToolTipFunc } from 'helpers/hotkeysManager';
 import { within, userEvent, expect } from 'storybook/test';
-import withI18n from '../../../jest/withI18n';
 import i18next from 'i18next';
 import { disableRtlModeParameters } from 'helpers/storybookParams';
 
@@ -74,7 +73,7 @@ StayVisibleOnTooltipHover.play = async ({ canvasElement }) => {
 
 StayVisibleOnTooltipHover.parameters = disableRtlModeParameters;
 
-export const UrduTooltip = withI18n(createTooltip('annotation.signature'));
+export const UrduTooltip = createTooltip('annotation.signature');
 UrduTooltip.play = async ({ canvasElement }) => {
   await i18next.changeLanguage('ur');
   const canvas = within(canvasElement);

@@ -5,6 +5,7 @@ const { checkTypes, TYPES } = window.Core;
 
 export const panelItemType = TYPES.OBJECT({
   dataElement: TYPES.OPTIONAL(TYPES.STRING),
+  useIcon: TYPES.OPTIONAL(TYPES.BOOLEAN),
   icon: TYPES.OPTIONAL(TYPES.STRING),
   label: TYPES.OPTIONAL(TYPES.STRING),
   render: TYPES.MULTI_TYPE(
@@ -19,6 +20,7 @@ export const UNSUPPORTED_PANELS = [panelNames.REDACTION, panelNames.TEXT_EDITING
  * @typedef {Object} TabPanelItemProperties
  * @memberOf UI.Components
  * @property {string} [dataElement] Unique dataElement name for the panel.
+ * @property {boolean} [useIcon] Whether to use an icon for the panel in the Tab Panel. Defaults to true when omitted. If false, the icon is suppressed even when `icon` is provided.
  * @property {string} [icon] Path to an image or base64 data. Can also be the filename of a .svg from the WebViewer icons folder found here:
  *   {@link https://github.com/PDFTron/webviewer-ui/tree/master/assets/icons/ assets/icons/} (i.e. `icon-save` to use `icon-save.svg`).
  * @property {string} [label] The label to be displayed for the panel in the Tab Panel.

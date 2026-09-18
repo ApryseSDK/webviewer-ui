@@ -26,10 +26,6 @@ export function isOfficeEditorMode() {
   return core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR;
 }
 
-export function isSpreadsheetEditorMode() {
-  return core.getDocument()?.getType() === workerTypes.SPREADSHEET_EDITOR;
-}
-
 export const calculateLineSpacing = (lineHeightMultiplier, lineHeight, fontSize) => {
   // if lineHeight is provided, it takes precedence, because the rule sets the line height in points (either exact or at least)
   const lineSpacing = lineHeight ? lineHeight / fontSize : lineHeightMultiplier;

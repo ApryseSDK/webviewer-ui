@@ -14,12 +14,38 @@ import useOnContentEditHistoryUndoRedoChanged from 'hooks/useOnContentEditHistor
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getInstanceNode }  from 'src/helpers/getRootNode';
 import handleSelectionChange from './TextEditingPanelHelpers/handleSelectionChange';
+import updateContentEditingFonts from './TextEditingPanelHelpers/updateContentEditingFonts';
+import applyPropertyChange from './TextEditingPanelHelpers/applyPropertyChange';
 import { css } from '@emotion/react';
 
-const conversionMap = {
-  Font: 'fontName',
-  FontSize: 'fontSize',
-  TextAlign: 'textAlign',
+const hasContentBoxEditorLinkApi = (candidate) => (
+  Boolean(candidate)
+  && typeof candidate.insertHyperlink === 'function'
+);
+
+const resolveContentBoxEditorFromPayload = (payload) => {
+  if (hasContentBoxEditorLinkApi(payload)) {
+    return payload;
+  }
+
+  if (!payload || typeof payload !== 'object') {
+    return null;
+  }
+
+  for (const value of Object.values(payload)) {
+    if (hasContentBoxEditorLinkApi(value)) {
+      return value;
+    }
+
+    if (value && typeof value.getEditor === 'function') {
+      const nestedEditor = value.getEditor();
+      if (hasContentBoxEditorLinkApi(nestedEditor)) {
+        return nestedEditor;
+      }
+    }
+  }
+
+  return null;
 };
 
 const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
@@ -52,12 +78,12 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const DEFAULT_COLOR = new instance.Core.Annotations.Color(COMMON_COLORS['black']);
 
   useDidUpdate(async () => {
-    const supportedFonts = await instance.Core.ContentEdit.getContentEditingFonts();
+    const isInContentEditMode = core.getContentEditManager().isInContentEditMode();
+    if (!isInContentEditMode) {
+      return;
+    }
 
-    setFonts((prevFonts) => [
-      ...prevFonts,
-      ...supportedFonts.filter((font) => !prevFonts.includes(font))
-    ]);
+    await updateContentEditingFonts({ instance, setFonts });
   }, [selectionMode]);
 
   useEffect(() => {
@@ -87,6 +113,9 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
    * @returns {string} the separated font name
    */
   function getFontName(fontString) {
+    if (typeof fontString !== 'string') {
+      return '';
+    }
     const cleanedFontString = fontString.replace(/(Bold|Italic)/gi, '').trim();
     const words = [];
     let currentWord = '';
@@ -108,13 +137,14 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
 
     const separatedFontName = words.join(' ');
 
-    return separatedFontName;
+    return separatedFontName || fontString;
   }
 
   useEffect(() => {
-    const handleEditorStarted = ({ editor }) => {
+    const handleEditorStarted = (payload) => {
+      const editor = resolveContentBoxEditorFromPayload(payload);
       contentEditorRef.current = editor;
-      dispatch(actions.setContentBoxEditor(contentEditorRef.current));
+      dispatch(actions.setContentBoxEditor(editor));
     };
     core.addEventListener('contentBoxEditStarted', handleEditorStarted);
     return () => core.removeEventListener('contentBoxEditStarted', handleEditorStarted);
@@ -190,6 +220,20 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     };
   }, [isDisabled, isOpen]);
 
+  useEffect(() => {
+    // Undo/redo doesn't reselect the annotation, so when there is no active content box editor
+    // session the panel must re-fetch the selected annotation's attributes itself.
+    const handleUndoRedoStatusChanged = () => {
+      if (!contentEditorRef.current && selectedContentBox && core.getContentEditManager().isInContentEditMode()) {
+        setContentEditPanelProperties(selectedContentBox);
+      }
+    };
+
+    instance.Core.ContentEdit.addEventListener('undoRedoStatusChanged', handleUndoRedoStatusChanged);
+    return () => {
+      instance.Core.ContentEdit.removeEventListener('undoRedoStatusChanged', handleUndoRedoStatusChanged);
+    };
+  }, [selectedContentBox, isDisabled, isOpen]);
 
   const handlePropertyChange = (property, value) => {
     if (annotationRef.current) {
@@ -203,19 +247,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
       });
     }
 
-    if (selectedContentBox) {
-      switch (property) {
-        case 'Font':
-          instance.Core.ContentEdit.setContentFont(selectedContentBox, value);
-          break;
-        case 'FontSize':
-          instance.Core.ContentEdit.setContentFontSize(selectedContentBox, value);
-          break;
-        case 'TextAlign':
-          instance.Core.ContentEdit.alignContents(selectedContentBox, value);
-          break;
-      }
-    }
+    applyPropertyChange({ instance, selectedContentBox, property, value });
 
     if (property === 'TextAlign') {
       property = 'textAlign';
@@ -224,8 +256,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
         [property]: value
       }));
     }
-
-    instance.Core.ContentEdit.setTextAttributes({ [conversionMap[property]]: value });
   };
 
   const handleTextFormatChange = (updatedDecorator) => () => {
@@ -254,8 +284,22 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
 
   const handleAddLinkToText = async () => {
     if (contentEditorRef.current) {
+      dispatch(actions.openElement(DataElements.LINK_MODAL));
+    }
+  };
+
+  const handlePrepareAddLinkToText = async (e) => {
+    if (e?.type !== 'touchstart') {
+      e?.preventDefault();
+    }
+
+    if (contentEditorRef.current?.prepareHyperLinkSelection) {
+      await contentEditorRef.current.prepareHyperLinkSelection();
+      return;
+    }
+
+    if (contentEditorRef.current?.loadHyperLinkURL) {
       await contentEditorRef.current.loadHyperLinkURL();
-      dispatch(actions.openElement(DataElements.CONTENT_EDIT_LINK_MODAL));
     }
   };
 
@@ -267,9 +311,10 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
       const selectionLength = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
       const isParagraphEdit = selectionLength && contentEditorRef.current;
       if (isParagraphEdit) {
-        const selection = await contentEditorRef.current.getCurrentSelection();
-        const length = selection.endIndex - selection.startIndex;
-        const isValidSelection = length && length > 0;
+        const selection = contentEditorRef.current.getCurrentSelection();
+        const lastKnownSelection = contentEditorRef.current.getLastKnownSelection?.();
+        const activeSelection = (selection.endIndex - selection.startIndex) > 0 ? selection : lastKnownSelection;
+        const isValidSelection = activeSelection && (activeSelection.endIndex - activeSelection.startIndex) > 0;
         if (isValidSelection) {
           instance.Core.ContentEdit.setTextColor(selectedContentBox, textColor);
         } else {
@@ -286,6 +331,28 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     if (rgbColor?.toHexString) {
       const arrayOfColors = new Set([...customColors, rgbColor.toHexString().toLowerCase()]);
       dispatch(actions.setCustomColors(COLOR_PALETTE_STYLES.TextColor.type, [...arrayOfColors]));
+    }
+  };
+
+  const handleZOrderChange = (direction) => {
+    if (selectedContentBox) {
+      const editManager = core.getDocumentViewer().getContentEditManager();
+      switch (direction) {
+        case 'bringToFront':
+          editManager.sendToFront(selectedContentBox.getCustomData('contentEditBoxId'));
+          break;
+        case 'sendToBack':
+          editManager.sendToBack(selectedContentBox.getCustomData('contentEditBoxId'));
+          break;
+        case 'bringForward':
+          editManager.bringForward(selectedContentBox.getCustomData('contentEditBoxId'));
+          break;
+        case 'sendBackward':
+          editManager.bringBackward(selectedContentBox.getCustomData('contentEditBoxId'));
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -317,7 +384,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
       const attribs = await editManager.getContentBoxAttributes(contentBoxId);
       const fontName = getFontName(attribs.fontName);
       const { bold, italic, underline, fontColors, fontSize, textAlign, strike } = attribs;
-      const color = new instance.Core.Annotations.Color(fontColors[0].fontColor);
+      const color = fontColors?.length > 0 ? new instance.Core.Annotations.Color(fontColors[0].fontColor) : DEFAULT_COLOR;
 
       if (!fonts.includes(fontName)) {
         setFonts([...fonts, fontName]);
@@ -381,11 +448,13 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
         imageSelectMode={selectionMode === instance.Core.ContentEdit.Types.OBJECT}
         textEditProperties={textEditProperties}
         handlePropertyChange={handlePropertyChange}
+        handleZOrderChange={handleZOrderChange}
         format={format}
         handleTextFormatChange={handleTextFormatChange}
         handleColorChange={handleColorChange}
         fonts={fonts}
         handleAddLinkToText={handleAddLinkToText}
+        handlePrepareAddLinkToText={handlePrepareAddLinkToText}
         disableLinkButton={!contentEditorRef.current}
         addActiveColor={handleAddActiveColor}
         rgbColor={rgbColor}

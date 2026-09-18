@@ -1,6 +1,7 @@
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import core from 'core';
+import polylineToolNames from 'constants/polylineToolNames';
 
 export default function fireActiveDocumentViewerChanged(previousDocumentViewerKey, activeDocumentViewerKey) {
 
@@ -13,15 +14,7 @@ export default function fireActiveDocumentViewerChanged(previousDocumentViewerKe
       const toolsToReset = [
         window.Core.Tools.ToolNames['CROP'],
         window.Core.Tools.ToolNames['SNIPPING'],
-        window.Core.Tools.ToolNames['POLYLINE'],
-        window.Core.Tools.ToolNames['POLYLINE2'],
-        window.Core.Tools.ToolNames['POLYLINE3'],
-        window.Core.Tools.ToolNames['POLYLINE4'],
-        window.Core.Tools.ToolNames['ARC'],
-        window.Core.Tools.ToolNames['ARC2'],
-        window.Core.Tools.ToolNames['ARC3'],
-        window.Core.Tools.ToolNames['ARC4'],
-        window.Core.Tools.ToolNames['CALLOUT'],
+        ...polylineToolNames
       ];
 
       toolsToReset.forEach((toolName) => {

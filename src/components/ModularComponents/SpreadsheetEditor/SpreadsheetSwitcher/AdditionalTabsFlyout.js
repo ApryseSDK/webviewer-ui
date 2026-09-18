@@ -1,6 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import selectors from 'selectors';
+import { useDispatch } from 'react-redux';
 import actions from 'actions';
 import PropTypes from 'prop-types';
 
@@ -8,13 +7,10 @@ const AdditionalTabsFlyout = (props) => {
   const {
     id = '',
     additionalTabs,
-    tabsForReference,
     onClick,
     activeItem,
   } = props;
   const dispatch = useDispatch();
-
-  const currentFlyout = useSelector((state) => selectors.getFlyout(state, id));
 
   useLayoutEffect(() => {
     const noteStateFlyout = {
@@ -34,12 +30,8 @@ const AdditionalTabsFlyout = (props) => {
         };
       })
     };
-    if (!currentFlyout) {
-      dispatch(actions.addFlyout(noteStateFlyout));
-    } else {
-      dispatch(actions.updateFlyout(noteStateFlyout.dataElement, noteStateFlyout));
-    }
-  }, [tabsForReference, activeItem]);
+    dispatch(actions.updateFlyout(noteStateFlyout.dataElement, noteStateFlyout));
+  }, [additionalTabs, activeItem, dispatch, id, onClick]);
 
   return null;
 };
@@ -51,11 +43,9 @@ AdditionalTabsFlyout.propTypes = {
     sheetIndex: PropTypes.number,
     disabled: PropTypes.bool,
   })),
-  tabsForReference: PropTypes.array,
   onClick: PropTypes.func,
   activeItem: PropTypes.string,
 };
 
 export default AdditionalTabsFlyout;
-
 

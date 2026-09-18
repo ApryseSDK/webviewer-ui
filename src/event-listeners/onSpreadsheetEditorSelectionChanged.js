@@ -13,13 +13,15 @@ export default (dispatch) => (event) => {
   const spreadsheetEditorHistoryManager = spreadsheetEditorManager.getSpreadsheetEditorHistoryManager();
   const activeCellRange = event.getSelectionRangeDisplayValue();
   const clipboard = event.getClipboard();
-  // Get cellRange returns the top-left and bottom-right cell of the current selection
-  // Top left will be the cell containing the active cell a value or formula
+
   const [topLeft, bottomRight] = event.getBoundingCells();
-  const { cellFormula, stringCellValue } = topLeft;
-  const { rowIndex: topLeftRow, columnIndex: topLeftColumn, cellType  } = topLeft;
-  // if bottomRight is undefined, then the selection is a single cell so we can repeat the topLeft values
-  const { rowIndex: bottomRightRow, columnIndex: bottomRightColumn } = bottomRight ?? topLeft;
+  const { cellFormula, stringCellValue, cellType } = topLeft;
+
+  const cellRange = event.getCellRange();
+  const topLeftRow = cellRange['firstRow'];
+  const topLeftColumn = cellRange['firstColumn'];
+  const bottomRightRow = cellRange['lastRow'];
+  const bottomRightColumn = cellRange['lastColumn'];
   const cellStyle = topLeft.getStyle() || defaultCellStyle;
 
   const isSingleCell = !bottomRight;

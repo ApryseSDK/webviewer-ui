@@ -34,11 +34,9 @@ const CustomStampModal = () => {
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CUSTOM_STAMP_MODAL));
   const userName = useSelector((state) => selectors.getUserName(state));
-  const featureFlags = useSelector((state) => selectors.getFeatureFlags(state));
 
   const isStampTextInputEmpty = !stamp.title || stamp.title.trim() === '';
-  const isCategoryInputEmpty = !stamp.category || stamp.category.trim() === '';
-  const isCreateDisabled = isStampTextInputEmpty || (featureFlags.newStampPanel && isCategoryInputEmpty);
+  const isCreateDisabled = isStampTextInputEmpty;
 
   const updateOverflow = () => {
     const currentModalOverlayElement = customStampModalOverlayRef.current;

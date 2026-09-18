@@ -11,7 +11,8 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import range from 'lodash/range';
 import getRootNode from 'helpers/getRootNode';
 import { workerTypes } from 'constants/types';
-import { isOfficeEditorMode, isSpreadsheetEditorMode } from './officeEditor';
+import { isOfficeEditorMode } from './officeEditor';
+import { isSpreadsheetEditorMode } from './spreadsheetEditor/isSpreadsheetEditorMode';
 import DataElements from 'src/constants/dataElement';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getDownloadFilename, getDocumentFileExtension } from './downloadHelper';
@@ -94,6 +95,14 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     return;
   }
 
+  // Content Edit boxes must not be present while the document is downloaded, so end the mode
+  // beforehand and resume it afterwards if it was previously active.
+  const contentEditManager = core.getDocumentViewer(documentViewerKey).getContentEditManager();
+  const wasInContentEditMode = contentEditManager.isInContentEditMode();
+  if (wasInContentEditMode) {
+    await contentEditManager.endContentEditMode({ 'preserveHistory': true });
+  }
+
   // Internal lifecycle signal: intentionally bypasses fireEvent/UI.Events and uses window dispatch directly.
   window.dispatchEvent(new CustomEvent(BEFORE_FILE_DOWNLOAD, {
     detail: { documentViewerKey },
@@ -101,6 +110,9 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
 
   // Internal lifecycle signal: intentionally bypasses fireEvent/UI.Events and uses window dispatch directly.
   const dispatchAfterFileDownload = () => {
+    if (wasInContentEditMode) {
+      contentEditManager.startContentEditMode().catch((error) => console.warn(error));
+    }
     window.dispatchEvent(new CustomEvent(AFTER_FILE_DOWNLOAD, {
       detail: { documentViewerKey },
     }));
@@ -663,7 +675,12 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     };
 
     const signatureWidgets = core.getAnnotationsList().filter((a) => a instanceof window.Core.Annotations.SignatureWidgetAnnotation);
-    if (signatureWidgets.some((a) => a.isSignedByAppearance())) {
+    const hasCryptographicSignature = (
+      await Promise.all(
+        signatureWidgets.map((signatureWidget) => signatureWidget.hasCryptographicSignature())
+      )
+    ).some(Boolean);
+    if (hasCryptographicSignature) {
       clonedOptions.flags |= window.Core.SaveOptions.INCREMENTAL;
     }
 

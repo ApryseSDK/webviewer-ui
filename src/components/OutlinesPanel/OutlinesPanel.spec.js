@@ -229,6 +229,35 @@ describe('OutlinesPanel basic tests', () => {
     expect(screen.queryByRole('button', { name: 'Grandchild' })).not.toBeInTheDocument();
   });
 
+  it('keeps nested checkboxes indented with their outlines in edit mode', async () => {
+    core.getType.mockReturnValue(workerTypes.PDF);
+    const editableStore = configureStore({
+      reducer: rootReducer(),
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
+    });
+    const outlines = createOutlines([{
+      name: 'Root',
+      children: [{ name: 'Child', children: [] }],
+    }]);
+    editableStore.dispatch(actions.setOutlines(outlines, 1));
+    editableStore.dispatch(actions.setOutlinesStateMap('0', { isExpanded: true }, 1));
+
+    render(
+      <Provider store={editableStore}>
+        <OutlinesPanel isTest />
+      </Provider>
+    );
+
+    await userEvent.click(await screen.findByRole('button', { name: 'Edit Outlines' }));
+
+    const rootCheckbox = screen.getByRole('checkbox', { name: 'Root' });
+    const childCheckbox = screen.getByRole('checkbox', { name: 'Child' });
+    expect(rootCheckbox).toBeVisible();
+    expect(childCheckbox).toBeVisible();
+    const getCheckboxOffset = (checkbox) => getComputedStyle(checkbox.closest('.checkbox')).getPropertyValue('--checkbox-left');
+    expect(getCheckboxOffset(childCheckbox)).toBe(getCheckboxOffset(rootCheckbox));
+  });
+
   it('respects an explicitly collapsed outline when auto-expand is enabled', async () => {
     const autoExpandStore = configureStore({
       reducer: rootReducer(),

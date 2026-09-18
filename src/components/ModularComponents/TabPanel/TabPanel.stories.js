@@ -110,7 +110,7 @@ const mockState = {
         dataElement: 'label1',
         title: 'Tab 1',
         label: 'Tab 1',
-        render: {},
+        render: () => <div>Tab 1 content</div>,
       },
       {
         dataElement: 'label2',
@@ -149,6 +149,7 @@ const mockState = {
     lastPickedToolGroup: '',
     activeTabInPanel: {
       'tabPanel': 'thumbnailsPanel',
+      'tabPanelLabelsOnly': 'label1',
     },
     flyoutMap: {},
     customPanels: [],

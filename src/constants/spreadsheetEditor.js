@@ -1,6 +1,7 @@
 import DataElements from './dataElement';
 
 export const SpreadsheetEditorEditMode = window.Core.SpreadsheetEditor.SpreadsheetEditorEditMode;
+export const SpreadsheetCommentState = window.Core.SpreadsheetEditor.SpreadsheetCommentState;
 
 export const AVAILABLE_FONT_SIZES = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
 
@@ -68,10 +69,14 @@ export const SPREADSHEET_ROW_KEY = 'spreadsheetRow';
 export const SPREADSHEET_COLUMN_KEY = 'spreadsheetColumn';
 export const SPREADSHEET_SHEET_NAME_KEY = 'spreadsheetSheetName';
 export const SPREADSHEET_CELL_KEY = 'spreadsheetCell';
+export const SPREADSHEET_COMMENT_STATE_KEY = 'spreadsheetCommentState';
 
 export const ELEMENTS_TO_DISABLE_IN_SPREADSHEET_EDITOR = [
   DataElements.CONTEXT_MENU_POPUP,
   DataElements.ANNOTATION_NOTE_CONNECTOR_LINE,
+  DataElements.ANNOTATION_POPUP,
+  DataElements.NOTE_MULTI_SELECT_MODE_BUTTON,
+  DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON,
 ];
 
 export const ELEMENTS_TO_ENABLE_IN_SPREADSHEET_EDITOR = [

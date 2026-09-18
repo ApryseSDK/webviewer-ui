@@ -103,6 +103,34 @@ TextSignaturePanel.play = async ({ canvasElement }) => {
   expect(clearButton).toBeInTheDocument();
 };
 
+const drawSignatureStoreWithDisclaimer = configureStore({
+  reducer: () => ({
+    viewer: {
+      ...initialState.viewer,
+      tab: {
+        signatureModal: 'textSignaturePanelButton',
+      },
+      signatureDisclaimerEnabled: true,
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  })
+});
+
+export const TextSignaturePanelWithDisclaimer = () => (
+  <Provider store={drawSignatureStoreWithDisclaimer}>
+    <SignatureModalComponent isOpen />
+  </Provider>
+);
+
+TextSignaturePanelWithDisclaimer.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  const disclaimer = await canvas.findByText(getTranslatedText('message.signatureDisclaimer'));
+  expect(disclaimer).toBeInTheDocument();
+};
+
 const drawSignatureStoreWithInitials = configureStore({
   reducer: () => ({
     viewer: {

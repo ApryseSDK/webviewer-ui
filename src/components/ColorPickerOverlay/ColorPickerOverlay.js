@@ -18,6 +18,7 @@ import './ColorPickerOverlay.scss';
 
 const propTypes = {
   color: PropTypes.object,
+  colorPaletteOverride: PropTypes.arrayOf(PropTypes.string),
   onStyleChange: PropTypes.func,
   overlayDataElement: PropTypes.string,
   toggleButtonDataElement: PropTypes.string,
@@ -26,6 +27,7 @@ const propTypes = {
 
 const ColorPickerOverlay = ({
   color,
+  colorPaletteOverride,
   onStyleChange,
   onDefaultColorReset,
   overlayDataElement,
@@ -90,6 +92,7 @@ const ColorPickerOverlay = ({
     >
       <ColorPalette
         color={color}
+        overridePalette2={colorPaletteOverride}
         property='TextColor'
         onStyleChange={onStyleChange}
         onDefaultColorReset={onDefaultColorReset}

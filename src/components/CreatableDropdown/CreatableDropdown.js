@@ -16,6 +16,7 @@ const CreatableDropdown = ({
   isClearable,
   isValid,
   messageText,
+  labelledById,
 }) => {
   const { t } = useTranslation();
 
@@ -53,11 +54,25 @@ const CreatableDropdown = ({
       ...provided,
       padding: '6px',
     }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      padding: 0,
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      padding: 0,
+      marginInlineEnd: '6px',
+      color: 'var(--text-color)',
+      '&:hover': {
+        color: 'var(--text-color)',
+      },
+    }),
   };
 
   return (
     <ReactSelectWebComponentProvider>
       <CreatableSelect
+        classNamePrefix="creatable-dropdown"
         isClearable={isClearable}
         onChange={onChange}
         onInputChange={onInputChange}
@@ -68,7 +83,8 @@ const CreatableDropdown = ({
         value={value}
         styles={customStyles}
         isValid={isValid}
-        components={{ IndicatorsContainer: ReactSelectCustomArrowIndicator }}
+        aria-labelledby={labelledById}
+        components={{ DropdownIndicator: ReactSelectCustomArrowIndicator, IndicatorSeparator: null }}
       />
       {messageText ? <div className="messageText">{messageText}</div> : undefined}
     </ReactSelectWebComponentProvider>

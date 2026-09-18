@@ -1,14 +1,15 @@
 import core from 'core';
 import actions from 'actions';
 import getCurrentT from 'helpers/getCurrentT';
-import { getDefaultStampCategory } from 'helpers/stamps';
+import { getCustomStampCategoryFromAnnotation } from 'helpers/stamps';
 
 const onRubberStampsUpdated = (dispatch) => async () => {
   const boundTranslator = getCurrentT();
   const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
-  const annotations = await rubberStampTool.getCustomStamps();
-  const customStampCategories = annotations.reduce((categories, annotation) => {
-    const category = annotation['category'] || getDefaultStampCategory();
+
+  const customAnnotations = await rubberStampTool.getCustomStamps();
+  const customStampCategories = customAnnotations.reduce((categories, annotation) => {
+    const category = getCustomStampCategoryFromAnnotation(annotation);
     if (!categories.includes(category)) {
       categories.push(category);
     }

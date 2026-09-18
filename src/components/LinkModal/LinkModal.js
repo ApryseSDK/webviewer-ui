@@ -11,6 +11,7 @@ import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import ModalWrapper from 'components/ModalWrapper';
 import DataElementWrapper from 'components/DataElementWrapper';
+import { getIsInContentEditMode, getPrepopulatedLinkURL } from './linkModalUtils';
 
 import './LinkModal.scss';
 
@@ -26,6 +27,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
     isRightClickAnnotationPopupEnabled,
     activeDocumentViewerKey,
     selectedTab,
+    contentBoxEditor,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.LINK_MODAL),
     selectors.isElementOpen(state, DataElements.LINK_MODAL),
@@ -36,6 +38,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
     selectors.isRightClickAnnotationPopupEnabled(state),
     selectors.getActiveDocumentViewerKey(state),
     selectors.getSelectedTab(state, 'linkModal'),
+    selectors.getContentBoxEditor(state),
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -45,6 +48,11 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
 
   const [url, setURL] = useState('');
   const [pageLabel, setPageLabel] = useState('');
+  const canInsertContentEditHyperlink = Boolean(
+    contentBoxEditor
+    && typeof contentBoxEditor.insertHyperlink === 'function'
+  );
+  const isInContentEditMode = getIsInContentEditMode(core, contentBoxEditor);
   const isRightClickedAnnotationSelected = core.isAnnotationSelected(rightClickedAnnotation, activeDocumentViewerKey);
   const selectedAnnotations = core.getSelectedAnnotations(activeDocumentViewerKey);
   const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
@@ -52,7 +60,15 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.LINK_MODAL));
     setURL('');
-    core.setToolMode(defaultTool);
+    if (isInContentEditMode) {
+      try {
+        contentBoxEditor?.blur?.();
+      } catch (error) {
+        console.error('Failed to blur content box editor while closing link modal.', error);
+      }
+    } else {
+      core.setToolMode(defaultTool);
+    }
     setRightClickedAnnotation(null);
   };
 
@@ -88,7 +104,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
               Math.min(quad.y1, quad.y3),
               Math.abs(quad.x1 - quad.x3),
               Math.abs(quad.y1 - quad.y3),
-              parseInt(currPageNumber)
+              Number.parseInt(currPageNumber, 10)
             )
           );
         });
@@ -148,7 +164,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
     annotManager.groupAnnotations(highlight, linkAnnotArray, activeDocumentViewerKey);
   };
 
-  const addURLLink = (e) => {
+  const addURLLink = async (e) => {
     e.preventDefault();
 
     if (!url.length) {
@@ -162,64 +178,99 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
       urlWithProtocol = url;
     }
 
-    const action = new window.Core.Actions.URI({ uri: urlWithProtocol });
-    const links = createLink(action);
+    try {
+      if (isInContentEditMode) {
+        if (!canInsertContentEditHyperlink) {
+          console.error('Content box editor is unavailable for URL link insertion.');
+          return;
+        }
+        await contentBoxEditor.insertHyperlink(urlWithProtocol);
+        return;
+      }
 
-    let pageNumbersToDraw = links.map((link) => link.PageNumber);
-    pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
-    pageNumbersToDraw.forEach((pageNumberToDraw) => {
-      core.drawAnnotations(pageNumberToDraw, null, true, undefined, activeDocumentViewerKey);
-    });
+      const action = new window.Core.Actions.URI({ uri: urlWithProtocol });
+      const links = createLink(action);
 
-    closeModal();
+      let pageNumbersToDraw = links.map((link) => link.PageNumber);
+      pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
+      pageNumbersToDraw.forEach((pageNumberToDraw) => {
+        core.drawAnnotations(pageNumberToDraw, null, true, undefined, activeDocumentViewerKey);
+      });
+    } catch (error) {
+      console.error('Failed to create link with URL:', urlWithProtocol, error);
+    } finally {
+      closeModal();
+    }
   };
 
   const isValidPageLabel = () => {
     return pageLabels?.includes(pageLabel);
   };
 
-  const addPageLink = (e) => {
+  const addPageLink = async (e) => {
     e.preventDefault();
 
-    const Dest = window.Core.Actions.GoTo.Dest;
+    try {
+      if (isInContentEditMode) {
+        if (!canInsertContentEditHyperlink) {
+          console.error('Content box editor is unavailable for page link insertion.');
+          return;
+        }
+        const targetPageIndex = pageLabels?.indexOf(pageLabel);
+        if (targetPageIndex === undefined || targetPageIndex < 0) {
+          console.error('Invalid page label for content edit link:', pageLabel);
+          return;
+        }
+        const targetPageNumber = targetPageIndex + 1;
+        await contentBoxEditor.insertHyperlink({ type: 'page', pageNumber: targetPageNumber });
+        return;
+      }
 
-    const options = { dest: new Dest({ page: pageLabels.indexOf(pageLabel) + 1 }) };
-    const action = new window.Core.Actions.GoTo(options);
+      const Dest = window.Core.Actions.GoTo.Dest;
 
-    const links = createLink(action);
+      const options = { dest: new Dest({ page: pageLabels.indexOf(pageLabel) + 1 }) };
+      const action = new window.Core.Actions.GoTo(options);
 
-    let pageNumbersToDraw = links.map((link) => link.PageNumber);
-    pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
-    pageNumbersToDraw.forEach((pageNumberToDraw) => {
-      core.drawAnnotations(pageNumberToDraw, null, true, undefined, activeDocumentViewerKey);
-    });
+      const links = createLink(action);
 
-    closeModal();
+      let pageNumbersToDraw = links.map((link) => link.PageNumber);
+      pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
+      pageNumbersToDraw.forEach((pageNumberToDraw) => {
+        core.drawAnnotations(pageNumberToDraw, null, true, undefined, activeDocumentViewerKey);
+      });
+    } catch (error) {
+      console.error('Failed to create page link:', error);
+    } finally {
+      closeModal();
+    }
   };
 
   useEffect(() => {
-    if (isOpen) {
-      //  prepopulate URL if URL is selected
-      const selectedText = core.getSelectedText(activeDocumentViewerKey);
-      if (selectedText) {
-        const urlRegex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
-        const urls = selectedText.match(urlRegex);
-        if (urls && urls.length > 0) {
-          setURL(urls[0]);
-        }
-      }
-
-      setPageLabel(pageLabels?.length > 0 ? pageLabels[0] : '1');
+    if (!isOpen) {
+      return;
     }
-  }, [totalPages, isOpen]);
+
+    const prepopulatedURL = getPrepopulatedLinkURL(
+      core,
+      activeDocumentViewerKey,
+      isInContentEditMode,
+      contentBoxEditor,
+    );
+    setURL(prepopulatedURL);
+    setPageLabel(pageLabels?.length > 0 ? pageLabels[0] : '1');
+  }, [activeDocumentViewerKey, contentBoxEditor, isInContentEditMode, isOpen, pageLabels, totalPages]);
 
   useEffect(() => {
-    if (tabSelected === 'PageNumberPanelButton' && isOpen) {
+    if (!isOpen) {
+      return;
+    }
+
+    if (tabSelected === 'PageNumberPanelButton') {
       pageLabelInput.current.focus();
-    } else if (tabSelected === 'URLPanelButton' && isOpen) {
+    } else {
       urlInput.current.focus();
     }
-  }, [tabSelected, isOpen, pageLabelInput, urlInput]);
+  }, [isInContentEditMode, tabSelected, isOpen, pageLabelInput, urlInput]);
 
   useEffect(() => {
     core.addEventListener('documentUnloaded', closeModal);

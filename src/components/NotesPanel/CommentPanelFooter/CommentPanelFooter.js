@@ -8,6 +8,7 @@ import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import { EditingStreamType } from 'constants/officeEditor';
 import TextButton from 'components/TextButton';
+import getCommentCellLocation from 'src/helpers/spreadsheetEditor/getCommentCellLocation';
 
 const CommentPanelFooter = ({ dataElement, existingCommentAtSelectedCell }) => {
   const [t] = useTranslation();
@@ -15,14 +16,22 @@ const CommentPanelFooter = ({ dataElement, existingCommentAtSelectedCell }) => {
   const dispatch = useDispatch();
   const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
   const activeCellRange = useSelector(selectors.getActiveCellRange);
+  const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isOfficeEditorCommentPanel = dataElement === DataElements.OFFICE_EDITOR_COMMENT_PANEL;
   const isSpreadsheetEditorCommentPanel = dataElement === DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL;
 
-  // TODO: Replace this stub with a call to the real Core reply API (CommentManager.addReply)
-  // once it is merged.
   const handleAddReplyToExistingComment = useCallback((existingComment) => {
-    console.warn('Add reply is not yet implemented; the addReply API has not been merged.', existingComment);
-  }, []);
+    if (!existingComment) {
+      console.warn('Failed to add a reply. No existing comment found.');
+      return;
+    }
+
+    // Just select the thread and focus its reply input; the actual reply annotation
+    // is only created once the user submits text, so repeated clicks can't spam replies.
+    core.deselectAllAnnotations();
+    core.selectAnnotation(existingComment, activeDocumentViewerKey);
+    dispatch(actions.triggerNoteEditing());
+  }, [dispatch, core, activeDocumentViewerKey]);
 
   const handleAddSpreadsheetComment = useCallback(() => {
     if (existingCommentAtSelectedCell) {
@@ -30,31 +39,28 @@ const CommentPanelFooter = ({ dataElement, existingCommentAtSelectedCell }) => {
       return;
     }
 
-    // When multiple cells are selected, activeCellRange is a range string (e.g. "A1:C3")
-    // with the top-left cell listed first, so the comment always lands on the top-left cell.
     const spreadsheetEditorManager = core.getDocumentViewer()?.getSpreadsheetEditorManager();
-    const workbook = spreadsheetEditorManager?.getWorkbook();
-    const sheetName = workbook?.getSheetAt(workbook.activeSheetIndex)?.name;
-    const cellString = activeCellRange?.split(':')[0];
-    if (!sheetName || !cellString) {
+    const commentCellLocation = getCommentCellLocation(spreadsheetEditorManager, activeCellRange);
+    if (!commentCellLocation) {
+      console.warn('Could not get comment cell location. No action performed.');
       return;
     }
 
     try {
       const commentManager = spreadsheetEditorManager?.getCommentManager?.();
-      const comment = commentManager.addComment('', { sheetName, cellString });
+      const comment = commentManager.addComment('', commentCellLocation);
 
       const annotation = core.getAnnotationById(comment.getId());
       if (!annotation) {
         return;
       }
       core.deselectAllAnnotations();
-      core.selectAnnotation(annotation);
+      core.selectAnnotation(annotation, activeDocumentViewerKey);
       dispatch(actions.triggerNoteEditing());
     } catch (error) {
       console.warn('Failed to add comment:', error);
     }
-  }, [existingCommentAtSelectedCell, handleAddReplyToExistingComment, activeCellRange, dispatch, core]);
+  }, [existingCommentAtSelectedCell, handleAddReplyToExistingComment, activeCellRange, dispatch, core, activeDocumentViewerKey]);
 
   const handleAddComment = useCallback(() => {
     if (isOfficeEditorCommentPanel) {

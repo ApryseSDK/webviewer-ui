@@ -27,7 +27,6 @@ const propTypes = {
   onCancel: PropTypes.func,
   textColor: PropTypes.string,
   childrenCount: PropTypes.number,
-  nestingLevel: PropTypes.number,
   setMultiSelected: PropTypes.func,
 };
 
@@ -44,7 +43,6 @@ const OutlineContent = ({
   onCancel,
   textColor,
   childrenCount,
-  nestingLevel,
   setMultiSelected,
 }) => {
   const outlineContext = useContext(OutlineContext);
@@ -227,7 +225,7 @@ const OutlineContent = ({
           expanded={isExpanded}
           setIsExpandedHandler={updateIsExpanded}
           childrenCount={childrenCount}
-          nestingLevel={nestingLevel}
+          nestingLevel={0}
         />
       }
 

@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import LayersPanel from './LayersPanel';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
+import _isEqual from 'lodash/isEqual';
 import { toggleAnnotationsVisibility } from './helper';
 import onLayersUpdated from 'src/event-listeners/onLayersUpdated';
 import { setNextActivePanelDueToEmptyCurrentPanel } from 'src/event-listeners/onDocumentLoaded';
+import setUIPropertiesForLayers from 'helpers/setUIPropertiesForLayers';
 import useDocumentLoadState from 'hooks/useDocumentLoadState';
 import useCore from 'hooks/useCore';
 
@@ -16,11 +18,22 @@ function LayersPanelRedux(props) {
   const store = useStore();
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const layers = useSelector((state) => selectors.getLayers(state, activeDocumentViewerKey));
+  const initialLayers = useSelector((state) => selectors.getInitialLayers(state, activeDocumentViewerKey));
   const documentLoaded = useDocumentLoadState();
   const layersNotFetched = layers === null;
+  const layersHaveChanged = useMemo(() => (
+    !layersNotFetched && initialLayers !== null && !_isEqual(layers, initialLayers)
+  ), [layers, initialLayers, layersNotFetched]);
 
   function setLayers(updatedLayers) {
     dispatch(actions.setLayers(updatedLayers, activeDocumentViewerKey));
+  }
+
+  function restoreDefaultLayers() {
+    const currentLayers = selectors.getLayers(store.getState(), activeDocumentViewerKey);
+    if (initialLayers !== null && !_isEqual(initialLayers, currentLayers)) {
+      dispatch(actions.setLayers(initialLayers, activeDocumentViewerKey));
+    }
   }
 
   useEffect(() => {
@@ -45,6 +58,7 @@ function LayersPanelRedux(props) {
             dispatch(actions.setLayers([], activeDocumentViewerKey));
             setNextActivePanelDueToEmptyCurrentPanel('layersPanel');
           } else {
+            dispatch(actions.setInitialLayers(setUIPropertiesForLayers(layers), activeDocumentViewerKey));
             onLayersUpdated(layers, undefined, dispatch, activeDocumentViewerKey);
           }
         });
@@ -77,6 +91,8 @@ function LayersPanelRedux(props) {
   const reduxProps = {
     layers: layers || [],
     setLayers,
+    restoreDefaultLayers,
+    layersHaveChanged,
     layersNotFetched,
   };
 

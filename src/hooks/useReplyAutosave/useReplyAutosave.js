@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, useCallback, useContext } from 'react';
 import debounce from 'lodash/debounce';
 import mentionsManager from 'helpers/MentionsManager';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
@@ -45,6 +45,8 @@ const useReplyAutosave = ({
   const commitAutosavedReplyRef = useRef(null);
   const shouldSkipCommitOnUnmountRef = useRef(false);
   const isMountedRef = useRef(true);
+  const pendingAutosaveRef = useRef(null);
+  const editorRef = useRef(null);
 
   const autosaveEnabled = useSelector(selectors.getAutosaveEnabled);
   const autosaveInterval = useSelector(selectors.getAutosaveInterval);
@@ -61,10 +63,11 @@ const useReplyAutosave = ({
   const pendingReplyMapRef = useRef(pendingReplyMap || {});
   pendingReplyMapRef.current = pendingReplyMap || {};
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
+      pendingAutosaveRef.current?.flush();
     };
   }, []);
 
@@ -312,7 +315,7 @@ const useReplyAutosave = ({
       return;
     }
     const autosave = debounce(async () => {
-      const editor = textareaRef.current?.getEditor?.();
+      const editor = textareaRef.current?.getEditor?.() || editorRef.current;
       const plainText = editor ? editor.getText() : localReplyValue;
       const currentDraftText = replyDraftByAnnotationId.get(makeDraftKey(activeDocumentViewerKey, annotation.Id)) || '';
       if (plainText === currentDraftText) {
@@ -369,10 +372,14 @@ const useReplyAutosave = ({
         setAnnotationRichTextStyle(editor, replyAnnotation);
       }
       attachDraftReply(replyAnnotation);
-      setShowAutosaved(true);
+      if (isMountedRef.current) {
+        setShowAutosaved(true);
+      }
       setPendingReply('', annotation.Id);
     }, autosaveInterval);
 
+    editorRef.current = textareaRef.current?.getEditor?.() || editorRef.current;
+    pendingAutosaveRef.current = autosave;
     autosave();
     return () => autosave.cancel();
   }, [localReplyValue, autosaveEnabled, autosaveInterval, attachDraftReply, clearStoredDraft, detachDraftReply, resetDraftReplyTracking, isOfficeEditorCommentAnnotation]);

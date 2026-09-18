@@ -34,7 +34,7 @@ import TopHeader from 'components/ModularComponents/TopHeader';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
 import StylePanelFlyout from 'components/ModularComponents/StylePanelFlyout';
-import ProgressModal from 'components/ProgressModal';
+import LoadingScreen from 'components/LoadingScreen';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 import useOnTextSelected from 'hooks/useOnTextSelected';
 import useOnContextMenuOpen from 'hooks/useOnContextMenuOpen';
@@ -76,8 +76,10 @@ import useCloseOnWindowResize from 'hooks/useCloseOnWindowResize';
 import PageManipulationFlyout from 'components/ModularComponents/PageManipulationFlyout';
 import { VIEWER_CONFIGURATIONS } from 'src/constants/customizationVariables';
 import useWidgetHighlightingSync from 'hooks/useWidgetHighlightingSync';
+import useViewportRelativeAnnotationPositioningSync from 'hooks/useViewportRelativeAnnotationPositioningSync';
 import { useTranslation } from 'react-i18next';
 import { onOfficeEditorCommentAdded } from 'src/event-listeners';
+import { shouldHandleLoadError } from './loadErrorRouting';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -121,6 +123,9 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
       '--panel-top-headers-height': `${topHeadersHeight}px`,
       '--panel-formula-bar-height': `${isFormulaBarVisible ? 50 : 0}px`,
       '--panel-bottom-headers-height': `${bottomHeadersHeight}px`,
+      '& .content:has(.resize-bar:active) .document-content-container': {
+        transition: 'none',
+      },
     });
   }, [isSpreadsheetEditorModeEnabled, topHeadersHeight, isFormulaBarVisible, bottomHeadersHeight]);
   const [direction, setDirection] = useState(defaultDirection);
@@ -138,6 +143,7 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
 
 
   useWidgetHighlightingSync();
+  useViewportRelativeAnnotationPositioningSync();
 
   useEffect(() => {
     const initialMode = getHashParameters('initialMode', null);
@@ -411,13 +417,12 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
 
   useEffect(() => {
     const onError = (errorPayload) => {
-      const payloadDocumentViewerId = errorPayload?.documentViewerId;
-      if (payloadDocumentViewerId) {
-        const currentDocumentViewer = core.getDocumentViewer();
-        const currentDocumentViewerId = currentDocumentViewer?.getID?.() || currentDocumentViewer?.id;
-        if (`${currentDocumentViewerId || ''}` !== `${payloadDocumentViewerId}`) {
-          return;
-        }
+      const state = store.getState();
+      const instanceDocumentViewerKey = window.isApryseWebViewerWebComponent && !selectors.isMultiViewerMode(state)
+        ? selectors.getActiveDocumentViewerKey(state)
+        : undefined;
+      if (!shouldHandleLoadError(errorPayload?.documentViewerId, core, instanceDocumentViewerKey)) {
+        return;
       }
 
       // The LOAD_ERROR event always represents a load error.
@@ -438,6 +443,7 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
         errorMessage = 'message.badDocument';
       }
 
+      dispatch(actions.closeLoadingScreen());
       if (errorMessage) {
         dispatch(actions.showErrorMessage(errorMessage, errorTitle));
       }
@@ -487,7 +493,7 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
       case panelNames.FILE_ATTACHMENT:
         return <LazyLoadWrapper Component={LazyLoadComponents.FileAttachmentPanel} dataElement={dataElement} />;
       case panelNames.THUMBNAIL:
-        return <LazyLoadWrapper Component={LazyLoadComponents.ThumbnailsPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.ThumbnailsPanel} dataElement={dataElement} panelSelector={dataElement} />;
       case panelNames.LAYERS:
         return <LayersPanel dataElement={dataElement} />;
       case panelNames.TEXT_EDITING:
@@ -673,8 +679,6 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
         <LazyLoadWrapper Component={LazyLoadComponents.SettingsModal} dataElement={DataElements.SETTINGS_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.SaveModal} dataElement={DataElements.SAVE_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.InsertPageModal} dataElement={DataElements.INSERT_PAGE_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.LoadingModal} dataElement={DataElements.LOADING_MODAL} />
-
         {
           /*
             There were issues appearing in WebViewer BIM add-on with lazy loading ProgressModal.
@@ -684,7 +688,7 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
             See https://apryse.atlassian.net/browse/WVR-3094
           */
         }
-        <ProgressModal />
+        <LoadingScreen />
 
         <LazyLoadWrapper Component={LazyLoadComponents.WarningModal} dataElement={DataElements.WARNING_MODAL} />
         <LazyLoadWrapper
