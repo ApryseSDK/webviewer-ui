@@ -169,6 +169,14 @@ const NoteContent = ({
   const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
 
   const [attachments, setAttachments] = useState([]);
+  // Keep this on NoteContent: selecting another thread unmounts ContentArea,
+  // but does not start a new edit session for this comment or reply.
+  const officeEditorHasAutoFocusedRef = useRef(false);
+  useLayoutEffect(() => {
+    if (!isEditing) {
+      officeEditorHasAutoFocusedRef.current = false;
+    }
+  }, [isEditing]);
 
   useEffect(() => {
     const baselineKey = makeBaselineKey(activeDocumentViewerKey, annotation.Id);
@@ -477,6 +485,7 @@ const NoteContent = ({
           {(isEditing && isSelected) ? (
             <ContentArea
               annotation={annotation}
+              officeEditorHasAutoFocusedRef={officeEditorHasAutoFocusedRef}
               editingKey={editingKey}
               setIsEditing={setIsEditing}
               textAreaValue={textAreaValue}
@@ -588,6 +597,7 @@ const ContentArea = ({
   onTextAreaValueChange,
   pendingText,
   editSessionBaseline,
+  officeEditorHasAutoFocusedRef,
 }) => {
   const [
     autoFocusNoteOnAnnotationSelectionEnabled,
@@ -635,7 +645,7 @@ const ContentArea = ({
   const shouldNotFocusOnInput = !isInlineCommentDisabled && isInlineCommentOpen && isMobile();
   const autoFocusNoteOnAnnotationSelection =
     autoFocusNoteOnAnnotationSelectionEnabled &&
-    ((!isOfficeEditorCommentAnnotation && !isSpreadsheetEditorCommentAnnotation) || isNoteEditingTriggeredByAnnotationPopup);
+    (isOfficeEditorCommentAnnotation || !isSpreadsheetEditorCommentAnnotation || isNoteEditingTriggeredByAnnotationPopup);
   const { core } = useCore();
   const autosaveContextRef = useRef({});
   const isMountedRef = useRef(true);
@@ -761,8 +771,17 @@ const ContentArea = ({
     }
   }, [annotation, core, activeDocumentViewerKey]);
   useEffect(() => {
+    let contentTimeout;
+    let selectionTimeout;
+    const shouldAutoFocus = !shouldNotFocusOnInput && autoFocusNoteOnAnnotationSelection &&
+      (!isOfficeEditorCommentAnnotation || !officeEditorHasAutoFocusedRef.current);
+    const markAutoFocused = () => {
+      if (isOfficeEditorCommentAnnotation) {
+        officeEditorHasAutoFocusedRef.current = true;
+      }
+    };
     // on initial mount, focus the last character of the textarea
-    if (isAnyCustomPanelOpen || (isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current) {
+    if ((isAnyCustomPanelOpen || isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current) {
       const editor = textareaRef.current.getEditor();
       const isFreeTextAnnnotation = annotation && annotation instanceof window.Core.Annotations.FreeTextAnnotation;
       isFreeTextAnnnotation && editor.setText('');
@@ -774,7 +793,7 @@ const ContentArea = ({
       if (pendingText) {
         setAnnotationRichTextStyle(editor, annotation);
       } else if (editor.getContents()) {
-        setTimeout(() => {
+        contentTimeout = setTimeout(() => {
           // need setTimeout because textarea seem to rerender and unfocus
           if (isMentionEnabled) {
             textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
@@ -785,19 +804,18 @@ const ContentArea = ({
             }
           }
 
-          if (shouldNotFocusOnInput || !autoFocusNoteOnAnnotationSelection) {
+          if (!shouldAutoFocus) {
             return;
           }
 
-          if (autoFocusNoteOnAnnotationSelection) {
-            textareaRef.current?.focus();
-            const annotRichTextStyle = annotation.getRichTextStyle();
-            if (annotRichTextStyle) {
-              setReactQuillContent(annotation, editor);
-              // Store the styled HTML in localValue so a re-render doesn't re-inject the
-              // plain value and wipe the styling.
-              setLocalValue(editor.root.innerHTML);
-            }
+          markAutoFocused();
+          textareaRef.current?.focus();
+          const annotRichTextStyle = annotation.getRichTextStyle();
+          if (annotRichTextStyle) {
+            setReactQuillContent(annotation, editor);
+            // Store the styled HTML in localValue so a re-render doesn't re-inject the
+            // plain value and wipe the styling.
+            setLocalValue(editor.root.innerHTML);
           }
         }, 0);
       }
@@ -805,16 +823,19 @@ const ContentArea = ({
       const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;
 
-      if (shouldNotFocusOnInput || !autoFocusNoteOnAnnotationSelection) {
-        return;
+      if (shouldAutoFocus) {
+        selectionTimeout = setTimeout(() => {
+          markAutoFocused();
+          if (textLength) {
+            editor.setSelection(textLength, textLength);
+          }
+        }, 0);
       }
-
-      setTimeout(() => {
-        if (textLength) {
-          editor.setSelection(textLength, textLength);
-        }
-      }, 0);
     }
+    return () => {
+      clearTimeout(contentTimeout);
+      clearTimeout(selectionTimeout);
+    };
   }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput, autoFocusNoteOnAnnotationSelection]);
 
   // Sync editor local state only when switching to a different annotation.
@@ -905,6 +926,10 @@ const ContentArea = ({
   }, []);
 
   const onTextValueChange = (value, annotationId) => {
+    // Quill compares the controlled value as HTML, not plain text. Even a
+    // normalization-only change must be reflected here; otherwise a later
+    // render rewrites the editor and restores its previous selection.
+    setLocalValue(value);
     const editor = textareaRef.current?.getEditor?.();
     const inputPlainText = editor ? getEditorPlainText(editor) : stripNewLineFromEndOfText(value);
     const localPlainText = stripNewLineFromEndOfText(localValue);
@@ -918,7 +943,6 @@ const ContentArea = ({
       return;
     }
     isAutosaveCancelledRef.current = false;
-    setLocalValue(value);
     onTextAreaValueChange(value, annotationId);
   };
 

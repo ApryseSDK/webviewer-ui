@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
 import debounce from 'lodash/debounce';
 import mentionsManager from 'helpers/MentionsManager';
@@ -73,16 +73,18 @@ jest.mock('helpers/setReactQuillContent', () => jest.fn());
 
 jest.mock('components/NoteTextarea', () => {
   const React = require('react');
-  const MockNoteTextarea = React.forwardRef(({ value, onChange }, ref) => {
+  const MockNoteTextarea = React.forwardRef(({ value, onChange, onFocus, onBlur }, ref) => {
+    const inputRef = React.useRef();
     const editor = {
       getContents: jest.fn(() => ({ ops: [{ insert: value || '' }] })),
       getLength: jest.fn(() => (value || '').length + 1),
       setText: jest.fn(),
-      setSelection: jest.fn(),
+      setSelection: jest.fn(() => inputRef.current?.focus()),
+      root: { innerHTML: value || '' },
     };
     const textarea = {
       getEditor: jest.fn(() => editor),
-      focus: jest.fn(),
+      focus: jest.fn(() => inputRef.current?.focus()),
       editor,
     };
 
@@ -94,6 +96,9 @@ jest.mock('components/NoteTextarea', () => {
 
     return (
       <input
+        ref={inputRef}
+        onFocus={onFocus}
+        onBlur={onBlur}
         aria-label="comment"
         value={value || ''}
         onChange={(e) => onChange(e.target.value)}
@@ -239,33 +244,37 @@ const renderWithAutosave = (annotation, contextValue, propOverrides = {}) => {
   };
 };
 
+const mockCore = () => {
+  useCore.mockReturnValue({
+    core: {
+      getAnnotationManager: jest.fn().mockReturnValue({
+        getEditBoxManager: jest.fn().mockReturnValue({
+          getEditor: jest.fn().mockReturnValue(null),
+        }),
+        trigger: jest.fn(),
+        isFreeTextEditingEnabled: jest.fn().mockReturnValue(false),
+      }),
+      getDisplayAuthor: jest.fn().mockReturnValue('Mocked Author'),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      drawAnnotationsFromList: jest.fn(),
+      getFormFieldCreationManager: jest.fn().mockReturnValue({
+        isInFormFieldCreationMode: jest.fn().mockReturnValue(false),
+      }),
+      getIsReadOnly: jest.fn().mockReturnValue(false),
+      canModify: jest.fn().mockReturnValue(true),
+      canModifyContents: jest.fn().mockReturnValue(true),
+      deleteAnnotations: jest.fn(),
+    },
+  });
+};
+
 describe('NoteContent Component', () => {
   let useSelectorMock;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    useCore.mockReturnValue({
-      core: {
-        getAnnotationManager: jest.fn().mockReturnValue({
-          getEditBoxManager: jest.fn().mockReturnValue({
-            getEditor: jest.fn().mockReturnValue(null),
-          }),
-          trigger: jest.fn(),
-          isFreeTextEditingEnabled: jest.fn().mockReturnValue(false),
-        }),
-        getDisplayAuthor: jest.fn().mockReturnValue('Mocked Author'),
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        drawAnnotationsFromList: jest.fn(),
-        getFormFieldCreationManager: jest.fn().mockReturnValue({
-          isInFormFieldCreationMode: jest.fn().mockReturnValue(false),
-        }),
-        getIsReadOnly: jest.fn().mockReturnValue(false),
-        canModify: jest.fn().mockReturnValue(true),
-        canModifyContents: jest.fn().mockReturnValue(true),
-        deleteAnnotations: jest.fn(),
-      },
-    });
+    mockCore();
     // We mock the redux call to always return "false" for isElementDisabled
     useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     useSelectorMock.mockImplementation((callback) => callback(initialState));
@@ -317,6 +326,7 @@ describe('NoteContent Component', () => {
 
 describe('NoteContent autosave behavior', () => {
   beforeEach(() => {
+    mockCore();
     debounce.deferred = false;
     const AnnotationFallback = class {};
     const EventHandler = class {
@@ -345,6 +355,110 @@ describe('NoteContent autosave behavior', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe('Office comment autofocus', () => {
+    let selectorSpy;
+    let state;
+
+    beforeEach(() => {
+      jest.useFakeTimers();
+      state = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          autoFocusNoteOnAnnotationSelection: true,
+          isNoteEditing: true,
+          openElements: { notesPanel: true },
+        },
+      };
+      selectorSpy = jest.spyOn(reactRedux, 'useSelector').mockImplementation((selector) => selector(state));
+    });
+
+    afterEach(() => {
+      selectorSpy.mockRestore();
+      jest.clearAllTimers();
+      jest.useRealTimers();
+    });
+
+    const flushFocus = () => act(() => jest.runOnlyPendingTimers());
+
+    it('focuses each newly edited comment or reply without reclaiming document focus', () => {
+      const contextValue = createContextValue({ isOfficeEditorCommentAnnotation: true });
+      const comment = renderWithAutosave(createAnnotation({ id: 'focus-comment' }), contextValue);
+      flushFocus();
+      expect(screen.getAllByRole('textbox')[0]).toHaveFocus();
+
+      const replies = [1, 2].map((index) => {
+        const annotation = createAnnotation({ id: `focus-reply-${index}` });
+        annotation.isReply.mockReturnValue(true);
+        const reply = renderWithAutosave(annotation, contextValue);
+        flushFocus();
+        expect(screen.getAllByRole('textbox')[index]).toHaveFocus();
+        return reply;
+      });
+
+      const documentSurface = document.createElement('textarea');
+      document.body.appendChild(documentSurface);
+      try {
+        documentSurface.focus();
+        for (const isNoteEditing of [true, false, true]) {
+          state = { ...state, viewer: { ...state.viewer, isNoteEditing } };
+          for (const editor of [comment, ...replies]) {
+            editor.rerenderWithContext({ ...contextValue });
+          }
+          flushFocus();
+          expect(documentSurface).toHaveFocus();
+        }
+
+        // Restoring a selected thread remounts its editors, but keeps the edit sessions.
+        for (const editor of [comment, ...replies]) {
+          editor.rerenderWithContext({ ...contextValue, isSelected: false });
+          editor.rerenderWithContext({ ...contextValue, isSelected: true });
+        }
+        flushFocus();
+        expect(documentSurface).toHaveFocus();
+      } finally {
+        documentSurface.remove();
+      }
+    });
+
+    it('focuses the same comment again when a new edit session starts', () => {
+      const contextValue = createContextValue({ isOfficeEditorCommentAnnotation: true });
+      const props = { isEditing: true };
+      const { rerenderWithContext } = renderWithAutosave(createAnnotation({ id: 'edit-again' }), contextValue, props);
+      flushFocus();
+      expect(screen.getByRole('textbox')).toHaveFocus();
+
+      props.isEditing = false;
+      rerenderWithContext({ ...contextValue });
+      props.isEditing = true;
+      rerenderWithContext({ ...contextValue });
+      flushFocus();
+      expect(screen.getByRole('textbox')).toHaveFocus();
+    });
+
+    it('honors disabled autofocus for Office comments', () => {
+      state.viewer.autoFocusNoteOnAnnotationSelection = false;
+      renderWithAutosave(createAnnotation({ id: 'disabled-focus' }), createContextValue({ isOfficeEditorCommentAnnotation: true }));
+      flushFocus();
+      expect(screen.getByRole('textbox')).not.toHaveFocus();
+    });
+  });
+
+  it('keeps the controlled HTML synchronized when Quill reports the saved text', () => {
+    const annotation = createAnnotation({ id: 'normalized-html' });
+    const contextValue = createContextValue({ isOfficeEditorCommentAnnotation: true });
+    renderWithAutosave(annotation, contextValue);
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('original note');
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: '<p>original note</p>' },
+    });
+
+    expect(screen.getByRole('textbox', { name: /comment/i })).toHaveValue('<p>original note</p>');
+    expect(contextValue.setPendingEditText).not.toHaveBeenCalled();
+    expect(annotation.setContents).not.toHaveBeenCalled();
   });
 
   it('autosave clears pending edit state without rendering inline saved text', async () => {

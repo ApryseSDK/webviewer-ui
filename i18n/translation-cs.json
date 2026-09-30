@@ -15,6 +15,7 @@
     "close": "Zavřít",
     "undo": "vrátit",
     "redo": "Předělat",
+    "reload": "Znovu načíst",
     "comment": "Komentář",
     "reply": "Přidat odpověď",
     "copy": "kopírovat",
@@ -147,7 +148,12 @@
     "showLessColors": "Zobrazit méně barev",
     "fromCustomColorPicker": "z Custom Color Picker",
     "newSpreadsheetDocument": "Nová tabulka",
-    "resetDefault": "Obnovit výchozí"
+    "resetDefault": "Obnovit výchozí",
+    "restoreDefaults": "Obnovit výchozí nastavení",
+    "sendToBack": "Odeslat dozadu",
+    "bringToFront": "Přenést do popředí",
+    "sendBackward": "Poslat zpět",
+    "bringForward": "Předložit"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -194,6 +200,7 @@
     "note": "Poznámka",
     "textField": "Textové pole",
     "signatureFormField": "Pole podpisu",
+    "datePickerFormField": "Pole pro výběr data",
     "checkBoxFormField": "Pole zaškrtávacího políčka",
     "radioButtonFormField": "Pole přepínače",
     "listBoxFormField": "Pole seznamu",
@@ -258,7 +265,7 @@
     "calibration": "Kalibrace",
     "zoomOverlay": "Zoom Overlay",
     "textPopup": "Textové vyskakovací okno",
-    "createStampButton": "Vytvořit nové razítko",
+    "addStampButton": "Přidat razítko",
     "filter": "Filtr",
     "multiSelectButton": "Více násobný výběr",
     "pageReplaceModalTitle": "Nahradit stránku",
@@ -271,12 +278,12 @@
       "open": "Zobrazit všechny anotace",
       "close": "Zavřít všechny anotace"
     },
-    "comparePanel": "Panel porovnání",
-    "mainMenu": "Hlavní menu"
+    "comparePanel": "Panel porovnání"
   },
   "message": {
     "showMore": "Zobrazit více",
     "showLess": "Ukaž méně",
+    "signatureDisclaimer": "Tento elektronický podpis vyjadřuje záměr podepisujícího podepsat dokument. Použitím tohoto podpisu souhlasíte s tím, že váš elektronický podpis je právním ekvivalentem vašeho vlastnoručního podpisu na tomto dokumentu.",
     "toolsOverlayNoPresets": "Žádné předvolby",
     "badDocument": "Dokument se nepodařilo načíst. Dokument je buď poškozený, nebo neplatný.",
     "customPrintPlaceholder": "např. 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "Načtení zašifrovaného dokumentu se nezdařilo. Zadání hesla bylo zrušeno.",
     "enterPassword": "Tento dokument je chráněn heslem. Prosím, vložte heslo",
     "incorrectPassword": "Nesprávné heslo, zbývající počet pokusů: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Přidejte komentář a zahajte diskusi.",
     "noAnnotations": "Začněte vytvářet poznámky, abyste mohli zanechat komentář.",
     "noAnnotationsReadOnly": "Tento dokument neobsahuje žádné poznámky.",
     "noAnnotationsFilter": "Začněte vytvářet poznámky a zde se zobrazí filtry.",
@@ -292,6 +300,7 @@
     "noAttachments": "Tento dokument nemá žádné přílohy.",
     "noResults": "Nebyly nalezeny žádné výsledky.",
     "numResultsFound": "nalezeny výsledky",
+    "loadingDocument": "Načítání dokumentu",
     "loadError": "Chyba při načítání dokumentu",
     "urlInputFileLoadError": "Soubor se nepodařilo načíst z poskytnuté adresy URL.",
     "notSupported": "Tento typ souboru není podporován.",
@@ -328,6 +337,7 @@
     "sortBy": "Seřadit",
     "emptyCustomStampInput": "Text razítka nemůže být prázdný",
     "unpostedComment": "Nezveřejněný komentář",
+    "saved": "Uloženo",
     "lockedLayer": "Vrstva je uzamčena",
     "layerVisibilityNoChange": "Viditelnost vrstvy nelze změnit",
     "noLayers": "Tento dokument nemá žádné vrstvy.",
@@ -354,7 +364,15 @@
     "refreshPage": "Zkontrolujte prosím připojení k síti a obnovte stránku.",
     "renderErrors": {
       "error": "Něco se tu pokazilo.",
-      "refreshPanel": "Můžete pokračovat v práci. Zkuste panel znovu otevřít."
+      "toFixIssue": "Chcete-li problém vyřešit, zkuste znovu otevřít {{componentType}}.",
+      "componentType": {
+        "component": "komponent",
+        "panel": "panel",
+        "modal": "kapitál",
+        "flyout": "rozbalovací nabídka",
+        "dropdown": "rozbalovací nabídka",
+        "popup": "vyskakovací okno"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "Seznam pořadí řazení",
       "position": "Pozice",
       "linePosition": "Pozice",
+      "spreadsheetPosition": "Pozice",
       "time": "Čas",
       "status": "Postavení",
       "author": "Autor",
       "type": "Typ",
       "color": "Barva",
+      "number": "Číslo",
       "createdDate": "Datum vytvoření",
       "modifiedDate": "Upravené datum"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "Panel filtrování dokumentů a komentářů"
     },
     "state": {
+      "open": "Otevřeno",
+      "resolved": "Vyřešeno",
       "accepted": "Přijato",
       "rejected": "Odmítnuto",
       "completed": "Dokončeno",
@@ -617,10 +639,7 @@
         "irreversible": "nevratné",
         "willDeleteMeasurement": "a vymaže související měření.",
         "confirmDelete": "Opravdu chcete tuto stupnici smazat?",
-        "thisCantBeUndone": " Toto nelze vrátit zpět.",
-        "ifChangeScale": "Pokud změníte měřítko pro vybrané měření nebo nástroj, upravte měřítko",
-        "notUsedWillDelete": " již nebudou používány žádnými měřeními ani nástroji a budou smazány. Smazání je nevratné.",
-        "ifToContinue": "Opravdu chcete pokračovat?"
+        "thisCantBeUndone": " Toto nelze vrátit zpět."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "Barva textu",
       "backgroundColor": "Barva pozadí",
       "dateToolTipLabel": "Další informace o formátu data",
-      "previewCustomStamp": "Náhled na"
+      "previewCustomStamp": "Náhled na",
+      "category": "Kategorie",
+      "categoryInstructions": "Zadejte název nové kategorie",
+      "customStamp": "Vlastní razítko"
     },
     "pageRedactModal": {
       "addMark": "Přidat Marka",
@@ -754,6 +776,8 @@
       "annotations": "Anotace",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Zakázat aktualizaci výchozího stylu nástroje z vyskakovacího okna anotace",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Zakáže synchronizaci aktualizací stylu anotací s přidruženým nástrojem, který anotaci vytvořil. Pokud se tedy změní styl anotace, výchozí styly nástroje nebudou aktualizovány.",
+      "enableViewportRelativePositioning": "Povolit umístění anotací vzhledem k výřezu",
+      "enableViewportRelativePositioningDesc": "Pokud je tato možnost povolena, přesouvání anotací mezi stránkami s různou rotací zachovává jejich vizuální polohu a orientaci.",
       "notesPanel": "Panel poznámek",
       "disableNoteSubmissionWithEnter": "Zakázat odesílání poznámek pomocí Enter",
       "disableNoteSubmissionWithEnterDesc": "Zakažte možnost odesílat poznámky stisknutím klávesy Enter pouze v případě, že byla dříve povolena. Tím se vrátí odeslání poznámky na výchozí hodnotu, což je Ctrl/Cmd + Enter.",
@@ -818,6 +842,17 @@
       "setShortcut": "Nastavit zástupce",
       "editShortcut": "Upravit zástupce",
       "shortcutAlreadyExists": "Výše uvedená klávesová zkratka již existuje.",
+      "contentEdit": {
+        "copyText": "Zkopírujte vybraný text nebo anotace",
+        "cutText": "Vyjmout vybraný text nebo buňky",
+        "pasteText": "Vložte text nebo anotace",
+        "undoChange": "Vrátit zpět změnu anotace",
+        "redoChange": "Znovu proveďte změnu anotace",
+        "bold": "tučně",
+        "italic": "kurzíva",
+        "underline": "Zdůraznit",
+        "strikeout": "Přeškrtnutí"
+      },
       "close": "Zavřít popisek",
       "spreadsheetEditor": {
         "copyText": "Kopírování vybraného textu nebo buněk",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "Zahrnout indikátor pole",
       "indicatorPlaceHolders": {
         "TextFormField": "Sem vložte text",
+        "DatePickerFormField": "Vyberte datum",
         "CheckBoxFormField": "Šek",
         "RadioButtonFormField": "Vyplnit",
         "ListBoxFormField": "Vybrat",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "Anotace pole přepínače",
       "ListBoxFormField": "Anotace pole seznamu",
       "ComboBoxFormField": "Combo Box Field Anotace",
+      "DatePickerFormField": "Anotace pole pro výběr data",
       "TextFormField": "Anotace textového pole"
     },
     "apply": "Použít pole",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Začněte redigovat označením textu, regionů, stránek nebo hledáním.",
-    "redactionSearchPlaceholder": "Upravte pomocí klávesnice nebo vzorů",
+    "redactionSearchPlaceholder": "Upravte pomocí klíčových slov nebo vzorů",
     "redactionCounter": "Označeno k redigování",
     "clearMarked": "Průhledná",
     "redactAllMarked": "Upravit vše",
@@ -1311,6 +1348,7 @@
     "underline": "Zdůraznit",
     "strikeout": "Přeškrtnutí",
     "textColor": "Barva textu",
+    "highlightColor": "Barva zvýraznění",
     "leftAlign": "Zarovnat doleva",
     "centerAlign": "Zarovnání na střed",
     "rightAlign": "Zarovnat vpravo",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "Označte obrys",
       "redactionFill": "Barva redakce",
       "redactionTextPlaceholder": "Vložte textový štítek",
-      "contentEdit": "Úprava obsahu"
+      "contentEdit": "Úprava obsahu",
+      "zOrder": "Objednávka"
     },
     "lineStyles": {
       "startLineStyleLabel": "Počáteční styl čáry",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "Pohraniční"
+    },
+    "fillStyle": {
+      "dropdownLabel": "Styl výplně"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "Známky",
-    "standard": "Standardní razítka"
+    "standard": "Standardní razítka",
+    "preset": "Přednastavení",
+    "custom": "Vlastní",
+    "categories": "Kategorie",
+    "filter": "Filtr",
+    "searchStamps": "Hledat známky"
   },
   "colorPickerModal": {
     "modalTitle": "Výběr barvy"

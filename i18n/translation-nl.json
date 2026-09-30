@@ -15,6 +15,7 @@
     "close": "Sluiten",
     "undo": "Ongedaan maken",
     "redo": "Klaar",
+    "reload": "Herladen",
     "comment": "Opmerking",
     "reply": "Antwoorden",
     "copy": "Kopieer",
@@ -147,7 +148,12 @@
     "showLessColors": "Minder kleuren weergeven",
     "fromCustomColorPicker": "van Aangepaste kleurenkiezer",
     "newSpreadsheetDocument": "Nieuw spreadsheet",
-    "resetDefault": "Resetten naar standaardinstellingen"
+    "resetDefault": "Resetten naar standaardinstellingen",
+    "restoreDefaults": "Standaardinstellingen herstellen",
+    "sendToBack": "Naar achteren sturen",
+    "bringToFront": "Naar voren brengen",
+    "sendBackward": "Stuur achteruit",
+    "bringForward": "Naar voren brengen"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -194,6 +200,7 @@
     "note": "Notitie",
     "textField": "Tekstveld",
     "signatureFormField": "Handtekeningveld",
+    "datePickerFormField": "Datumkiezerveld",
     "checkBoxFormField": "Selectievakje veld",
     "radioButtonFormField": "Veld voor keuzerondjes",
     "listBoxFormField": "Keuzelijstveld",
@@ -258,7 +265,7 @@
     "calibration": "ijking",
     "zoomOverlay": "Zoom-overlay",
     "textPopup": "Tekstpop-up",
-    "createStampButton": "Maak een nieuwe stempel",
+    "addStampButton": "Stempel toevoegen",
     "filter": "Filter",
     "multiSelectButton": "Multi-Select",
     "pageReplaceModalTitle": "Pagina vervangen",
@@ -271,12 +278,12 @@
       "open": "Bekijk alle annotaties",
       "close": "Sluit alle annotaties"
     },
-    "comparePanel": "Vergelijk Paneel",
-    "mainMenu": "Hoofdmenu"
+    "comparePanel": "Vergelijk Paneel"
   },
   "message": {
     "showMore": "Laat meer zien",
     "showLess": "Laat minder zien",
+    "signatureDisclaimer": "Deze elektronische handtekening vertegenwoordigt de intentie van de ondertekenaar om het document te ondertekenen. Door deze handtekening te gebruiken, gaat u ermee akkoord dat uw elektronische handtekening juridisch gelijkwaardig is aan uw handtekening op dit document.",
     "toolsOverlayNoPresets": "Geen voorinstellingen",
     "badDocument": "Er is een fout opgetreden bij het laden van het document. Het document is corrupt of heeft een ongeldige indeling.",
     "customPrintPlaceholder": "bijv. 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "Fout bij het laden van versleuteld document. Wachtwoord invoer geannuleerd.",
     "enterPassword": "Dit document heeft een wachtwoord beveiliging. Geef een wachtwoord",
     "incorrectPassword": "Fout wachtwoord, overgebleven pogingen: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Voeg een opmerking toe om een discussie te starten.",
     "noAnnotations": "Begin met het maken van aantekeningen om een opmerking achter te laten.",
     "noAnnotationsReadOnly": "Dit document heeft geen annotaties.",
     "noAnnotationsFilter": "Begin met het maken van aantekeningen en filters verschijnen hier.",
@@ -292,6 +300,7 @@
     "noAttachments": "Dit document heeft geen bijlagen.",
     "noResults": "Geen resultaten.",
     "numResultsFound": "gevonden resultaten",
+    "loadingDocument": "Document laden",
     "loadError": "Fout bij het laden van document",
     "urlInputFileLoadError": "Het bestand kon niet worden opgehaald vanaf de opgegeven URL.",
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
@@ -328,6 +337,7 @@
     "sortBy": "Sorteer op",
     "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
     "unpostedComment": "Niet-geplaatste reactie",
+    "saved": "Opgeslagen",
     "lockedLayer": "Laag is vergrendeld",
     "layerVisibilityNoChange": "De zichtbaarheid van de laag kan niet worden gewijzigd",
     "noLayers": "Dit document heeft geen lagen.",
@@ -354,7 +364,15 @@
     "refreshPage": "Controleer uw netwerkverbinding en vernieuw de pagina.",
     "renderErrors": {
       "error": "Hier is iets misgegaan.",
-      "refreshPanel": "Je kunt gewoon doorwerken. Probeer het paneel opnieuw te openen."
+      "toFixIssue": "Om het probleem op te lossen, kunt u proberen de {{componentType}} opnieuw te openen.",
+      "componentType": {
+        "component": "component",
+        "panel": "paneel",
+        "modal": "hoofdstad",
+        "flyout": "uitvliegen",
+        "dropdown": "dropdown",
+        "popup": "pop-up"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "Sorteer Bestellijst",
       "position": "Positie",
       "linePosition": "Positie",
+      "spreadsheetPosition": "Positie",
       "time": "Tijd",
       "status": "Toestand",
       "author": "Auteur",
       "type": "Type",
       "color": "Kleur",
+      "number": "Nummer",
       "createdDate": "Aanmaakdatum",
       "modifiedDate": "Aangepaste datum"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "Filter document en opmerkingenpaneel"
     },
     "state": {
+      "open": "Open",
+      "resolved": "Opgelost",
       "accepted": "Geaccepteerd",
       "rejected": "Afgekeurd",
       "completed": "Voltooid",
@@ -617,10 +639,7 @@
         "irreversible": "onomkeerbaar",
         "willDeleteMeasurement": "en zal de bijbehorende metingen verwijderen.",
         "confirmDelete": "Weet u zeker dat u deze weegschaal wilt verwijderen?",
-        "thisCantBeUndone": " Dit kan niet ongedaan worden gemaakt.",
-        "ifChangeScale": "Als u de schaal voor de geselecteerde meting of tool wijzigt, schaalt u",
-        "notUsedWillDelete": " wordt niet langer gebruikt door metingen of gereedschappen en wordt verwijderd. Verwijdering is onomkeerbaar.",
-        "ifToContinue": "Weet je zeker dat je wilt doorgaan?"
+        "thisCantBeUndone": " Dit kan niet ongedaan worden gemaakt."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "Tekst kleur",
       "backgroundColor": "Achtergrond kleur",
       "dateToolTipLabel": "Meer informatie over datumnotatie",
-      "previewCustomStamp": "Voorvertoning van"
+      "previewCustomStamp": "Voorvertoning van",
+      "category": "Categorie",
+      "categoryInstructions": "Typ om een nieuwe categorie een naam te geven",
+      "customStamp": "Aangepaste stempel"
     },
     "pageRedactModal": {
       "addMark": "Markering toevoegen",
@@ -754,6 +776,8 @@
       "annotations": "annotaties",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Standaardstijl-update van tool uitschakelen vanuit annotatiepop-up",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Schakelt het synchroniseren van updates van de annotatiestijl uit met de bijbehorende tool die de annotatie heeft gemaakt. Dus als de stijl van een annotatie wordt gewijzigd, worden de standaardstijlen van de tool niet bijgewerkt.",
+      "enableViewportRelativePositioning": "Schakel positionering van annotaties ten opzichte van het weergavegebied in",
+      "enableViewportRelativePositioningDesc": "Wanneer deze functie is ingeschakeld, blijven de visuele positie en oriëntatie van annotaties behouden wanneer ze over pagina's met verschillende rotaties worden verplaatst.",
       "notesPanel": "Notitiepaneel",
       "disableNoteSubmissionWithEnter": "Schakel het verzenden van notities uit met Enter",
       "disableNoteSubmissionWithEnterDesc": "Schakel de mogelijkheid om notities in te dienen uit door alleen op Enter te drukken als dit eerder was ingeschakeld. Hiermee wordt het indienen van notities teruggezet naar de standaardwaarde, namelijk Ctrl/Cmd + Enter.",
@@ -818,6 +842,17 @@
       "setShortcut": "Snelkoppeling instellen",
       "editShortcut": "Snelkoppeling bewerken",
       "shortcutAlreadyExists": "De sneltoets hierboven bestaat al.",
+      "contentEdit": {
+        "copyText": "Kopieer geselecteerde tekst of annotaties",
+        "cutText": "Geselecteerde tekst of cellen knippen",
+        "pasteText": "Plak tekst of annotaties",
+        "undoChange": "Een annotatiewijziging ongedaan maken",
+        "redoChange": "Voer een annotatiewijziging opnieuw uit",
+        "bold": "Vet",
+        "italic": "Cursief",
+        "underline": "Onderstrepen",
+        "strikeout": "Doorhalen"
+      },
       "close": "Knopinfo sluiten",
       "spreadsheetEditor": {
         "copyText": "Geselecteerde tekst of cellen kopiëren",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "Inclusief veldindicator",
       "indicatorPlaceHolders": {
         "TextFormField": "Tekst hier invoegen",
+        "DatePickerFormField": "Selecteer datum",
         "CheckBoxFormField": "Controleren",
         "RadioButtonFormField": "Vullen",
         "ListBoxFormField": "Selecteer",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "Annotatie van keuzerondjeveld",
       "ListBoxFormField": "Keuzelijstveldannotatie",
       "ComboBoxFormField": "Veldannotatie met invoervak",
+      "DatePickerFormField": "Datumkiezer veldannotatie",
       "TextFormField": "Annotatie van tekstvelden"
     },
     "apply": "Velden toepassen",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Begin met redigeren door tekst, regio's, pagina's te markeren of een zoekopdracht uit te voeren.",
-    "redactionSearchPlaceholder": "Redigeren via toetsenbord of patronen",
+    "redactionSearchPlaceholder": "Redigeren via trefwoorden of patronen",
     "redactionCounter": "Gemarkeerd voor redactie",
     "clearMarked": "Duidelijk",
     "redactAllMarked": "Alles redigeren",
@@ -1311,6 +1348,7 @@
     "underline": "Onderstrepen",
     "strikeout": "Strike-out",
     "textColor": "Tekst kleur",
+    "highlightColor": "Markeer de kleur",
     "leftAlign": "Links uitlijnen",
     "centerAlign": "Midden uitlijnen",
     "rightAlign": "Rechts uitlijnen",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "Markeer overzicht",
       "redactionFill": "Redactiekleur",
       "redactionTextPlaceholder": "Tekstlabel invoegen",
-      "contentEdit": "Inhoud bewerken"
+      "contentEdit": "Inhoud bewerken",
+      "zOrder": "Volgorde"
     },
     "lineStyles": {
       "startLineStyleLabel": "Startlijnstijl",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "Grens"
+    },
+    "fillStyle": {
+      "dropdownLabel": "Vulstijl"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "Stempels",
-    "standard": "Standaard postzegels"
+    "standard": "Standaard postzegels",
+    "preset": "Voorinstelling",
+    "custom": "Aangepast",
+    "categories": "Categorieën",
+    "filter": "Filter",
+    "searchStamps": "Postzegels zoeken"
   },
   "colorPickerModal": {
     "modalTitle": "Kleurenkiezer"

@@ -121,6 +121,7 @@ const HotkeysManager = {
     if (
       selectors.getIsOfficeEditorMode(state) ||
       selectors.isSpreadsheetEditorModeEnabled(state) ||
+      core.getContentEditManager?.()?.isInContentEditMode?.() ||
       !isShortcutKeyActive(Shortcuts.PASTE, shortcutKeyMap, this.activeHotkeysMap)
     ) {
       return;
@@ -308,7 +309,7 @@ WebViewer(...)
       // add a signature from the modal and then choose to not apply it, so we whitelist it
       // Same with the close shortcut it can be triggered no matter where the focus is since it is kind of like an escape
       const isEscape = e.key === 'Escape' || e.key === ShortcutKeys[Shortcuts.CLOSE];
-      const isInContentEditMode = core.getContentEditManager?.().isInContentEditMode?.();
+      const isInContentEditMode = core.getContentEditManager?.()?.isInContentEditMode?.();
 
       // Let content edit own text shortcuts (copy/paste/bold/etc.) while editing.
       if (isInContentEditMode && !isEscape) {

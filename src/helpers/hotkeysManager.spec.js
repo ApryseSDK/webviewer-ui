@@ -663,6 +663,23 @@ describe('hotkeysManager', () => {
       expect(pasteClipboardText).not.toHaveBeenCalled();
     });
 
+    it('leaves paste handling to Content Edit mode', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      const isInContentEditMode = jest.fn(() => true);
+      core.getContentEditManager.mockReturnValue({
+        isInContentEditMode,
+      });
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+
+      await manager.handleClipboardPaste({});
+
+      expect(isInContentEditMode).toHaveBeenCalledTimes(1);
+      expect(pasteClipboardImage).not.toHaveBeenCalled();
+      expect(pasteClipboardText).not.toHaveBeenCalled();
+    });
+
     it('leaves paste handling to a focused input', async () => {
       shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
       isFocusingElement.mockReturnValueOnce(true);

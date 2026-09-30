@@ -15,6 +15,7 @@
     "close": "Stänga",
     "undo": "Ångra",
     "redo": "Göra om",
+    "reload": "Ladda om",
     "comment": "Kommentar",
     "reply": "Lägg till svar",
     "copy": "Kopiera",
@@ -147,7 +148,12 @@
     "showLessColors": "Visa färre färger",
     "fromCustomColorPicker": "från Custom Color Picker",
     "newSpreadsheetDocument": "Nytt kalkylblad",
-    "resetDefault": "Återställ till standard"
+    "resetDefault": "Återställ till standard",
+    "restoreDefaults": "Återställ standardinställningar",
+    "sendToBack": "Skicka till baksidan",
+    "bringToFront": "Ta fram",
+    "sendBackward": "Skicka bakåt",
+    "bringForward": "Ta framåt"
   },
   "annotation": {
     "areaMeasurement": "Område",
@@ -194,6 +200,7 @@
     "note": "Notera",
     "textField": "Textfält",
     "signatureFormField": "Signaturfält",
+    "datePickerFormField": "Datumväljarfält",
     "checkBoxFormField": "Kryssruta Fält",
     "radioButtonFormField": "Radioknappfält",
     "listBoxFormField": "Listboxfält",
@@ -258,7 +265,7 @@
     "calibration": "Kalibrering",
     "zoomOverlay": "Zoomöverlägg",
     "textPopup": "Text popup",
-    "createStampButton": "Skapa ny stämpel",
+    "addStampButton": "Lägg till stämpel",
     "filter": "Filtrera",
     "multiSelectButton": "Flera val",
     "pageReplaceModalTitle": "Ersätt sida",
@@ -271,12 +278,12 @@
       "open": "Visa alla kommentarer",
       "close": "Stäng alla anteckningar"
     },
-    "comparePanel": "Jämför panel",
-    "mainMenu": "Huvudmeny"
+    "comparePanel": "Jämför panel"
   },
   "message": {
     "showMore": "Visa mer",
     "showLess": "Visa mindre",
+    "signatureDisclaimer": "Denna elektroniska signatur representerar undertecknarens avsikt att underteckna dokumentet. Genom att använda denna signatur godkänner du att din elektroniska signatur är den juridiska motsvarigheten till din manuella signatur på detta dokument.",
     "toolsOverlayNoPresets": "Inga förinställningar",
     "badDocument": "Det gick inte att ladda dokumentet. Dokumentet är antingen korrupt eller ogiltigt.",
     "customPrintPlaceholder": "t.ex. 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "Det gick inte att läsa in krypterade dokument. Lösenordsinmatningen avbröts.",
     "enterPassword": "Detta dokument är lösenordsskyddat. Vänligen ange ett lösenord",
     "incorrectPassword": "Felaktigt lösenord, försök kvar: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Lägg till en kommentar för att starta en diskussion.",
     "noAnnotations": "Börja göra anteckningar för att lämna en kommentar.",
     "noAnnotationsReadOnly": "Detta dokument har inga kommentarer.",
     "noAnnotationsFilter": "Börja göra kommentarer och filter visas här.",
@@ -292,6 +300,7 @@
     "noAttachments": "Detta dokument har inga bilagor.",
     "noResults": "Inga resultat funna.",
     "numResultsFound": "resultat hittades",
+    "loadingDocument": "Läser in dokument",
     "loadError": "Fel vid inläsning av dokument",
     "urlInputFileLoadError": "Filen kunde inte hämtas från den angivna URL:en.",
     "notSupported": "Den filtypen stöds inte.",
@@ -328,6 +337,7 @@
     "sortBy": "Sortera",
     "emptyCustomStampInput": "Stämpeltexten får inte vara tom",
     "unpostedComment": "Ej postad kommentar",
+    "saved": "Sparad",
     "lockedLayer": "Lagret är låst",
     "layerVisibilityNoChange": "Lagrets synlighet kan inte ändras",
     "noLayers": "Detta dokument har inga lager.",
@@ -354,7 +364,15 @@
     "refreshPage": "Kontrollera din nätverksanslutning och uppdatera sidan.",
     "renderErrors": {
       "error": "Något gick fel här.",
-      "refreshPanel": "Du kan fortsätta arbeta. Försök öppna panelen igen."
+      "toFixIssue": "För att åtgärda problemet, försök att öppna {{componentType}} igen.",
+      "componentType": {
+        "component": "komponent",
+        "panel": "panel",
+        "modal": "kapital",
+        "flyout": "utfällbar vy",
+        "dropdown": "rullgardinsmeny",
+        "popup": "popup-meny"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "Sorteringsordningslista",
       "position": "Placera",
       "linePosition": "Placera",
+      "spreadsheetPosition": "Placera",
       "time": "Tid",
       "status": "Status",
       "author": "Författare",
       "type": "Typ",
       "color": "Färg",
+      "number": "Antal",
       "createdDate": "Skapat Datum",
       "modifiedDate": "Ändrat datum"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "Filtrera dokument och kommentarspanel"
     },
     "state": {
+      "open": "Öppen",
+      "resolved": "Löst",
       "accepted": "Accepterad",
       "rejected": "Avvisade",
       "completed": "Avslutad",
@@ -617,10 +639,7 @@
         "irreversible": "irreversibel",
         "willDeleteMeasurement": "och raderar associerade mätningar.",
         "confirmDelete": "Är du säker på att du vill ta bort den här skalan?",
-        "thisCantBeUndone": " Detta kan inte ångras.",
-        "ifChangeScale": "Om du ändrar skalan för den valda mätningen eller verktyget, skala",
-        "notUsedWillDelete": " kommer inte längre att användas av några mått eller verktyg och kommer att raderas. Radering är oåterkallelig.",
-        "ifToContinue": "Är du säker på att du vill fortsätta?"
+        "thisCantBeUndone": " Detta kan inte ångras."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "Text färg",
       "backgroundColor": "Bakgrundsfärg",
       "dateToolTipLabel": "Mer information om datumformat",
-      "previewCustomStamp": "Förhandsvisning av"
+      "previewCustomStamp": "Förhandsvisning av",
+      "category": "Kategori",
+      "categoryInstructions": "Skriv för att namnge en ny kategori",
+      "customStamp": "Anpassad stämpel"
     },
     "pageRedactModal": {
       "addMark": "Lägg till Mark",
@@ -754,6 +776,8 @@
       "annotations": "Anteckningar",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Inaktivera verktygets standardformatuppdatering från anteckningspopup",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Inaktiverar synkronisering av uppdateringar av anteckningsstil till det associerade verktyget som skapade anteckningen. Så om en kommentars stil ändras kommer verktygets standardstilar inte att uppdateras.",
+      "enableViewportRelativePositioning": "Aktivera Viewport-relativ annoteringspositionering",
+      "enableViewportRelativePositioningDesc": "När funktionen är aktiverad bevaras annoteringars visuella position och orientering när de flyttas mellan sidor med olika rotationer.",
       "notesPanel": "Anteckningspanel",
       "disableNoteSubmissionWithEnter": "Inaktivera anteckningsinlämning med Enter",
       "disableNoteSubmissionWithEnterDesc": "Inaktivera möjligheten att skicka anteckningar genom att endast trycka på Enter om det tidigare varit aktiverat. Detta kommer att återställa anteckningsinlämning till standarden som är Ctrl/Cmd + Enter.",
@@ -818,6 +842,17 @@
       "setShortcut": "Ställ in genväg",
       "editShortcut": "Redigera genväg",
       "shortcutAlreadyExists": "Kortkommandot ovan finns redan.",
+      "contentEdit": {
+        "copyText": "Kopiera markerad text eller anteckningar",
+        "cutText": "Klipp ut markerad text eller celler",
+        "pasteText": "Klistra in text eller kommentarer",
+        "undoChange": "Ångra en anteckningsändring",
+        "redoChange": "Gör om en anteckningsändring",
+        "bold": "Fet",
+        "italic": "Kursiv",
+        "underline": "Understrykning",
+        "strikeout": "Överstrykning"
+      },
       "close": "Stäng verktygstips",
       "spreadsheetEditor": {
         "copyText": "Kopiera markerad text eller celler",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "Inkludera fältindikator",
       "indicatorPlaceHolders": {
         "TextFormField": "Infoga text här",
+        "DatePickerFormField": "Välj datum",
         "CheckBoxFormField": "Kolla upp",
         "RadioButtonFormField": "Fylla",
         "ListBoxFormField": "Välj",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "Radioknapp Fältanteckning",
       "ListBoxFormField": "Fältkommentar för listruta",
       "ComboBoxFormField": "Fältkommentar med kombinationsruta",
+      "DatePickerFormField": "Annotering av datumväljarfält",
       "TextFormField": "Textfältsanteckning"
     },
     "apply": "Använd fält",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Börja redigera genom att markera text, regioner, sidor eller göra en sökning.",
-    "redactionSearchPlaceholder": "Redigera med tangentbord eller mönster",
+    "redactionSearchPlaceholder": "Redigera med nyckelord eller mönster",
     "redactionCounter": "Markerad för redigering",
     "clearMarked": "Klar",
     "redactAllMarked": "Redigera alla",
@@ -1311,6 +1348,7 @@
     "underline": "Understrykning",
     "strikeout": "Överstrykning",
     "textColor": "Text färg",
+    "highlightColor": "Markeringsfärg",
     "leftAlign": "Vänsterjustera",
     "centerAlign": "Centrera",
     "rightAlign": "Högerjustera",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "Markera Outline",
       "redactionFill": "Redaktionsfärg",
       "redactionTextPlaceholder": "Infoga textetikett",
-      "contentEdit": "Redigera innehåll"
+      "contentEdit": "Redigera innehåll",
+      "zOrder": "Beställa"
     },
     "lineStyles": {
       "startLineStyleLabel": "Startlinjestil",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "Gräns"
+    },
+    "fillStyle": {
+      "dropdownLabel": "Fyllningsstil"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "Frimärken",
-    "standard": "Standardstämplar"
+    "standard": "Standardstämplar",
+    "preset": "Förinställning",
+    "custom": "Anpassad",
+    "categories": "Kategorier",
+    "filter": "Filtrera",
+    "searchStamps": "Sök stämplar"
   },
   "colorPickerModal": {
     "modalTitle": "Färgväljare"

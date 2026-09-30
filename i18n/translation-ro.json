@@ -15,6 +15,7 @@
     "close": "Închide",
     "undo": "Anula",
     "redo": "A reface",
+    "reload": "Reîncărcare",
     "comment": "cometariu",
     "reply": "Adăugați răspuns",
     "copy": "Copie",
@@ -147,7 +148,12 @@
     "showLessColors": "Afișați mai puține culori",
     "fromCustomColorPicker": "din Custom Color Picker",
     "newSpreadsheetDocument": "Noua foaie de calcul",
-    "resetDefault": "Resetați la valoarea implicită"
+    "resetDefault": "Resetați la valoarea implicită",
+    "restoreDefaults": "Restaurare setări implicite",
+    "sendToBack": "Trimite în spate",
+    "bringToFront": "Aduceți în față",
+    "sendBackward": "Trimiteți înapoi",
+    "bringForward": "Aduceți înainte"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -194,6 +200,7 @@
     "note": "Notă",
     "textField": "Câmp text",
     "signatureFormField": "Câmp de semnătură",
+    "datePickerFormField": "Câmp de selecție a datei",
     "checkBoxFormField": "Câmp casetă de selectare",
     "radioButtonFormField": "Câmpul butonului radio",
     "listBoxFormField": "Câmp List Box",
@@ -258,7 +265,7 @@
     "calibration": "Calibrare",
     "zoomOverlay": "Suprapunere zoom",
     "textPopup": "Popup text",
-    "createStampButton": "Creați o ștampilă nouă",
+    "addStampButton": "Adăugați ștampilă",
     "filter": "Filtru",
     "multiSelectButton": "Selectare multipla",
     "pageReplaceModalTitle": "Înlocuiește pagina",
@@ -271,12 +278,12 @@
       "open": "Vedeți toate adnotările",
       "close": "Închideți toate adnotările"
     },
-    "comparePanel": "Panoul de comparare",
-    "mainMenu": "Meniul principal"
+    "comparePanel": "Panoul de comparare"
   },
   "message": {
     "showMore": "Afișați mai multe",
     "showLess": "Arata mai putin",
+    "signatureDisclaimer": "Această semnătură electronică este reprezentativă pentru intenția semnatarului de a semna documentul. Prin utilizarea acestei semnături, sunteți de acord că semnătura dvs. electronică este echivalentul legal al semnăturii dvs. manuale pe acest document.",
     "toolsOverlayNoPresets": "Fără presetări",
     "badDocument": "Nu s-a putut încărca documentul. Documentul fie este corupt, fie nu este valid.",
     "customPrintPlaceholder": "de exemplu. 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "Nu s-a încărcat documentul criptat. Introducerea parolei a fost anulată.",
     "enterPassword": "Acest document este protejat prin parolă. Vă rugăm să introduceți o parolă",
     "incorrectPassword": "Parolă incorectă, încercări rămase: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Adăugați un comentariu pentru a începe o discuție.",
     "noAnnotations": "Începeți să faceți adnotări pentru a lăsa un comentariu.",
     "noAnnotationsReadOnly": "Acest document nu are adnotări.",
     "noAnnotationsFilter": "Începeți să faceți adnotări și filtrele vor apărea aici.",
@@ -292,6 +300,7 @@
     "noAttachments": "Acest document nu are atașamente.",
     "noResults": "Nici un rezultat gasit.",
     "numResultsFound": "rezultate găsite",
+    "loadingDocument": "Se încarcă documentul",
     "loadError": "Eroare la încărcarea documentului",
     "urlInputFileLoadError": "Fișierul nu a putut fi preluat de la adresa URL furnizată.",
     "notSupported": "Acel tip de fișier nu este suportat.",
@@ -328,6 +337,7 @@
     "sortBy": "Fel",
     "emptyCustomStampInput": "Textul ștampilei nu poate fi gol",
     "unpostedComment": "Comentariu nepostat",
+    "saved": "Salvat",
     "lockedLayer": "Stratul este blocat",
     "layerVisibilityNoChange": "Vizibilitatea stratului nu poate fi modificată",
     "noLayers": "Acest document nu are straturi.",
@@ -354,7 +364,15 @@
     "refreshPage": "Vă rugăm să verificați conexiunea la rețea și să actualizați pagina.",
     "renderErrors": {
       "error": "Ceva nu a mers bine aici.",
-      "refreshPanel": "Puteți continua să lucrați. Încercați să redeschideți panoul."
+      "toFixIssue": "Pentru a remedia problema, încercați să redeschideți {{componentType}}.",
+      "componentType": {
+        "component": "componentă",
+        "panel": "panou",
+        "modal": "capital",
+        "flyout": "iconiță glisantă",
+        "dropdown": "scapă jos",
+        "popup": "pop-up"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "Listă de ordine de sortare",
       "position": "Poziţie",
       "linePosition": "Poziţie",
+      "spreadsheetPosition": "Poziţie",
       "time": "Timp",
       "status": "stare",
       "author": "Autor",
       "type": "Tip",
       "color": "Culoare",
+      "number": "Număr",
       "createdDate": "data creata",
       "modifiedDate": "Data modificata"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "Filtrați documentul și panoul de comentarii"
     },
     "state": {
+      "open": "Deschis",
+      "resolved": "Rezolvat",
       "accepted": "Admis",
       "rejected": "Respins",
       "completed": "Efectuat",
@@ -617,10 +639,7 @@
         "irreversible": "ireversibil",
         "willDeleteMeasurement": "și va șterge măsurătorile asociate.",
         "confirmDelete": "Sigur doriți să ștergeți această scală?",
-        "thisCantBeUndone": " Acest lucru nu poate fi anulat.",
-        "ifChangeScale": "Dacă schimbați scara pentru măsurarea sau instrumentul selectat, scalați",
-        "notUsedWillDelete": " nu vor mai fi folosite de nicio măsurătoare sau instrumente și vor fi șterse. Ștergerea este ireversibilă.",
-        "ifToContinue": "Sunteți sigur că doriți să continuați?"
+        "thisCantBeUndone": " Acest lucru nu poate fi anulat."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "Culoarea textului",
       "backgroundColor": "Culoare de fundal",
       "dateToolTipLabel": "Mai multe informații despre formatul datei",
-      "previewCustomStamp": "Previzualizare a"
+      "previewCustomStamp": "Previzualizare a",
+      "category": "Categorie",
+      "categoryInstructions": "Tastați pentru a denumi o categorie nouă",
+      "customStamp": "Ștampilă personalizată"
     },
     "pageRedactModal": {
       "addMark": "Adăugați Mark",
@@ -754,6 +776,8 @@
       "annotations": "Adnotări",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Dezactivați actualizarea stilului implicit al instrumentului din popup-ul de adnotare",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Dezactivează sincronizarea actualizărilor stilului de adnotare cu instrumentul asociat care a creat adnotarea. Deci, dacă stilul unei adnotări este schimbat, stilurile implicite ale instrumentului nu vor fi actualizate.",
+      "enableViewportRelativePositioning": "Activează poziționarea adnotărilor relative la Viewport",
+      "enableViewportRelativePositioningDesc": "Când este activată, mutarea adnotărilor pe pagini cu rotații diferite păstrează poziția și orientarea vizuală a acestora.",
       "notesPanel": "Panoul de note",
       "disableNoteSubmissionWithEnter": "Dezactivați trimiterea notiței cu Enter",
       "disableNoteSubmissionWithEnterDesc": "Dezactivați capacitatea de a trimite note apăsând pe Enter numai dacă a fost activată anterior. Acest lucru va reveni la valoarea prestabilită, care este Ctrl/Cmd + Enter.",
@@ -818,6 +842,17 @@
       "setShortcut": "Setați comanda rapidă",
       "editShortcut": "Editați comanda rapidă",
       "shortcutAlreadyExists": "Comanda rapidă de la tastatură de mai sus există deja.",
+      "contentEdit": {
+        "copyText": "Copiați textul sau adnotările selectate",
+        "cutText": "Decuparea textului sau a celulelor selectate",
+        "pasteText": "Lipiți text sau adnotări",
+        "undoChange": "Anulați o modificare de adnotare",
+        "redoChange": "Refaceți o modificare de adnotare",
+        "bold": "Aldin",
+        "italic": "Cursiv",
+        "underline": "Subliniați",
+        "strikeout": "Tăiat"
+      },
       "close": "Închideți tooltip",
       "spreadsheetEditor": {
         "copyText": "Copiați textul sau celulele selectate",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "Includeți indicatorul de câmp",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserați text aici",
+        "DatePickerFormField": "Selectați data",
         "CheckBoxFormField": "Verifica",
         "RadioButtonFormField": "Completati",
         "ListBoxFormField": "Selectați",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "Adnotare câmp cu butonul radio",
       "ListBoxFormField": "Adnotare câmp List Box",
       "ComboBoxFormField": "Adnotare câmp pentru casetă combinată",
+      "DatePickerFormField": "Adnotare câmp selector dată",
       "TextFormField": "Adnotare câmp text"
     },
     "apply": "Aplicați câmpuri",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Începeți să redactați prin marcarea textului, regiunilor, paginilor sau efectuând o căutare.",
-    "redactionSearchPlaceholder": "Redactați după tastatură sau modele",
+    "redactionSearchPlaceholder": "Redactați după cuvinte cheie sau modele",
     "redactionCounter": "Marcat pentru redactare",
     "clearMarked": "clar",
     "redactAllMarked": "Redact All",
@@ -1311,6 +1348,7 @@
     "underline": "Subliniați",
     "strikeout": "Strikeout",
     "textColor": "Culoarea textului",
+    "highlightColor": "Culoare de evidențiere",
     "leftAlign": "Aliniere la stânga",
     "centerAlign": "Alinierea la centru",
     "rightAlign": "Aliniați la dreapta",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "Mark Outline",
       "redactionFill": "Culoare de redactare",
       "redactionTextPlaceholder": "Introduceți eticheta text",
-      "contentEdit": "Editare conținut"
+      "contentEdit": "Editare conținut",
+      "zOrder": "Comanda"
     },
     "lineStyles": {
       "startLineStyleLabel": "Stilul liniei de pornire",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "Frontieră"
+    },
+    "fillStyle": {
+      "dropdownLabel": "Stil de umplere"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "Timbre",
-    "standard": "Timbre standard"
+    "standard": "Timbre standard",
+    "preset": "Presetare",
+    "custom": "Personalizat",
+    "categories": "Categorii",
+    "filter": "Filtra",
+    "searchStamps": "Căutare timbre"
   },
   "colorPickerModal": {
     "modalTitle": "Selector de culoare"

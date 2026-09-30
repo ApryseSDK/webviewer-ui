@@ -1,104 +1,42 @@
-
-const path = require('path');
-const appDirectory = path.join(__dirname, '..');
-
 module.exports = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: ['./static'],
 
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    '@storybook/addon-webpack5-compiler-swc',
     '@chromatic-com/storybook',
-    '@storybook/addon-interactions',
     '@storybook/addon-a11y',
-    'storybook-addon-pseudo-states'
+    '@storybook/addon-themes',
+    'storybook-addon-pseudo-states',
+    'storybook-addon-rtl',
+    '@storybook/addon-vitest'
   ],
 
-  webpackFinal: async (config, { configType }) => {
-    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
-    // You can change the configuration based on that.
-    // 'PRODUCTION' is used when building the static version of storybook.
+  viteFinal: async (config) => {
+    const { mergeConfig } = await import('vite');
+    const { createUiViteCompatibilityConfig } = await import('../vite.ui-shared.js');
 
-    const svgRule = config.module.rules.find((rule) => 'test.svg'.match(rule.test));
-    svgRule.exclude = [appDirectory];
-
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        {
-          loader: 'postcss-loader',
-          options: {
-            ident: 'postcss',
-            plugins: loader => [
-              require('postcss-import')({ root: loader.resourcePath }),
-              require('postcss-preset-env')(),
-              require('cssnano')(),
-            ],
-          },
-        },
-        'sass-loader',
-      ],
-      include: path.resolve(__dirname, '../'),
+    return mergeConfig(config, {
+      ...createUiViteCompatibilityConfig(),
+      build: {
+        cssMinify: 'esbuild',
+      },
     });
-
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['svg-inline-loader'],
-      include: path.resolve(__dirname, '../'),
-    });
-    config.module.rules.push({
-      test: /\.woff(2)?$/,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          },
-        },
-      ],
-    });
-
-    config.resolve.alias = {
-      src: path.resolve(__dirname, '../src'),
-      components: path.resolve(__dirname, '../src/components/'),
-      constants: path.resolve(__dirname, '../src/constants/'),
-      helpers: path.resolve(__dirname, '../src/helpers/'),
-      hooks: path.resolve(__dirname, '../src/hooks/'),
-      actions: path.resolve(__dirname, '../src/redux/actions/'),
-      reducers: path.resolve(__dirname, '../src/redux/reducers/'),
-      selectors: path.resolve(__dirname, '../src/redux/selectors/'),
-      core: path.resolve(__dirname, '../src/core/'),
-    }
-
-    return config;
   },
 
   framework: {
-    name: '@storybook/react-webpack5',
+    name: '@storybook/react-vite',
     options: {}
   },
 
   docs: {},
 
-  swcLoaderOptions: {
-    jsc: {
-      parser: {
-        syntax: 'ecmascript',
-        jsx: true,
-      },
-      transform: {
-        react: {
-          runtime: 'automatic'
-        }
-      }
-    }
+  features: {
+    viewport: true,
+    experimentalReview: true
   },
 
   typescript: {
     reactDocgen: 'react-docgen-typescript'
   }
-}
+};

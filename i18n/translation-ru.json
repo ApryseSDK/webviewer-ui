@@ -15,6 +15,7 @@
     "close": "Закрыть",
     "undo": "Отменить",
     "redo": "готов",
+    "reload": "Перезагрузка",
     "comment": "Откомментировать",
     "reply": "Ответить",
     "copy": "Скопировать",
@@ -147,7 +148,12 @@
     "showLessColors": "Показать меньше цветов",
     "fromCustomColorPicker": "из пользовательского палитры цветов",
     "newSpreadsheetDocument": "Новая электронная таблица",
-    "resetDefault": "Сбросить до значений по умолчанию"
+    "resetDefault": "Сбросить до значений по умолчанию",
+    "restoreDefaults": "Восстановить настройки по умолчанию",
+    "sendToBack": "Отправить назад",
+    "bringToFront": "Вынести на передний план",
+    "sendBackward": "Отправить назад",
+    "bringForward": "Вынести на передний план"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -194,6 +200,7 @@
     "note": "Заметка",
     "textField": "Текстовое поле",
     "signatureFormField": "Поле для подписи",
+    "datePickerFormField": "Поле выбора даты",
     "checkBoxFormField": "Поле флажка",
     "radioButtonFormField": "Поле переключателя",
     "listBoxFormField": "Поле списка",
@@ -258,7 +265,7 @@
     "calibration": "калибровка",
     "zoomOverlay": "Наложение масштаба",
     "textPopup": "Текстовое всплывающее окно",
-    "createStampButton": "Создать новую марку",
+    "addStampButton": "Добавить штамп",
     "filter": "Фильтр",
     "multiSelectButton": "Выбор из нескольких вариантов",
     "pageReplaceModalTitle": "Заменить страницу",
@@ -271,12 +278,12 @@
       "open": "Просмотреть все аннотации",
       "close": "Закрыть все аннотации"
     },
-    "comparePanel": "Панель сравнения",
-    "mainMenu": "Главное меню"
+    "comparePanel": "Панель сравнения"
   },
   "message": {
     "showMore": "Показать больше",
     "showLess": "Показывай меньше",
+    "signatureDisclaimer": "Данная электронная подпись отражает намерение подписавшего лица подписать документ. Используя эту подпись, вы соглашаетесь с тем, что ваша электронная подпись является юридическим эквивалентом вашей собственноручной подписи на этом документе.",
     "toolsOverlayNoPresets": "Нет пресетов",
     "badDocument": "Произошла ошибка при загрузке документа. Документ содержит ошибки или недостоверный.",
     "customPrintPlaceholder": "пример 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "Не удалось загрузить зашифрованный документ. Ввод пароля прерван.",
     "enterPassword": "Документ защищен паролем. Пожалуйста введите пароль.",
     "incorrectPassword": "Пароль неверный, {{ remainingAttempts }} попыток осталось.",
+    "commentsPanelEmpty": "Добавьте комментарий, чтобы начать обсуждение.",
     "noAnnotations": "Начните делать аннотации, чтобы оставить комментарий.",
     "noAnnotationsReadOnly": "Документ не имеет аннотаций.",
     "noAnnotationsFilter": "Начните делать аннотации и фильтры появятся здесь.",
@@ -292,6 +300,7 @@
     "noAttachments": "К этому документу нет приложений.",
     "noResults": "Поиск не вернул результатов.",
     "numResultsFound": "найдены результаты",
+    "loadingDocument": "Загрузка документа",
     "loadError": "Ошибка загрузки документа",
     "urlInputFileLoadError": "Не удалось получить файл по указанному URL-адресу.",
     "notSupported": "Расширение файла не поддерживается.",
@@ -328,6 +337,7 @@
     "sortBy": "Сортировать по",
     "emptyCustomStampInput": "Текст штампа не может быть пустым",
     "unpostedComment": "Неопубликованный комментарий",
+    "saved": "Сохранено",
     "lockedLayer": "Слой заблокирован",
     "layerVisibilityNoChange": "Видимость слоя не может быть изменена",
     "noLayers": "В этом документе нет слоев.",
@@ -354,7 +364,15 @@
     "refreshPage": "Проверьте сетевое подключение и обновите страницу.",
     "renderErrors": {
       "error": "Здесь что-то пошло не так.",
-      "refreshPanel": "Вы можете продолжить работу. Попробуйте снова открыть панель."
+      "toFixIssue": "Чтобы исправить проблему, попробуйте снова открыть {{componentType}}.",
+      "componentType": {
+        "component": "компонент",
+        "panel": "панель",
+        "modal": "капитал",
+        "flyout": "вылет",
+        "dropdown": "падать",
+        "popup": "неожиданно возникнуть"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "Список порядка сортировки",
       "position": "Позиция",
       "linePosition": "Позиция",
+      "spreadsheetPosition": "Позиция",
       "time": "Время",
       "status": "Статус",
       "author": "Автор",
       "type": "Тип",
       "color": "Цвет",
+      "number": "Число",
       "createdDate": "Дата создания",
       "modifiedDate": "Дата изменения"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "Панель фильтров и комментариев"
     },
     "state": {
+      "open": "Открыто",
+      "resolved": "Решено",
       "accepted": "Принято",
       "rejected": "Отклонено",
       "completed": "Завершенно",
@@ -617,10 +639,7 @@
         "irreversible": "необратимый",
         "willDeleteMeasurement": "и удалит связанные измерения.",
         "confirmDelete": "Вы уверены, что хотите удалить эту шкалу?",
-        "thisCantBeUndone": " Это невозможно отменить.",
-        "ifChangeScale": "Если вы измените масштаб для выбранного измерения или инструмента, масштаб",
-        "notUsedWillDelete": " больше не будут использоваться никакими измерениями или инструментами и будут удалены. Удаление необратимо.",
-        "ifToContinue": "Вы уверены, что хотите продолжить?"
+        "thisCantBeUndone": " Это невозможно отменить."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "Цвет текста",
       "backgroundColor": "Фоновый цвет",
       "dateToolTipLabel": "Дополнительная информация о формате даты",
-      "previewCustomStamp": "Предварительный просмотр"
+      "previewCustomStamp": "Предварительный просмотр",
+      "category": "Категория",
+      "categoryInstructions": "Введите название для новой категории",
+      "customStamp": "Штамп на заказ"
     },
     "pageRedactModal": {
       "addMark": "Добавить отметку",
@@ -754,6 +776,8 @@
       "annotations": "Аннотации",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Отключить обновление стиля инструмента по умолчанию из всплывающего окна аннотации",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Отключает синхронизацию обновлений стиля аннотации с соответствующим инструментом, создавшим аннотацию. Таким образом, если стиль аннотации изменен, стили инструмента по умолчанию не будут обновлены.",
+      "enableViewportRelativePositioning": "Включить позиционирование аннотаций относительно области просмотра",
+      "enableViewportRelativePositioningDesc": "При включении этой функции перемещение аннотаций между страницами с разным поворотом сохраняет их визуальное положение и ориентацию.",
       "notesPanel": "Панель заметок",
       "disableNoteSubmissionWithEnter": "Отключить отправку заметок с помощью Enter",
       "disableNoteSubmissionWithEnterDesc": "Отключите возможность отправлять заметки, нажав клавишу Enter, если она была ранее включена. Это вернет отправку заметки к значению по умолчанию, то есть Ctrl/Cmd + Enter.",
@@ -818,6 +842,17 @@
       "setShortcut": "Установить сочетание клавиш",
       "editShortcut": "Редактировать ярлык",
       "shortcutAlreadyExists": "Комбинация клавиш выше уже существует.",
+      "contentEdit": {
+        "copyText": "Копировать выделенный текст или аннотации",
+        "cutText": "Вырезать выделенный текст или ячейки",
+        "pasteText": "Вставка текста или аннотаций",
+        "undoChange": "Отменить изменение аннотации",
+        "redoChange": "Повторить изменение аннотации",
+        "bold": "Жирный",
+        "italic": "Курсив",
+        "underline": "Подчеркнутый",
+        "strikeout": "Зачеркнутый"
+      },
       "close": "Закрыть подсказку",
       "spreadsheetEditor": {
         "copyText": "Копировать выделенный текст или ячейки",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "Включить индикатор поля",
       "indicatorPlaceHolders": {
         "TextFormField": "Вставьте текст сюда",
+        "DatePickerFormField": "Выберите дату",
         "CheckBoxFormField": "Проверять",
         "RadioButtonFormField": "Наполнять",
         "ListBoxFormField": "Выбирать",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "Аннотация поля переключателя",
       "ListBoxFormField": "Аннотация поля списка",
       "ComboBoxFormField": "Аннотация поля поля со списком",
+      "DatePickerFormField": "Аннотация поля выбора даты",
       "TextFormField": "Аннотация текстового поля"
     },
     "apply": "Применить поля",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Начните редактирование, пометив текст, области, страницы или выполнив поиск.",
-    "redactionSearchPlaceholder": "Редактирование с помощью клавиатуры или шаблонов",
+    "redactionSearchPlaceholder": "Редактирование с помощью ключевых слов или шаблонов",
     "redactionCounter": "Помечено для редактирования",
     "clearMarked": "Прозрачный",
     "redactAllMarked": "Редактировать все",
@@ -1311,6 +1348,7 @@
     "underline": "Подчеркнуть",
     "strikeout": "Вычеркивание",
     "textColor": "Цвет текста",
+    "highlightColor": "Выделить цвет",
     "leftAlign": "Выровнять по левому краю",
     "centerAlign": "Выровнять по центру",
     "rightAlign": "Выровнять по правому краю",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "Отметить контур",
       "redactionFill": "Цвет редактирования",
       "redactionTextPlaceholder": "Вставить текстовую метку",
-      "contentEdit": "Содержимое Редактировать"
+      "contentEdit": "Содержимое Редактировать",
+      "zOrder": "Заказ"
     },
     "lineStyles": {
       "startLineStyleLabel": "Стиль стартовой линии",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "Граница"
+    },
+    "fillStyle": {
+      "dropdownLabel": "Стиль заливки"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "Марки",
-    "standard": "Стандартные марки"
+    "standard": "Стандартные марки",
+    "preset": "Предустановка",
+    "custom": "Пользовательский",
+    "categories": "Категории",
+    "filter": "Фильтр",
+    "searchStamps": "Поисковые марки"
   },
   "colorPickerModal": {
     "modalTitle": "Выбор цвета"

@@ -15,6 +15,7 @@
     "close": "סגור",
     "undo": "בטל",
     "redo": "בצע שוב",
+    "reload": "לִטעוֹן מִחָדָשׁ",
     "comment": "הערה",
     "reply": "הוסף תגובה",
     "copy": "העתק",
@@ -147,7 +148,12 @@
     "showLessColors": "הצג פחות צבעים",
     "fromCustomColorPicker": "מבוחר צבעים מותאם אישית",
     "newSpreadsheetDocument": "גיליון אלקטרוני חדש",
-    "resetDefault": "איפוס לברירת מחדל"
+    "resetDefault": "איפוס לברירת מחדל",
+    "restoreDefaults": "שחזור ברירות מחדל",
+    "sendToBack": "שלח לחלק האחורי",
+    "bringToFront": "להביא לחזית",
+    "sendBackward": "שלח אחורה",
+    "bringForward": "להביא קדימה"
   },
   "annotation": {
     "areaMeasurement": "אזור",
@@ -194,6 +200,7 @@
     "note": "הערה",
     "textField": "שדה טקסט",
     "signatureFormField": "שדה חתימה",
+    "datePickerFormField": "שדה בורר תאריכים",
     "checkBoxFormField": "שדה תיבת סימון",
     "radioButtonFormField": "שדה כפתור רדיו",
     "listBoxFormField": "שדה תיבת רשימה",
@@ -258,7 +265,7 @@
     "calibration": "כיול",
     "zoomOverlay": "שכבת-על של זום",
     "textPopup": "חלון קופץ טקסט",
-    "createStampButton": "צור חותמת חדשה",
+    "addStampButton": "הוסף בול",
     "filter": "לסנן",
     "multiSelectButton": "בחירה מרובה",
     "pageReplaceModalTitle": "החלפת עמוד",
@@ -271,12 +278,12 @@
       "open": "הצג את כל ההערות",
       "close": "סגור את כל ההערות"
     },
-    "comparePanel": "השוואת לוח",
-    "mainMenu": "תפריט ראשי"
+    "comparePanel": "השוואת לוח"
   },
   "message": {
     "showMore": "הצג עוד",
     "showLess": "הצג פחות",
+    "signatureDisclaimer": "חתימה אלקטרונית זו מייצגת את כוונת החותם לחתום על המסמך. על ידי שימוש בחתימה זו, הנך מסכים כי חתימתך האלקטרונית היא המקבילה החוקית לחתימה הידנית שלך על מסמך זה.",
     "toolsOverlayNoPresets": "אין הגדרות קבועות מראש",
     "badDocument": "טעינת המסמך נכשלה. המסמך פגום או לא תקף.",
     "customPrintPlaceholder": "לדוגמה 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "טעינת המסמך המוצפן נכשלה. הזנת הסיסמה בוטלה.",
     "enterPassword": "מסמך זה מוגן בסיסמה. אנא הזן סיסמה",
     "incorrectPassword": "סיסמה שגויה, ניסיונות שנותרו: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "הוסף תגובה כדי להתחיל דיון.",
     "noAnnotations": "התחל לרשום הערות כדי להשאיר תגובה.",
     "noAnnotationsReadOnly": "למסמך זה אין הערות.",
     "noAnnotationsFilter": "התחל ליצור הערות ומסננים יופיעו כאן.",
@@ -292,6 +300,7 @@
     "noAttachments": "למסמך זה אין קבצים מצורפים.",
     "noResults": "לא נמצאו תוצאות.",
     "numResultsFound": "תוצאות שנמצאו",
+    "loadingDocument": "טוען את המסמך",
     "loadError": "שגיאה בטעינת המסמך",
     "urlInputFileLoadError": "לא ניתן היה לאחזר את הקובץ מכתובת האתר שסופקה.",
     "notSupported": "סוג קובץ זה אינו נתמך.",
@@ -328,6 +337,7 @@
     "sortBy": "מיין לפי",
     "emptyCustomStampInput": "טקסט החותמת אינו יכול להיות ריק",
     "unpostedComment": "תגובה שלא פורסמה",
+    "saved": "נשמר",
     "lockedLayer": "השכבה נעולה",
     "layerVisibilityNoChange": "לא ניתן לשנות את נראות השכבה",
     "noLayers": "למסמך זה אין שכבות.",
@@ -354,7 +364,15 @@
     "refreshPage": "אנא בדוק את חיבור הרשת שלך ורענן את הדף.",
     "renderErrors": {
       "error": "משהו השתבש כאן.",
-      "refreshPanel": "אתה יכול להמשיך לעבוד. נסה לפתוח מחדש את הפאנל."
+      "toFixIssue": "כדי לתקן את הבעיה, אנא נסה לפתוח מחדש את {{componentType}}.",
+      "componentType": {
+        "component": "רְכִיב",
+        "panel": "לוּחַ",
+        "modal": "הוֹן",
+        "flyout": "חלון נפתח",
+        "dropdown": "תפריט נפתח",
+        "popup": "קופץ"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "סדר מיון רשימה",
       "position": "מצב",
       "linePosition": "מַצָב",
+      "spreadsheetPosition": "מַצָב",
       "time": "זמן",
       "status": "סטטוס",
       "author": "מחבר",
       "type": "סוג",
       "color": "צבע",
+      "number": "מִספָּר",
       "createdDate": "תאריך יצירה",
       "modifiedDate": "תאריך שינוי"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "סינון מסמך וחלונית הערות"
     },
     "state": {
+      "open": "פתוח",
+      "resolved": "נפתר",
       "accepted": "התקבל",
       "rejected": "נדחה",
       "completed": "הושלם",
@@ -617,10 +639,7 @@
         "irreversible": "בלתי הפיכה",
         "willDeleteMeasurement": "ותמחק את המידות הקשורות.",
         "confirmDelete": "האם אתה בטוח שאתה רוצה למחוק את קנה המידה הזה?",
-        "thisCantBeUndone": "לא ניתן לבטל את זה.",
-        "ifChangeScale": "אם תשנה את קנה המידה עבור המדידה או הכלי שנבחרו, קנה המידה",
-        "notUsedWillDelete": "לא ישמש עוד אף מדידה או כלי ויימחק. המחיקה אינה הפיכה.",
-        "ifToContinue": "האם אתה בטוח שאתה רוצה להמשיך?"
+        "thisCantBeUndone": "לא ניתן לבטל את זה."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "צבע הטקסט",
       "backgroundColor": "צבע רקע",
       "dateToolTipLabel": "מידע נוסף על פורמט תאריך",
-      "previewCustomStamp": "תצוגה מקדימה של"
+      "previewCustomStamp": "תצוגה מקדימה של",
+      "category": "קָטֵגוֹרִיָה",
+      "categoryInstructions": "הקלד כדי לתת שם לקטגוריה חדשה",
+      "customStamp": "חותמת מותאמת אישית"
     },
     "pageRedactModal": {
       "addMark": "הוסף סימן",
@@ -754,6 +776,8 @@
       "annotations": "ביאורים",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "השבת עדכון סגנון ברירת מחדל של הכלי מחלון קופץ של ביאור",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "מבטל סנכרון של עדכוני סגנונות ביאור לכלי המשויך שיצר את הביאור. לכן, אם סגנון של ביאור משתנה, סגנונות ברירת המחדל של הכלי לא יעודכנו.",
+      "enableViewportRelativePositioning": "הפעל מיקום ביאורים יחסי לחלון התצוגה",
+      "enableViewportRelativePositioningDesc": "כאשר אפשרות זו מופעלת, העברת ביאורים בין עמודים עם סיבובים שונים שומרת על מיקומם החזותי והכיוון שלהם.",
       "notesPanel": "לוח הערות",
       "disableNoteSubmissionWithEnter": "השבת שליחת הערות באמצעות Enter",
       "disableNoteSubmissionWithEnterDesc": "השבת את היכולת לשלוח הערות על ידי לחיצה על Enter רק אם היא הייתה מופעלת בעבר. פעולה זו תחזיר את שליחת ההערות לברירת המחדל שהיא Ctrl/Cmd + Enter.",
@@ -818,6 +842,17 @@
       "setShortcut": "הגדר קיצור דרך",
       "editShortcut": "עריכת קיצור דרך",
       "shortcutAlreadyExists": "קיצור המקשים הנ\"ל כבר קיים.",
+      "contentEdit": {
+        "copyText": "העתק טקסט או ביאורים שנבחרו",
+        "cutText": "גזור טקסט או תאים שנבחרו",
+        "pasteText": "הדבק טקסט או הערות",
+        "undoChange": "ביטול שינוי ביאור",
+        "redoChange": "בצע שוב שינוי ביאור",
+        "bold": "מודגש",
+        "italic": "נטוי",
+        "underline": "קו תחתי",
+        "strikeout": "קו חוצה"
+      },
       "close": "סגור את תיאור הכלי",
       "spreadsheetEditor": {
         "copyText": "העתק טקסט או תאים שנבחרו",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "כלול מחוון שדה",
       "indicatorPlaceHolders": {
         "TextFormField": "הכנס טקסט כאן",
+        "DatePickerFormField": "בחר תאריך",
         "CheckBoxFormField": "בדוק",
         "RadioButtonFormField": "מלא",
         "ListBoxFormField": "בחר",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "ביאור שדה כפתור רדיו",
       "ListBoxFormField": "ביאור שדה תיבת רשימה",
       "ComboBoxFormField": "ביאור שדה של תיבת קומבו",
+      "DatePickerFormField": "ביאור שדה בורר התאריכים",
       "TextFormField": "ביאור שדה טקסט"
     },
     "apply": "החלת שדות",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "התחל להסתיר טקסט על ידי סימון טקסט, אזורים, עמודים או ביצוע חיפוש.",
-    "redactionSearchPlaceholder": "הסתרה באמצעות מקלדת או תבניות",
+    "redactionSearchPlaceholder": "הסתרה באמצעות מילות מפתח או תבניות",
     "redactionCounter": "מסומן להסתרה",
     "clearMarked": "נקה",
     "redactAllMarked": "הסתר הכל",
@@ -1311,6 +1348,7 @@
     "underline": "קו תחתי",
     "strikeout": "סטרייקאאוט",
     "textColor": "צבע הטקסט",
+    "highlightColor": "צבע ההדגשה",
     "leftAlign": "יישור שמאלה",
     "centerAlign": "יישור מרכז",
     "rightAlign": "יישור ימינה",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "סמן מתווה",
       "redactionFill": "צבע הסתרה",
       "redactionTextPlaceholder": "הוסף תווית טקסט",
-      "contentEdit": "עריכת תוכן"
+      "contentEdit": "עריכת תוכן",
+      "zOrder": "לְהַזמִין"
     },
     "lineStyles": {
       "startLineStyleLabel": "סגנון קו התחלה",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "גבול"
+    },
+    "fillStyle": {
+      "dropdownLabel": "סגנון מילוי"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "חותמת",
-    "standard": "חותמות סטנדרטיות"
+    "standard": "חותמות סטנדרטיות",
+    "preset": "הגדרה מראש",
+    "custom": "מותאם אישית",
+    "categories": "קטגוריות",
+    "filter": "לְסַנֵן",
+    "searchStamps": "חיפוש בולים"
   },
   "colorPickerModal": {
     "modalTitle": "בורר צבעים"

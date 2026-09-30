@@ -15,6 +15,7 @@
     "close": "بند",
     "undo": "کالعدم",
     "redo": "دوبارہ کریں۔",
+    "reload": "دوبارہ لوڈ کریں۔",
     "comment": "تبصرہ",
     "reply": "جواب شامل کریں۔",
     "copy": "کاپی",
@@ -147,7 +148,12 @@
     "showLessColors": "کم رنگ دکھائیں۔",
     "fromCustomColorPicker": "اپنی مرضی کے رنگ چنندہ سے",
     "newSpreadsheetDocument": "نئی اسپریڈشیٹ",
-    "resetDefault": "ڈیفالٹ پر ری سیٹ کریں۔"
+    "resetDefault": "ڈیفالٹ پر ری سیٹ کریں۔",
+    "restoreDefaults": "ڈیفالٹس کو بحال کریں۔",
+    "sendToBack": "واپس بھیجیں۔",
+    "bringToFront": "سامنے لاؤ",
+    "sendBackward": "پیچھے بھیجیں۔",
+    "bringForward": "آگے لاؤ"
   },
   "annotation": {
     "areaMeasurement": "علاقہ",
@@ -194,6 +200,7 @@
     "note": "نوٹ",
     "textField": "ٹیکسٹ فیلڈ",
     "signatureFormField": "دستخط کا میدان",
+    "datePickerFormField": "تاریخ چننے والا فیلڈ",
     "checkBoxFormField": "چیک باکس فیلڈ",
     "radioButtonFormField": "ریڈیو بٹن فیلڈ",
     "listBoxFormField": "فہرست باکس فیلڈ",
@@ -258,7 +265,7 @@
     "calibration": "انشانکن",
     "zoomOverlay": "زوم اوورلے",
     "textPopup": "ٹیکسٹ پاپ اپ",
-    "createStampButton": "نیا ڈاک ٹکٹ بنائیں",
+    "addStampButton": "ڈاک ٹکٹ شامل کریں۔",
     "filter": "فلٹر",
     "multiSelectButton": "ملٹی سلیکٹ",
     "pageReplaceModalTitle": "صفحہ تبدیل کریں۔",
@@ -271,12 +278,12 @@
       "open": "تمام تشریحات دیکھیں",
       "close": "تمام تشریحات بند کریں۔"
     },
-    "comparePanel": "پینل کا موازنہ کریں۔",
-    "mainMenu": "مین مینو"
+    "comparePanel": "پینل کا موازنہ کریں۔"
   },
   "message": {
     "showMore": "مزید دکھائیں",
     "showLess": "کم دکھائیں۔",
+    "signatureDisclaimer": "یہ الیکٹرانک دستخط دستخط کنندہ کے دستاویز پر دستخط کرنے کے ارادے کا نمائندہ ہے۔ اس دستخط کو استعمال کرکے، آپ اس بات سے اتفاق کرتے ہیں کہ آپ کا الیکٹرانک دستخط اس دستاویز پر آپ کے دستی دستخط کے قانونی مساوی ہے۔",
     "toolsOverlayNoPresets": "کوئی پیش سیٹ نہیں ہے۔",
     "badDocument": "دستاویز لوڈ کرنے میں ناکام۔ دستاویز یا تو کرپٹ ہے یا درست نہیں۔",
     "customPrintPlaceholder": "جیسے 3، 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "خفیہ کردہ دستاویز لوڈ کرنے میں ناکام۔ پاس ورڈ کا اندراج منسوخ کر دیا گیا۔",
     "enterPassword": "یہ دستاویز پاس ورڈ سے محفوظ ہے۔ براہ کرم پاس ورڈ درج کریں۔",
     "incorrectPassword": "غلط پاس ورڈ، کوششیں باقی ہیں: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "بحث شروع کرنے کے لیے ایک تبصرہ شامل کریں۔",
     "noAnnotations": "تبصرہ چھوڑنے کے لیے تشریحات بنانا شروع کریں۔",
     "noAnnotationsReadOnly": "اس دستاویز میں کوئی تشریحات نہیں ہیں۔",
     "noAnnotationsFilter": "تشریحات بنانا شروع کریں اور فلٹرز یہاں ظاہر ہوں گے۔",
@@ -292,6 +300,7 @@
     "noAttachments": "اس دستاویز میں کوئی منسلکات نہیں ہیں۔",
     "noResults": "کوئی نتیجہ نہیں ملا۔",
     "numResultsFound": "نتائج ملے",
+    "loadingDocument": "دستاویز لوڈ ہو رہی ہے۔",
     "loadError": "دستاویز لوڈ کرنے میں خرابی۔",
     "urlInputFileLoadError": "فراہم کردہ URL سے فائل بازیافت نہیں کی جا سکی۔",
     "notSupported": "اس فائل کی قسم تعاون یافتہ نہیں ہے۔",
@@ -328,6 +337,7 @@
     "sortBy": "ترتیب دیں",
     "emptyCustomStampInput": "ڈاک ٹکٹ خالی نہیں ہو سکتا",
     "unpostedComment": "غیر پوسٹ شدہ تبصرہ",
+    "saved": "محفوظ کیا گیا۔",
     "lockedLayer": "پرت مقفل ہے۔",
     "layerVisibilityNoChange": "پرت کی مرئیت کو تبدیل نہیں کیا جا سکتا",
     "noLayers": "اس دستاویز کی کوئی تہہ نہیں ہے۔",
@@ -354,7 +364,15 @@
     "refreshPage": "براہ کرم اپنا نیٹ ورک کنکشن چیک کریں اور صفحہ ریفریش کریں۔",
     "renderErrors": {
       "error": "یہاں کچھ غلط ہو گیا۔",
-      "refreshPanel": "آپ کام جاری رکھ سکتے ہیں۔ پینل کو دوبارہ کھولنے کی کوشش کریں۔"
+      "toFixIssue": "مسئلہ حل کرنے کے لیے، براہ کرم {{componentType}} کو دوبارہ کھولنے کی کوشش کریں۔",
+      "componentType": {
+        "component": "جزو",
+        "panel": "پینل",
+        "modal": "سرمایہ",
+        "flyout": "فلائی آؤٹ",
+        "dropdown": "ڈراپ ڈاؤن",
+        "popup": "پاپ اپ"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "ترتیب کی فہرست",
       "position": "پوزیشن",
       "linePosition": "پوزیشن",
+      "spreadsheetPosition": "پوزیشن",
       "time": "وقت",
       "status": "حیثیت",
       "author": "مصنف",
       "type": "قسم",
       "color": "رنگ",
+      "number": "نمبر",
       "createdDate": "تخلیق کی تاریخ",
       "modifiedDate": "ترمیم شدہ تاریخ"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "دستاویز اور تبصرے کے پینل کو فلٹر کریں۔"
     },
     "state": {
+      "open": "کھلا",
+      "resolved": "حل شدہ",
       "accepted": "قبول کر لیا",
       "rejected": "مسترد",
       "completed": "مکمل",
@@ -617,10 +639,7 @@
         "irreversible": "ناقابل واپسی",
         "willDeleteMeasurement": "اور متعلقہ پیمائش کو حذف کر دے گا۔",
         "confirmDelete": "کیا آپ واقعی اس پیمانے کو حذف کرنا چاہتے ہیں؟",
-        "thisCantBeUndone": " اسے کالعدم نہیں کیا جا سکتا۔",
-        "ifChangeScale": "اگر آپ منتخب پیمائش یا ٹول کے لیے پیمانہ تبدیل کرتے ہیں تو پیمانہ کریں۔ ",
-        "notUsedWillDelete": " اب کسی پیمائش یا ٹولز کے ذریعے استعمال نہیں کیا جائے گا اور حذف کر دیا جائے گا۔ حذف کرنا ناقابل واپسی ہے۔",
-        "ifToContinue": "کیا آپ واقعی جاری رکھنا چاہتے ہیں؟"
+        "thisCantBeUndone": " اسے کالعدم نہیں کیا جا سکتا۔"
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "متن کا رنگ",
       "backgroundColor": "پس منظر کا رنگ",
       "dateToolTipLabel": "تاریخ کی شکل کے بارے میں مزید معلومات",
-      "previewCustomStamp": "کا پیش نظارہ"
+      "previewCustomStamp": "کا پیش نظارہ",
+      "category": "زمرہ",
+      "categoryInstructions": "ایک نئے زمرے کو نام دینے کے لیے ٹائپ کریں۔",
+      "customStamp": "اپنی مرضی کے ڈاک ٹکٹ"
     },
     "pageRedactModal": {
       "addMark": "مارک شامل کریں۔",
@@ -754,6 +776,8 @@
       "annotations": "تشریحات",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "تشریح پاپ اپ سے ٹول ڈیفالٹ اسٹائل اپ ڈیٹ کو غیر فعال کریں۔",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "تشریح کو تخلیق کرنے والے متعلقہ ٹول سے تشریحی طرز کی اپ ڈیٹس کی مطابقت پذیری کو غیر فعال کرتا ہے۔ لہذا اگر کسی تشریح کا انداز تبدیل کیا جاتا ہے تو ٹول ڈیفالٹ اسٹائل کو اپ ڈیٹ نہیں کیا جائے گا۔",
+      "enableViewportRelativePositioning": "ویو پورٹ سے متعلق تشریح کی پوزیشننگ کو فعال کریں۔",
+      "enableViewportRelativePositioningDesc": "فعال ہونے پر، مختلف گردشوں کے ساتھ صفحات پر تشریحات کو منتقل کرنا ان کی بصری پوزیشن اور واقفیت کو محفوظ رکھتا ہے۔",
       "notesPanel": "نوٹس پینل",
       "disableNoteSubmissionWithEnter": "Enter کے ساتھ نوٹ جمع کرنے کو غیر فعال کریں۔",
       "disableNoteSubmissionWithEnterDesc": "نوٹ جمع کرنے کی اہلیت کو صرف Enter دبانے سے غیر فعال کریں اگر یہ پہلے فعال کیا گیا ہو۔ یہ نوٹ جمع کرانے کو ڈیفالٹ پر واپس کر دے گا جو کہ Ctrl/Cmd + Enter ہے۔",
@@ -818,6 +842,17 @@
       "setShortcut": "شارٹ کٹ سیٹ کریں۔",
       "editShortcut": "شارٹ کٹ میں ترمیم کریں۔",
       "shortcutAlreadyExists": "اوپر کی بورڈ شارٹ کٹ پہلے سے موجود ہے۔",
+      "contentEdit": {
+        "copyText": "منتخب متن یا تشریحات کاپی کریں۔",
+        "cutText": "منتخب متن یا سیلز کاٹ دیں۔",
+        "pasteText": "متن یا تشریحات چسپاں کریں۔",
+        "undoChange": "تشریح کی تبدیلی کو کالعدم کریں۔",
+        "redoChange": "تشریحی تبدیلی کو دوبارہ کریں۔",
+        "bold": "بولڈ",
+        "italic": "ترچھا",
+        "underline": "انڈر لائن",
+        "strikeout": "اسٹرائیک آؤٹ"
+      },
       "close": "ٹول ٹپ بند کریں۔",
       "spreadsheetEditor": {
         "copyText": "منتخب متن یا سیلز کو کاپی کریں۔",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "فیلڈ انڈیکیٹر شامل کریں۔",
       "indicatorPlaceHolders": {
         "TextFormField": "یہاں متن داخل کریں۔",
+        "DatePickerFormField": "تاریخ منتخب کریں۔",
         "CheckBoxFormField": "چیک کریں۔",
         "RadioButtonFormField": "بھرنا",
         "ListBoxFormField": "منتخب کریں۔",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "ریڈیو بٹن فیلڈ تشریح",
       "ListBoxFormField": "فہرست باکس فیلڈ تشریح",
       "ComboBoxFormField": "کومبو باکس فیلڈ تشریح",
+      "DatePickerFormField": "تاریخ چنندہ فیلڈ تشریح",
       "TextFormField": "ٹیکسٹ فیلڈ تشریح"
     },
     "apply": "فیلڈز کا اطلاق کریں۔",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "متن، علاقوں، صفحات کو نشان زد کرکے یا تلاش کرکے ترمیم کرنا شروع کریں۔",
-    "redactionSearchPlaceholder": "کی بورڈ یا پیٹرن کے ذریعے ترمیم کریں۔",
+    "redactionSearchPlaceholder": "کلیدی الفاظ یا پیٹرن کے ذریعے ترمیم کریں۔",
     "redactionCounter": "ریڈیکشن کے لیے نشان زد",
     "clearMarked": "صاف",
     "redactAllMarked": "تمام کو ریڈیکٹ کریں۔",
@@ -1311,6 +1348,7 @@
     "underline": "انڈر لائن",
     "strikeout": "اسٹرائیک آؤٹ",
     "textColor": "متن کا رنگ",
+    "highlightColor": "رنگ کو نمایاں کریں۔",
     "leftAlign": "بائیں سیدھ کریں۔",
     "centerAlign": "بیچ میں سیدھ کریں۔",
     "rightAlign": "دائیں سیدھ کریں۔",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "آؤٹ لائن کو نشان زد کریں۔",
       "redactionFill": "ریڈیکشن کا رنگ",
       "redactionTextPlaceholder": "ٹیکسٹ لیبل داخل کریں۔",
-      "contentEdit": "مواد میں ترمیم کریں۔"
+      "contentEdit": "مواد میں ترمیم کریں۔",
+      "zOrder": "آرڈر"
     },
     "lineStyles": {
       "startLineStyleLabel": "لائن اسٹائل شروع کریں۔",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "بارڈر"
+    },
+    "fillStyle": {
+      "dropdownLabel": "فل اسٹائل"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "ڈاک ٹکٹ",
-    "standard": "معیاری ڈاک ٹکٹ"
+    "standard": "معیاری ڈاک ٹکٹ",
+    "preset": "پیش سیٹ",
+    "custom": "حسب ضرورت",
+    "categories": "زمرہ جات",
+    "filter": "فلٹر",
+    "searchStamps": "ڈاک ٹکٹ تلاش کریں۔"
   },
   "colorPickerModal": {
     "modalTitle": "رنگ چنندہ"

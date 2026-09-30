@@ -15,6 +15,7 @@
     "close": "بستن",
     "undo": "لغو",
     "redo": "از نو انجام دادن",
+    "reload": "بارگیری مجدد",
     "comment": "نظر دهید",
     "reply": "پاسخ اضافه کنید",
     "copy": "کپی",
@@ -147,7 +148,12 @@
     "showLessColors": "نمایش رنگ‌های کمتر",
     "fromCustomColorPicker": "از انتخابگر رنگ سفارشی",
     "newSpreadsheetDocument": "صفحه گسترده جدید",
-    "resetDefault": "تنظیم مجدد به حالت پیش‌فرض"
+    "resetDefault": "تنظیم مجدد به حالت پیش‌فرض",
+    "restoreDefaults": "بازیابی پیش‌فرض‌ها",
+    "sendToBack": "ارسال به عقب",
+    "bringToFront": "جلو آوردن",
+    "sendBackward": "ارسال به عقب",
+    "bringForward": "جلو آوردن."
   },
   "annotation": {
     "areaMeasurement": "مساحت",
@@ -194,6 +200,7 @@
     "note": "توجه داشته باشید",
     "textField": "فیلد متنی",
     "signatureFormField": "فیلد امضا",
+    "datePickerFormField": "فیلد انتخاب تاریخ",
     "checkBoxFormField": "فیلد چک باکس",
     "radioButtonFormField": "فیلد دکمه رادیویی",
     "listBoxFormField": "فیلد لیست باکس",
@@ -258,7 +265,7 @@
     "calibration": "کالیبراسیون",
     "zoomOverlay": "بزرگنمایی روی هم افتادگی",
     "textPopup": "پنجره متنی",
-    "createStampButton": "ایجاد تمبر جدید",
+    "addStampButton": "اضافه کردن تمبر",
     "filter": "فیلتر",
     "multiSelectButton": "انتخاب چندگانه",
     "pageReplaceModalTitle": "صفحه را جایگزین کنید",
@@ -271,12 +278,12 @@
       "open": "مشاهده همه حاشیه‌نویسی‌ها",
       "close": "بستن همه حاشیه‌نویسی‌ها"
     },
-    "comparePanel": "پنل مقایسه",
-    "mainMenu": "منوی اصلی"
+    "comparePanel": "پنل مقایسه"
   },
   "message": {
     "showMore": "نمایش بیشتر",
     "showLess": "نمایش کمتر",
+    "signatureDisclaimer": "این امضای الکترونیکی نمایانگر قصد امضاکننده برای امضای سند است. با استفاده از این امضا، شما موافقت می‌کنید که امضای الکترونیکی شما معادل قانونی امضای دستی شما در این سند است.",
     "toolsOverlayNoPresets": "بدون تنظیمات از پیش تعیین‌شده",
     "badDocument": "سند بارگذاری نشد. سند یا خراب است یا معتبر نیست.",
     "customPrintPlaceholder": "مثال ۳، ۴-۱۰",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "سند رمزگذاری شده بارگیری نشد. ورود رمز عبور لغو شد.",
     "enterPassword": "این سند با رمز عبور محافظت می‌شود. لطفاً رمز عبور را وارد کنید.",
     "incorrectPassword": "رمز عبور نادرست، تعداد تلاش باقی مانده: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "برای شروع گفتگو، یک نظر اضافه کنید.",
     "noAnnotations": "برای گذاشتن نظر، شروع به حاشیه‌نویسی کنید.",
     "noAnnotationsReadOnly": "این سند هیچ گونه توضیح و تفسیری ندارد.",
     "noAnnotationsFilter": "شروع به ایجاد حاشیه‌نویسی کنید و فیلترها اینجا ظاهر می‌شوند.",
@@ -292,6 +300,7 @@
     "noAttachments": "این سند هیچ پیوستی ندارد.",
     "noResults": "هیچ نتیجه‌ای یافت نشد.",
     "numResultsFound": "نتایج یافت شده",
+    "loadingDocument": "بارگیری سند",
     "loadError": "خطا در بارگیری سند",
     "urlInputFileLoadError": "فایل از آدرس اینترنتی ارائه شده قابل بازیابی نیست.",
     "notSupported": "آن نوع فایل پشتیبانی نمی‌شود.",
@@ -328,6 +337,7 @@
     "sortBy": "مرتب سازی بر اساس",
     "emptyCustomStampInput": "متن مهر نمی‌تواند خالی باشد",
     "unpostedComment": "نظر ارسال نشده",
+    "saved": "ذخیره شده",
     "lockedLayer": "لایه قفل شده است",
     "layerVisibilityNoChange": "قابلیت مشاهده لایه‌ها قابل تغییر نیست",
     "noLayers": "این سند هیچ لایه‌ای ندارد.",
@@ -354,7 +364,15 @@
     "refreshPage": "لطفاً اتصال شبکه خود را بررسی کرده و صفحه را رفرش کنید.",
     "renderErrors": {
       "error": "اینجا یه مشکلی پیش اومده.",
-      "refreshPanel": "می‌توانید به کار خود ادامه دهید. پنل را دوباره باز کنید."
+      "toFixIssue": "برای رفع مشکل، لطفاً {{componentType}} را دوباره باز کنید.",
+      "componentType": {
+        "component": "جزء",
+        "panel": "پنل",
+        "modal": "سرمایه",
+        "flyout": "پرواز",
+        "dropdown": "منوی کشویی",
+        "popup": "پنجره بازشو"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "لیست مرتب سازی",
       "position": "موقعیت",
       "linePosition": "موقعیت",
+      "spreadsheetPosition": "موقعیت",
       "time": "زمان",
       "status": "وضعیت",
       "author": "نویسنده",
       "type": "نوع",
       "color": "رنگ",
+      "number": "شماره",
       "createdDate": "تاریخ ایجاد",
       "modifiedDate": "تاریخ اصلاح‌شده"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "پنل فیلتر سند و نظرات"
     },
     "state": {
+      "open": "باز",
+      "resolved": "حل‌شده",
       "accepted": "پذیرفته شده",
       "rejected": "رد شد",
       "completed": "تکمیل شده",
@@ -617,10 +639,7 @@
         "irreversible": "برگشت ناپذیر",
         "willDeleteMeasurement": "و اندازه‌گیری‌های مرتبط را حذف خواهد کرد.",
         "confirmDelete": "آیا مطمئن هستید که می‌خواهید این مقیاس را حذف کنید؟",
-        "thisCantBeUndone": "این قابل برگشت نیست.",
-        "ifChangeScale": "اگر مقیاس اندازه‌گیری یا ابزار انتخاب شده را تغییر دهید، مقیاس",
-        "notUsedWillDelete": "دیگر توسط هیچ اندازه‌گیری یا ابزاری استفاده نخواهد شد و حذف خواهد شد. حذف برگشت‌ناپذیر است.",
-        "ifToContinue": "مطمئنی که می‌خوای ادامه بدی؟"
+        "thisCantBeUndone": "این قابل برگشت نیست."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "رنگ متن",
       "backgroundColor": "رنگ پس زمینه",
       "dateToolTipLabel": "اطلاعات بیشتر در مورد قالب تاریخ",
-      "previewCustomStamp": "پیش‌نمایش از"
+      "previewCustomStamp": "پیش‌نمایش از",
+      "category": "دسته بندی",
+      "categoryInstructions": "برای نامگذاری یک دسته جدید تایپ کنید",
+      "customStamp": "تمبر سفارشی"
     },
     "pageRedactModal": {
       "addMark": "اضافه کردن علامت",
@@ -754,6 +776,8 @@
       "annotations": "حاشیه‌نویسی‌ها",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "غیرفعال کردن به‌روزرسانی پیش‌فرض سبک ابزار از پنجره‌ی حاشیه‌نویسی",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "همگام‌سازی به‌روزرسانی‌های سبک حاشیه‌نویسی را با ابزار مرتبطی که حاشیه‌نویسی را ایجاد کرده است غیرفعال می‌کند. بنابراین اگر سبک یک حاشیه‌نویسی تغییر کند، سبک‌های پیش‌فرض ابزار به‌روزرسانی نخواهند شد.",
+      "enableViewportRelativePositioning": "فعال کردن موقعیت‌دهی نسبی حاشیه‌نویسی‌ها نسبت به Viewport",
+      "enableViewportRelativePositioningDesc": "وقتی این گزینه فعال باشد، جابجایی حاشیه‌نویسی‌ها در صفحات با چرخش‌های مختلف، موقعیت و جهت بصری آنها را حفظ می‌کند.",
       "notesPanel": "پنل یادداشت‌ها",
       "disableNoteSubmissionWithEnter": "غیرفعال کردن ارسال یادداشت با Enter",
       "disableNoteSubmissionWithEnterDesc": "اگر قبلاً امکان ارسال یادداشت فقط با فشار دادن Enter فعال بوده است، آن را غیرفعال کنید. این کار ارسال یادداشت را به حالت پیش‌فرض که Ctrl/Cmd + Enter است، برمی‌گرداند.",
@@ -818,6 +842,17 @@
       "setShortcut": "تنظیم میانبر",
       "editShortcut": "میانبر ویرایش",
       "shortcutAlreadyExists": "میانبر صفحه‌کلید بالا از قبل وجود دارد.",
+      "contentEdit": {
+        "copyText": "کپی کردن متن یا حاشیه‌نویسی‌های انتخاب‌شده",
+        "cutText": "متن یا سلول‌های انتخاب شده را برش دهید",
+        "pasteText": "چسباندن متن یا حاشیه‌نویسی",
+        "undoChange": "لغو تغییر حاشیه‌نویسی",
+        "redoChange": "تغییر حاشیه‌نویسی را دوباره انجام دهید",
+        "bold": "پررنگ",
+        "italic": "ایتالیک",
+        "underline": "زیرخط دار",
+        "strikeout": "خط خورده"
+      },
       "close": "بستن راهنمای ابزار",
       "spreadsheetEditor": {
         "copyText": "کپی کردن متن یا سلول‌های انتخاب شده",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "شامل نشانگر فیلد",
       "indicatorPlaceHolders": {
         "TextFormField": "متن را اینجا وارد کنید",
+        "DatePickerFormField": "تاریخ را انتخاب کنید",
         "CheckBoxFormField": "بررسی",
         "RadioButtonFormField": "پر کردن",
         "ListBoxFormField": "انتخاب کنید",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "حاشیه نویسی فیلد دکمه رادیویی",
       "ListBoxFormField": "حاشیه نویسی فیلدهای لیست باکس",
       "ComboBoxFormField": "حاشیه نویسی فیلدهای کمبو باکس",
+      "DatePickerFormField": "حاشیه نویسی فیلد انتخابگر تاریخ",
       "TextFormField": "حاشیه‌نویسی فیلد متنی"
     },
     "apply": "فیلدهای اعمال شده",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "با علامت‌گذاری متن، مناطق، صفحات یا انجام جستجو، ویرایش را شروع کنید.",
-    "redactionSearchPlaceholder": "ویرایش با صفحه کلید یا الگوها",
+    "redactionSearchPlaceholder": "ویرایش با کلمات کلیدی یا الگوها",
     "redactionCounter": "برای ویرایش علامت‌گذاری شده است",
     "clearMarked": "پاک کردن",
     "redactAllMarked": "همه را ویرایش کنید",
@@ -1311,6 +1348,7 @@
     "underline": "زیرخط دار",
     "strikeout": "اعتصاب",
     "textColor": "رنگ متن",
+    "highlightColor": "رنگ برجسته",
     "leftAlign": "تراز چپ",
     "centerAlign": "تراز وسط",
     "rightAlign": "تراز راست",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "طرح کلی مارک",
       "redactionFill": "رنگ ویرایش",
       "redactionTextPlaceholder": "برچسب متن را وارد کنید",
-      "contentEdit": "ویرایش محتوا"
+      "contentEdit": "ویرایش محتوا",
+      "zOrder": "سفارش دهید"
     },
     "lineStyles": {
       "startLineStyleLabel": "سبک خط شروع",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "مرز"
+    },
+    "fillStyle": {
+      "dropdownLabel": "سبک پر کردن"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "تمبرها",
-    "standard": "تمبرهای استاندارد"
+    "standard": "تمبرهای استاندارد",
+    "preset": "از پیش تعیین شده",
+    "custom": "سفارشی",
+    "categories": "دسته‌ها",
+    "filter": "فیلتر",
+    "searchStamps": "جستجوی تمبرها"
   },
   "colorPickerModal": {
     "modalTitle": "انتخابگر رنگ"

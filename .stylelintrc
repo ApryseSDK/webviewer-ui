@@ -1,5 +1,31 @@
 {
   "rules": {
-    "color-no-hex": true
+    "property-disallowed-list": [
+      [
+        "margin-left",
+        "margin-right",
+        "padding-left",
+        "padding-right",
+        "border-left",
+        "border-right",
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      {
+        "message": "Use logical CSS properties instead of directional ones."
+      }
+    ],
+    "declaration-property-value-disallowed-list": {
+      "text-align": [
+        "left",
+        "right"
+      ],
+      "float": [
+        "left",
+        "right"
+      ]
+    }
   }
 }

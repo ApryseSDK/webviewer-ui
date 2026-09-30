@@ -15,6 +15,7 @@
     "close": "Vicino",
     "undo": "Disfare",
     "redo": "Pronto",
+    "reload": "Ricaricare",
     "comment": "Commento",
     "reply": "rispondere",
     "copy": "copia",
@@ -147,7 +148,12 @@
     "showLessColors": "Mostra meno colori",
     "fromCustomColorPicker": "da Selettore colori personalizzato",
     "newSpreadsheetDocument": "Nuovo foglio di calcolo",
-    "resetDefault": "Ripristina impostazioni predefinite"
+    "resetDefault": "Ripristina impostazioni predefinite",
+    "restoreDefaults": "Ripristina le impostazioni predefinite",
+    "sendToBack": "Invia indietro",
+    "bringToFront": "Portare in avanti",
+    "sendBackward": "Invia indietro",
+    "bringForward": "Portare avanti"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -194,6 +200,7 @@
     "note": "Nota",
     "textField": "Campo di testo",
     "signatureFormField": "Campo firma",
+    "datePickerFormField": "Campo di selezione data",
     "checkBoxFormField": "Campo casella di controllo",
     "radioButtonFormField": "Campo del pulsante di opzione",
     "listBoxFormField": "Campo casella di riepilogo",
@@ -258,7 +265,7 @@
     "calibration": "Calibrazione",
     "zoomOverlay": "Sovrapposizione zoom",
     "textPopup": "Popup di testo",
-    "createStampButton": "Crea nuovo timbro",
+    "addStampButton": "Aggiungi timbro",
     "filter": "Filtro",
     "multiSelectButton": "Selezione multipla",
     "pageReplaceModalTitle": "Sostituisci pagina",
@@ -271,12 +278,12 @@
       "open": "Visualizza tutte le annotazioni",
       "close": "Chiudi tutte le annotazioni"
     },
-    "comparePanel": "Confronta pannello",
-    "mainMenu": "Menù principale"
+    "comparePanel": "Confronta pannello"
   },
   "message": {
     "showMore": "Mostra di più",
     "showLess": "Mostra meno",
+    "signatureDisclaimer": "Questa firma elettronica rappresenta l'intenzione del firmatario di firmare il documento. Utilizzando questa firma, l'utente accetta che la sua firma elettronica abbia lo stesso valore legale della sua firma autografa su questo documento.",
     "toolsOverlayNoPresets": "Nessun preset",
     "badDocument": "Caricamento del documento non riuscito. Il documento è corrotto o non valido.",
     "customPrintPlaceholder": "es 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "Caricamento del documento crittografato non riuscito. Inserimento password annullato.",
     "enterPassword": "Questo documento è protetto da password. Per favore inserire una password",
     "incorrectPassword": "Password errata, tentativi rimasti: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Aggiungi un commento per iniziare una discussione.",
     "noAnnotations": "Inizia a fare annotazioni per lasciare un commento.",
     "noAnnotationsReadOnly": "Questo documento non ha annotazioni.",
     "noAnnotationsFilter": "Inizia a creare annotazioni e filtri verranno visualizzati qui.",
@@ -292,6 +300,7 @@
     "noAttachments": "Questo documento non ha allegati.",
     "noResults": "Nessun risultato trovato.",
     "numResultsFound": "risultati trovati",
+    "loadingDocument": "Caricamento del documento",
     "loadError": "Errore durante il caricamento del documento",
     "urlInputFileLoadError": "Non è stato possibile recuperare il file dall'URL fornito.",
     "notSupported": "Quel tipo di file non è supportato.",
@@ -328,6 +337,7 @@
     "sortBy": "Ordina per",
     "emptyCustomStampInput": "Il testo del timbro non può essere vuoto",
     "unpostedComment": "Commento non pubblicato",
+    "saved": "Salvato",
     "lockedLayer": "Il livello è bloccato",
     "layerVisibilityNoChange": "La visibilità del livello non può essere modificata",
     "noLayers": "Questo documento non ha livelli.",
@@ -354,7 +364,15 @@
     "refreshPage": "Controlla la tua connessione di rete e aggiorna la pagina.",
     "renderErrors": {
       "error": "Qualcosa è andato storto.",
-      "refreshPanel": "Puoi continuare a lavorare. Prova a riaprire il pannello."
+      "toFixIssue": "Per risolvere il problema, prova a riaprire il {{componentType}}.",
+      "componentType": {
+        "component": "componente",
+        "panel": "pannello",
+        "modal": "capitale",
+        "flyout": "volo fuori",
+        "dropdown": "cadere in picchiata",
+        "popup": "apparire"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "Ordina elenco",
       "position": "Posizione",
       "linePosition": "Posizione",
+      "spreadsheetPosition": "Posizione",
       "time": "Tempo",
       "status": "Stato",
       "author": "Autore",
       "type": "genere",
       "color": "Colore",
+      "number": "Numero",
       "createdDate": "Data di Creazione",
       "modifiedDate": "Data modificata"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "Filtra il documento e il pannello dei commenti"
     },
     "state": {
+      "open": "Aperto",
+      "resolved": "Risolto",
       "accepted": "Accettato",
       "rejected": "Respinto",
       "completed": "Completato",
@@ -617,10 +639,7 @@
         "irreversible": "irreversibile",
         "willDeleteMeasurement": "e cancellerà le misurazioni associate.",
         "confirmDelete": "Sei sicuro di voler eliminare questa scala?",
-        "thisCantBeUndone": " L'operazione non può essere annullata.",
-        "ifChangeScale": "Se si modifica la scala per la misurazione o lo strumento selezionato, scalare",
-        "notUsedWillDelete": " non sarà più utilizzato da alcuna misura o strumento e sarà cancellato. La cancellazione è irreversibile.",
-        "ifToContinue": "Sei sicuro di voler continuare?"
+        "thisCantBeUndone": " L'operazione non può essere annullata."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "Colore del testo",
       "backgroundColor": "Colore di sfondo",
       "dateToolTipLabel": "Ulteriori informazioni sul formato della data",
-      "previewCustomStamp": "Anteprima di"
+      "previewCustomStamp": "Anteprima di",
+      "category": "Categoria",
+      "categoryInstructions": "Digita per assegnare un nome a una nuova categoria",
+      "customStamp": "Timbro personalizzato"
     },
     "pageRedactModal": {
       "addMark": "Aggiungi Marco",
@@ -754,6 +776,8 @@
       "annotations": "Annotazioni",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Disattiva l'aggiornamento dello stile predefinito dello strumento dal popup di annotazione",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Disabilita la sincronizzazione degli aggiornamenti dello stile di annotazione con lo strumento associato che ha creato l'annotazione. Quindi, se lo stile di un'annotazione viene modificato, gli stili predefiniti dello strumento non verranno aggiornati.",
+      "enableViewportRelativePositioning": "Abilita il posizionamento delle annotazioni rispetto alla finestra di visualizzazione",
+      "enableViewportRelativePositioningDesc": "Quando questa opzione è abilitata, lo spostamento delle annotazioni tra pagine con rotazioni diverse ne preserva la posizione e l'orientamento visivi.",
       "notesPanel": "Pannello Note",
       "disableNoteSubmissionWithEnter": "Disabilita l'invio delle note con Invio",
       "disableNoteSubmissionWithEnterDesc": "Disabilita la possibilità di inviare note premendo Invio solo se precedentemente era stato abilitato. Questo ripristinerà l'invio delle note all'impostazione predefinita che è Ctrl/Cmd + Invio.",
@@ -818,6 +842,17 @@
       "setShortcut": "Imposta scorciatoia",
       "editShortcut": "Modifica collegamento",
       "shortcutAlreadyExists": "La scorciatoia da tastiera sopra esiste già.",
+      "contentEdit": {
+        "copyText": "Copia il testo o le annotazioni selezionati",
+        "cutText": "Taglia il testo o le celle selezionate",
+        "pasteText": "Incolla testo o annotazioni",
+        "undoChange": "Annulla la modifica di un'annotazione",
+        "redoChange": "Ripristina una modifica all'annotazione",
+        "bold": "Grassetto",
+        "italic": "Corsivo",
+        "underline": "Sottolineato",
+        "strikeout": "Barrato"
+      },
       "close": "Chiudi la descrizione comando",
       "spreadsheetEditor": {
         "copyText": "Copia il testo o le celle selezionate",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "Includi indicatore di campo",
       "indicatorPlaceHolders": {
         "TextFormField": "Inserisci qui il testo",
+        "DatePickerFormField": "Seleziona la data",
         "CheckBoxFormField": "Dai un'occhiata",
         "RadioButtonFormField": "Riempire",
         "ListBoxFormField": "Selezionare",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "Annotazione del campo del pulsante di opzione",
       "ListBoxFormField": "Annotazione del campo della casella di riepilogo",
       "ComboBoxFormField": "Annotazione del campo della casella combinata",
+      "DatePickerFormField": "Annotazione del campo Selettore data",
       "TextFormField": "Annotazione del campo di testo"
     },
     "apply": "Applica campi",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Inizia a redigere contrassegnando testo, regioni, pagine o effettuando una ricerca.",
-    "redactionSearchPlaceholder": "Redigere tramite tastiera o modelli",
+    "redactionSearchPlaceholder": "Redigere tramite parole chiave o modelli",
     "redactionCounter": "Contrassegnato per la redazione",
     "clearMarked": "Chiaro",
     "redactAllMarked": "Redigere tutto",
@@ -1311,6 +1348,7 @@
     "underline": "Sottolineare",
     "strikeout": "Barrato",
     "textColor": "Colore del testo",
+    "highlightColor": "Colore di evidenziazione",
     "leftAlign": "Allineamento a sinistra",
     "centerAlign": "Allineamento al centro",
     "rightAlign": "Allineamento a destra",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "Segna contorno",
       "redactionFill": "Colore di redazione",
       "redactionTextPlaceholder": "Inserisci etichetta di testo",
-      "contentEdit": "Modifica contenuto"
+      "contentEdit": "Modifica contenuto",
+      "zOrder": "Ordine"
     },
     "lineStyles": {
       "startLineStyleLabel": "Stile della linea di partenza",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "Confine"
+    },
+    "fillStyle": {
+      "dropdownLabel": "Stile di riempimento"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "Francobolli",
-    "standard": "Francobolli standard"
+    "standard": "Francobolli standard",
+    "preset": "Preimpostazione",
+    "custom": "Personalizzato",
+    "categories": "Categorie",
+    "filter": "Filtro",
+    "searchStamps": "Cerca timbri"
   },
   "colorPickerModal": {
     "modalTitle": "Selettore colore"

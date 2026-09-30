@@ -15,6 +15,7 @@
     "close": "Cerrar",
     "undo": "Deshacer",
     "redo": "Listo",
+    "reload": "Recargar",
     "comment": "Añadir comentario",
     "reply": "Responder",
     "copy": "Copiar",
@@ -147,7 +148,12 @@
     "showLessColors": "Mostrar menos colores",
     "fromCustomColorPicker": "del Selector de color personalizado",
     "newSpreadsheetDocument": "Nueva hoja de cálculo",
-    "resetDefault": "Restablecer a valores predeterminados"
+    "resetDefault": "Restablecer a valores predeterminados",
+    "restoreDefaults": "Restaurar valores predeterminados",
+    "sendToBack": "Enviar atrás",
+    "bringToFront": "Traer al frente",
+    "sendBackward": "Enviar hacia atrás",
+    "bringForward": "Presentar"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -194,6 +200,7 @@
     "note": "Nota",
     "textField": "Campo de texto",
     "signatureFormField": "Campo de firma",
+    "datePickerFormField": "Campo de selección de fecha",
     "checkBoxFormField": "Campo de casilla de verificación",
     "radioButtonFormField": "Campo de botón de opción",
     "listBoxFormField": "Campo de cuadro de lista",
@@ -258,7 +265,7 @@
     "calibration": "Calibración",
     "zoomOverlay": "Superposición de zoom",
     "textPopup": "Ventana emergente de texto",
-    "createStampButton": "Crear nuevo sello",
+    "addStampButton": "Agregar sello",
     "filter": "Filtrar",
     "multiSelectButton": "Selección múltiple",
     "pageReplaceModalTitle": "Reemplazar página",
@@ -271,12 +278,12 @@
       "open": "Ver todas las anotaciones",
       "close": "Cerrar todas las anotaciones"
     },
-    "comparePanel": "Panel de comparación",
-    "mainMenu": "Menú principal"
+    "comparePanel": "Panel de comparación"
   },
   "message": {
     "showMore": "Mostrar más",
     "showLess": "Muestra menos",
+    "signatureDisclaimer": "Esta firma electrónica representa la intención del firmante de firmar el documento. Al utilizar esta firma, usted acepta que su firma electrónica tiene la misma validez legal que su firma manuscrita en este documento.",
     "toolsOverlayNoPresets": "Sin preajustes",
     "badDocument": "Error al cargar el documento. El documento está dañado o no es válido.",
     "customPrintPlaceholder": "por ej. 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "Error al cargar el documento cifrado. Se ha cancelado la escritura de la contraseña.",
     "enterPassword": "Este documento está protegido por contraseña. Introduce una contraseña",
     "incorrectPassword": "Contraseña incorrecta, intentos restantes: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Agregue un comentario para iniciar una discusión.",
     "noAnnotations": "Empiece a hacer anotaciones para dejar un comentario.",
     "noAnnotationsReadOnly": "Este documento no tiene anotaciones.",
     "noAnnotationsFilter": "Empiece a hacer anotaciones y los filtros aparecerán aquí.",
@@ -292,6 +300,7 @@
     "noAttachments": "Este documento no tiene anexos.",
     "noResults": "No se han encontrado resultados.",
     "numResultsFound": "resultados encontrados",
+    "loadingDocument": "Cargando documento",
     "loadError": "Error al cargar el documento",
     "urlInputFileLoadError": "No se pudo recuperar el archivo de la URL proporcionada.",
     "notSupported": "Ese tipo de archivo no es compatible.",
@@ -328,6 +337,7 @@
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "El texto del sello no puede estar vacío",
     "unpostedComment": "Comentario no publicado",
+    "saved": "Guardado",
     "lockedLayer": "La capa está bloqueada",
     "layerVisibilityNoChange": "La visibilidad de la capa no se puede cambiar",
     "noLayers": "Este documento no tiene capas.",
@@ -354,7 +364,15 @@
     "refreshPage": "Verifique su conexión de red y actualice la página.",
     "renderErrors": {
       "error": "Algo salió mal aquí.",
-      "refreshPanel": "Puedes seguir trabajando. Intenta volver a abrir el panel."
+      "toFixIssue": "Para solucionar el problema, intente volver a abrir el {{componentType}}.",
+      "componentType": {
+        "component": "componente",
+        "panel": "panel",
+        "modal": "capital",
+        "flyout": "vuelo",
+        "dropdown": "menú desplegable",
+        "popup": "ventana emergente"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "Lista de orden de clasificación",
       "position": "Posición",
       "linePosition": "Posición",
+      "spreadsheetPosition": "Posición",
       "time": "Hora",
       "status": "Estado",
       "author": "Autor",
       "type": "Tipo",
       "color": "Color",
+      "number": "Número",
       "createdDate": "Fecha de creación",
       "modifiedDate": "Fecha de modificación"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "Panel de filtro de documentos y comentarios"
     },
     "state": {
+      "open": "Abierto",
+      "resolved": "Resuelto",
       "accepted": "Aceptado",
       "rejected": "Rechazado",
       "completed": "Terminado",
@@ -617,10 +639,7 @@
         "irreversible": "irreversible",
         "willDeleteMeasurement": "y eliminará las medidas asociadas.",
         "confirmDelete": "¿Está seguro de que desea eliminar esta escala?",
-        "thisCantBeUndone": " Esto no se puede deshacer.",
-        "ifChangeScale": "Si cambia la escala para la medida o herramienta seleccionada, la escala",
-        "notUsedWillDelete": " ya no será utilizado por ninguna medida o herramienta y será eliminado. La eliminación es irreversible.",
-        "ifToContinue": "¿Está seguro de que desea continuar?"
+        "thisCantBeUndone": " Esto no se puede deshacer."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "Color de texto",
       "backgroundColor": "Color de fondo",
       "dateToolTipLabel": "Más información sobre el formato de fecha",
-      "previewCustomStamp": "Vista previa de"
+      "previewCustomStamp": "Vista previa de",
+      "category": "Categoría",
+      "categoryInstructions": "Escribe para nombrar una nueva categoría",
+      "customStamp": "Sello personalizado"
     },
     "pageRedactModal": {
       "addMark": "Agregar marca",
@@ -754,6 +776,8 @@
       "annotations": "Anotaciones",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Deshabilitar la actualización del estilo predeterminado de la herramienta desde la ventana emergente de anotación",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Deshabilita la sincronización de actualizaciones de estilo de anotación con la herramienta asociada que creó la anotación. Por lo tanto, si se cambia el estilo de una anotación, los estilos predeterminados de la herramienta no se actualizarán.",
+      "enableViewportRelativePositioning": "Habilitar el posicionamiento de anotaciones relativo a la ventana gráfica",
+      "enableViewportRelativePositioningDesc": "Cuando está habilitada, al mover las anotaciones entre páginas con diferentes rotaciones se conserva su posición y orientación visual.",
       "notesPanel": "Panel de notas",
       "disableNoteSubmissionWithEnter": "Deshabilitar el envío de notas con Enter",
       "disableNoteSubmissionWithEnterDesc": "Deshabilite la capacidad de enviar notas presionando solo Enter si se había habilitado previamente. Esto revertirá el envío de la nota al valor predeterminado, que es Ctrl/Cmd + Enter.",
@@ -818,6 +842,17 @@
       "setShortcut": "Establecer acceso directo",
       "editShortcut": "Editar acceso directo",
       "shortcutAlreadyExists": "El método abreviado de teclado anterior ya existe.",
+      "contentEdit": {
+        "copyText": "Copiar texto o anotaciones seleccionadas",
+        "cutText": "Cortar texto o celdas seleccionadas",
+        "pasteText": "Pegar texto o anotaciones",
+        "undoChange": "Deshacer un cambio de anotación",
+        "redoChange": "Rehacer un cambio de anotación",
+        "bold": "Negrita",
+        "italic": "Cursiva",
+        "underline": "Subrayar",
+        "strikeout": "Tachado"
+      },
       "close": "Cerrar información sobre herramientas",
       "spreadsheetEditor": {
         "copyText": "Copiar texto o celdas seleccionadas",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "Incluir indicador de campo",
       "indicatorPlaceHolders": {
         "TextFormField": "Insertar texto aquí",
+        "DatePickerFormField": "Seleccione la fecha",
         "CheckBoxFormField": "Controlar",
         "RadioButtonFormField": "Llenar",
         "ListBoxFormField": "Seleccione",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "Anotación de campo de botón de radio",
       "ListBoxFormField": "Anotación de campo del cuadro de lista",
       "ComboBoxFormField": "Anotación de campo de cuadro combinado",
+      "DatePickerFormField": "Anotación de campo del selector de fecha",
       "TextFormField": "Anotación de campo de texto"
     },
     "apply": "Aplicar campos",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Comience a redactar marcando texto, regiones, páginas o realizando una búsqueda.",
-    "redactionSearchPlaceholder": "Redactar por teclado o patrones",
+    "redactionSearchPlaceholder": "Redactar por palabras clave o patrones",
     "redactionCounter": "Marcado para Redacción",
     "clearMarked": "Claro",
     "redactAllMarked": "Redactar todo",
@@ -1311,6 +1348,7 @@
     "underline": "Subrayar",
     "strikeout": "Ponche",
     "textColor": "Color de texto",
+    "highlightColor": "Resaltar color",
     "leftAlign": "Alinear a la izquierda",
     "centerAlign": "alineación central",
     "rightAlign": "alinear a la derecha",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "Esquema de marca",
       "redactionFill": "Color de redacción",
       "redactionTextPlaceholder": "Insertar etiqueta de texto",
-      "contentEdit": "Editar contenido"
+      "contentEdit": "Editar contenido",
+      "zOrder": "Orden"
     },
     "lineStyles": {
       "startLineStyleLabel": "Estilo de línea de salida",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "Borde"
+    },
+    "fillStyle": {
+      "dropdownLabel": "Estilo de relleno"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "Sellos",
-    "standard": "Sellos estándar"
+    "standard": "Sellos estándar",
+    "preset": "Preestablecido",
+    "custom": "Personalizado",
+    "categories": "Categorías",
+    "filter": "Filtrar",
+    "searchStamps": "Sellos de búsqueda"
   },
   "colorPickerModal": {
     "modalTitle": "Selector de color"

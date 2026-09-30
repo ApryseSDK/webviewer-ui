@@ -15,6 +15,7 @@
     "close": "বন্ধ",
     "undo": "পূর্বাবস্থায় ফেরান",
     "redo": "প্রস্তুত",
+    "reload": "পুনরায় লোড করুন",
     "comment": "মন্তব্য করুন",
     "reply": "উত্তর যোগ করুন",
     "copy": "কপি",
@@ -147,7 +148,12 @@
     "showLessColors": "কম রং দেখান",
     "fromCustomColorPicker": "কাস্টম কালার পিকার থেকে",
     "newSpreadsheetDocument": "নতুন স্প্রেডশীট",
-    "resetDefault": "ডিফল্টে রিসেট করুন"
+    "resetDefault": "ডিফল্টে রিসেট করুন",
+    "restoreDefaults": "ডিফল্ট পুনরুদ্ধার করুন",
+    "sendToBack": "ফেরত পাঠান",
+    "bringToFront": "সামনে নিয়ে আসুন",
+    "sendBackward": "পিছনে পাঠান",
+    "bringForward": "সামনে নিয়ে আসুন"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -194,6 +200,7 @@
     "note": "বিঃদ্রঃ",
     "textField": "টেক্সট ক্ষেত্রের",
     "signatureFormField": "স্বাক্ষর ক্ষেত্র",
+    "datePickerFormField": "তারিখ বাছাই ক্ষেত্র",
     "checkBoxFormField": "চেকবক্স ক্ষেত্র",
     "radioButtonFormField": "রেডিও বোতাম ক্ষেত্র",
     "listBoxFormField": "তালিকা বক্স ক্ষেত্র",
@@ -258,7 +265,7 @@
     "calibration": "ক্রমাঙ্কন",
     "zoomOverlay": "জুম ওভারলে",
     "textPopup": "পাঠ্য পপআপ",
-    "createStampButton": "নতুন স্ট্যাম্প তৈরি করুন",
+    "addStampButton": "স্ট্যাম্প যোগ করুন",
     "filter": "ছাঁকনি",
     "multiSelectButton": "মাল্টি সিলেক্ট",
     "pageReplaceModalTitle": "পৃষ্ঠা প্রতিস্থাপন করুন",
@@ -271,12 +278,12 @@
       "open": "সমস্ত টীকা দেখুন",
       "close": "সমস্ত টীকা বন্ধ করুন"
     },
-    "comparePanel": "প্যানেল তুলনা করুন",
-    "mainMenu": "প্রধান মেনু"
+    "comparePanel": "প্যানেল তুলনা করুন"
   },
   "message": {
     "showMore": "আরো দেখুন",
     "showLess": "প্রদর্শন কম",
+    "signatureDisclaimer": "এই ইলেকট্রনিক স্বাক্ষরটি দলিলে স্বাক্ষর করার জন্য স্বাক্ষরকারীর অভিপ্রায়ের পরিচায়ক। এই স্বাক্ষরটি ব্যবহার করার মাধ্যমে, আপনি সম্মত হচ্ছেন যে এই দলিলে আপনার ইলেকট্রনিক স্বাক্ষরটি আপনার হস্তলিখিত স্বাক্ষরের আইনি সমতুল্য।",
     "toolsOverlayNoPresets": "কোনো প্রিসেট নেই",
     "badDocument": "নথি লোড করতে ব্যর্থ হয়েছে৷ নথিটি হয় দূষিত বা বৈধ নয়।",
     "customPrintPlaceholder": "যেমন 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "এনক্রিপ্ট করা নথি লোড করতে ব্যর্থ হয়েছে৷ পাসওয়ার্ড এন্ট্রি বাতিল করা হয়েছে.",
     "enterPassword": "এই নথি পাসওয়ার্ড সুরক্ষিত. একটি পাসওয়ার্ড লিখুন",
     "incorrectPassword": "ভুল পাসওয়ার্ড, চেষ্টা বাকি আছে: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "আলোচনা শুরু করতে একটি মন্তব্য যোগ করুন।",
     "noAnnotations": "একটি মন্তব্য করতে টীকা তৈরি করা শুরু করুন.",
     "noAnnotationsReadOnly": "এই নথিতে কোন টীকা নেই।",
     "noAnnotationsFilter": "টীকা তৈরি করা শুরু করুন এবং ফিল্টারগুলি এখানে উপস্থিত হবে৷",
@@ -292,6 +300,7 @@
     "noAttachments": "এই নথিতে কোন সংযুক্তি নেই.",
     "noResults": "কোন ফলাফল পাওয়া যায়নি.",
     "numResultsFound": "ফলাফল পাওয়া গেছে",
+    "loadingDocument": "ডকুমেন্ট লোড হচ্ছে",
     "loadError": "নথি লোড করার সময় ত্রুটি৷",
     "urlInputFileLoadError": "প্রদত্ত URL থেকে ফাইলটি পুনরুদ্ধার করা যায়নি।",
     "notSupported": "যে ফাইল টাইপ সমর্থিত নয়.",
@@ -328,6 +337,7 @@
     "sortBy": "সাজান",
     "emptyCustomStampInput": "স্ট্যাম্প টেক্সট খালি হতে পারে না",
     "unpostedComment": "পোস্ট না করা মন্তব্য",
+    "saved": "সংরক্ষিত",
     "lockedLayer": "স্তর লক করা আছে",
     "layerVisibilityNoChange": "স্তর দৃশ্যমানতা পরিবর্তন করা যাবে না",
     "noLayers": "এই নথিতে কোন স্তর নেই।",
@@ -354,7 +364,15 @@
     "refreshPage": "আপনার নেটওয়ার্ক সংযোগ পরীক্ষা করুন এবং পৃষ্ঠাটি রিফ্রেশ করুন।",
     "renderErrors": {
       "error": "এখানে কিছু ভুল হয়েছে।",
-      "refreshPanel": "তুমি কাজ চালিয়ে যেতে পারো। প্যানেলটি আবার খোলার চেষ্টা করো।"
+      "toFixIssue": "সমস্যাটি সমাধান করতে, অনুগ্রহ করে {{componentType}} পুনরায় খোলার চেষ্টা করুন।",
+      "componentType": {
+        "component": "উপাদান",
+        "panel": "প্যানেল",
+        "modal": "মূলধন",
+        "flyout": "ফ্লাইআউট",
+        "dropdown": "ড্রপডাউন",
+        "popup": "পপআপ"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "বাছাই অর্ডার তালিকা",
       "position": "অবস্থান",
       "linePosition": "অবস্থান",
+      "spreadsheetPosition": "অবস্থান",
       "time": "সময়",
       "status": "স্ট্যাটাস",
       "author": "লেখক",
       "type": "টাইপ",
       "color": "রঙ",
+      "number": "সংখ্যা",
       "createdDate": "তৈরীর তারিখ",
       "modifiedDate": "পরিবর্তিত তারিখ"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "নথি এবং মন্তব্য প্যানেল ফিল্টার করুন"
     },
     "state": {
+      "open": "খোলা",
+      "resolved": "সমাধান করা হয়েছে",
       "accepted": "গৃহীত",
       "rejected": "প্রত্যাখ্যাত",
       "completed": "সম্পন্ন",
@@ -617,10 +639,7 @@
         "irreversible": "অপরিবর্তনীয়",
         "willDeleteMeasurement": "এবং সংশ্লিষ্ট পরিমাপ মুছে ফেলবে।",
         "confirmDelete": "আপনি কি এই স্কেল মুছে ফেলার বিষয়ে নিশ্চিত?",
-        "thisCantBeUndone": " এটি পূর্বাবস্থায় ফেরানো যাবে না।",
-        "ifChangeScale": "আপনি নির্বাচিত পরিমাপ বা টুলের জন্য স্কেল পরিবর্তন করলে, স্কেল করুন",
-        "notUsedWillDelete": " কোন পরিমাপ বা সরঞ্জাম দ্বারা আর ব্যবহার করা হবে না এবং মুছে ফেলা হবে. মুছে ফেলা অপরিবর্তনীয়।",
-        "ifToContinue": "আপনি কি চালিয়ে যাওয়ার বিষয়ে নিশ্চিত?"
+        "thisCantBeUndone": " এটি পূর্বাবস্থায় ফেরানো যাবে না।"
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "লেখার রঙ",
       "backgroundColor": "পেছনের রং",
       "dateToolTipLabel": "তারিখ বিন্যাস সম্পর্কে আরো তথ্য",
-      "previewCustomStamp": "এর পূর্বরূপ"
+      "previewCustomStamp": "এর পূর্বরূপ",
+      "category": "বিভাগ",
+      "categoryInstructions": "নতুন বিভাগের নাম দিতে টাইপ করুন",
+      "customStamp": "কাস্টম স্ট্যাম্প"
     },
     "pageRedactModal": {
       "addMark": "মার্ক যোগ করুন",
@@ -754,6 +776,8 @@
       "annotations": "টীকা",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "টীকা পপআপ থেকে টুল ডিফল্ট শৈলী আপডেট অক্ষম করুন",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "অ্যানোটেশন তৈরি করা সংশ্লিষ্ট টুলে টীকা শৈলী আপডেটের সিঙ্ক করা অক্ষম করে। তাই যদি একটি টীকা এর শৈলী পরিবর্তন করা হয় টুল ডিফল্ট শৈলী আপডেট করা হবে না.",
+      "enableViewportRelativePositioning": "ভিউপোর্ট-সাপেক্ষ টীকা অবস্থান সক্ষম করুন",
+      "enableViewportRelativePositioningDesc": "এটি সক্রিয় করা থাকলে, বিভিন্ন ঘূর্ণনে থাকা পৃষ্ঠাগুলির মধ্যে টীকাগুলি সরানোর সময় সেগুলির দৃশ্যমান অবস্থান এবং অভিমুখ অপরিবর্তিত থাকে।",
       "notesPanel": "নোট প্যানেল",
       "disableNoteSubmissionWithEnter": "এন্টার দিয়ে নোট জমা বন্ধ করুন",
       "disableNoteSubmissionWithEnterDesc": "নোট জমা দেওয়ার ক্ষমতা অক্ষম করুন শুধুমাত্র Enter টিপে যদি এটি পূর্বে সক্ষম করা থাকে। এটি নোট জমাকে ডিফল্টে ফিরিয়ে দেবে যা Ctrl/Cmd + Enter।",
@@ -818,6 +842,17 @@
       "setShortcut": "শর্টকাট সেট করুন",
       "editShortcut": "শর্টকাট সম্পাদনা করুন",
       "shortcutAlreadyExists": "উপরের কীবোর্ড শর্টকাট ইতিমধ্যেই বিদ্যমান।",
+      "contentEdit": {
+        "copyText": "নির্বাচিত পাঠ্য বা টীকা কপি করুন",
+        "cutText": "নির্বাচিত টেক্সট বা সেল কাটুন",
+        "pasteText": "পাঠ্য বা টীকা আটকান",
+        "undoChange": "একটি টীকা পরিবর্তন পূর্বাবস্থায় ফেরান৷",
+        "redoChange": "একটি টীকা পরিবর্তন পুনরায় করুন",
+        "bold": "বোল্ড",
+        "italic": "তির্যক",
+        "underline": "আন্ডারলাইন করুন",
+        "strikeout": "স্ট্রাইকআউট"
+      },
       "close": "টুলটিপ বন্ধ করুন",
       "spreadsheetEditor": {
         "copyText": "নির্বাচিত টেক্সট বা সেল কপি করুন",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "ক্ষেত্র নির্দেশক অন্তর্ভুক্ত করুন",
       "indicatorPlaceHolders": {
         "TextFormField": "এখানে পাঠ্য সন্নিবেশ করুন",
+        "DatePickerFormField": "তারিখ নির্বাচন করুন",
         "CheckBoxFormField": "চেক করুন",
         "RadioButtonFormField": "ভরাট",
         "ListBoxFormField": "নির্বাচন করুন",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "রেডিও বোতাম ফিল্ড টীকা",
       "ListBoxFormField": "লিস্ট বক্স ফিল্ড টীকা",
       "ComboBoxFormField": "কম্বো বক্স ফিল্ড টীকা",
+      "DatePickerFormField": "তারিখ বাছাই ক্ষেত্রের টীকা",
       "TextFormField": "টেক্সট ফিল্ড টীকা"
     },
     "apply": "ক্ষেত্র প্রয়োগ করুন",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "টেক্সট, অঞ্চল, পৃষ্ঠা চিহ্নিত করে বা একটি অনুসন্ধান করে সংশোধন করা শুরু করুন।",
-    "redactionSearchPlaceholder": "কীবোর্ড বা নিদর্শন দ্বারা সংশোধন করুন",
+    "redactionSearchPlaceholder": "কীওয়ার্ড বা নিদর্শন দ্বারা সংশোধন করুন",
     "redactionCounter": "সংস্কারের জন্য চিহ্নিত",
     "clearMarked": "স্পষ্ট",
     "redactAllMarked": "সমস্ত সংশোধন করুন",
@@ -1311,6 +1348,7 @@
     "underline": "আন্ডারলাইন করুন",
     "strikeout": "স্ট্রাইকআউট",
     "textColor": "লেখার রঙ",
+    "highlightColor": "হাইলাইট রঙ",
     "leftAlign": "বাম সারিবদ্ধ",
     "centerAlign": "কেন্দ্র সারিবদ্ধ",
     "rightAlign": "ডান সারিবদ্ধ",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "আউটলাইন চিহ্নিত করুন",
       "redactionFill": "রিডাকশন কালার",
       "redactionTextPlaceholder": "টেক্সট লেবেল ঢোকান",
-      "contentEdit": "বিষয়বস্তু সম্পাদনা"
+      "contentEdit": "বিষয়বস্তু সম্পাদনা",
+      "zOrder": "অর্ডার"
     },
     "lineStyles": {
       "startLineStyleLabel": "লাইন স্টাইল শুরু করুন",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "বর্ডার"
+    },
+    "fillStyle": {
+      "dropdownLabel": "ফিল স্টাইল"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "স্ট্যাম্প",
-    "standard": "স্ট্যান্ডার্ড স্ট্যাম্প"
+    "standard": "স্ট্যান্ডার্ড স্ট্যাম্প",
+    "preset": "প্রিসেট",
+    "custom": "কাস্টম",
+    "categories": "বিভাগগুলি",
+    "filter": "ফিল্টার",
+    "searchStamps": "স্ট্যাম্প অনুসন্ধান করুন"
   },
   "colorPickerModal": {
     "modalTitle": "কালার পিকার"

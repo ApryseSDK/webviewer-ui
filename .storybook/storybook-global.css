@@ -1,0 +1,46 @@
+/* Mimics styles we apply globally to the app */
+input,
+button,
+label,
+textarea,
+form,
+select,
+#storybook-root {
+  font-size: 13px;
+  font-family: 'Lato', sans-serif;
+  color: var(--text-color);
+}
+
+@media (max-width: 640px) {
+
+  input,
+  button,
+  label,
+  textarea,
+  form,
+  select,
+  #storybook-root {
+    font-size: 16px;
+  }
+}
+
+.storybook-mock-document {
+  display: flex;
+  justify-content: center;
+  padding: 5px 0 5px;
+}
+
+.storybook-mock-page {
+  width: min(90%, 720px);
+  max-width: 720px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.storybook-mock-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

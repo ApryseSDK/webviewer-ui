@@ -299,7 +299,7 @@ function SearchOverlay(props) {
       setShowReplaceSpinner(false);
       setReplaceAllBtnDisabled(true);
     },
-    [replaceValue]
+    [replaceValue, isReplaceAllBtnDisabled, nextResultValue]
   );
 
   const searchAndReplaceOne = useCallback(

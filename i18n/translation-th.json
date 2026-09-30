@@ -15,6 +15,7 @@
     "close": "ปิด I",
     "undo": "เลิกทำ",
     "redo": "ทำซ้ำ",
+    "reload": "โหลดซ้ำ",
     "comment": "ความคิดเห็น",
     "reply": "เพิ่มคำตอบ",
     "copy": "สำเนา",
@@ -147,7 +148,12 @@
     "showLessColors": "แสดงสีน้อยลง",
     "fromCustomColorPicker": "จากเครื่องมือเลือกสีที่กำหนดเอง",
     "newSpreadsheetDocument": "สเปรดชีตใหม่",
-    "resetDefault": "รีเซ็ตเป็นค่าเริ่มต้น"
+    "resetDefault": "รีเซ็ตเป็นค่าเริ่มต้น",
+    "restoreDefaults": "คืนค่าเริ่มต้น",
+    "sendToBack": "ส่งกลับ",
+    "bringToFront": "นำมาไว้ข้างหน้า",
+    "sendBackward": "ส่งกลับ",
+    "bringForward": "นำมาข้างหน้า"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -194,6 +200,7 @@
     "note": "บันทึก",
     "textField": "ช่องข้อความ",
     "signatureFormField": "ลายเซ็นฟิลด์",
+    "datePickerFormField": "ช่องเลือกวันที่",
     "checkBoxFormField": "ช่องทำเครื่องหมาย",
     "radioButtonFormField": "ฟิลด์ปุ่มตัวเลือก",
     "listBoxFormField": "ช่องรายการช่อง",
@@ -258,7 +265,7 @@
     "calibration": "การสอบเทียบ",
     "zoomOverlay": "ซูมโอเวอร์เลย์",
     "textPopup": "ป๊อปอัปข้อความ",
-    "createStampButton": "สร้างแสตมป์ใหม่",
+    "addStampButton": "เพิ่มแสตมป์",
     "filter": "กรอง",
     "multiSelectButton": "เลือกหลายรายการ",
     "pageReplaceModalTitle": "แทนที่หน้า",
@@ -271,12 +278,12 @@
       "open": "ดูคำอธิบายประกอบทั้งหมด",
       "close": "ปิดคำอธิบายประกอบทั้งหมด"
     },
-    "comparePanel": "เปรียบเทียบแผง",
-    "mainMenu": "เมนูหลัก"
+    "comparePanel": "เปรียบเทียบแผง"
   },
   "message": {
     "showMore": "แสดงมากขึ้น",
     "showLess": "แสดงน้อยลง",
+    "signatureDisclaimer": "ลายเซ็นอิเล็กทรอนิกส์นี้แสดงถึงเจตนาของผู้ลงนามที่จะลงนามในเอกสาร โดยการใช้ลายเซ็นนี้ คุณตกลงว่าลายเซ็นอิเล็กทรอนิกส์ของคุณมีผลทางกฎหมายเทียบเท่ากับลายเซ็นที่เขียนด้วยมือของคุณในเอกสารนี้",
     "toolsOverlayNoPresets": "ไม่มีสถานีที่ตั้งไว้",
     "badDocument": "ไม่สามารถโหลดเอกสาร เอกสารเสียหายหรือไม่ถูกต้อง",
     "customPrintPlaceholder": "เช่น. 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "ไม่สามารถโหลดเอกสารที่เข้ารหัส การป้อนรหัสผ่านถูกยกเลิก",
     "enterPassword": "เอกสารนี้มีการป้องกันด้วยรหัสผ่าน กรุณาใส่รหัสผ่าน",
     "incorrectPassword": "รหัสผ่านไม่ถูกต้อง เหลือความพยายาม: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "เพิ่มความคิดเห็นเพื่อเริ่มการสนทนา",
     "noAnnotations": "เริ่มสร้างคำอธิบายประกอบเพื่อแสดงความคิดเห็น",
     "noAnnotationsReadOnly": "เอกสารนี้ไม่มีคำอธิบายประกอบ",
     "noAnnotationsFilter": "เริ่มสร้างคำอธิบายประกอบและตัวกรองจะปรากฏที่นี่",
@@ -292,6 +300,7 @@
     "noAttachments": "เอกสารนี้ไม่มีไฟล์แนบ",
     "noResults": "ไม่พบผลลัพธ์.",
     "numResultsFound": "พบผลลัพธ์",
+    "loadingDocument": "กำลังโหลดเอกสาร",
     "loadError": "เกิดข้อผิดพลาดในการโหลดเอกสาร",
     "urlInputFileLoadError": "ไม่สามารถดึงไฟล์จาก URL ที่ให้มาได้",
     "notSupported": "ไม่รองรับไฟล์ประเภทนั้น",
@@ -328,6 +337,7 @@
     "sortBy": "เรียงลำดับ",
     "emptyCustomStampInput": "ข้อความประทับตราต้องไม่เว้นว่างไว้",
     "unpostedComment": "ความคิดเห็นที่ยังไม่ได้โพสต์",
+    "saved": "บันทึกแล้ว",
     "lockedLayer": "เลเยอร์ถูกล็อค",
     "layerVisibilityNoChange": "ระดับการมองเห็นไม่สามารถเปลี่ยนแปลงได้",
     "noLayers": "เอกสารนี้ไม่มีเลเยอร์",
@@ -354,7 +364,15 @@
     "refreshPage": "โปรดตรวจสอบการเชื่อมต่อเครือข่ายของคุณและรีเฟรชหน้า",
     "renderErrors": {
       "error": "เกิดข้อผิดพลาดบางอย่างขึ้นที่นี่",
-      "refreshPanel": "คุณสามารถทำงานต่อได้ ลองเปิดแผงควบคุมอีกครั้ง"
+      "toFixIssue": "เพื่อแก้ไขปัญหานี้ โปรดลองเปิด {{componentType}} อีกครั้ง",
+      "componentType": {
+        "component": "ส่วนประกอบ",
+        "panel": "แผง",
+        "modal": "เมืองหลวง",
+        "flyout": "บินออกไป",
+        "dropdown": "ดรอปดาวน์",
+        "popup": "ป๊อปอัพ"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "เรียงลำดับรายการ",
       "position": "ตำแหน่ง",
       "linePosition": "ตำแหน่ง",
+      "spreadsheetPosition": "ตำแหน่ง",
       "time": "เวลา",
       "status": "สถานะ",
       "author": "ผู้เขียน",
       "type": "พิมพ์",
       "color": "สี",
+      "number": "ตัวเลข",
       "createdDate": "วันที่สร้าง",
       "modifiedDate": "แก้ไขวันที่"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "กรองเอกสารและแผงความคิดเห็น"
     },
     "state": {
+      "open": "เปิด",
+      "resolved": "แก้ไขแล้ว",
       "accepted": "ได้รับการยอมรับ",
       "rejected": "ถูกปฏิเสธ",
       "completed": "สมบูรณ์",
@@ -617,10 +639,7 @@
         "irreversible": "กลับไม่ได้",
         "willDeleteMeasurement": "และจะลบการวัดที่เกี่ยวข้อง",
         "confirmDelete": "คุณแน่ใจหรือไม่ว่าต้องการลบมาตราส่วนนี้",
-        "thisCantBeUndone": " การดำเนินการนี้ไม่สามารถยกเลิกได้",
-        "ifChangeScale": "หากคุณเปลี่ยนมาตราส่วนสำหรับการวัดหรือเครื่องมือที่เลือก มาตราส่วน",
-        "notUsedWillDelete": " จะไม่ถูกใช้โดยการวัดหรือเครื่องมือใดๆ อีกต่อไป และจะถูกลบ การลบจะย้อนกลับไม่ได้",
-        "ifToContinue": "คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ"
+        "thisCantBeUndone": " การดำเนินการนี้ไม่สามารถยกเลิกได้"
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "สีข้อความ",
       "backgroundColor": "สีพื้นหลัง",
       "dateToolTipLabel": "ข้อมูลเพิ่มเติมเกี่ยวกับรูปแบบวันที่",
-      "previewCustomStamp": "ตัวอย่าง"
+      "previewCustomStamp": "ตัวอย่าง",
+      "category": "หมวดหมู่",
+      "categoryInstructions": "พิมพ์เพื่อตั้งชื่อหมวดหมู่ใหม่",
+      "customStamp": "ตราประทับแบบกำหนดเอง"
     },
     "pageRedactModal": {
       "addMark": "เพิ่มเครื่องหมาย",
@@ -754,6 +776,8 @@
       "annotations": "คำอธิบายประกอบ",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "ปิดใช้งานการอัปเดตสไตล์เริ่มต้นของเครื่องมือจากป๊อปอัปคำอธิบายประกอบ",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "ปิดใช้งานการซิงค์การอัปเดตรูปแบบคำอธิบายประกอบกับเครื่องมือที่เกี่ยวข้องซึ่งสร้างคำอธิบายประกอบ ดังนั้น หากรูปแบบคำอธิบายประกอบมีการเปลี่ยนแปลง รูปแบบเริ่มต้นของเครื่องมือจะไม่ได้รับการอัปเดต",
+      "enableViewportRelativePositioning": "เปิดใช้งานการกำหนดตำแหน่งคำอธิบายประกอบแบบสัมพันธ์กับวิวพอร์ต",
+      "enableViewportRelativePositioningDesc": "เมื่อเปิดใช้งาน การย้ายคำอธิบายประกอบข้ามหน้าที่มีการหมุนต่างกันจะรักษาตำแหน่งและการวางแนวของคำอธิบายประกอบไว้",
       "notesPanel": "แผงบันทึกย่อ",
       "disableNoteSubmissionWithEnter": "ปิดใช้งานการส่งโน้ตด้วย Enter",
       "disableNoteSubmissionWithEnterDesc": "ปิดใช้งานความสามารถในการส่งบันทึกย่อโดยกด Enter หากเคยเปิดใช้งานไว้ก่อนหน้านี้เท่านั้น การดำเนินการนี้จะเปลี่ยนการส่งโน้ตกลับเป็นค่าเริ่มต้นซึ่งก็คือ Ctrl/Cmd + Enter",
@@ -818,6 +842,17 @@
       "setShortcut": "ตั้งค่าทางลัด",
       "editShortcut": "แก้ไขทางลัด",
       "shortcutAlreadyExists": "แป้นพิมพ์ลัดด้านบนมีอยู่แล้ว",
+      "contentEdit": {
+        "copyText": "คัดลอกข้อความหรือคำอธิบายประกอบที่เลือก",
+        "cutText": "ตัดข้อความหรือเซลล์ที่เลือก",
+        "pasteText": "วางข้อความหรือคำอธิบายประกอบ",
+        "undoChange": "เลิกทำการเปลี่ยนแปลงคำอธิบายประกอบ",
+        "redoChange": "ทำซ้ำการเปลี่ยนแปลงคำอธิบายประกอบ",
+        "bold": "ตัวหนา",
+        "italic": "ตัวเอียง",
+        "underline": "ขีดเส้นใต้",
+        "strikeout": "สไตรค์เอาท์"
+      },
       "close": "ปิดคำแนะนำเครื่องมือ",
       "spreadsheetEditor": {
         "copyText": "คัดลอกข้อความหรือเซลล์ที่เลือก",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "รวมตัวบ่งชี้ฟิลด์",
       "indicatorPlaceHolders": {
         "TextFormField": "ใส่ข้อความที่นี่",
+        "DatePickerFormField": "เลือกวันที่",
         "CheckBoxFormField": "ตรวจสอบ",
         "RadioButtonFormField": "เติม",
         "ListBoxFormField": "เลือก",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "คำอธิบายประกอบฟิลด์ปุ่มตัวเลือก",
       "ListBoxFormField": "คำอธิบายประกอบฟิลด์กล่องรายการ",
       "ComboBoxFormField": "คำอธิบายประกอบฟิลด์กล่องคำสั่งผสม",
+      "DatePickerFormField": "คำอธิบายประกอบช่องเลือกวันที่",
       "TextFormField": "คำอธิบายประกอบช่องข้อความ"
     },
     "apply": "สมัครฟิลด์",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "เริ่มแก้ไขด้วยการทำเครื่องหมายข้อความ ภูมิภาค หน้า หรือทำการค้นหา",
-    "redactionSearchPlaceholder": "ตรวจทานด้วยแป้นพิมพ์หรือรูปแบบ",
+    "redactionSearchPlaceholder": "ตรวจทานด้วยคำสำคัญหรือรูปแบบ",
     "redactionCounter": "ถูกทำเครื่องหมายสำหรับ Redaction",
     "clearMarked": "ชัดเจน",
     "redactAllMarked": "แก้ไขทั้งหมด",
@@ -1311,6 +1348,7 @@
     "underline": "ขีดเส้นใต้",
     "strikeout": "สไตรค์เอาท์",
     "textColor": "สีข้อความ",
+    "highlightColor": "สีไฮไลท์",
     "leftAlign": "จัดชิดซ้าย",
     "centerAlign": "จัดกึ่งกลาง",
     "rightAlign": "จัดชิดขวา",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "ทำเครื่องหมายโครงร่าง",
       "redactionFill": "สีปฏิกิริยา",
       "redactionTextPlaceholder": "ใส่ป้ายกำกับข้อความ",
-      "contentEdit": "แก้ไขเนื้อหา"
+      "contentEdit": "แก้ไขเนื้อหา",
+      "zOrder": "คำสั่ง"
     },
     "lineStyles": {
       "startLineStyleLabel": "รูปแบบเส้นเริ่มต้น",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "ชายแดน"
+    },
+    "fillStyle": {
+      "dropdownLabel": "เติมสไตล์"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "แสตมป์",
-    "standard": "แสตมป์มาตรฐาน"
+    "standard": "แสตมป์มาตรฐาน",
+    "preset": "ตั้งค่าล่วงหน้า",
+    "custom": "กำหนดเอง",
+    "categories": "หมวดหมู่",
+    "filter": "กรอง",
+    "searchStamps": "ค้นหาแสตมป์"
   },
   "colorPickerModal": {
     "modalTitle": "เครื่องมือเลือกสี"

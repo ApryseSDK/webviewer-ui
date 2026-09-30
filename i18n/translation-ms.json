@@ -15,6 +15,7 @@
     "close": "tutup",
     "undo": "Buat asal",
     "redo": "sedia",
+    "reload": "Muat semula",
     "comment": "Komen",
     "reply": "Tambah balasan",
     "copy": "Salinan",
@@ -147,7 +148,12 @@
     "showLessColors": "Tunjukkan Kurang Warna",
     "fromCustomColorPicker": "daripada Pemilih Warna Tersuai",
     "newSpreadsheetDocument": "Hamparan Baharu",
-    "resetDefault": "Tetapkan semula kepada lalai"
+    "resetDefault": "Tetapkan semula kepada lalai",
+    "restoreDefaults": "Pulihkan Lalai",
+    "sendToBack": "Hantar ke belakang",
+    "bringToFront": "Bawa ke hadapan",
+    "sendBackward": "Hantar ke belakang",
+    "bringForward": "Bawa ke hadapan"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -194,6 +200,7 @@
     "note": "Catatan",
     "textField": "Medan Teks",
     "signatureFormField": "Medan Tandatangan",
+    "datePickerFormField": "Medan Pemilih Tarikh",
     "checkBoxFormField": "Medan Kotak semak",
     "radioButtonFormField": "Medan Butang Radio",
     "listBoxFormField": "Medan Kotak Senarai",
@@ -258,7 +265,7 @@
     "calibration": "Penentukuran",
     "zoomOverlay": "Tindanan Zum",
     "textPopup": "Teks Pop Timbul",
-    "createStampButton": "Cipta Setem Baharu",
+    "addStampButton": "Tambah Setem",
     "filter": "Penapis",
     "multiSelectButton": "Pelbagai Pilihan",
     "pageReplaceModalTitle": "Gantikan Halaman",
@@ -271,12 +278,12 @@
       "open": "Lihat Semua Anotasi",
       "close": "Tutup Semua Anotasi"
     },
-    "comparePanel": "Bandingkan Panel",
-    "mainMenu": "Menu Utama"
+    "comparePanel": "Bandingkan Panel"
   },
   "message": {
     "showMore": "Tunjukkan Lagi",
     "showLess": "Tunjukkan Kurang",
+    "signatureDisclaimer": "Tandatangan elektronik ini mewakili niat penandatangan untuk menandatangani dokumen tersebut. Dengan menggunakan tandatangan ini, anda bersetuju bahawa tandatangan elektronik anda adalah bersamaan sah dengan tandatangan manual anda pada dokumen ini.",
     "toolsOverlayNoPresets": "Tiada Pratetap",
     "badDocument": "Gagal memuatkan dokumen. Dokumen itu sama ada rosak atau tidak sah.",
     "customPrintPlaceholder": "cth. 3, 4-10",
@@ -284,6 +291,7 @@
     "encryptedUserCancelled": "Gagal memuatkan dokumen yang disulitkan. Kemasukan kata laluan dibatalkan.",
     "enterPassword": "Dokumen ini dilindungi kata laluan. Sila masukkan kata laluan",
     "incorrectPassword": "Kata laluan salah, percubaan yang tinggal: {{ remainingAttempts }}",
+    "commentsPanelEmpty": "Tambahkan komen untuk memulakan perbincangan.",
     "noAnnotations": "Mula membuat anotasi untuk meninggalkan ulasan.",
     "noAnnotationsReadOnly": "Dokumen ini tidak mempunyai anotasi.",
     "noAnnotationsFilter": "Mula membuat anotasi dan penapis akan dipaparkan di sini.",
@@ -292,6 +300,7 @@
     "noAttachments": "Dokumen ini tidak mempunyai lampiran.",
     "noResults": "Tiada keputusan dijumpai.",
     "numResultsFound": "keputusan dijumpai",
+    "loadingDocument": "Memuatkan dokumen",
     "loadError": "Ralat Memuatkan Dokumen",
     "urlInputFileLoadError": "Fail tidak dapat diambil daripada URL yang disediakan.",
     "notSupported": "Jenis fail itu tidak disokong.",
@@ -328,6 +337,7 @@
     "sortBy": "Isih",
     "emptyCustomStampInput": "Teks setem tidak boleh kosong",
     "unpostedComment": "Komen Tidak Disiarkan",
+    "saved": "Disimpan",
     "lockedLayer": "Lapisan dikunci",
     "layerVisibilityNoChange": "Keterlihatan lapisan tidak boleh diubah",
     "noLayers": "Dokumen ini tidak mempunyai lapisan.",
@@ -354,7 +364,15 @@
     "refreshPage": "Sila semak sambungan rangkaian anda dan muat semula halaman.",
     "renderErrors": {
       "error": "Ada sesuatu yang tidak kena di sini.",
-      "refreshPanel": "Anda boleh teruskan kerja. Cuba buka semula panel itu."
+      "toFixIssue": "Untuk menyelesaikan masalah ini, sila cuba buka semula {{componentType}}.",
+      "componentType": {
+        "component": "komponen",
+        "panel": "panel",
+        "modal": "modal",
+        "flyout": "terbang keluar",
+        "dropdown": "lungsur turun",
+        "popup": "timbul"
+      }
     }
   },
   "option": {
@@ -386,11 +404,13 @@
       "dropdownLabel": "Isih Senarai Pesanan",
       "position": "kedudukan",
       "linePosition": "Kedudukan",
+      "spreadsheetPosition": "Kedudukan",
       "time": "Masa",
       "status": "Status",
       "author": "Pengarang",
       "type": "taip",
       "color": "Warna",
+      "number": "Nombor",
       "createdDate": "Tarikh Dicipta",
       "modifiedDate": "Tarikh Diubah Suai"
     },
@@ -552,6 +572,8 @@
       "filterDocument": "Tapis dokumen dan panel ulasan"
     },
     "state": {
+      "open": "Terbuka",
+      "resolved": "Diselesaikan",
       "accepted": "Diterima",
       "rejected": "Ditolak",
       "completed": "Selesai",
@@ -617,10 +639,7 @@
         "irreversible": "tak boleh balik",
         "willDeleteMeasurement": "dan akan memadamkan ukuran yang berkaitan.",
         "confirmDelete": "Adakah anda pasti mahu memadamkan skala ini?",
-        "thisCantBeUndone": " Ini tidak boleh dibuat asal.",
-        "ifChangeScale": "Jika anda menukar skala untuk ukuran atau alat yang dipilih, skala",
-        "notUsedWillDelete": " tidak akan digunakan lagi oleh sebarang ukuran atau alat dan akan dipadamkan. Pemadaman tidak dapat dipulihkan.",
-        "ifToContinue": "Adakah anda pasti mahu meneruskan?"
+        "thisCantBeUndone": " Ini tidak boleh dibuat asal."
       }
     },
     "contentEdit": {
@@ -722,7 +741,10 @@
       "textColor": "Warna teks",
       "backgroundColor": "Warna latar belakang",
       "dateToolTipLabel": "Maklumat lanjut tentang format tarikh",
-      "previewCustomStamp": "Pratonton bagi"
+      "previewCustomStamp": "Pratonton bagi",
+      "category": "Kategori",
+      "categoryInstructions": "Taip untuk menamakan kategori baharu",
+      "customStamp": "Setem Tersuai"
     },
     "pageRedactModal": {
       "addMark": "Tambah Mark",
@@ -754,6 +776,8 @@
       "annotations": "Anotasi",
       "disableToolDefaultStyleUpdateFromAnnotationPopup": "Lumpuhkan Kemas Kini Gaya Lalai Alat Daripada Pop Timbul Anotasi",
       "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Melumpuhkan penyegerakan kemas kini gaya anotasi kepada alat berkaitan yang mencipta anotasi. Jadi jika gaya anotasi ditukar, gaya lalai alat tidak akan dikemas kini.",
+      "enableViewportRelativePositioning": "Dayakan Penentuan Kedudukan Anotasi Relatif Viewport",
+      "enableViewportRelativePositioningDesc": "Apabila diaktifkan, pemindahan anotasi merentasi halaman dengan putaran berbeza mengekalkan kedudukan dan orientasi visualnya.",
       "notesPanel": "Panel Nota",
       "disableNoteSubmissionWithEnter": "Lumpuhkan Penyerahan Nota Dengan Enter",
       "disableNoteSubmissionWithEnterDesc": "Lumpuhkan keupayaan untuk menyerahkan nota dengan hanya menekan Enter jika ia telah didayakan sebelum ini. Ini akan mengembalikan penyerahan nota kepada lalai iaitu Ctrl/Cmd + Enter.",
@@ -818,6 +842,17 @@
       "setShortcut": "Tetapkan Pintasan",
       "editShortcut": "Edit Pintasan",
       "shortcutAlreadyExists": "Pintasan papan kekunci di atas sudah wujud.",
+      "contentEdit": {
+        "copyText": "Salin teks atau anotasi yang dipilih",
+        "cutText": "Potong teks atau sel yang dipilih",
+        "pasteText": "Tampal teks atau anotasi",
+        "undoChange": "Buat asal perubahan anotasi",
+        "redoChange": "Buat semula perubahan anotasi",
+        "bold": "Tebal",
+        "italic": "Miring",
+        "underline": "Garis bawah",
+        "strikeout": "Coret"
+      },
       "close": "Tutup petua alat",
       "spreadsheetEditor": {
         "copyText": "Salin teks atau sel yang dipilih",
@@ -1058,6 +1093,7 @@
       "includeFieldIndicator": "Sertakan Penunjuk Medan",
       "indicatorPlaceHolders": {
         "TextFormField": "Sisipkan Teks Di Sini",
+        "DatePickerFormField": "Pilih Tarikh",
         "CheckBoxFormField": "Semak",
         "RadioButtonFormField": "isi",
         "ListBoxFormField": "Pilih",
@@ -1081,6 +1117,7 @@
       "RadioButtonFormField": "Anotasi Medan Butang Radio",
       "ListBoxFormField": "Anotasi Medan Kotak Senarai",
       "ComboBoxFormField": "Anotasi Medan Kotak Kombo",
+      "DatePickerFormField": "Anotasi Medan Pemilih Tarikh",
       "TextFormField": "Anotasi Medan Teks"
     },
     "apply": "Guna Medan",
@@ -1256,7 +1293,7 @@
   },
   "redactionPanel": {
     "noMarkedRedactions": "Mula menyunting dengan menandakan teks, kawasan, halaman atau membuat carian.",
-    "redactionSearchPlaceholder": "Redaksi mengikut papan kekunci atau corak",
+    "redactionSearchPlaceholder": "Redaksi mengikut kata kunci atau corak",
     "redactionCounter": "Ditanda untuk Redaksi",
     "clearMarked": "Jelas",
     "redactAllMarked": "Redaksi Semua",
@@ -1311,6 +1348,7 @@
     "underline": "Garis bawah",
     "strikeout": "Strikeout",
     "textColor": "Warna teks",
+    "highlightColor": "Warna sorotan",
     "leftAlign": "Jajar ke kiri",
     "centerAlign": "Jajaran tengah",
     "rightAlign": "Jajar ke kanan",
@@ -1641,7 +1679,8 @@
       "redactionMarkOutline": "Tandakan Garis Besar",
       "redactionFill": "Warna Redaksi",
       "redactionTextPlaceholder": "Sisipkan label teks",
-      "contentEdit": "Suntingan Kandungan"
+      "contentEdit": "Suntingan Kandungan",
+      "zOrder": "Pesanan"
     },
     "lineStyles": {
       "startLineStyleLabel": "Gaya Baris Mula",
@@ -1665,6 +1704,9 @@
     },
     "borderStyle": {
       "dropdownLabel": "Sempadan"
+    },
+    "fillStyle": {
+      "dropdownLabel": "Gaya Isi"
     }
   },
   "signatureListPanel": {
@@ -1678,7 +1720,12 @@
   },
   "rubberStampPanel": {
     "header": "setem",
-    "standard": "Setem Standard"
+    "standard": "Setem Standard",
+    "preset": "Pratetap",
+    "custom": "Tersuai",
+    "categories": "Kategori",
+    "filter": "Penapis",
+    "searchStamps": "Cari Setem"
   },
   "colorPickerModal": {
     "modalTitle": "Pemilih Warna"
