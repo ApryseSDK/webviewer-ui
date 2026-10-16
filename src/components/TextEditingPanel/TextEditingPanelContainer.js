@@ -13,9 +13,12 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import useOnContentEditHistoryUndoRedoChanged from 'hooks/useOnContentEditHistoryUndoRedoChanged';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getInstanceNode }  from 'src/helpers/getRootNode';
-import handleSelectionChange from './TextEditingPanelHelpers/handleSelectionChange';
-import updateContentEditingFonts from './TextEditingPanelHelpers/updateContentEditingFonts';
-import applyPropertyChange from './TextEditingPanelHelpers/applyPropertyChange';
+import {
+  getFontDisplayValue,
+  applyPropertyChange,
+  updateContentEditingFonts,
+  handleSelectionChange,
+} from './TextEditingPanelHelpers';
 import { css } from '@emotion/react';
 
 const hasContentBoxEditorLinkApi = (candidate) => (
@@ -90,7 +93,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     const handleSelectionChangeWrapper = async () => {
       const isInContentEditMode = contentEditorRef.current && core.getContentEditManager().isInContentEditMode();
       await handleSelectionChange({
-        getFontName,
         setFonts,
         handleColorChange,
         setTextEditProperties,
@@ -105,40 +107,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     core.addEventListener('contentEditSelectionChange', handleSelectionChangeWrapper);
     return () => core.removeEventListener('contentEditSelectionChange', handleSelectionChangeWrapper);
   }, [fonts]);
-
-  /**
-   * @ignore
-   * Small routine that strips out the bold and italic from the font name, separates the Font into separate words for the UI
-   * @param {string} fontString
-   * @returns {string} the separated font name
-   */
-  function getFontName(fontString) {
-    if (typeof fontString !== 'string') {
-      return '';
-    }
-    const cleanedFontString = fontString.replace(/(Bold|Italic)/gi, '').trim();
-    const words = [];
-    let currentWord = '';
-
-    for (const char of cleanedFontString) {
-      if (char.toUpperCase() === char) {
-        if (currentWord) {
-          words.push(currentWord.trim());
-        }
-        currentWord = char;
-      } else {
-        currentWord += char;
-      }
-    }
-
-    if (currentWord) {
-      words.push(currentWord.trim());
-    }
-
-    const separatedFontName = words.join(' ');
-
-    return separatedFontName || fontString;
-  }
 
   useEffect(() => {
     const handleEditorStarted = (payload) => {
@@ -382,7 +350,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
 
       const editManager = core.getDocumentViewer().getContentEditManager();
       const attribs = await editManager.getContentBoxAttributes(contentBoxId);
-      const fontName = getFontName(attribs.fontName);
+      const fontName = attribs.fontName;
       const { bold, italic, underline, fontColors, fontSize, textAlign, strike } = attribs;
       const color = fontColors?.length > 0 ? new instance.Core.Annotations.Color(fontColors[0].fontColor) : DEFAULT_COLOR;
 
@@ -453,6 +421,7 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
         handleTextFormatChange={handleTextFormatChange}
         handleColorChange={handleColorChange}
         fonts={fonts}
+        getFontDisplayValue={getFontDisplayValue}
         handleAddLinkToText={handleAddLinkToText}
         handlePrepareAddLinkToText={handlePrepareAddLinkToText}
         disableLinkButton={!contentEditorRef.current}

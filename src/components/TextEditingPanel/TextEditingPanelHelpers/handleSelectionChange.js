@@ -6,7 +6,6 @@ import getFontInfo from './getFontInfo';
  * @ignore
  */
 const handleSelectionChange = async ({
-  getFontName,
   setFonts,
   handleColorChange,
   setTextEditProperties,
@@ -24,7 +23,6 @@ const handleSelectionChange = async ({
   const { fontObject, color, attribute } = await getFontInfo(
     instance,
     contentEditorRef,
-    getFontName
   );
 
   if (!fonts.includes(fontObject.Font)) {
