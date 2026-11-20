@@ -3,7 +3,7 @@ import './ModularHeaderItems.scss';
 import InnerItem from '../ModularComponents/InnerItem';
 import { PLACEMENT, DIRECTION, ITEM_TYPE } from 'constants/customizationVariables';
 import ResponsiveContainer from 'components/ResponsiveContainer';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { getSizeManager, useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
@@ -15,6 +15,7 @@ import { css } from '@emotion/react';
 
 const ModularHeaderItems = (props) => {
   const dispatch = useDispatch();
+  const store = useStore();
   const { placement, gap, items, justifyContent, className = '', maxWidth, maxHeight, headerId } = props;
   const [itemsGap, setItemsGap] = useState(gap);
   const elementRef = useRef();
@@ -58,7 +59,7 @@ const ModularHeaderItems = (props) => {
         if (i < indexToExclude) {
           continue;
         }
-        const flyoutItem = itemToFlyout(item);
+        const flyoutItem = itemToFlyout(item, { store });
         if (flyoutItem) {
           flyout.items.push(flyoutItem);
         }

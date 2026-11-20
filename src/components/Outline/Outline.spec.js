@@ -82,7 +82,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
   });
 
   const renderOutline = (store, props, outlineContextProps) => {
-    render(
+    return render(
       <Provider store={store}>
         <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
           <div className='left-panel-container' style={{ minWidth: '330px' }}>
@@ -121,7 +121,7 @@ describe('OutlinesPanel in MultiViewer mode', () => {
         children: [],
       }),
     };
-    renderOutline(store, props, { isAddingNewOutline: true, isOutlineActive: () => true, addNewOutline: addNewOutlineSpy });
+    const { unmount } = renderOutline(store, props, { isAddingNewOutline: true, isOutlineActive: () => true, addNewOutline: addNewOutlineSpy });
 
     expect(await screen.findByText('Lion')).toBeInTheDocument();
     expect(screen.queryByText('Goat')).not.toBeInTheDocument();
@@ -129,9 +129,12 @@ describe('OutlinesPanel in MultiViewer mode', () => {
     userEvent.click(addOutlinesButton);
     expect(addNewOutlineSpy).toHaveBeenNthCalledWith(1, expect.anything(), 1);
 
+    unmount();
     store.dispatch(actions.setActiveDocumentViewerKey(2));
 
-    userEvent.click(addOutlinesButton);
+    renderOutline(store, props, { isAddingNewOutline: true, isOutlineActive: () => true, addNewOutline: addNewOutlineSpy });
+    const addOutlinesButtonForViewer2 = await screen.findByRole('button', { name: /Add/i });
+    userEvent.click(addOutlinesButtonForViewer2);
     expect(addNewOutlineSpy).toHaveBeenNthCalledWith(2, expect.anything(), 2);
     expect(addNewOutlineSpy).toHaveBeenCalledTimes(2);
   });

@@ -13,8 +13,8 @@ export const filterOutDisabledToolShortcuts = (shortcuts, disabledToolNames) => 
 };
 
 
-export const filterViewOnlyShortcuts = (shortcuts, shortcutKeyMap) => {
-  const viewOnlyShortcuts = getViewOnlyShortcuts();
+export const filterViewOnlyShortcuts = (shortcuts, shortcutKeyMap, instanceId) => {
+  const viewOnlyShortcuts = getViewOnlyShortcuts(instanceId);
   return shortcuts.filter(([shortcut]) =>
     viewOnlyShortcuts.includes(shortcut) && shortcutKeyMap[shortcut]
   );

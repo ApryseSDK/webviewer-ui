@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -10,12 +10,17 @@ import useCore from 'hooks/useCore';
 import './FormulaBar.scss';
 import { css } from '@emotion/react';
 
+const CLIPBOARD_DISABLED_MESSAGE = 'Clipboard operations are disabled in the formula bar.';
+
+const shouldPreventMultilineEnter = (multiline, key, altKey) => multiline && key === 'Enter' && !altKey;
+
 const FormulaBar = (props) => {
   const {
     isReadOnly,
     activeCellRange,
     cellFormula,
     stringCellValue,
+    multiline,
     onRangeInputChange,
     onRangeInputKeyDown,
   } = props;
@@ -23,8 +28,8 @@ const FormulaBar = (props) => {
   const { t } = useTranslation();
   const { core } = useCore();
   const formulaBarValue = cellFormula || stringCellValue || '';
-
   const [inputValue, setInputValue] = useState(formulaBarValue);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [selectedFormula, setSelectedFormula] = useState(null);
@@ -33,8 +38,11 @@ const FormulaBar = (props) => {
   const [isFormulaFocused, setIsFormulaFocused] = useState(false);
 
   const formulaInputRef = useRef(null);
+  const formulaInputMaskRef = useRef(null);
   const formulaBarProviderRef = useRef(null);
+  const pendingCursorPositionRef = useRef(null);
   const lastCellRef = useRef();
+  const lastFormulaBarValueRef = useRef(formulaBarValue);
 
   const spreadsheetEditorManager = core.getDocumentViewer().getSpreadsheetEditorManager();
 
@@ -73,7 +81,7 @@ const FormulaBar = (props) => {
       const segments = event.getInfo();
       setFormulaSegments(segments);
 
-      const updatedText = segments.map((segment) => segment._text).join('');
+      const updatedText = segments.map((segment) => segment.text).join('');
       setInputValue(updatedText);
     };
 
@@ -102,9 +110,28 @@ const FormulaBar = (props) => {
     const currentCell = activeCellRange;
     if (lastCellRef.current !== currentCell) {
       setInputValue(formulaBarValue);
+      setIsExpanded(false);
       lastCellRef.current = currentCell;
+      lastFormulaBarValueRef.current = formulaBarValue;
+    } else if (formulaBarValue !== lastFormulaBarValueRef.current) {
+      setInputValue(formulaBarValue);
+      lastFormulaBarValueRef.current = formulaBarValue;
     }
   }, [activeCellRange, formulaBarValue]);
+
+  useEffect(() => {
+    if (!multiline) {
+      setIsExpanded(false);
+    }
+  }, [multiline]);
+
+  useLayoutEffect(() => {
+    if (pendingCursorPositionRef.current !== null && formulaInputRef.current) {
+      const cursorPosition = pendingCursorPositionRef.current;
+      formulaInputRef.current.setSelectionRange(cursorPosition, cursorPosition);
+      pendingCursorPositionRef.current = null;
+    }
+  }, [inputValue]);
 
   const handleOptionSelect = useCallback((option) => {
     if (formulaBarProviderRef.current) {
@@ -151,45 +178,108 @@ const FormulaBar = (props) => {
     setIsFormulaFocused(false);
   };
 
+  const handleClipboardEvent = (event) => {
+    if (!spreadsheetEditorManager.isClipboardEnabled()) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.warn(CLIPBOARD_DISABLED_MESSAGE);
+    }
+  };
+
+  const handleContextMenu = (event) => {
+    if (!spreadsheetEditorManager.isClipboardEnabled()) {
+      event.preventDefault();
+    }
+  };
+
+  const selectHighlightedOption = useCallback(() => {
+    const selectedOption = formulaSearchResults[highlightedIndex];
+    if (!selectedOption) {
+      return false;
+    }
+
+    handleOptionSelect(selectedOption);
+    return true;
+  }, [formulaSearchResults, highlightedIndex, handleOptionSelect]);
+
+  const handleOverlayKeyDown = useCallback((e) => {
+    switch (e.key) {
+      case 'ArrowDown':
+        if (formulaSearchResults.length === 0) {
+          return false;
+        }
+        e.preventDefault();
+        setHighlightedIndex((previousIndex) => (previousIndex + 1) % formulaSearchResults.length);
+        return true;
+      case 'ArrowUp':
+        if (formulaSearchResults.length === 0) {
+          return false;
+        }
+        e.preventDefault();
+        setHighlightedIndex((previousIndex) => (previousIndex - 1 + formulaSearchResults.length) % formulaSearchResults.length);
+        return true;
+      case 'Enter':
+        if (selectHighlightedOption()) {
+          e.preventDefault();
+          return true;
+        }
+        return false;
+      case 'Tab':
+        if (!e.shiftKey) {
+          e.preventDefault();
+          selectHighlightedOption();
+          return true;
+        }
+        return false;
+      case 'Escape':
+        e.stopPropagation();
+        handleOverlayClose();
+        return true;
+      default:
+        return false;
+    }
+  }, [formulaSearchResults, handleOverlayClose, selectHighlightedOption]);
+
   const handleKeyDown = useCallback((e) => {
-    if (showOverlay && !isReadOnly) {
-      switch (e.key) {
-        case 'ArrowDown':
-          e.preventDefault();
-          setHighlightedIndex((prev) => (prev + 1) % formulaSearchResults.length);
-          return;
-        case 'ArrowUp':
-          e.preventDefault();
-          setHighlightedIndex((prev) => (prev - 1 + formulaSearchResults.length) % formulaSearchResults.length);
-          return;
-        case 'Enter':
-          if (formulaSearchResults[highlightedIndex]) {
-            handleOptionSelect(formulaSearchResults[highlightedIndex]);
-            return;
-          }
-          break;
-        case 'Tab':
-          if (!e.shiftKey) {
-            e.preventDefault();
-            if (formulaSearchResults[highlightedIndex]) {
-              handleOptionSelect(formulaSearchResults[highlightedIndex]);
-            }
-            return;
-          }
-          break;
-        case 'Escape':
-          e.stopPropagation();
-          handleOverlayClose();
-          return;
-        default:
-          break;
+    const key = e.key.toLowerCase();
+    const isClipboardShortcut = ((e.ctrlKey || e.metaKey) && (key === 'c' || key === 'x' || key === 'v' || key === 'insert')) ||
+      (e.shiftKey && (key === 'delete' || key === 'insert'));
+    if (isClipboardShortcut && !spreadsheetEditorManager.isClipboardEnabled()) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.warn(CLIPBOARD_DISABLED_MESSAGE);
+      return;
+    }
+    if (multiline && e.key === 'Enter' && e.altKey) {
+      e.preventDefault();
+      const { selectionStart, selectionEnd, value } = e.currentTarget;
+      const updatedValue = `${value.slice(0, selectionStart)}\n${value.slice(selectionEnd)}`;
+      const cursorPosition = selectionStart + 1;
+      pendingCursorPositionRef.current = cursorPosition;
+      setInputValue(updatedValue);
+      setFormulaSegments([]);
+      if (formulaBarProviderRef.current) {
+        formulaBarProviderRef.current.onFormulaBarSelectionChanged(cursorPosition);
+        formulaBarProviderRef.current.onFormulaBarTextChange(updatedValue);
       }
+      return;
+    }
+    if (showOverlay && !isReadOnly && handleOverlayKeyDown(e)) {
+      return;
     }
     if (formulaBarProviderRef.current) {
       formulaBarProviderRef.current.onFormulaBarSelectionChanged(formulaInputRef.current.selectionStart);
       formulaBarProviderRef.current.onFormulaBarKeyDown(e);
     }
-  }, [showOverlay, isReadOnly, formulaSearchResults, highlightedIndex, handleOptionSelect, handleOverlayClose]);
+    if (shouldPreventMultilineEnter(multiline, e.key, e.altKey)) {
+      e.preventDefault();
+    }
+  }, [showOverlay, isReadOnly, multiline, handleOverlayKeyDown, spreadsheetEditorManager]);
+
+  const FormulaInputElement = multiline ? 'textarea' : 'input';
+  const isMultilineExpanded = multiline && isExpanded;
+  const inputRows = isMultilineExpanded ? 4 : 1;
+  const inputWrap = isMultilineExpanded ? 'soft' : undefined;
 
   return (
     <DataElementWrapper className='FormulaBar' dataElement={DataElements.FORMULA_BAR}>
@@ -201,36 +291,62 @@ const FormulaBar = (props) => {
         onKeyDown={onRangeInputKeyDown}
         aria-label={t('formulaBar.range')}
       />
-      <div className={classNames('Formula', { readOnly: isReadOnly })}>
+      <div className={classNames('Formula', { readOnly: isReadOnly, multiline, expanded: isMultilineExpanded })}>
         <Icon glyph="function" className={classNames('FormulaIcon', { readOnly: isReadOnly })} />
-        <div className='FormulaInputMask'>
+        <div className={classNames('FormulaInputMask', { hidden: multiline })} ref={formulaInputMaskRef}>
           {
             formulaSegments.map((item, index) => {
               return (<span key={`${item.text}-${index}`} css={css({ color: item.color })}>{item.text}</span>);
             })
           }
         </div>
-        <input
+        <FormulaInputElement
           onFocus={handleInputFocus}
           id={DataElements.FORMULA_BAR}
           ref={formulaInputRef}
-          type="text"
-          role="combobox"
+          type={multiline ? undefined : 'text'}
+          rows={multiline ? inputRows : undefined}
+          wrap={multiline ? inputWrap : undefined}
+          role={multiline ? 'textbox' : 'combobox'}
           aria-autocomplete="list"
-          aria-expanded={formulaSearchResults.length > 0}
-          aria-controls={overlayID}
+          aria-expanded={showOverlay && !isReadOnly}
+          aria-controls={showOverlay && !isReadOnly ? overlayID : undefined}
           className={classNames({
             'FormulaInput': true,
-            hasFormula: formulaSegments.length > 0,
+            hasFormula: !multiline && formulaSegments.length > 0,
+            multilineInput: multiline,
+            expandedInput: isMultilineExpanded,
           })}
           aria-activedescendant={showOverlay && highlightedIndex !== -1 ? `option-${highlightedIndex}` : undefined}
           value={inputValue}
+          onScroll={(e) => {
+            if (formulaInputMaskRef.current) {
+              formulaInputMaskRef.current.scrollLeft = e.target.scrollLeft;
+            }
+          }}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           onKeyDown={handleKeyDown}
+          onCopy={handleClipboardEvent}
+          onCut={handleClipboardEvent}
+          onPaste={handleClipboardEvent}
+          onDragStart={handleClipboardEvent}
+          onContextMenu={handleContextMenu}
           readOnly={isReadOnly}
           aria-label={t('formulaBar.label')}
         />
+        {multiline && (
+          <button
+            type="button"
+            className="FormulaExpandButton"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => setIsExpanded((expanded) => !expanded)}
+            aria-label={`${t(isMultilineExpanded ? 'action.collapse' : 'action.expand')} ${t('formulaBar.label')}`}
+            aria-expanded={isMultilineExpanded}
+          >
+            <Icon glyph={isExpanded ? 'icon-chevron-up' : 'icon-chevron-down'} ariaHidden={true} />
+          </button>
+        )}
         {showOverlay && !isReadOnly && (
           <FormulaOverlay
             isOpen={showOverlay}
@@ -254,6 +370,7 @@ FormulaBar.propTypes = {
   activeCellRange: PropTypes.string,
   cellFormula: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   stringCellValue: PropTypes.string,
+  multiline: PropTypes.bool,
   onRangeInputChange: PropTypes.func,
   onRangeInputKeyDown: PropTypes.func,
 };

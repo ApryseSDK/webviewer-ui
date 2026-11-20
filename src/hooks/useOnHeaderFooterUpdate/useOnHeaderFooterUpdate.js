@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import { EditingStreamType } from 'constants/officeEditor';
 import DataElements from 'constants/dataElement';
 
 export default function useOnHeaderFooterUpdate() {
+  const core = useInstanceCore();
   const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
 
   const dispatch = useDispatch();

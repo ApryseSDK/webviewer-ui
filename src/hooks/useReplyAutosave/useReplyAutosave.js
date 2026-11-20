@@ -12,17 +12,19 @@ import selectors from 'selectors';
 import NoteContext from 'components/Note/Context';
 import { AUTOSAVE_DRAFT_REPLY_SOURCE, AUTOSAVE_DRAFT_REPLY_COMMIT_SOURCE } from 'constants/autosave';
 import { BEFORE_FILE_DOWNLOAD, AFTER_FILE_DOWNLOAD } from 'constants/downloads';
+import InstanceIdContext from 'src/context/InstanceIdContext';
+import { createInstanceScopedState, getCurrentInstanceId } from 'core/documentViewers';
 
-// Module-level map persists drafts across remounts. Keyed as `${documentViewerKey}:${annotationId}`.
-export const replyDraftByAnnotationId = new Map();
+// Persists drafts across remounts, one map per instance. Keyed as `${documentViewerKey}:${annotationId}`.
+export const replyDraftsByInstance = createInstanceScopedState(() => new Map());
 
 const makeDraftKey = (viewerKey, annotationId) => `${viewerKey}:${annotationId}`;
 
-const clearAllDraftsForViewer = (viewerKey) => {
+const clearAllDraftsForViewer = (drafts, viewerKey) => {
   const prefix = `${viewerKey}:`;
-  for (const key of replyDraftByAnnotationId.keys()) {
+  for (const key of drafts.keys()) {
     if (key.startsWith(prefix)) {
-      replyDraftByAnnotationId.delete(key);
+      drafts.delete(key);
     }
   }
 };
@@ -35,6 +37,9 @@ const useReplyAutosave = ({
   const [showAutosaved, setShowAutosaved] = useState(false);
 
   const { core } = useCore();
+  // Timers and Core callbacks fire outside any instance scope, so resolve the instance here rather than at call time.
+  const instanceId = useContext(InstanceIdContext) ?? getCurrentInstanceId();
+  const drafts = replyDraftsByInstance.get(instanceId);
 
   const autosaveReplyAnnotationRef = useRef(null);
   const autosaveReplyAttachedToParentRef = useRef(false);
@@ -79,9 +84,9 @@ const useReplyAutosave = ({
   }, []);
 
   const clearStoredDraft = useCallback((annotationId, documentViewerKey) => {
-    replyDraftByAnnotationId.delete(makeDraftKey(documentViewerKey, annotationId));
-    clearReplyDraftForExport(documentViewerKey, annotationId);
-  }, []);
+    drafts.delete(makeDraftKey(documentViewerKey, annotationId));
+    clearReplyDraftForExport(documentViewerKey, annotationId, instanceId);
+  }, [drafts, instanceId]);
 
   // Restore draft on mount / annotation change (skip for Office Editor comments)
   useEffect(() => {
@@ -91,7 +96,7 @@ const useReplyAutosave = ({
     resetDraftReplyTracking();
     shouldSkipCommitOnUnmountRef.current = false;
 
-    const savedContent = replyDraftByAnnotationId.get(makeDraftKey(activeDocumentViewerKey, annotation.Id));
+    const savedContent = drafts.get(makeDraftKey(activeDocumentViewerKey, annotation.Id));
     const pendingReplyContent = pendingReplyMapRef.current?.[annotation.Id] || '';
     const restoredContent = (autosaveEnabled && savedContent) ? savedContent : pendingReplyContent;
     if (restoredContent) {
@@ -109,7 +114,7 @@ const useReplyAutosave = ({
     } else {
       setLocalReplyValue('');
     }
-  }, [annotation.Id, activeDocumentViewerKey, autosaveEnabled, resetDraftReplyTracking, textareaRef, isOfficeEditorCommentAnnotation]);
+  }, [annotation.Id, activeDocumentViewerKey, autosaveEnabled, drafts, resetDraftReplyTracking, textareaRef, isOfficeEditorCommentAnnotation]);
 
   // Skip download flow handling for Office Editor comments
   useEffect(() => {
@@ -141,8 +146,8 @@ const useReplyAutosave = ({
     }
     const onDocumentTeardown = () => {
       shouldSkipCommitOnUnmountRef.current = true;
-      clearAllDraftsForViewer(activeDocumentViewerKey);
-      clearAllReplyDraftsForExport(activeDocumentViewerKey);
+      clearAllDraftsForViewer(drafts, activeDocumentViewerKey);
+      clearAllReplyDraftsForExport(activeDocumentViewerKey, instanceId);
       resetDraftReplyTracking();
     };
     core.addEventListener('beforeDocumentLoaded', onDocumentTeardown, undefined, activeDocumentViewerKey);
@@ -151,7 +156,7 @@ const useReplyAutosave = ({
       core.removeEventListener('beforeDocumentLoaded', onDocumentTeardown, activeDocumentViewerKey);
       core.removeEventListener('documentUnloaded', onDocumentTeardown, activeDocumentViewerKey);
     };
-  }, [core, activeDocumentViewerKey, annotation.Id, clearStoredDraft, resetDraftReplyTracking, isOfficeEditorCommentAnnotation]);
+  }, [core, activeDocumentViewerKey, annotation.Id, clearStoredDraft, drafts, instanceId, resetDraftReplyTracking, isOfficeEditorCommentAnnotation]);
 
   const getResolvedOfficeEditorCommentId = useCallback(() => {
     const officeEditorCommentId = annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY);
@@ -225,7 +230,7 @@ const useReplyAutosave = ({
     if (!autosaveEnabled || isCommittingAutosaveRef.current || isSubmitClickRef.current) {
       return;
     }
-    const draftText = (replyDraftByAnnotationId.get(makeDraftKey(activeDocumentViewerKey, annotation.Id)) || '').trim();
+    const draftText = (drafts.get(makeDraftKey(activeDocumentViewerKey, annotation.Id)) || '').trim();
     if (!draftText) {
       return;
     }
@@ -272,6 +277,7 @@ const useReplyAutosave = ({
   }, [
     autosaveEnabled,
     activeDocumentViewerKey,
+    drafts,
     annotation.Id,
     isOfficeEditorCommentAnnotation,
     isMentionEnabled,
@@ -317,7 +323,7 @@ const useReplyAutosave = ({
     const autosave = debounce(async () => {
       const editor = textareaRef.current?.getEditor?.() || editorRef.current;
       const plainText = editor ? editor.getText() : localReplyValue;
-      const currentDraftText = replyDraftByAnnotationId.get(makeDraftKey(activeDocumentViewerKey, annotation.Id)) || '';
+      const currentDraftText = drafts.get(makeDraftKey(activeDocumentViewerKey, annotation.Id)) || '';
       if (plainText === currentDraftText) {
         return;
       }
@@ -332,7 +338,7 @@ const useReplyAutosave = ({
         return;
       }
 
-      replyDraftByAnnotationId.set(makeDraftKey(activeDocumentViewerKey, annotation.Id), replyText);
+      drafts.set(makeDraftKey(activeDocumentViewerKey, annotation.Id), replyText);
       committedAutosaveSignatureRef.current = '';
 
       let replyAnnotation = autosaveReplyAnnotationRef.current;
@@ -356,7 +362,7 @@ const useReplyAutosave = ({
           plainTextValue: plainTextValue || '',
           isMentionEnabled: true,
           ids,
-        });
+        }, instanceId);
       } else {
         replyAnnotation.setContents(replyText);
         replyAnnotation.setCustomData('trn-mention', '');
@@ -365,7 +371,7 @@ const useReplyAutosave = ({
           plainTextValue: replyText,
           isMentionEnabled: false,
           ids: [],
-        });
+        }, instanceId);
       }
 
       if (editor) {
@@ -382,7 +388,7 @@ const useReplyAutosave = ({
     pendingAutosaveRef.current = autosave;
     autosave();
     return () => autosave.cancel();
-  }, [localReplyValue, autosaveEnabled, autosaveInterval, attachDraftReply, clearStoredDraft, detachDraftReply, resetDraftReplyTracking, isOfficeEditorCommentAnnotation]);
+  }, [localReplyValue, autosaveEnabled, autosaveInterval, attachDraftReply, clearStoredDraft, detachDraftReply, drafts, instanceId, resetDraftReplyTracking, isOfficeEditorCommentAnnotation]);
 
   // Hide the "Saved" indicator after a short delay.
   useEffect(() => {

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 
 export default function useOnClickPrepareSoundAnnotation() {
+  const core = useInstanceCore();
   function onAnnotationSelected(annotations, action) {
     if (action === 'selected' && annotations[0] instanceof window.Core.Annotations.SoundAnnotation) {
       const annotationHasAudioPrepared = (annotations[0].audio.blob);

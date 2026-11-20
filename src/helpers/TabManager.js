@@ -1,4 +1,3 @@
-import core from 'core';
 import { workerTypes } from 'constants/types';
 import loadDocument from 'helpers/loadDocument';
 import { setLoadingProgress } from 'actions/internalActions';
@@ -14,12 +13,13 @@ import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import getFilename from 'helpers/getFilename';
 import { setupMultiViewer, cleanUpMultiViewer, finalizeMultiViewerSetup } from 'helpers/multiViewerHelper';
-import { createWrappedCore } from 'hooks/useCore/useCore';
+import { createWrappedCore, getInstanceCore } from 'hooks/useCore/useCore';
 
 const databaseID = `WebViewer Files-${Math.random()}`;
 
 export const enableMultiTab = () => (dispatch, getState) => {
   const state = getState();
+  const core = getInstanceCore(selectors.getInstanceId(state));
   // if already in multi-tab mode do not recreate TabManager
   if (selectors.getIsMultiTab(state) && selectors.getTabManager(state)) {
     return;
@@ -44,7 +44,7 @@ export const enableMultiTab = () => (dispatch, getState) => {
   dispatch(actions.setTabManager(tabManager));
   // Fix for event not firing on some devices
   setTimeout(() => {
-    fireEvent(Events.TAB_MANAGER_READY);
+    tabManager.fireInstanceEvent(Events.TAB_MANAGER_READY);
   }, 300);
 
 
@@ -90,7 +90,7 @@ export function prepareMultiTab(initialDoc, store) {
   tabManager.listenForAnnotChanges();
   // Fix for event not firing on some devices
   setTimeout(() => {
-    fireEvent(Events.TAB_MANAGER_READY);
+    tabManager.fireInstanceEvent(Events.TAB_MANAGER_READY);
   }, 300);
 }
 
@@ -143,9 +143,13 @@ export default class TabManager {
 
   constructor(docArr, extensionArr, store) {
     this.store = store;
+    // Tab events fire after awaits, and App creates this manager from a startup timer when a sibling may be ambient, so take the instance from the store.
+    this.instanceId = selectors.getInstanceId(this.store.getState());
+    const { core } = this;
     const state = this.store.getState();
     this.useDB = !state.advanced.disableIndexedDB;
-    const { tabs, isMultiTab } = state.viewer;
+    const { isMultiTab } = state.viewer;
+    const tabs = [...state.viewer.tabs];
 
     if (this.useDB) {
       const req = indexedDB.open(databaseID, 1);
@@ -223,7 +227,21 @@ export default class TabManager {
     }, undefined, 1);
   }
 
+  // These methods resume after awaits, when the ambient instance may belong to a sibling, so use this manager's own core.
+  get core() {
+    return getInstanceCore(this.instanceId);
+  }
+
+  fireInstanceEvent(eventName, data) {
+    return fireEvent(eventName, data, null, this.instanceId);
+  }
+
+  loadDocumentInInstance(dispatch, src, options, viewerKey) {
+    return loadDocument(dispatch, src, options, viewerKey, '', this.instanceId);
+  }
+
   prepareTabEventListeners() {
+    const { core } = this;
     const documentViewer = core.getDocumentViewer(1);
 
     // To control if the document was downloaded or not after any document changes
@@ -233,6 +251,7 @@ export default class TabManager {
   }
 
   attachAllListeners() {
+    const { core } = this;
     this.listenForAnnotChanges(1);
     this.listenToDocumentDownloaded(1);
     this.listenToPasswordError();
@@ -243,6 +262,7 @@ export default class TabManager {
   }
 
   async setActiveTab(id, saveCurrentActiveTabState = true) {
+    const { core } = this;
     const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(this.store.getState());
     if (activeDocumentViewerKey !== 1) {
       this.store.dispatch(actions.setActiveDocumentViewerKey(1));
@@ -259,7 +279,7 @@ export default class TabManager {
       return console.error(`Tab id not found: ${id}`);
     }
     await this.waitForTabToLoad();
-    await fireEvent(Events['BEFORE_TAB_CHANGED'], [
+    await this.fireInstanceEvent(Events['BEFORE_TAB_CHANGED'], [
       currentTab ? {
         src: currentTab.src,
         options: currentTab.options,
@@ -272,7 +292,7 @@ export default class TabManager {
         options: newTab.options,
         id: newTab.id,
       },
-    ]);
+    ], null, this.instanceId);
     const viewerState = this.getViewerState(state);
     this.store.dispatch(actions.setActiveDocumentViewerKey(1));
     if (currentTab) {
@@ -359,6 +379,7 @@ export default class TabManager {
   }
 
   async deleteTab(id) {
+    const { core } = this;
     const state = this.store.getState();
     const { tabs, activeTab } = state.viewer;
     const tabToDelete = tabs.find((tab) => tab.id === id);
@@ -369,11 +390,11 @@ export default class TabManager {
     } else {
       const [deletedTab] = tabs.filter((tab) => tab.id === id);
       const updatedTabs = tabs.filter((tab) => tab.id !== id);
-      await fireEvent(Events['BEFORE_TAB_DELETED'], [
+      await this.fireInstanceEvent(Events['BEFORE_TAB_DELETED'], [
         deletedTab.id,
         deletedTab.src,
         deletedTab.options,
-      ]);
+      ], null, this.instanceId);
       deletedTab.delete(this.db);
       this.store.dispatch(actions.setTabs(updatedTabs));
       deleteFileDataOptionsForTab(tabToDelete.id);
@@ -389,11 +410,11 @@ export default class TabManager {
         this.store.dispatch(actions.setActiveTab(null));
       }
 
-      await fireEvent(Events['TAB_DELETED'], [
+      await this.fireInstanceEvent(Events['TAB_DELETED'], [
         deletedTab.id,
         deletedTab.src,
         deletedTab.options,
-      ]);
+      ], null, this.instanceId);
     }
   }
 
@@ -424,11 +445,11 @@ export default class TabManager {
       await this.setActiveTab(tab.id, saveCurrentTabState);
     }
 
-    await fireEvent(Events['TAB_ADDED'], [
+    await this.fireInstanceEvent(Events['TAB_ADDED'], [
       tab.id,
       tab.src,
       tab.options,
-    ]);
+    ], null, this.instanceId);
     return tab.id;
   }
 
@@ -439,13 +460,13 @@ export default class TabManager {
     updatedTabs.splice(to, 0, tab);
     this.store.dispatch(actions.setTabs(updatedTabs));
 
-    fireEvent(Events['TAB_MOVED'], [
+    this.fireInstanceEvent(Events['TAB_MOVED'], [
       tab.id,
       tab.src,
       tab.options,
       from,
       to,
-    ]);
+    ], null, this.instanceId);
   }
 
   getTabUpdateDetails(tabProperties) {
@@ -566,6 +587,7 @@ export default class TabManager {
   }
 
   async handleActiveTabUpdate(id, existingTab, newTab, tabProperties, tabUpdateDetails) {
+    const { core } = this;
     const {
       hasSecondaryDocumentUpdate,
       shouldClearPrimaryDocument,
@@ -618,7 +640,7 @@ export default class TabManager {
     }
 
     if (isUpdatingPrimaryDocumentOnly) {
-      await this.runWithLoadCapture(() => loadDocument(this.store.dispatch, newTab.src, newTab.options, 1));
+      await this.runWithLoadCapture(() => this.loadDocumentInInstance(this.store.dispatch, newTab.src, newTab.options, 1));
     } else if (isUpdatingSecondaryDocumentOnly) {
       setupMultiViewer(this.store, true);
       await this.runWithLoadCapture(async () => {
@@ -656,7 +678,7 @@ export default class TabManager {
   }
 
   listenForAnnotChanges(documentViewerKey = 1) {
-    const core = createWrappedCore(documentViewerKey);
+    const core = createWrappedCore(documentViewerKey, this.instanceId);
     const changesFound = () => {
       const { tabs, activeTab } = this.store.getState().viewer;
       const tab = tabs.find((t) => t.id === activeTab);
@@ -688,7 +710,7 @@ export default class TabManager {
   }
 
   listenToDocumentDownloaded = (documentViewerKey = 1) => {
-    const core = createWrappedCore(documentViewerKey);
+    const core = createWrappedCore(documentViewerKey, this.instanceId);
     const documentViewer = core.getDocumentViewer();
     const { tabs, activeTab } = this.store.getState().viewer;
     const currentTab = tabs.find((tab) => tab.id === activeTab);
@@ -703,11 +725,11 @@ export default class TabManager {
       }
     };
 
-    getEventHandler().addEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
+    getEventHandler(this.instanceId).addEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
     documentViewer.addEventListener('pagesUpdated', onPagesUpdated);
 
     const removeListeners = () => {
-      getEventHandler().removeEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
+      getEventHandler(this.instanceId).removeEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
       documentViewer.removeEventListener('pagesUpdated', onPagesUpdated);
     };
 
@@ -715,6 +737,7 @@ export default class TabManager {
   };
 
   listenToPasswordError = () => {
+    const { core } = this;
     const onPasswordError = (error) => {
       const isPasswordError = error?.type === 'PasswordAttemptsExceeded' || error?.type === 'PasswordUserCancelled';
       if (!isPasswordError) {
@@ -722,9 +745,9 @@ export default class TabManager {
       }
       this.tabLoadPromise = Promise.resolve();
     };
-    getEventHandler().addEventListener(Events.LOAD_ERROR, onPasswordError);
+    getEventHandler(this.instanceId).addEventListener(Events.LOAD_ERROR, onPasswordError);
     const removeListeners = () => {
-      getEventHandler().removeEventListener(Events.LOAD_ERROR, onPasswordError);
+      getEventHandler(this.instanceId).removeEventListener(Events.LOAD_ERROR, onPasswordError);
     };
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
     return removeListeners;
@@ -810,6 +833,14 @@ export class Tab {
     }
   }
 
+  get instanceId() {
+    return this.tabManager?.instanceId;
+  }
+
+  get core() {
+    return createWrappedCore(this.viewerKey, this.instanceId);
+  }
+
   getTabForViewerKey(viewerKey) {
     return this.viewerDocuments?.[viewerKey];
   }
@@ -882,7 +913,7 @@ export class Tab {
 
   async loadPrimaryDocument(dispatch, db) {
     if (!(this.useDB && this.saveData.docInDB)) {
-      await loadDocument(dispatch, this.src, this.options, this.viewerKey);
+      await this.tabManager.loadDocumentInInstance(dispatch, this.src, this.options, this.viewerKey);
       return;
     }
 
@@ -896,7 +927,7 @@ export class Tab {
 
       req.onsuccess = async () => {
         const doc = req.result;
-        await loadDocument(dispatch, doc, this.options, this.viewerKey);
+        await this.tabManager.loadDocumentInInstance(dispatch, doc, this.options, this.viewerKey);
         resolve();
       };
       tx.commit();
@@ -904,6 +935,7 @@ export class Tab {
   }
 
   async loadSecondaryMultiViewerDocument(store, db) {
+    const core = getInstanceCore(this.instanceId);
     if (this.viewerKey !== 1 || !this.isMultiViewer) {
       return;
     }
@@ -926,7 +958,7 @@ export class Tab {
   }
 
   async saveCurrentActiveTabState(db) {
-    const core = createWrappedCore(this.viewerKey);
+    const { core } = this;
     this.disabled = true;
     this.savePageData();
     const document = core.getDocument();
@@ -951,7 +983,7 @@ export class Tab {
   }
 
   async saveFileData(db, document) {
-    const core = createWrappedCore(this.viewerKey);
+    const { core } = this;
     this.saveData.annotInDB = false;
     const xfdfString = await core.exportAnnotations();
     const state = this.tabManager.store.getState();
@@ -966,7 +998,7 @@ export class Tab {
   }
 
   async saveAnnotData() {
-    const core = createWrappedCore(this.viewerKey);
+    const { core } = this;
     this.saveData.annotInDB = false;
     const annotData = await core.exportAnnotations({ options: { fields: true, widgets: true, links: true } });
     if (annotData) {
@@ -975,7 +1007,7 @@ export class Tab {
   }
 
   async saveAnnotDataInDB(db) {
-    const core = createWrappedCore(this.viewerKey);
+    const { core } = this;
     const annotData = await core.exportAnnotations({ options: { fields: true, widgets: true, links: true } });
     if (annotData) {
       const annots = annotData;
@@ -988,7 +1020,7 @@ export class Tab {
   }
 
   savePageData() {
-    const core = createWrappedCore(this.viewerKey);
+    const { core } = this;
     const docContainer = getRootNode()
       .getElementById('app')
       .getElementsByClassName('DocumentContainer')[this.viewerKey - 1];
@@ -1000,7 +1032,7 @@ export class Tab {
   }
 
   restorePageDataOnLoad(viewerState, dispatch) {
-    const core = createWrappedCore(this.viewerKey);
+    const { core } = this;
     const docContainer = getRootNode()
       .getElementById('app')
       .getElementsByClassName('DocumentContainer')[this.viewerKey - 1];
@@ -1047,7 +1079,6 @@ export class Tab {
     }
 
     const updateViewer = async () => {
-      const core = createWrappedCore(this.viewerKey);
       if (cancelled || !isCurrentViewerTabActive()) {
         return;
       }
@@ -1062,7 +1093,7 @@ export class Tab {
       this.saveData.zoom && await core.zoomTo(this.saveData.zoom);
       this.saveData.page && await core.setCurrentPage(this.saveData.page);
 
-      this.viewerKey === 1 && await fireEvent(Events['AFTER_TAB_CHANGED'], [
+      this.viewerKey === 1 && await this.tabManager.fireInstanceEvent(Events['AFTER_TAB_CHANGED'], [
         this.src ? {
           src: this.src,
           options: this.options,
@@ -1070,7 +1101,7 @@ export class Tab {
           annotationsChanged: this.changes.annotations,
           hasUnsavedChanges: this.changes.hasUnsavedChanges
         } : null
-      ]);
+      ], null, this.tabManager?.instanceId);
     };
 
     core.addEventListener('documentLoaded', updateViewer, { once: true });
@@ -1085,7 +1116,7 @@ export class Tab {
   }
 
   async updateAnnotations(db) {
-    const core = createWrappedCore(this.viewerKey);
+    const { core } = this;
     const state = this.tabManager.store.getState();
     const activeTabId = selectors.getActiveTab(state);
     const activeTab = selectors.getTabs(state).find((tab) => tab.id === activeTabId);
@@ -1143,7 +1174,7 @@ export class Tab {
   }
 
   async restoreAnnotDataOnLoad(db) {
-    const core = createWrappedCore(this.viewerKey);
+    const { core } = this;
     const updateAnnotations = () => this.updateAnnotations(db);
     const removeListeners = () => core.removeEventListener('documentLoaded', updateAnnotations);
     core.addEventListener('documentLoaded', updateAnnotations, { once: true });

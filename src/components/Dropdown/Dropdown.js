@@ -1,6 +1,7 @@
 import useCore from 'hooks/useCore';
 import classNames from 'classnames';
 import Icon from 'components/Icon';
+import Tooltip from 'components/Tooltip';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react';
@@ -18,6 +19,17 @@ const directionMap = {
   'left': 'right',
   'right': 'left',
 };
+
+const hasVisibleText = (content) => React.Children.toArray(content).some((child) => {
+  if (typeof child === 'string' || typeof child === 'number') {
+    return String(child).trim().length > 0;
+  }
+  return React.isValidElement(child) && hasVisibleText(child.props.children);
+});
+
+const hasIcon = (content) => React.Children.toArray(content).some((child) => React.isValidElement(child) && (
+  child.type === Icon || child.type === 'img' || child.type === 'svg' || hasIcon(child.props.children)
+));
 
 const propTypes = {
   id: PropTypes.string.isRequired,
@@ -126,6 +138,7 @@ function Dropdown({
   const [isOpen, setIsOpen] = useState(false);
   const [inputVal, setInputVal] = useState('');
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [isKeyboardNavigating, setIsKeyboardNavigating] = useState(false);
   const [displayKeys, setDisplayKeys] = useState([]);
   const [filteredItems, setFilteredItems] = useState(items);
   const [noMatchMessage, setNoMatchMessage] = useState('');
@@ -273,6 +286,7 @@ function Dropdown({
 
   useEffect(() => {
     if (!isOpen && overlayRef?.current) {
+      setIsKeyboardNavigating(false);
       // Always reset style when closing to prevent height calculations from being off.
       overlayRef.current.style.top = '';
       // Scroll to the top of list when closing.
@@ -361,10 +375,12 @@ function Dropdown({
 
   const renderDropdownImages = () => images.map((image, i) => {
     const key = getKey(image);
+    const descriptionKey = image.title || image.label || image.ariaLabel;
+    const description = descriptionKey ? t(descriptionKey) : getTranslation(translationPrefix, key);
     const itemContent = image.src
       ? <Icon glyph={image.src} className={image.className} />
       : <span className={classNames('linestyle-label', image.className)}>{image.title || key}</span>;
-    return (
+    const option = (
       <DataElementWrapper
         key={key}
         id={`${id}-${key}`}
@@ -380,6 +396,11 @@ function Dropdown({
         {itemContent}
       </DataElementWrapper>
     );
+    return image.src && isOpen ? (
+      <Tooltip key={key} content={description} hideShortcut virtualFocus={isKeyboardNavigating && activeIndex === i} ref={(el) => optionRefs.current[i] = el}>
+        {option}
+      </Tooltip>
+    ) : option;
   });
 
   const stopPropagationCheck = (e) => {
@@ -431,8 +452,11 @@ function Dropdown({
       // This is a corner case for the text signatures
       // because the font family is not displayed in the dropdown, but the signature is.
       const isFont = !!item.font;
+      const itemContent = renderItem(item, getTranslatedDisplayValue);
+      const isIconOnly = hasIcon(itemContent) && !hasVisibleText(itemContent);
+      const description = isIconOnly ? t(item.title || item.label || item.ariaLabel || itemContent.props?.['aria-label'] || translatedDisplayValue) : null;
 
-      return (
+      const option = (
         <DataElementWrapper
           key={key}
           role="option"
@@ -447,9 +471,14 @@ function Dropdown({
           tabIndex={isOpen ? 0 : -1}
           ref={(el) => optionRefs.current[i] = el}
         >
-          {renderItem(item, getTranslatedDisplayValue)}
+          {itemContent}
         </DataElementWrapper>
       );
+      return isIconOnly && isOpen && description ? (
+        <Tooltip key={key} content={description} hideShortcut virtualFocus={isKeyboardNavigating && activeIndex === i} ref={(el) => optionRefs.current[i] = el}>
+          {option}
+        </Tooltip>
+      ) : option;
     });
 
   let optionIsSelected;
@@ -491,9 +520,12 @@ function Dropdown({
     inputVal,
     translationPrefix,
     activeIndex,
+    isKeyboardNavigating,
     images,
     filteredItems,
     renderItem,
+    t,
+    getTranslationLabel,
   ]);
 
   // Make it so the combo and listbox have the same widths
@@ -662,6 +694,7 @@ function Dropdown({
     }
 
     setActiveIndex(newIndex);
+    setIsKeyboardNavigating(true);
 
     if (isScrollable(overlayRef.current)) {
       const activeElement = optionRefs.current[newIndex];
@@ -698,6 +731,7 @@ function Dropdown({
       case SelectActions.Open:
         event.preventDefault();
         event.stopPropagation();
+        setIsKeyboardNavigating(true);
         return onToggle(event);
       case SelectActions.CloseSelect:
         event.preventDefault();

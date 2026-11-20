@@ -6,7 +6,7 @@ import ModularColorPicker from '../../ModularColorPicker/ModularColorPicker';
 import DataElements from 'constants/dataElement';
 import { FLYOUT_ITEM_TYPES } from 'constants/customizationVariables';
 import { getColorFromHex } from 'helpers/colorPickerHelper';
-import setCellFontStyle from 'helpers/setCellFontStyle';
+import setCellFontStyle from 'src/helpers/spreadsheetEditor/setCellFontStyle';
 import selectors from 'selectors';
 import { defaultTextColor } from 'src/helpers/initialColorStates';
 

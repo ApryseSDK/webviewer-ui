@@ -30,6 +30,7 @@ jest.mock('selectors', () => ({
     getMultiViewerSyncScrollMode: (state) => state.multiViewerSyncScrollMode,
     isMultiViewerMode: (state) => state.isMultiViewerMode,
     isDocumentLoaded: (state, documentViewerKey) => !!state.documentLoadedMap[documentViewerKey],
+    getInstanceId: () => 1,
   },
 }));
 
@@ -48,7 +49,7 @@ jest.mock('helpers/eventHandler', () => ({
 }));
 jest.mock('helpers/zoom', () => ({ zoomTo: jest.fn() }));
 jest.mock('helpers/fireEvent', () => jest.fn());
-jest.mock('hooks/useCore/useCore', () => ({ createWrappedCore: jest.fn() }));
+jest.mock('hooks/useCore/useCore', () => ({ createWrappedCore: jest.fn(), useInstanceCore: () => jest.requireMock('core').default }));
 jest.mock('components/MultiViewer/ComparisonButton', () => ({ __esModule: true, default: jest.fn(() => null) }));
 jest.mock('constants/dataElement', () => ({}));
 jest.mock('constants/defaultTool', () => ({ __esModule: true, default: 'AnnotationEdit' }));

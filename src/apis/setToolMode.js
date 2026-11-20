@@ -21,6 +21,10 @@ export default (store) => (toolName) => {
     // We can also set the active ribbon here if the tool is associated with a ribbon
     const ribbonAssociatedWithTool = selectors.getRibbonAssociatedWithTool(state, toolName);
     if (ribbonAssociatedWithTool) {
+      store.dispatch(actions.setLastActiveToolForRibbon({
+        ribbon: ribbonAssociatedWithTool,
+        toolName,
+      }));
       store.dispatch(actions.setActiveCustomRibbon(ribbonAssociatedWithTool));
     }
 

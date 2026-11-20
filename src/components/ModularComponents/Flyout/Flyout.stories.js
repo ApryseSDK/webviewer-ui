@@ -659,6 +659,54 @@ export const PortfolioFlyout = () => {
 };
 PortfolioFlyout.parameters = disableRtlModeParameters;
 
+const createIndexPanelFlyoutStore = (type) => {
+  const state = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      activeFlyout: 'bookmarkOutlineFlyout',
+      flyoutMap: {
+        ...initialState.viewer.flyoutMap,
+        'bookmarkOutlineFlyout': {
+          dataElement: 'bookmarkOutlineFlyout',
+          items: createItemsForBookmarkOutlineFlyout(MenuItemsForBookmarkOutlines, type, false, () => { }, menuTypes),
+        },
+      },
+    },
+  };
+
+  return configureStore({
+    reducer: (currentState = state) => currentState,
+    preloadedState: state,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
+  });
+};
+
+const indexPanelFolderFlyoutStore = createIndexPanelFlyoutStore('indexPanel.folder');
+
+export const IndexPanelFolderFlyout = () => {
+  return (
+    <Provider store={indexPanelFolderFlyoutStore}>
+      <Flyout />
+    </Provider>
+  );
+};
+IndexPanelFolderFlyout.parameters = disableRtlModeParameters;
+
+const indexPanelItemFlyoutStore = createIndexPanelFlyoutStore('indexPanel');
+
+export const IndexPanelItemFlyout = () => {
+  return (
+    <Provider store={indexPanelItemFlyoutStore}>
+      <Flyout />
+    </Provider>
+  );
+};
+IndexPanelItemFlyout.parameters = disableRtlModeParameters;
+
 const mockInitialState = {
   middleware: false,
   onClick: false,

@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 
 export default function useOnContentEditHistoryUndoRedoChanged() {
+  const core = useInstanceCore();
   const contentEditHistoryManager = core.getDocumentViewer().getContentEditHistoryManager();
   const contentEditManager = core.getDocumentViewer().getContentEditManager();
 

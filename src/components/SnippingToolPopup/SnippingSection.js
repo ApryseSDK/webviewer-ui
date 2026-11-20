@@ -3,12 +3,14 @@ import { useTranslation } from 'react-i18next';
 import Choice from 'components/Choice';
 import CollapsibleSection from '../CollapsibleSection';
 import PropTypes from 'prop-types';
+import DataElements from 'constants/dataElement';
 
 const SnippingSection = ({
   isMobile,
   isInDesktopOnlyMode,
   snippingMode,
   onSnippingModeChange,
+  shouldShowCropAndRemoveRadioButton=true,
 }) => {
   const { t } = useTranslation();
 
@@ -25,7 +27,7 @@ const SnippingSection = ({
       <Choice
         label={t('snippingPopUp.clipboard')}
         name="CLIPBOARD"
-        data-element="copyToClipboardRadioButton"
+        data-element={DataElements.COPY_TO_CLIPBOARD_RADIO_BUTTON}
         onChange={() => onSnippingModeChange('CLIPBOARD')}
         checked={snippingMode === 'CLIPBOARD'}
         radio
@@ -33,19 +35,21 @@ const SnippingSection = ({
       <Choice
         label={t('snippingPopUp.download')}
         name="DOWNLOAD"
-        data-element="downloadSnippingRadioButton"
+        data-element={DataElements.DOWNLOAD_SNIPPING_RADIO_BUTTON}
         onChange={() => onSnippingModeChange('DOWNLOAD')}
         checked={snippingMode === 'DOWNLOAD'}
         radio
       />
-      <Choice
-        label={t('snippingPopUp.cropAndRemove')}
-        name="CROP_AND_REMOVE"
-        data-element="cropAndRemoveRadioButton"
-        onChange={() => onSnippingModeChange('CROP_AND_REMOVE')}
-        checked={snippingMode === 'CROP_AND_REMOVE'}
-        radio
-      />
+      { shouldShowCropAndRemoveRadioButton && (
+        <Choice
+          label={t('snippingPopUp.cropAndRemove')}
+          name="CROP_AND_REMOVE"
+          data-element={DataElements.CROP_AND_REMOVE_RADIO_BUTTON}
+          onChange={() => onSnippingModeChange('CROP_AND_REMOVE')}
+          checked={snippingMode === 'CROP_AND_REMOVE'}
+          radio
+        />
+      )}
     </div>
   );
 
@@ -69,4 +73,5 @@ SnippingSection.propTypes = {
   isInDesktopOnlyMode: PropTypes.bool.isRequired,
   snippingMode: PropTypes.string.isRequired,
   onSnippingModeChange: PropTypes.func.isRequired,
+  shouldShowCropAndRemoveRadioButton: PropTypes.bool,
 };

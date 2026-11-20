@@ -21,6 +21,19 @@
     .container {
       display: block;
 
+      .spellcheck-suggestions-label {
+        padding: 12px;
+        padding-inline-start: 8px;
+        font-weight: bold;
+        color: var(--text-color);
+      }
+
+      .no-suggestions {
+        padding: 8px;
+        padding-inline-start: 16px;
+        color: var(--disabled-text);
+      }
+
       .office-action-item {
         width: 300px;
         padding: 8px;
@@ -47,6 +60,10 @@
           .Icon {
             margin-inline-end: 10px;
           }
+        }
+
+        &.spellcheck-suggestion {
+          padding-inline-start: 16px;
         }
 
         .shortcut {

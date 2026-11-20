@@ -14,15 +14,15 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import CustomElement from 'components/CustomElement';
 
 import Events from 'constants/events';
-import { BASE_SORT_STRATEGIES, OFFICE_EDITOR_SORT_STRATEGIES, NotesPanelSortStrategy, SPREADSHEET_EDITOR_SORT_STRATEGIES } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
-import { OfficeEditorEditMode } from 'constants/officeEditor';
 import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
+import getNotesPanelMode from 'helpers/getNotesPanelMode';
+import getNotesPanelModeStrategy from 'helpers/getNotesPanelModeStrategy';
 import useFocusHandler from 'hooks/useFocusHandler';
 
 import './NotesPanelHeader.scss';
 import Icon from '../Icon';
-import { getEventHandler } from 'helpers/fireEvent';
+import { useInstanceEventHandler } from 'helpers/fireEvent';
 
 const propTypes = {
   parentDataElement: PropTypes.string,
@@ -44,6 +44,7 @@ function NotesPanelHeader({
   toggleMultiSelectMode,
   isMultiSelectEnabled,
 }) {
+  const eventHandler = useInstanceEventHandler();
   const { core } = useCore();
   const [
     sortStrategy,
@@ -70,9 +71,11 @@ function NotesPanelHeader({
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [filterEnabled, setFilterEnabled] = useState(false);
-  const [isPreviewingTrackedChanges, setIsPreviewingTrackedChanges] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const notesPanelConfig = getNotesPanelConfig(parentDataElement);
+  const modeStrategy = getNotesPanelModeStrategy(getNotesPanelMode({ isOfficeEditorMode, isSpreadsheetEditorMode }));
+  const isSearchDisabled = modeStrategy.isSearchDisabled({ officeEditorEditMode });
+  const isSortDisabled = modeStrategy.isSortDisabled({ officeEditorEditMode });
 
   useEffect(() => {
     // check if Redux filter state is enabled on mount and set filterEnabled to true
@@ -89,22 +92,19 @@ function NotesPanelHeader({
       }
     };
 
-    getEventHandler().addEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
+    eventHandler.addEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
     return () => {
-      getEventHandler().removeEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
+      eventHandler.removeEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
     };
   }, []);
 
-  // on oe preview mode, disable and clear the search input
+  // when the mode disables search (e.g. oe preview mode), clear the search input
   useEffect(() => {
-    if (isOfficeEditorMode && officeEditorEditMode === OfficeEditorEditMode.PREVIEW) {
-      setIsPreviewingTrackedChanges(true);
+    if (isSearchDisabled) {
       setSearchInputHandler('');
       setSearchInput('');
-    } else {
-      setIsPreviewingTrackedChanges(false);
     }
-  }, [isOfficeEditorMode, officeEditorEditMode]);
+  }, [isSearchDisabled]);
 
   const handleInputChange = (e) => {
     setSearchInput(e.target.value);
@@ -119,23 +119,7 @@ function NotesPanelHeader({
   }, 500);
 
 
-  const getNotesPanelSortStrategies = ({ isOfficeEditorMode, isAnnotationNumberingEnabled, isSpreadsheetEditorMode }) => {
-    if (isOfficeEditorMode) {
-      return OFFICE_EDITOR_SORT_STRATEGIES;
-    }
-
-    if (isSpreadsheetEditorMode) {
-      return SPREADSHEET_EDITOR_SORT_STRATEGIES;
-    }
-
-    if (isAnnotationNumberingEnabled) {
-      return [...BASE_SORT_STRATEGIES, NotesPanelSortStrategy.NUMBER];
-    }
-
-    return BASE_SORT_STRATEGIES;
-  };
-
-  const sortStrategyItems = getNotesPanelSortStrategies({ isOfficeEditorMode, isAnnotationNumberingEnabled, isSpreadsheetEditorMode });
+  const sortStrategyItems = modeStrategy.getSortStrategyKeys({ isAnnotationNumberingEnabled });
 
   useEffect(() => {
     if (!sortStrategyItems.includes(sortStrategy)) {
@@ -150,7 +134,7 @@ function NotesPanelHeader({
         id="notesOrderDropdown"
         labelledById='notesSortLabel'
         dataElement="notesOrderDropdown"
-        disabled={notes.length === 0 || isPreviewingTrackedChanges}
+        disabled={notes.length === 0 || isSortDisabled}
         ariaLabel={`${t('message.sortBy')} ${sortStrategy}`}
         items={sortStrategyItems}
         translationPrefix="option.notesOrder"
@@ -176,7 +160,7 @@ function NotesPanelHeader({
       >
         <Icon glyph="icon-header-search" />
         <input
-          disabled={isPreviewingTrackedChanges}
+          disabled={isSearchDisabled}
           type="text"
           placeholder={''}
           aria-label={placeholderText}
@@ -201,7 +185,7 @@ function NotesPanelHeader({
         <div
           className="buttons-container"
         >
-          {isMultiSelectEnabled && !isOfficeEditorMode && (
+          {isMultiSelectEnabled && modeStrategy.showMultiSelectButton() && (
             <Button
               dataElement={DataElements.NOTE_MULTI_SELECT_MODE_BUTTON}
               className={classNames({

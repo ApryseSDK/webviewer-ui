@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { act, render, fireEvent, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 // import { Editable } from './OutlinesPanel.stories';
 import outlineUtils from '../../helpers/OutlineUtils';
@@ -14,6 +14,32 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'reducers/rootReducer';
 import actions from 'src/redux/actions';
 import { ConditionalFlyout } from 'jest/testUtils';
+
+const mockScrollToIndex = jest.fn();
+const mockScrollIntoView = jest.fn();
+
+jest.mock('react-virtuoso', () => {
+  const React = require('react');
+
+  const MockVirtuoso = React.forwardRef(function MockVirtuoso({ data = [], itemContent, className }, ref) {
+    React.useImperativeHandle(ref, () => ({
+      scrollToIndex: mockScrollToIndex,
+      scrollIntoView: mockScrollIntoView,
+    }));
+
+    return (
+      <div className={className} data-testid="virtuoso-scroller">
+        {data.map((item, index) => (
+          <div key={index}>{itemContent(index, item)}</div>
+        ))}
+      </div>
+    );
+  });
+
+  MockVirtuoso.displayName = 'Virtuoso';
+
+  return { Virtuoso: MockVirtuoso };
+});
 
 // const BasicOutlinesPanel = withProviders(Editable);
 const BasicOutlinesPanel = {};
@@ -63,6 +89,12 @@ jest.mock('core', () => ({
 describe.skip('OutlinesPanel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    mockScrollToIndex.mockClear();
+    mockScrollIntoView.mockClear();
+    jest.useRealTimers();
   });
 
   it('Clicks on one outline should make it active and clicks on the panel empty area should deselect the selected outline', async () => {
@@ -279,6 +311,101 @@ describe('OutlinesPanel basic tests', () => {
 
     expect(await screen.findByRole('button', { name: 'Expand Root' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Child' })).not.toBeInTheDocument();
+  });
+
+  it('automatically scrolls to an outline item when the user begins creating it', async () => {
+    const store = configureStore({
+      reducer: rootReducer(),
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
+    });
+    const outlines = createOutlines([{
+      name: 'Root 1',
+      children: [
+        { name: 'Child 1', children: [] },
+      ],
+    },
+    ]);
+    store.dispatch(actions.setOutlines(outlines, 1));
+    store.dispatch(actions.setAutoExpandOutlines(true));
+    render(
+      <Provider store={store}>
+        <OutlinesPanel isTest />
+      </Provider>
+    );
+
+    jest.useFakeTimers();
+    fireEvent.click(screen.getByRole('button', { name: 'Child 1' }), { detail: 1 });
+    act(() => jest.advanceTimersByTime(300));
+    fireEvent.click(screen.getByRole('button', { name: 'Add Outlines' }));
+
+    await waitFor(() => {
+      expect(mockScrollToIndex).toHaveBeenCalledWith({
+        index: 1,
+        align: 'center',
+        behavior: 'smooth',
+      });
+    });
+  });
+
+  it('automatically scrolls to the newly created outline', async () => {
+    core.getType.mockReturnValue(workerTypes.PDF);
+    const addNewOutline = jest.spyOn(outlineUtils, 'addNewOutline').mockResolvedValue('0-0-0');
+    const store = configureStore({
+      reducer: rootReducer(),
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
+    });
+    const outlines = createOutlines([{
+      name: 'Root 1',
+      children: [{ name: 'Child 1', children: [] }],
+    },
+    ]);
+    const updatedOutlines = createOutlines([{
+      name: 'Root 1',
+      children: [{
+        name: 'Child 1',
+        children: [{ name: 'New Outline', children: [] }],
+      }],
+    }]);
+    const getOutlines = jest.spyOn(core, 'getOutlines').mockImplementation((callback, documentViewerKey) => {
+      setTimeout(() => callback(updatedOutlines, documentViewerKey), 0);
+    });
+    store.dispatch(actions.setOutlines(outlines, 1));
+    store.dispatch(actions.setAutoExpandOutlines(true));
+    render(
+      <Provider store={store}>
+        <OutlinesPanel isTest />
+      </Provider>
+    );
+
+    jest.useFakeTimers();
+    try {
+      fireEvent.click(screen.getByRole('button', { name: 'Child 1' }), { detail: 1 });
+      act(() => jest.advanceTimersByTime(300));
+
+      const addOutlineButton = screen.getByRole('button', { name: 'Add Outlines' });
+      fireEvent.click(addOutlineButton);
+      const outlineTitleInput = screen.getByRole('textbox', { name: 'New Outline Title' });
+      fireEvent.change(outlineTitleInput, { target: { value: 'New Outline' } });
+      const createOutlineButton = screen.getByRole('button', { name: 'Add' });
+      fireEvent.click(createOutlineButton);
+      await act(async () => {
+        await Promise.resolve();
+        jest.runOnlyPendingTimers();
+      });
+
+      await waitFor(() => {
+        expect(addNewOutline).toHaveBeenCalledWith('New Outline', '0-0', 1, 0, 792, 0, 1);
+        expect(mockScrollIntoView).toHaveBeenCalledWith({
+          index: 2,
+          align: 'center',
+          behavior: 'smooth',
+          done: expect.any(Function),
+        });
+      });
+    } finally {
+      addNewOutline.mockRestore();
+      getOutlines.mockRestore();
+    }
   });
 });
 

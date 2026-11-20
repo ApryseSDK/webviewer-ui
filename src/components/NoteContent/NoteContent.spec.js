@@ -1,14 +1,15 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
 import debounce from 'lodash/debounce';
 import mentionsManager from 'helpers/MentionsManager';
-import updateSpreadsheetEditorCommentMessage from 'helpers/spreadsheetEditor/updateSpreadsheetEditorCommentMessage';
+import updateSpreadsheetEditorCommentMessage from 'src/helpers/spreadsheetEditor/updateSpreadsheetEditorCommentMessage';
 import { testProps, testPropsWithSkipAutoLink } from './NoteContent.stories';
 import NoteContent from './NoteContent';
 import NoteContext from '../Note/Context';
 import initialState from 'src/redux/initialState';
 import useCore from 'hooks/useCore';
+import { clearAllBaselinesForViewer, getEditSessionBaseline } from './NoteContentEditSession';
 
 jest.mock('lodash/debounce', () => {
   const debounceMock = (fn) => {
@@ -73,16 +74,18 @@ jest.mock('helpers/setReactQuillContent', () => jest.fn());
 
 jest.mock('components/NoteTextarea', () => {
   const React = require('react');
-  const MockNoteTextarea = React.forwardRef(({ value, onChange }, ref) => {
+  const MockNoteTextarea = React.forwardRef(({ value, onChange, onFocus, onBlur }, ref) => {
+    const inputRef = React.useRef();
     const editor = {
       getContents: jest.fn(() => ({ ops: [{ insert: value || '' }] })),
       getLength: jest.fn(() => (value || '').length + 1),
       setText: jest.fn(),
-      setSelection: jest.fn(),
+      setSelection: jest.fn(() => inputRef.current?.focus()),
+      root: { innerHTML: value || '' },
     };
     const textarea = {
       getEditor: jest.fn(() => editor),
-      focus: jest.fn(),
+      focus: jest.fn(() => inputRef.current?.focus()),
       editor,
     };
 
@@ -94,6 +97,9 @@ jest.mock('components/NoteTextarea', () => {
 
     return (
       <input
+        ref={inputRef}
+        onFocus={onFocus}
+        onBlur={onBlur}
         aria-label="comment"
         value={value || ''}
         onChange={(e) => onChange(e.target.value)}
@@ -191,7 +197,7 @@ const createContextValue = (overrides = {}) => ({
   ...overrides,
 });
 
-const renderWithAutosave = (annotation, contextValue, propOverrides = {}) => {
+const renderWithAutosave = (annotation, contextValue, propOverrides = {}, viewerOverrides = {}) => {
   const AutosaveNoteContent = withProviders(NoteContent, {
     viewer: {
       autosaveEnabled: true,
@@ -206,6 +212,7 @@ const renderWithAutosave = (annotation, contextValue, propOverrides = {}) => {
       openElements: {
         notesPanel: true,
       },
+      ...viewerOverrides,
     },
     officeEditor: {
       editMode: 'editing',
@@ -239,33 +246,37 @@ const renderWithAutosave = (annotation, contextValue, propOverrides = {}) => {
   };
 };
 
+const mockCore = () => {
+  useCore.mockReturnValue({
+    core: {
+      getAnnotationManager: jest.fn().mockReturnValue({
+        getEditBoxManager: jest.fn().mockReturnValue({
+          getEditor: jest.fn().mockReturnValue(null),
+        }),
+        trigger: jest.fn(),
+        isFreeTextEditingEnabled: jest.fn().mockReturnValue(false),
+      }),
+      getDisplayAuthor: jest.fn().mockReturnValue('Mocked Author'),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      drawAnnotationsFromList: jest.fn(),
+      getFormFieldCreationManager: jest.fn().mockReturnValue({
+        isInFormFieldCreationMode: jest.fn().mockReturnValue(false),
+      }),
+      getIsReadOnly: jest.fn().mockReturnValue(false),
+      canModify: jest.fn().mockReturnValue(true),
+      canModifyContents: jest.fn().mockReturnValue(true),
+      deleteAnnotations: jest.fn(),
+    },
+  });
+};
+
 describe('NoteContent Component', () => {
   let useSelectorMock;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    useCore.mockReturnValue({
-      core: {
-        getAnnotationManager: jest.fn().mockReturnValue({
-          getEditBoxManager: jest.fn().mockReturnValue({
-            getEditor: jest.fn().mockReturnValue(null),
-          }),
-          trigger: jest.fn(),
-          isFreeTextEditingEnabled: jest.fn().mockReturnValue(false),
-        }),
-        getDisplayAuthor: jest.fn().mockReturnValue('Mocked Author'),
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        drawAnnotationsFromList: jest.fn(),
-        getFormFieldCreationManager: jest.fn().mockReturnValue({
-          isInFormFieldCreationMode: jest.fn().mockReturnValue(false),
-        }),
-        getIsReadOnly: jest.fn().mockReturnValue(false),
-        canModify: jest.fn().mockReturnValue(true),
-        canModifyContents: jest.fn().mockReturnValue(true),
-        deleteAnnotations: jest.fn(),
-      },
-    });
+    mockCore();
     // We mock the redux call to always return "false" for isElementDisabled
     useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
     useSelectorMock.mockImplementation((callback) => callback(initialState));
@@ -283,6 +294,25 @@ describe('NoteContent Component', () => {
         </NoteContext.Provider>
       );
     }).not.toThrow();
+  });
+
+  it('uses an empty pending edit rather than restoring saved text', () => {
+    const annotation = createAnnotation({ id: 'pending-empty', initialContents: 'Saved text' });
+    renderWithAutosave(annotation, createContextValue({ pendingEditTextMap: { [annotation.Id]: '' } }), {}, { autosaveEnabled: false });
+
+    expect(screen.getByRole('textbox', { name: /comment/i })).toHaveValue('');
+  });
+
+  it('renders the no-name fallback when the author is missing', () => {
+    const annotation = createAnnotation({ id: 'missing-author' });
+    annotation.Author = undefined;
+    const getDisplayAuthor = useCore().core.getDisplayAuthor;
+    getDisplayAuthor.mockReturnValue(undefined);
+
+    renderWithAutosave(annotation, createContextValue({ isSelected: false }), { isEditing: false }, { autosaveEnabled: false });
+
+    expect(getDisplayAuthor).toHaveBeenCalledWith(undefined);
+    expect(screen.getByText('(no name)')).toBeInTheDocument();
   });
 
   it('Should generate an <a> tag if a link is identified', () => {
@@ -317,6 +347,7 @@ describe('NoteContent Component', () => {
 
 describe('NoteContent autosave behavior', () => {
   beforeEach(() => {
+    mockCore();
     debounce.deferred = false;
     const AnnotationFallback = class {};
     const EventHandler = class {
@@ -344,7 +375,112 @@ describe('NoteContent autosave behavior', () => {
   });
 
   afterEach(() => {
+    clearAllBaselinesForViewer(1);
     jest.clearAllMocks();
+  });
+
+  describe('Office comment autofocus', () => {
+    let selectorSpy;
+    let state;
+
+    beforeEach(() => {
+      jest.useFakeTimers();
+      state = {
+        ...initialState,
+        viewer: {
+          ...initialState.viewer,
+          autoFocusNoteOnAnnotationSelection: true,
+          isNoteEditing: true,
+          openElements: { notesPanel: true },
+        },
+      };
+      selectorSpy = jest.spyOn(reactRedux, 'useSelector').mockImplementation((selector) => selector(state));
+    });
+
+    afterEach(() => {
+      selectorSpy.mockRestore();
+      jest.clearAllTimers();
+      jest.useRealTimers();
+    });
+
+    const flushFocus = () => act(() => jest.runOnlyPendingTimers());
+
+    it('focuses each newly edited comment or reply without reclaiming document focus', () => {
+      const contextValue = createContextValue({ isOfficeEditorCommentAnnotation: true });
+      const comment = renderWithAutosave(createAnnotation({ id: 'focus-comment' }), contextValue);
+      flushFocus();
+      expect(screen.getAllByRole('textbox')[0]).toHaveFocus();
+
+      const replies = [1, 2].map((index) => {
+        const annotation = createAnnotation({ id: `focus-reply-${index}` });
+        annotation.isReply.mockReturnValue(true);
+        const reply = renderWithAutosave(annotation, contextValue);
+        flushFocus();
+        expect(screen.getAllByRole('textbox')[index]).toHaveFocus();
+        return reply;
+      });
+
+      const documentSurface = document.createElement('textarea');
+      document.body.appendChild(documentSurface);
+      try {
+        documentSurface.focus();
+        for (const isNoteEditing of [true, false, true]) {
+          state = { ...state, viewer: { ...state.viewer, isNoteEditing } };
+          for (const editor of [comment, ...replies]) {
+            editor.rerenderWithContext({ ...contextValue });
+          }
+          flushFocus();
+          expect(documentSurface).toHaveFocus();
+        }
+
+        // Restoring a selected thread remounts its editors, but keeps the edit sessions.
+        for (const editor of [comment, ...replies]) {
+          editor.rerenderWithContext({ ...contextValue, isSelected: false });
+          editor.rerenderWithContext({ ...contextValue, isSelected: true });
+        }
+        flushFocus();
+        expect(documentSurface).toHaveFocus();
+      } finally {
+        documentSurface.remove();
+      }
+    });
+
+    it('focuses the same comment again when a new edit session starts', () => {
+      const contextValue = createContextValue({ isOfficeEditorCommentAnnotation: true });
+      const props = { isEditing: true };
+      const { rerenderWithContext } = renderWithAutosave(createAnnotation({ id: 'edit-again' }), contextValue, props);
+      flushFocus();
+      expect(screen.getByRole('textbox')).toHaveFocus();
+
+      props.isEditing = false;
+      rerenderWithContext({ ...contextValue });
+      props.isEditing = true;
+      rerenderWithContext({ ...contextValue });
+      flushFocus();
+      expect(screen.getByRole('textbox')).toHaveFocus();
+    });
+
+    it('honors disabled autofocus for Office comments', () => {
+      state.viewer.autoFocusNoteOnAnnotationSelection = false;
+      renderWithAutosave(createAnnotation({ id: 'disabled-focus' }), createContextValue({ isOfficeEditorCommentAnnotation: true }));
+      flushFocus();
+      expect(screen.getByRole('textbox')).not.toHaveFocus();
+    });
+  });
+
+  it('keeps the controlled HTML synchronized when Quill reports the saved text', () => {
+    const annotation = createAnnotation({ id: 'normalized-html' });
+    const contextValue = createContextValue({ isOfficeEditorCommentAnnotation: true });
+    renderWithAutosave(annotation, contextValue);
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('original note');
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: '<p>original note</p>' },
+    });
+
+    expect(screen.getByRole('textbox', { name: /comment/i })).toHaveValue('<p>original note</p>');
+    expect(contextValue.setPendingEditText).not.toHaveBeenCalled();
+    expect(annotation.setContents).not.toHaveBeenCalled();
   });
 
   it('autosave clears pending edit state without rendering inline saved text', async () => {
@@ -442,6 +578,47 @@ describe('NoteContent autosave behavior', () => {
     });
   });
 
+  it('re-enables autolinking when an edit is autosaved', async () => {
+    const annotation = createAnnotation();
+    annotation.getSkipAutoLink.mockReturnValue(true);
+    renderWithAutosave(annotation, createContextValue());
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'edited value' },
+    });
+
+    await waitFor(() => {
+      expect(annotation.setContents).toHaveBeenCalledWith('edited value');
+    });
+    expect(annotation.disableSkipAutoLink).toHaveBeenCalledTimes(1);
+  });
+
+  it('re-enables autolinking when an edit is saved with Save', async () => {
+    const annotation = createAnnotation();
+    annotation.getSkipAutoLink.mockReturnValue(true);
+    renderWithAutosave(annotation, createContextValue(), {}, { autosaveEnabled: false });
+
+    fireEvent.click(screen.getByRole('button', { name: /save/i }));
+
+    await waitFor(() => {
+      expect(annotation.setContents).toHaveBeenCalledWith('edited value');
+    });
+    expect(annotation.disableSkipAutoLink).toHaveBeenCalledTimes(1);
+  });
+
+  it('removes the trailing Quill newline when an edit is saved with Save', async () => {
+    const annotation = createAnnotation();
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('edited value\n');
+    renderWithAutosave(annotation, createContextValue(), {}, { autosaveEnabled: false });
+
+    fireEvent.click(screen.getByRole('button', { name: /save/i }));
+
+    await waitFor(() => {
+      expect(annotation.setContents).toHaveBeenCalledWith('edited value');
+    });
+    expect(annotation.setContents).not.toHaveBeenCalledWith('edited value\n');
+  });
+
   it('does not autosave an edit that was cancelled before the interval elapsed', async () => {
     debounce.deferred = true;
     const annotation = createAnnotation();
@@ -494,6 +671,24 @@ describe('NoteContent autosave behavior', () => {
     expect(screen.getByRole('button', { name: /save/i })).toBeDisabled();
   });
 
+  it('does not autosave when the editor text is empty', async () => {
+    debounce.deferred = true;
+    const annotation = createAnnotation({ id: 'empty-editor-text', initialContents: 'original note' });
+    const contextValue = createContextValue();
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('\n');
+
+    const { unmount } = renderWithAutosave(annotation, contextValue);
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: '<p><br></p>' },
+    });
+
+    unmount();
+    await act(async () => {});
+
+    expect(annotation.setContents).not.toHaveBeenCalled();
+    expect(annotation.getContents()).toBe('original note');
+  });
+
   it('disables Save when a cancelled empty comment retains Quill markup', async () => {
     const annotation = createAnnotation({ id: 'empty-quill-comment', initialContents: '' });
     const contextValue = createContextValue({
@@ -540,7 +735,97 @@ describe('NoteContent autosave behavior', () => {
       );
     });
 
-    expect(annotation.setContents).toHaveBeenCalledWith('edited value');
+    expect(annotation.setContents).not.toHaveBeenCalled();
+  });
+
+  it('notifies both a Spreadsheet reply and its root annotation after autosave', async () => {
+    const annotation = createAnnotation();
+    annotation.isReply.mockReturnValue(true);
+    const rootAnnotation = createAnnotation({ id: 'root-annotation' });
+    const annotationManager = {
+      getEditBoxManager: jest.fn().mockReturnValue({ getEditor: jest.fn().mockReturnValue(null) }),
+      getRootAnnotation: jest.fn().mockReturnValue(rootAnnotation),
+      trigger: jest.fn(),
+    };
+    useCore.mockReturnValue({
+      core: {
+        getAnnotationManager: jest.fn().mockReturnValue(annotationManager),
+        getDisplayAuthor: jest.fn().mockReturnValue('Mocked Author'),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        drawAnnotationsFromList: jest.fn(),
+        getIsReadOnly: jest.fn().mockReturnValue(false),
+        canModify: jest.fn().mockReturnValue(true),
+        canModifyContents: jest.fn().mockReturnValue(true),
+      },
+    });
+    const contextValue = createContextValue({ isSpreadsheetEditorCommentAnnotation: true });
+    renderWithAutosave(annotation, contextValue);
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'edited value' },
+    });
+
+    await waitFor(() => {
+      expect(annotationManager.trigger).toHaveBeenCalledWith(
+        'annotationChanged',
+        [[annotation, rootAnnotation], 'modify', { source: 'noteChanged' }]
+      );
+    });
+  });
+
+  it('notifies both a Spreadsheet reply and its root annotation after explicit Save', async () => {
+    const annotation = createAnnotation();
+    annotation.isReply.mockReturnValue(true);
+    const rootAnnotation = createAnnotation({ id: 'root-annotation' });
+    const annotationManager = {
+      getEditBoxManager: jest.fn().mockReturnValue({ getEditor: jest.fn().mockReturnValue(null) }),
+      getRootAnnotation: jest.fn().mockReturnValue(rootAnnotation),
+      trigger: jest.fn(),
+    };
+    useCore.mockReturnValue({
+      core: {
+        getAnnotationManager: jest.fn().mockReturnValue(annotationManager),
+        getDisplayAuthor: jest.fn().mockReturnValue('Mocked Author'),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        drawAnnotationsFromList: jest.fn(),
+        getIsReadOnly: jest.fn().mockReturnValue(false),
+        canModify: jest.fn().mockReturnValue(true),
+        canModifyContents: jest.fn().mockReturnValue(true),
+      },
+    });
+    const contextValue = createContextValue({ isSpreadsheetEditorCommentAnnotation: true });
+    renderWithAutosave(annotation, contextValue, {}, { autosaveEnabled: false });
+
+    fireEvent.click(screen.getByRole('button', { name: /save/i }));
+
+    await waitFor(() => {
+      expect(annotationManager.trigger).toHaveBeenCalledWith(
+        'annotationChanged',
+        [[annotation, rootAnnotation], 'modify', { source: 'noteChanged' }]
+      );
+    });
+  });
+
+  it('uses the normalized annotation value after an SSE comment update', async () => {
+    updateSpreadsheetEditorCommentMessage.mockImplementationOnce(({ annotation, text }) => {
+      annotation.setContents(text.slice(0, 3));
+      return true;
+    });
+    const annotation = createAnnotation();
+    const contextValue = createContextValue({ isSpreadsheetEditorCommentAnnotation: true });
+    renderWithAutosave(annotation, contextValue);
+
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'edited value' },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole('textbox', { name: /comment/i })).toHaveValue('edi');
+    });
+
+    expect(annotation.setContents).toHaveBeenLastCalledWith('edi');
   });
 
   it('keeps the local annotation unchanged when the SSE comment update fails', async () => {
@@ -586,27 +871,49 @@ describe('NoteContent autosave behavior', () => {
     expect(annotation.getContents()).toBe('');
   });
 
-  it('falls back to annotation content and mention data when baseline is unavailable', () => {
-    const mentionData = JSON.stringify({ contents: 'original note', ids: ['user-1'] });
-    const annotation = createAnnotation({ initialMentionData: mentionData });
-    const contextValue = createContextValue();
-    const setIsEditing = jest.fn();
+  it('falls back to the current annotation when Cancel has no baseline in either store or editor', () => {
+    const annotation = createAnnotation({ id: 'no-baseline' });
+    const contextValue = createContextValue({ isSelected: false });
+    const { rerenderWithContext } = renderWithAutosave(annotation, contextValue, {}, { autosaveEnabled: false });
 
-    const mapGet = Map.prototype.get;
-    const mapGetSpy = jest.spyOn(Map.prototype, 'get').mockImplementation(function(key) {
-      if (key === '1:annot-1') {
-        return undefined;
-      }
-      return mapGet.call(this, key);
-    });
+    // ContentArea mounts before the parent's capture effect can pass it a baseline.
+    rerenderWithContext({ ...contextValue, isSelected: true });
+    expect(getEditSessionBaseline(1, annotation.Id)).toBeDefined();
+    clearAllBaselinesForViewer(1);
 
-    renderWithAutosave(annotation, contextValue, { setIsEditing });
+    const currentMentionData = JSON.stringify({ contents: 'current note', ids: ['user-2'] });
+    annotation.setContents('current note');
+    annotation.setCustomData('trn-mention', currentMentionData);
+    annotation.setContents.mockClear();
+    annotation.setCustomData.mockClear();
 
     fireEvent.click(screen.getByRole('button', { name: /cancel/i }));
 
-    expect(annotation.setContents).toHaveBeenCalledWith('original note');
-    expect(annotation.setCustomData).toHaveBeenCalledWith('trn-mention', mentionData);
+    expect(annotation.setContents).toHaveBeenLastCalledWith('current note');
+    expect(annotation.setCustomData).toHaveBeenLastCalledWith('trn-mention', currentMentionData);
+  });
 
-    mapGetSpy.mockRestore();
+  it('Cancel still restores the original note after document unload', async () => {
+    const mentionData = JSON.stringify({ contents: 'original note', ids: ['user-1'] });
+    const annotation = createAnnotation({ initialMentionData: mentionData });
+    const setIsEditing = jest.fn();
+    renderWithAutosave(annotation, createContextValue(), { setIsEditing });
+
+    mentionsManager.getFormattedTextFromDeltas.mockReturnValue('edited value');
+    fireEvent.change(screen.getByRole('textbox', { name: /comment/i }), {
+      target: { value: 'edited value' },
+    });
+    await waitFor(() => expect(annotation.getContents()).toBe('edited value'));
+    expect(getEditSessionBaseline(1, annotation.Id)?.contents).toBe('original note');
+
+    const core = useCore().core;
+    const onDocumentTeardown = core.addEventListener.mock.calls.find(([event]) => event === 'documentUnloaded')[1];
+    act(() => onDocumentTeardown());
+    expect(getEditSessionBaseline(1, annotation.Id)).toBeUndefined();
+    // ContentArea retains its own baseline ref while the shared store is cleared.
+    fireEvent.click(screen.getByRole('button', { name: /cancel/i }));
+
+    expect(annotation.setContents).toHaveBeenLastCalledWith('original note');
+    expect(annotation.setCustomData).toHaveBeenLastCalledWith('trn-mention', mentionData);
   });
 });

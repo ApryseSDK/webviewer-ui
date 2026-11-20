@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import useCore from 'hooks/useCore';
+import useInstanceDebouncedCallback from 'hooks/useInstanceDebouncedCallback';
 import selectors from 'selectors';
 import actions from 'actions';
 import { createPortal } from 'react-dom';
@@ -12,7 +13,6 @@ import { getConnectorLines } from 'helpers/annotationNoteConnectorLineHelper';
 import classNames from 'classnames';
 
 import './AnnotationNoteConnectorLine.scss';
-import debounce from 'lodash/debounce';
 
 const LineConnectorPortal = ({ children, anchorNode }) => {
   // Resolve the mount target from a node that's already in this instance's React tree (anchorNode), using the DOM-level Node.getRootNode() so we get the local ShadowRoot/Document. The module-level `getRootNode()` helper returns the singleton last-registered root node, which in multi-WC mode points to the most-recently-mounted instance and would cause connector lines from one viewer to render inside another.
@@ -81,7 +81,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
 
   const scrollViewElement = core.getScrollViewElement(activeDocumentViewerKey);
 
-  const calculatePosition = debounce(({
+  const calculatePosition = useInstanceDebouncedCallback(({
     activeDocumentViewerKey,
     bottomHeadersHeight,
     topHeadersHeight,

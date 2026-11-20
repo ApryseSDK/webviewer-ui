@@ -12,21 +12,23 @@ WebViewer(...)
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
 import core from 'core';
 import selectors from 'selectors';
+import { bindToInstance, createInstanceScopedState } from 'core/documentViewers';
 
-let previousDisplayMode;
+const readerModeState = createInstanceScopedState(() => ({ previousDisplayMode: undefined }));
 
 export default (store) => () => {
   const isInReaderMode = selectors.isReaderMode(store.getState());
+  const instanceId = selectors.getInstanceId(store.getState());
+  const state = readerModeState.get(instanceId);
   if (isInReaderMode) {
     exitReaderMode(store);
+    const { previousDisplayMode } = state;
     if (previousDisplayMode) {
-      setTimeout(() => {
-        core.setDisplayMode(previousDisplayMode);
-        previousDisplayMode = undefined;
-      });
+      setTimeout(bindToInstance(instanceId, () => core.setDisplayMode(previousDisplayMode)));
+      state.previousDisplayMode = undefined;
     }
   } else {
-    previousDisplayMode = core.getDisplayMode();
+    state.previousDisplayMode = core.getDisplayMode();
     enterReaderMode(store);
   }
 };

@@ -92,6 +92,7 @@ const Outline = forwardRef(
       shouldAutoExpandOutlines,
       isOutlineEditable,
       updateOutlines,
+      highlightedOutlinePath,
     } = useContext(OutlineContext);
 
     const isExpanded = isOutlineExpanded(outlineState, shouldAutoExpandOutlines);
@@ -171,6 +172,7 @@ const Outline = forwardRef(
             'editing': isRenaming || isChangingDest,
             'default': !isRenaming && !isChangingDest,
             'selected': isActive,
+            'outline-highlight-pulse': highlightedOutlinePath === outlinePath,
           })}
           tabIndex={0}
           onKeyDown={(e) => {

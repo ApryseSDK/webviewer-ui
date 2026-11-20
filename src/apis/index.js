@@ -90,6 +90,9 @@ import { setFontPath, getFontPath } from './fontPathHandler';
 import setPrintQuality from './setPrintQuality';
 import setDefaultPrintOptions from './setDefaultPrintOptions';
 import setSelectedTab from './setSelectedTab';
+import enableMeasurementPageValueRounding from './enableMeasurementPageValueRounding';
+import disableMeasurementPageValueRounding from './disableMeasurementPageValueRounding';
+import getIsMeasurementPageValueRoundingEnabled from './getIsMeasurementPageValueRoundingEnabled';
 import setSideWindowVisibility from './setSideWindowVisibility';
 import setNotesPanelSortStrategy from './setNotesPanelSortStrategy';
 import setSwipeOrientation from './setSwipeOrientation';
@@ -423,6 +426,9 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
     setSignatureFonts: setSignatureFonts(store),
     setSignatureModalColors: setSignatureModalColors(store),
     setSelectedTab: setSelectedTab(store),
+    enableMeasurementPageValueRounding: enableMeasurementPageValueRounding(store),
+    disableMeasurementPageValueRounding: disableMeasurementPageValueRounding(store),
+    getIsMeasurementPageValueRoundingEnabled: getIsMeasurementPageValueRoundingEnabled(store),
     setActiveTabInPanel: setActiveTabInPanel(store),
     setActiveGroupedItems: setActiveGroupedItems(store),
 
@@ -635,7 +641,8 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
     closeTooltip,
   };
   const documentViewerKey = instanceDocViewerKey || store.getState().advanced.documentViewerKey || 1;
-  const documentViewer = core.getDocumentViewer(documentViewerKey);
+  const instanceId = store.getState().viewer.instanceId;
+  const documentViewer = core.getDocumentViewer(documentViewerKey, instanceId);
 
   getInstanceNode().instance = {
     // keys needed for webviewer.js
@@ -646,8 +653,10 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
       ...window.Core,
       documentViewer,
       annotationManager: documentViewer.getAnnotationManager(),
-      getDocumentViewers: () => core.getDocumentViewers(),
+      getDocumentViewers: () => core.getDocumentViewers(instanceId),
     },
-    [UI_NAMESPACE]: objForWebViewerUI,
+    // instance.UI is wrapped here, so APIs like instanceA.UI.setZoomLevel() act on A even if B was clicked last.
+    // This is the main entry point for customer calls.
+    [UI_NAMESPACE]: core.bindApiToInstance(objForWebViewerUI, instanceId),
   };
 };

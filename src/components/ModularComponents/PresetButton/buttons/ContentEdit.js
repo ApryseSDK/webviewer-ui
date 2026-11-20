@@ -10,12 +10,14 @@ import DataElements from 'constants/dataElement';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
+import { useTranslation } from 'react-i18next';
 /**
  * A button that toggles Content Edit Mode.
  * @name contentEditButton
  * @memberof UI.Components.PresetButton
  */
 const ContentEditButton = forwardRef((props, ref) => {
+  const [t] = useTranslation();
   const {
     isFlyoutItem,
     buttonStyle,
@@ -83,7 +85,7 @@ const ContentEditButton = forwardRef((props, ref) => {
           isActive={active}
           buttonStyle={resolvedButtonStyle}
           ariaPressed={active}
-          onClickAnnouncement={getButtonPressedAnnouncement(title)}
+          onClickAnnouncement={getButtonPressedAnnouncement(title, t)}
         />
       )
   );

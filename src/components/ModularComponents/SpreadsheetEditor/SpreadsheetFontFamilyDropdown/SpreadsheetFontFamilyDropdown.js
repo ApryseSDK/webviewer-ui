@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import Dropdown from 'components/Dropdown';
-import setCellFontStyle from 'src/helpers/setCellFontStyle';
+import setCellFontStyle from 'src/helpers/spreadsheetEditor/setCellFontStyle';
 import './SpreadsheetFontFamilyDropdown.scss';
 
 const propTypes = {

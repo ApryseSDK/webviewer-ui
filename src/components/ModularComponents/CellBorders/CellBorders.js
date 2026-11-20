@@ -3,12 +3,13 @@ import Button from 'components/Button';
 import DataElements from 'constants/dataElement';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { getPresetButtonDOM } from '../Helpers/menuItems';
+import { menuItems } from '../Helpers/menuItems';
 import ToggleElementButton from '../ToggleElementButton';
-import setCellBorder from 'src/helpers/setCellBorder';
-import getButtonDisplay from 'src/helpers/getBorderDisplayButton';
+import getButtonDisplay from 'src/helpers/spreadsheetEditor/getButtonDisplay';
+import setCellBorder from 'src/helpers/spreadsheetEditor/setCellBorder';
 import calculateActiveBorderButtons from 'src/helpers/calculateActiveBorderButtons';
 import getUpdatedBorderStyles from 'src/helpers/getUpdatedBorderStyles';
+import { getButtonPressedAnnouncement } from 'helpers/accessibility';
 import selectors from 'selectors';
 import actions from 'actions';
 import { useSelector, useDispatch } from 'react-redux';
@@ -79,19 +80,25 @@ const CellBorders = (props) => {
   };
 
   const buttonDisplay = getButtonDisplay();
-  const borderButtons = Object.keys(buttonDisplay).flatMap((borderType) =>
-    buttonDisplay[borderType]
-      ? [getPresetButtonDOM({ buttonType: borderType, onClick })]
-      : []
-  );
-
-  const renderedBorderButtons = borderButtons.map((button) => (
-    React.cloneElement(button, {
-      key: button.props.dataElement,
-      className: 'border-button',
-      isActive: isSingleCell ? activeBorderButtons.includes(button.props.dataElement) : false
-    })
-  ));
+  // Rendered directly (not via getPresetButtonDOM) so these buttons don't pick up the
+  // PresetButton class and its hover styling, which border buttons never had.
+  const renderedBorderButtons = Object.keys(buttonDisplay)
+    .filter((borderType) => buttonDisplay[borderType])
+    .map((borderType) => {
+      const { icon, title } = menuItems[borderType] || {};
+      return (
+        <Button
+          key={borderType}
+          className="border-button"
+          dataElement={borderType}
+          img={icon}
+          title={title}
+          onClick={onClick}
+          isActive={isSingleCell ? activeBorderButtons.includes(borderType) : false}
+          onClickAnnouncement={getButtonPressedAnnouncement(title, t)}
+        />
+      );
+    });
 
   return (isFlyoutItem ?
     <div data-element={dataElement} className={classNames({

@@ -2,8 +2,9 @@ import React from 'react';
 import { useDispatch, useStore } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 const useRibbonActions = (items) => {
+  const core = useInstanceCore();
   const dispatch = useDispatch();
   const store = useStore();
 

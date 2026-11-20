@@ -23,6 +23,7 @@ const useKeyboardShortcuts = (editorMode) => {
   const isViewOnly = useSelector(selectors.isViewOnly);
   const isContentEditingEnabled = useSelector(selectors.isContentEditingEnabled);
   const disabledToolNames = useSelector(selectors.getDisabledToolNames);
+  const instanceId = useSelector(selectors.getInstanceId);
 
   const keyboardShortcuts = useMemo(() => {
     const baseShortcuts = SHORTCUT_CONFIGS[editorMode] || SHORTCUT_CONFIGS[EditorModes.DEFAULT];
@@ -36,13 +37,13 @@ const useKeyboardShortcuts = (editorMode) => {
     });
 
     let filteredShortcuts = isViewOnly
-      ? filterViewOnlyShortcuts(scopedShortcuts, shortcutKeyMap)
+      ? filterViewOnlyShortcuts(scopedShortcuts, shortcutKeyMap, instanceId)
       : scopedShortcuts;
 
     filteredShortcuts = filterOutDisabledToolShortcuts(filteredShortcuts, disabledToolNames);
 
     return filteredShortcuts;
-  }, [editorMode, isViewOnly, shortcutKeyMap, isContentEditingEnabled, disabledToolNames]);
+  }, [editorMode, isViewOnly, shortcutKeyMap, isContentEditingEnabled, disabledToolNames, instanceId]);
 
   let effectiveShortcutKeyMap;
   switch (editorMode) {

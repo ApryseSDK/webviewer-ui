@@ -1,6 +1,6 @@
 import getRootNode from 'helpers/getRootNode';
 import core from 'core';
-import { useTranslation } from 'react-i18next';
+
 
 export function isKeyboardNav() {
   return document.documentElement.getAttribute('data-tabbing') === 'true';
@@ -26,8 +26,8 @@ export function escapePressListener(event, onEscapeFunction) {
   }
 }
 
-export function getButtonPressedAnnouncement(buttonName) {
-  const [t] = useTranslation();
+// Takes the caller's `t` (from useTranslation) because this helper is called outside the top level of components.
+export function getButtonPressedAnnouncement(buttonName, t) {
   return t('action.buttonPressed', { buttonName: t(buttonName) });
 }
 

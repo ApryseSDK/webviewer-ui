@@ -49,6 +49,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
   const { position, handleDrag, handleStop, containerRef, setOverlayRef, initialOffset, dragBounds, resetPosition } = useDraggablePosition(initialPosition);
   const [, forceUpdate] = useReducer((x) => x + 1, 0, () => 0);
   const [scales, setScales] = useState({});
+  const isMeasurementPageValueRoundingEnabled = useSelector((state) => selectors.getIsMeasurementPageValueRoundingEnabled(state));
   const scalesInfo = useMemo(() => {
     const scaleInfoList = [];
     if (!scales || Object.keys(scales).length === 0) {
@@ -74,9 +75,15 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
           canDelete = false;
         }
       });
+      // Format the page value in the scale title
+      const scale = new Scale(scaleKey);
+      const precision = core.getScalePrecision(scale);
+      const pageScaleStr = Scale.getFormattedValue(scale.pageScale.value, scale.pageScale.unit, precision, { useFractionalCharacters: false, showTrailingZero: false, shouldApplyPrecision: isMeasurementPageValueRoundingEnabled });
+      const worldScaleStr = Scale.getFormattedValue(scale.worldScale.value, scale.worldScale.unit, precision, { useFractionalCharacters: false, showTrailingZero: false });
       scaleInfoList.push({
-        scale: new Scale(scaleKey),
-        title: scaleKey,
+        scale,
+        scaleKey,
+        title: `${pageScaleStr} = ${worldScaleStr}`,
         measurementsNum: measurements.length,
         pages: [...relatedPages],
         canDelete
@@ -84,7 +91,7 @@ const ScaleOverlayContainer = ({ annotations, selectedTool }) => {
     });
 
     return scaleInfoList;
-  }, [core, scales]);
+  }, [core, scales, isMeasurementPageValueRoundingEnabled]);
 
   useEffect(() => {
     resetPosition();

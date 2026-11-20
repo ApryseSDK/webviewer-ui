@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import DataElements from 'constants/dataElement';
 
 export default function useOnTextSelected() {
+  const core = useInstanceCore();
   const popupItems = useSelector(
     (state) => selectors.getPopupItems(state, DataElements.TEXT_POPUP),
     shallowEqual

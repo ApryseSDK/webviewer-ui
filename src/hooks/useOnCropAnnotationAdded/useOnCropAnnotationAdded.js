@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 
 export default function useOnCropAnnotationAdded(openDocumentCropPopup) {
+  const core = useInstanceCore();
   const [cropAnnotation, setCropAnnotation] = useState(null);
 
   useEffect(() => {

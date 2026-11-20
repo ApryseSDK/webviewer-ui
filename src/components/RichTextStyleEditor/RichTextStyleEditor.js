@@ -130,6 +130,13 @@ const RichTextStyleEditor = ({
   }, [annotation, editor, isRichTextEditMode]);
 
   useEffect(() => {
+    // The editor may have gained focus before this component mounted and subscribed to editorFocus
+    if (editor?.hasFocus?.()) {
+      setIsRichTextEditMode(true);
+    }
+  }, [editor]);
+
+  useEffect(() => {
     const handleEditorBlur = () => {
       editorRef.current = null;
       annotationRef.current = null;

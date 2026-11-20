@@ -31,13 +31,18 @@ const BottomHeaderContainer = () => {
   const [elementRef, dimensions] = useResizeObserver();
 
   // Debounced function to set the bottom floating container height
-  const setBottomFloatingContainerHeight = debounce((height) => {
+  const setBottomFloatingContainerHeight = useMemo(() => debounce((height) => {
     dispatch(actions.setBottomFloatingContainerHeight(height));
-  }, 200);
+  }, 200), [dispatch]);
 
-  const setBottomFloatingContainerWidth = debounce((width) => {
+  const setBottomFloatingContainerWidth = useMemo(() => debounce((width) => {
     dispatch(actions.setHeaderWidth('bottomHeaders', width));
-  }, 200);
+  }, 200), [dispatch]);
+
+  useEffect(() => () => {
+    setBottomFloatingContainerHeight.cancel();
+    setBottomFloatingContainerWidth.cancel();
+  }, [setBottomFloatingContainerHeight, setBottomFloatingContainerWidth]);
 
   useEffect(() => {
     if (dimensions.height !== null && floatingHeaders.length > 0) {

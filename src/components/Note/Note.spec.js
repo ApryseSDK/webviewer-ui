@@ -84,13 +84,19 @@ jest.mock('selectors', () => ({
 jest.mock('components/NoteContent', () => {
   return function MockNoteContent({ annotation, editingKey, isEditing, setIsEditing }) {
     return (
-      <button
-        aria-label={`note-content ${annotation.Id}`}
-        aria-pressed={Boolean(isEditing)}
-        onClick={() => setIsEditing(true, editingKey)}
-      >
-        {annotation.Id}
-      </button>
+      <>
+        <button
+          aria-label={`note-content ${annotation.Id}`}
+          aria-pressed={Boolean(isEditing)}
+          onClick={() => setIsEditing(true, editingKey)}
+        >
+          {annotation.Id}
+        </button>
+        <button
+          aria-label={`cancel-edit ${annotation.Id}`}
+          onClick={() => setIsEditing(false, editingKey)}
+        />
+      </>
     );
   };
 });
@@ -182,7 +188,7 @@ describe('Note', () => {
   it('should show the spreadsheet sheet and cell location for SSE comments', () => {
     mockIsSpreadsheetEditorMode = true;
 
-    const annotation = {
+    const annotation = Object.assign(Object.create(window.Core.Annotations.StickyAnnotation.prototype), {
       ...createAnnotation(() => []),
       getCustomData: (key) => {
         if (key === 'spreadsheetThreadId') {
@@ -199,7 +205,7 @@ describe('Note', () => {
 
         return null;
       },
-    };
+    });
 
     render(
       <NoteContext.Provider value={baseContext}>
@@ -220,14 +226,14 @@ describe('Note', () => {
 
   it('should switch sheets and select an SSE comment cell when the note is clicked in the notes panel', async () => {
     mockIsSpreadsheetEditorMode = true;
-    const annotation = {
+    const annotation = Object.assign(Object.create(window.Core.Annotations.StickyAnnotation.prototype), {
       ...createAnnotation(() => []),
       getCustomData: (key) => ({
         spreadsheetThreadId: 'thread-1',
         spreadsheetSheetIndex: '1',
         spreadsheetCell: 'D5',
       }[key] || null),
-    };
+    });
     render(
       <NoteContext.Provider value={{ ...baseContext, isSelected: false }}>
         <Note
@@ -414,5 +420,38 @@ describe('Note', () => {
 
     // The lower reply should still be in editing state after indices shift.
     expect(screen.getByRole('button', { name: 'note-content reply-3' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('should stay out of edit mode after cancelling an auto-opened edit', async () => {
+    const annotation = createAnnotation(() => []);
+    const props = {
+      annotation,
+      isMultiSelected: false,
+      isMultiSelectMode: false,
+      isInNotesPanel: false,
+      isCustomPanelOpen: false,
+      shouldHideConnectorLine: true,
+      handleMultiSelect: jest.fn(),
+    };
+
+    const { rerender } = render(
+      <NoteContext.Provider value={baseContext}>
+        <Note {...props} />
+      </NoteContext.Provider>
+    );
+
+    // An editable note opens in edit mode, e.g. a new Office Editor comment in the inline popup.
+    expect(screen.getByRole('button', { name: 'note-content note-1' })).toHaveAttribute('aria-pressed', 'true');
+
+    await userEvent.click(screen.getByRole('button', { name: 'cancel-edit note-1' }));
+
+    // Cancel also clears the pending edit text.
+    rerender(
+      <NoteContext.Provider value={{ ...baseContext, pendingEditTextMap: { 'note-1': undefined } }}>
+        <Note {...props} />
+      </NoteContext.Provider>
+    );
+
+    expect(screen.getByRole('button', { name: 'note-content note-1' })).toHaveAttribute('aria-pressed', 'false');
   });
 });

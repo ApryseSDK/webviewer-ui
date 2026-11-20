@@ -11,16 +11,17 @@ const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
 function StyleOption(props) {
   const lineEndingDropdownWidth = 80;
   const { onLineStyleChange, properties, isEllipse } = props;
-  if (!properties || !properties.hasOwnProperty('StrokeStyle')) {
-    // if there is no StrokeStyle property, there is no point rendering <Dropdown>
-    return null;
-  }
-  const [selectedMiddleLineStyle, setSelectedMiddleLineStyle] = useState(properties.StrokeStyle);
+  const [selectedMiddleLineStyle, setSelectedMiddleLineStyle] = useState(properties?.StrokeStyle);
   const [t] = useTranslation();
 
   function onClickMiddleLineStyle(key) {
     setSelectedMiddleLineStyle(key);
     onLineStyleChange('middle', key);
+  }
+
+  if (!properties || !properties.hasOwnProperty('StrokeStyle')) {
+    // if there is no StrokeStyle property, there is no point rendering <Dropdown>
+    return null;
   }
 
   return (
@@ -32,7 +33,7 @@ function StyleOption(props) {
           images={(isEllipse) ? defaultStrokeStyles : withCloudyStyle}
           width={lineEndingDropdownWidth}
           onClickItem={onClickMiddleLineStyle}
-          currentSelectionKey={selectedMiddleLineStyle}
+          currentSelectionKey={selectedMiddleLineStyle ?? properties.StrokeStyle}
         />
       </div>
     </div>

@@ -68,19 +68,22 @@ function RedactionSearchResultsContainer(props) {
       selectors.getActiveToolName(state)
     ], shallowEqual);
 
-  const redactSelectedResults = (searchResults) => {
-    const redactionAnnotations = createRedactionAnnotations(searchResults, defaultRedactionStyles);
-    dispatch(applyRedactions(redactionAnnotations, onCancelSearch));
-  };
-
-  const markSelectedResultsForRedaction = useCallback((searchResults) => {
+  const getRedactionToolStyles = useCallback(() => {
     const tool = core.getTool(ToolNames.REDACTION);
     const alternativeDefaultStyles = (tool && tool.defaults) ? tool.defaults : defaultRedactionStyles;
-    const redactionStyles = activeToolName.includes('Redaction') ? activeToolStyles : alternativeDefaultStyles;
-    const redactionAnnotations = createRedactionAnnotations(searchResults, redactionStyles);
+    return activeToolName.includes('Redaction') ? activeToolStyles : alternativeDefaultStyles;
+  }, [activeToolStyles, activeToolName, core]);
+
+  const redactSelectedResults = useCallback((searchResults) => {
+    const redactionAnnotations = createRedactionAnnotations(searchResults, getRedactionToolStyles());
+    dispatch(applyRedactions(redactionAnnotations, onCancelSearch));
+  }, [dispatch, getRedactionToolStyles, onCancelSearch]);
+
+  const markSelectedResultsForRedaction = useCallback((searchResults) => {
+    const redactionAnnotations = createRedactionAnnotations(searchResults, getRedactionToolStyles());
     const annotationManager = core.getAnnotationManager();
     annotationManager.addAnnotations(redactionAnnotations);
-  }, [activeToolStyles, activeToolName]);
+  }, [core, getRedactionToolStyles]);
 
   return (
     <RedactionSearchResults

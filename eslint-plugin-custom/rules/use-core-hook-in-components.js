@@ -2,12 +2,12 @@ module.exports = {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Require using useCore hook instead of direct core import in React components',
+      description: 'Require using useCore hook instead of direct core import in React components and custom hooks',
       category: 'Best Practices',
       recommended: true,
     },
     messages: {
-      useCoreHook: 'Use the useCore hook instead of importing core directly in React components. Import from "hooks/useCore" to automatically inject the viewer key.',
+      useCoreHook: 'Use the useCore hook (or useInstanceCore for code that must target a specific instance) instead of importing core directly in React components and custom hooks. Import from "hooks/useCore" to automatically inject the viewer key.',
       useCoreHookDocumentViewer: 'Use the useCore hook instead of accessing window.Core.documentViewer/globalThis.Core.documentViewer. Import from "hooks/useCore" to automatically inject the viewer key.',
     },
     schema: [],
@@ -19,6 +19,13 @@ module.exports = {
     if (/(\.test\.js|\.spec\.js|\.stories\.js)$/.test(filename)) {
       return {};
     }
+
+    // useCore is the hook that wraps core, so it has to import it.
+    if (/[\\/]hooks[\\/]useCore[\\/]useCore\.js$/.test(filename)) {
+      return {};
+    }
+
+    const isHookName = (name) => /^use[A-Z0-9]/.test(name || '');
 
     let hasCoreImport = false;
     let coreImportNode = null;
@@ -46,14 +53,14 @@ module.exports = {
         isReactComponent = true;
       }
 
-      if (node.type === 'FunctionDeclaration' && node.id?.name && /^[A-Z]/.test(node.id.name)) {
+      if (node.type === 'FunctionDeclaration' && node.id?.name && (/^[A-Z]/.test(node.id.name) || isHookName(node.id.name))) {
         isReactComponent = true;
       }
 
       if (node.type === 'ArrowFunctionExpression'
         && parent?.type === 'VariableDeclarator'
         && parent.id?.type === 'Identifier'
-        && /^[A-Z]/.test(parent.id.name)) {
+        && (/^[A-Z]/.test(parent.id.name) || isHookName(parent.id.name))) {
         isReactComponent = true;
       }
     }

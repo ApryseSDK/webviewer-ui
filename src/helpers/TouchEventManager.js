@@ -2,6 +2,7 @@ import core from 'core';
 import { isIOS } from 'helpers/device';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { getDataWithKey, mapToolNameToKey } from 'constants/map';
+import { workerTypes } from 'constants/types';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import { getScrollViewPointerPosition } from 'helpers/getZoomToMouseOffsets';
 import localStorageManager from './localStorageManager';
@@ -113,7 +114,14 @@ const TouchEventManager = {
     this.container.removeEventListener('touchend', this.handleTouchEnd);
     this.container.removeEventListener('touchcancel', this.handleTouchCancel);
   },
+  // The spreadsheet editor handles its own touch gestures (see SSETouchEventManager in core).
+  isSpreadsheetEditorDocument() {
+    return core.getDocument(this.documentViewerKey)?.getType() === workerTypes.SPREADSHEET_EDITOR;
+  },
   handleTouchStart(e) {
+    if (this.isSpreadsheetEditorDocument()) {
+      return;
+    }
     const isUsingStylusInPanMode = (
       core.getToolMode(this.documentViewerKey).name === 'Pan' &&
       core.getDocumentViewer(this.documentViewerKey).isStylusModeEnabled() &&
@@ -126,6 +134,10 @@ const TouchEventManager = {
       // on the FreeHand tool are executed without an annotation created from the mouseLeftDown
       // of the FreeHand tool. So we need to simulate that manually here.
       simulatePenDownInStylusMode(core.getToolMode(this.documentViewerKey), e.touches[0]);
+      return;
+    }
+    if (this.isPenInputActive()) {
+      this.resetTouchInteraction();
       return;
     }
     switch (e.touches.length) {
@@ -219,7 +231,9 @@ const TouchEventManager = {
       this.horziontalLock = this.isScrollingHorziontally();
     }
 
-    if (this.enableTouchScrollLock) {
+    // Axis locking resets the scroll to where the touch started, which undoes the annotation drag auto-scroll
+    const isDraggingAnnotation = !!core.getToolMode(this.documentViewerKey)?.isSelecting?.();
+    if (this.enableTouchScrollLock && !isDraggingAnnotation) {
       // scroll vertically
       if (this.verticalLock) {
         // calc the position in container
@@ -236,6 +250,16 @@ const TouchEventManager = {
     }
   },
   handleTouchMove(e) {
+    if (this.isSpreadsheetEditorDocument()) {
+      return;
+    }
+    if (this.isPenInputActive()) {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+      this.resetTouchInteraction();
+      return;
+    }
     switch (e.touches.length) {
       case 1: {
         if (e.cancelable) {
@@ -308,6 +332,13 @@ const TouchEventManager = {
     }
   },
   handleTouchEnd(e) {
+    if (this.isSpreadsheetEditorDocument()) {
+      return;
+    }
+    if (this.isPenInputActive()) {
+      this.resetTouchInteraction();
+      return;
+    }
     switch (this.touch.type) {
       case touchType.TAP: {
         this.doubleTapTimeout = setTimeout(() => {
@@ -437,6 +468,15 @@ const TouchEventManager = {
   handleTouchCancel(e) {
     this.handleTouchEnd(e);
   },
+  resetTouchInteraction() {
+    this.touch.type = '';
+    this.touch.touchMoveCount = 0;
+    this.touch.stopMomentumScroll = true;
+    this.horziontalLock = false;
+    this.verticalLock = false;
+    this.verticalMomentum = 0;
+    this.horziontalMomentum = 0;
+  },
   startMomentumScroll(touchDuration) {
     let currentIteration = 1;
     const iterationsCount = 70;
@@ -525,6 +565,10 @@ const TouchEventManager = {
   },
   isUsingPen() {
     return core.getToolMode(this.documentViewerKey)?.pointerType === 'pen';
+  },
+  isPenInputActive() {
+    const documentViewer = core.getDocumentViewer(this.documentViewerKey);
+    return !!documentViewer?.['isPenPointerDown']?.();
   },
   get useNativeScroll() {
     return this._useNativeScroll;

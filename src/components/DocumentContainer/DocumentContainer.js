@@ -6,8 +6,8 @@ import selectors from 'selectors';
 import { connect } from 'react-redux';
 import Measure from 'react-measure';
 import throttle from 'lodash/throttle';
-/* eslint-disable custom/use-core-hook-in-components */
-import core from 'core';
+import { getInstanceCore } from 'hooks/useCore/useCore';
+import InstanceIdContext from 'src/context/InstanceIdContext';
 import { isIE, isIE11 } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
 import loadDocument from 'helpers/loadDocument';
@@ -25,6 +25,12 @@ import './DocumentContainer.scss';
 import DataElements from 'src/constants/dataElement';
 
 class DocumentContainer extends React.PureComponent {
+  static contextType = InstanceIdContext;
+
+  get core() {
+    return getInstanceCore(this.context ?? undefined);
+  }
+
   static propTypes = {
     isLeftPanelOpen: PropTypes.bool,
     isRightPanelOpen: PropTypes.bool,
@@ -119,8 +125,8 @@ class DocumentContainer extends React.PureComponent {
 
   initializeContainer = () => {
     touchEventManager.initialize(this.document.current, this.container.current);
-    core.setScrollViewElement(this.container.current, this.props.activeDocumentViewerKey);
-    core.setViewerElement(this.document.current, this.props.activeDocumentViewerKey);
+    this.core.setScrollViewElement(this.container.current, this.props.activeDocumentViewerKey);
+    this.core.setViewerElement(this.document.current, this.props.activeDocumentViewerKey);
 
     if (process.env.NODE_ENV === 'development') {
       this.container.current.addEventListener('dragover', this.preventDefault);
@@ -176,10 +182,10 @@ class DocumentContainer extends React.PureComponent {
       e.preventDefault();
       this.wheelToZoom(e);
     } else if (
-      !core.isContinuousDisplayMode() &&
+      !this.core.isContinuousDisplayMode() &&
       this.props.allowPageNavigation &&
       !this.props.isReaderMode &&
-      core.isScrollableDisplayMode()
+      this.core.isScrollableDisplayMode()
     ) {
       const { currentPage, totalPages } = this.props;
       const { scrollTop, scrollHeight, clientHeight } = this.container.current;
@@ -241,7 +247,7 @@ class DocumentContainer extends React.PureComponent {
     } else if (e.deltaY > 0) {
       newZoomFactor = Math.max(currentZoomFactor - getStep(currentZoomFactor), getMinZoomLevel());
     }
-    core.zoomToMouse(newZoomFactor, activeDocumentViewerKey, e);
+    this.core.zoomToMouse(newZoomFactor, activeDocumentViewerKey, e);
   };
 
   handleScroll = () => {
@@ -264,8 +270,8 @@ class DocumentContainer extends React.PureComponent {
 
     if (!this.props.isReaderMode) {
       // Skip when in reader mode, otherwise will cause error.
-      core.setScrollViewElement(this.container.current, this.props.activeDocumentViewerKey);
-      core.scrollViewUpdated(this.props.activeDocumentViewerKey);
+      this.core.setScrollViewElement(this.container.current, this.props.activeDocumentViewerKey);
+      this.core.scrollViewUpdated(this.props.activeDocumentViewerKey);
     }
   }
 
@@ -303,7 +309,7 @@ class DocumentContainer extends React.PureComponent {
       // Note Update after fading page nav was added:
       // This also causes a doc container re-render as we fire the opacity transition when we fade the page nav
       // we must skip updating the scrollViewUpdated call as well or it causes re-renders on docs with different page sizes
-      core.scrollViewUpdated(this.props.activeDocumentViewerKey);
+      this.core.scrollViewUpdated(this.props.activeDocumentViewerKey);
     }
   }
 
@@ -333,7 +339,7 @@ class DocumentContainer extends React.PureComponent {
       document: true,
       hidden: this.props.isReaderMode,
     });
-    const document = core.getDocument();
+    const document = this.core.getDocument();
     const fileName = document ? removeFileNameExtension(document.filename) : '';
 
     const footerStyle = {

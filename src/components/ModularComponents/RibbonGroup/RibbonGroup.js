@@ -107,6 +107,19 @@ const RibbonGroup = (props) => {
   }, []);
 
   useEffect(() => {
+    // If the active ribbon item is hidden in the dropdown, we need to set it as active manually here
+    if (size === MIN_SIZE) {
+      const lastIndex = validatedRibbonItems.length - 1;
+      const firstHiddenIndex = lastIndex - size + 1;
+      const activeRibbonIndex = validatedRibbonItems.findIndex((item) => item.toolbarGroup === activeCustomRibbon);
+      const isActiveRibbonHidden = activeRibbonIndex >= firstHiddenIndex;
+      if (isActiveRibbonHidden) {
+        setActiveGroupedItemsAndTool(activeCustomRibbon);
+      }
+    }
+  }, [activeCustomRibbon, size, validatedRibbonItems, setActiveGroupedItemsAndTool]);
+
+  useEffect(() => {
     const flyout = {
       dataElement: FLYOUT_NAME,
       className: 'RibbonGroupFlyout',
@@ -122,6 +135,7 @@ const RibbonGroup = (props) => {
           continue;
         }
         const flyoutItem = itemToFlyout(item, {
+          store,
           onClick: () => {
             dispatch(actions.closeElements([FLYOUT_NAME]));
           },
@@ -262,7 +276,6 @@ const RibbonGroup = (props) => {
             currentSelectionKey={activeCustomRibbon}
             onClickItem={(customRibbon) => {
               setActiveCustomRibbon(customRibbon);
-              setActiveGroupedItemsAndTool(customRibbon);
             }}
             getDisplayValue={(item) => getTranslatedDisplayValue(item)}
             getKey={(item) => item?.toolbarGroup || item?.label || item?.dataElement}

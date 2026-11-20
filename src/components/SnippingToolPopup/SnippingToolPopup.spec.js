@@ -1,10 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'reducers/rootReducer';
 import actions from 'actions';
 import useCore from 'hooks/useCore';
+import DataElements from 'constants/dataElement';
+import SnippingToolPopupContainer from './SnippingToolPopupContainer';
 
 // Uncomment the following lines after fixing the import issue in `createFeatureAPI.js`
 // import { Basic } from './SnippingToolPopup.stories';
@@ -47,6 +49,7 @@ describe.skip('SnippingToolPopup', () => {
       }).not.toThrow();
     });
   });
+
 });
 
 describe('SnippingToolPopupContainer', () => {
@@ -174,6 +177,29 @@ describe('SnippingToolPopupContainer', () => {
       );
 
       expect(mockSnippingTool1.setSnippingMode).toHaveBeenCalledWith('CLIPBOARD');
+    });
+
+    it('resets snipping tool mode and snipping mode state when cropAndRemoveRadioButton disabled state changes', () => {
+      store.dispatch({ type: 'SET_ACTIVE_TOOL_NAME', payload: { toolName: window.Core.Tools.ToolNames['SNIPPING'] } });
+      store.dispatch(actions.openElement(DataElements.SNIPPING_TOOL_POPUP));
+
+      const I18nSnippingToolPopupContainer = withI18n(SnippingToolPopupContainer);
+      const { container } = render(
+        <Provider store={store}>
+          <I18nSnippingToolPopupContainer />
+        </Provider>
+      );
+      const mockSnippingTool = mockCore1.getTool();
+      expect(mockSnippingTool.setSnippingMode).toHaveBeenCalledWith('CLIPBOARD');
+
+      const cropAndRemoveRadioButton = container.querySelector('input[data-element="cropAndRemoveRadioButton"]');
+      fireEvent.click(cropAndRemoveRadioButton);
+      expect(mockSnippingTool.setSnippingMode).toHaveBeenLastCalledWith('CROP_AND_REMOVE');
+
+      act(() => {
+        store.dispatch(actions.disableElements(['cropAndRemoveRadioButton']));
+      });
+      expect(mockSnippingTool.setSnippingMode).toHaveBeenLastCalledWith('CLIPBOARD');
     });
   });
 });

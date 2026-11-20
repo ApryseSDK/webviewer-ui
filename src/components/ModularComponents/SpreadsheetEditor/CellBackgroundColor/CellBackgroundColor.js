@@ -7,7 +7,7 @@ import { FLYOUT_ITEM_TYPES } from 'constants/customizationVariables';
 import PropTypes from 'prop-types';
 import { getColorFromHex } from 'helpers/colorPickerHelper';
 import selectors from 'selectors';
-import setCellBackgroundColor from 'src/helpers/setCellBackgroundColor';
+import setCellBackgroundColor from 'src/helpers/spreadsheetEditor/setCellBackgroundColor';
 import { defaultBackgroundColor } from 'src/helpers/initialColorStates';
 
 const CellBackgroundColor = (props) => {

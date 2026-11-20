@@ -2,7 +2,9 @@ import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import InlineCommentingPopup from './InlineCommentingPopup';
 import InlineCommentingOfficeEditorPopupContainer from './InlineCommentingOfficeEditorPopupContainer';
+import InlineCommentingSpreadsheetEditorPopupContainer from './InlineCommentingSpreadsheetEditorPopupContainer';
 import useCore from 'hooks/useCore';
+import useInstanceDebouncedCallback from 'hooks/useInstanceDebouncedCallback';
 import { getAnnotationPopupPositionBasedOn as getPopupPosition } from 'helpers/getPopupPosition';
 import { getOpenedWarningModal, getOpenedColorPicker, getDatePicker } from 'helpers/getElements';
 import useOnClickOutside from 'hooks/useOnClickOutside';
@@ -10,8 +12,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { isMobile as isPhone, isIE, isMobileDevice } from 'helpers/device';
 import DataElements from 'constants/dataElement';
-import getRootNode from 'helpers/getRootNode';
-import debounce from 'lodash/debounce';
+import getRootNode, { getSpreadsheetEditorRoot, isEventWithinElement } from 'helpers/getRootNode';
 import PropTypes from 'prop-types';
 import { workerTypes } from 'constants/types';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
@@ -35,6 +36,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset, lastAnnotat
     isDocumentReadOnly,
     activeDocumentViewerKey,
     isOfficeEditorMode,
+    isSpreadsheetEditorMode,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElements.NOTES_PANEL),
@@ -46,6 +48,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset, lastAnnotat
       selectors.isDocumentReadOnly(state),
       selectors.getActiveDocumentViewerKey(state),
       selectors.getIsOfficeEditorMode(state),
+      selectors.isSpreadsheetEditorModeEnabled(state),
     ],
     shallowEqual,
   );
@@ -80,7 +83,12 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset, lastAnnotat
     const hasOpenColorPicker = getOpenedColorPicker();
     const hasOpenDatePicker = getDatePicker();
 
+    // The popup follows the selected cell, so clicking the sheet must not close it. Selecting a cell
+    // without a comment closes it through the annotation deselection instead.
+    const clickedInSpreadsheet = isSpreadsheetEditorMode && isEventWithinElement(e, core.getViewerElement());
+
     const clickedInProtectedArea =
+      clickedInSpreadsheet ||
       clickedInNotesPanel ||
       clickedInReviewPanel ||
       clickedInCommentPanel ||
@@ -117,7 +125,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset, lastAnnotat
     setPopupPosition();
   }, [activeDocumentViewerKey, annotation]);
 
-  const handleResize = debounce(() => {
+  const handleResize = useInstanceDebouncedCallback(() => {
     setPopupPosition();
   }, sixtyFramesPerSecondIncrement, { 'trailing': true, 'leading': false });
 
@@ -186,6 +194,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset, lastAnnotat
   }
 
   const isOfficeEditorCommentAnnotation = annotationKey === annotationMapKeys.OFFICE_EDITOR_COMMENT;
+  const isSpreadsheetEditorCommentAnnotation = annotationKey === annotationMapKeys.SPREADSHEET_EDITOR_COMMENT;
 
   const contextValue = {
     searchInput: '',
@@ -198,6 +207,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset, lastAnnotat
     isSelected: true,
     isContentEditable: core.canModifyContents(annotation) && !annotation.getContents(),
     isOfficeEditorCommentAnnotation,
+    isSpreadsheetEditorCommentAnnotation,
     pendingEditTextMap,
     setPendingEditText,
     pendingReplyMap,
@@ -228,13 +238,36 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset, lastAnnotat
     addAttachments,
   };
 
-  return shouldUseOfficeEditorPopup ? (
-    <InlineCommentingOfficeEditorPopupContainer
+  // WVR-12705: this container keeps gaining per-editor branches (Office Editor, Spreadsheet Editor, default); consider a variant lookup.
+  if (shouldUseOfficeEditorPopup) {
+    return (
+      <InlineCommentingOfficeEditorPopupContainer
+        {...popupProps}
+        annotationsUnderMouse={lastAnnotationsUnderMouse}
+      />
+    );
+  }
+
+  if (isSpreadsheetEditorCommentAnnotation) {
+    // Keep the annotation (unlike closeAndReset) so clicking the still-selected cell can reopen the popup, and
+    // hand keyboard focus back to the sheet since the popup held it when it closed.
+    const closeSpreadsheetEditorPopup = () => {
+      dispatch(actions.closeElement(DataElements.INLINE_COMMENT_POPUP));
+      getSpreadsheetEditorRoot()?.querySelector('#leadsheetTableContent + table')?.focus({ preventScroll: true });
+    };
+
+    return (
+      <InlineCommentingSpreadsheetEditorPopupContainer
+        {...popupProps}
+        closeAndReset={closeSpreadsheetEditorPopup}
+      />
+    );
+  }
+
+  return (
+    <InlineCommentingPopup
       {...popupProps}
-      annotationsUnderMouse={lastAnnotationsUnderMouse}
     />
-  ) : (
-    <InlineCommentingPopup {...popupProps} />
   );
 };
 

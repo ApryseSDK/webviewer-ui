@@ -24,6 +24,8 @@ export const LIST_OPTIONS = {
   Unordered: 'unordered',
 };
 
+export const MAXIMUM_DISPLAYED_SUGGESTIONS = 5;
+
 export const TRANSPARENT_COLOR = 'none';
 
 export const DEFAULT_HIGHLIGHT_COLORS = Object.values(window.Core.Document.OfficeEditor.HighlightColors);
@@ -51,6 +53,7 @@ export const OFFICE_NUMBER_OPTIONS = [
 
 export const OFFICE_EDITOR_TRACKED_CHANGE_KEY = 'officeEditorTrackedChangeUID';
 export const OFFICE_EDITOR_COMMENT_KEY = 'officeEditorCommentUID';
+export const OFFICE_EDITOR_SPELL_CHECK_KEY = 'officeEditorSpellCheckUID';
 
 export const OfficeEditorEditMode = window.Core.Document.OfficeEditor.EditMode;
 

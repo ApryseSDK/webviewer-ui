@@ -16,7 +16,7 @@ import Spinner from '../Spinner';
 import SearchOptionsFlyout from './SearchOptionsFlyout';
 import useDirectionalChevronIcons from 'hooks/useDirectionalChevronIcons';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
-import { isSpreadsheetEditorMode } from 'helpers/spreadsheetEditor/isSpreadsheetEditorMode';
+import isSpreadsheetEditorMode from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import './SearchOverlay.scss';
 import '../Button/Button.scss';
 
@@ -299,7 +299,7 @@ function SearchOverlay(props) {
       setShowReplaceSpinner(false);
       setReplaceAllBtnDisabled(true);
     },
-    [replaceValue]
+    [replaceValue, isReplaceAllBtnDisabled, nextResultValue]
   );
 
   const searchAndReplaceOne = useCallback(

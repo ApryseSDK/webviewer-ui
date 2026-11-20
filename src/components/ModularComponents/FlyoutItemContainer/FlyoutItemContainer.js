@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
+import Tooltip from 'components/Tooltip';
 import '../Flyout/Flyout.scss';
 import { getClickMiddleWare, ClickedItemTypes } from 'helpers/clickTracker';
 import selectors from 'selectors';
@@ -23,6 +24,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
     label,
     secondaryLabel,
     title,
+    ariaLabel,
     dataElement,
     disabled,
     additionalClass = '',
@@ -34,7 +36,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
     onKeyDownHandler,
     onClickHandler,
     isActive,
-  } = { ...props, ...customElementOverrides };
+  } = { ...props, ariaLabel: props.ariaLabel, ...customElementOverrides };
 
   let icon = customElementOverrides?.icon || customElementOverrides?.img || props.icon;
 
@@ -67,8 +69,12 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
     const flyoutItemLabel = label ?? title;
     const finalLabel = typeof flyoutItemLabel === 'string' ? t(flyoutItemLabel) : flyoutItemLabel;
     const finalLabelString = typeof finalLabel === 'string' ? finalLabel : null;
+    const isIconOnly = !!icon && !finalLabel && !secondaryLabel && !ariaKeyshortcuts;
+    const tooltipContent = [title, label, ariaLabel].find((value) => typeof value === 'string' && value.trim());
+    const labelForAccessibility = ariaLabel ? t(ariaLabel) : finalLabelString;
+    const accessibleLabel = labelForAccessibility || (isIconOnly && tooltipContent ? t(tooltipContent) : finalLabelString);
     const isSelected = props.additionalClass === 'active';
-    return (
+    const button = (
       <button
         className={classNames({
           'flyout-item': true,
@@ -79,7 +85,7 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
         aria-disabled={disabled}
         onKeyDown={onKeyDownHandler}
         data-element={dataElement}
-        aria-label={finalLabelString}
+        aria-label={accessibleLabel}
         aria-pressed={isSelected}
       >
         <div className="icon-label-wrapper">
@@ -91,6 +97,11 @@ const FlyoutItemContainer = forwardRef((props, ref) => {
         {children && <Icon className="icon-open-submenu" glyph="icon-chevron-right" />}
       </button>
     );
+    return isIconOnly && tooltipContent ? (
+      <Tooltip content={tooltipContent} hideShortcut>
+        {button}
+      </Tooltip>
+    ) : button;
   };
 
   return (
@@ -120,6 +131,7 @@ FlyoutItemContainer.propTypes = {
   ]),
   secondaryLabel: PropTypes.string,
   title: PropTypes.string,
+  ariaLabel: PropTypes.string,
   dataElement: PropTypes.string,
   disabled: PropTypes.bool,
   additionalClass: PropTypes.string,

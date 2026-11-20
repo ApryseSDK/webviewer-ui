@@ -480,6 +480,7 @@ const OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER = 'officeEditorContextMenuTableDi
 
 const defaultOfficeEditorPopups = {
   [DataElements.CONTEXT_MENU_POPUP]: [
+    { dataElement: DataElements.OFFICE_EDITOR_SPELL_CHECK_SUGGESTIONS },
     { dataElement: DataElements.OFFICE_EDITOR_CUT },
     { dataElement: DataElements.OFFICE_EDITOR_COPY },
     { dataElement: DataElements.OFFICE_EDITOR_PASTE },

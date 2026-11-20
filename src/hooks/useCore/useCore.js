@@ -1,8 +1,10 @@
 // eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
+import { runWithInstance, getCurrentInstanceId, createInstanceScopedState } from 'core/documentViewers';
+import InstanceIdContext from 'src/context/InstanceIdContext';
 
 const setToolModeForKey = (toolName, key) => {
   if (core.getMultiViewerModeActive?.()) {
@@ -14,8 +16,38 @@ const setToolModeForKey = (toolName, key) => {
   documentViewer?.setToolMode?.(documentViewer.getTool(toolName));
 };
 
-export const createWrappedCore = (key) => ({
+/**
+ * Wraps every method of `wrapped` so it executes against `instanceId`.
+ * @ignore
+ */
+const bindWrappedCoreToInstance = (wrapped, instanceId) => {
+  const bound = { ...wrapped };
+  Object.keys(wrapped).forEach((name) => {
+    if (typeof wrapped[name] === 'function') {
+      bound[name] = (...args) => runWithInstance(instanceId, () => wrapped[name](...args));
+    }
+  });
+  return bound;
+};
+
+const instanceCores = createInstanceScopedState((instanceId) => bindWrappedCoreToInstance(core, instanceId));
+
+/**
+ * `core` with every method bound to `instanceId`; original signatures, including explicit viewer keys, are preserved.
+ * @ignore
+ */
+export const getInstanceCore = (instanceId = getCurrentInstanceId()) => instanceCores.get(instanceId);
+
+/**
+ * For hooks and components that call `core` directly. Effects run after React has left the rendering instance, so unbound `core` could resolve a sibling.
+ * @ignore
+ */
+export const useInstanceCore = () => getInstanceCore(useContext(InstanceIdContext) ?? getCurrentInstanceId());
+
+// `instanceId` defaults to the ambient instance at creation, so wrappers made in handlers or API calls stay on it across awaits.
+export const createWrappedCore = (key, instanceId = getCurrentInstanceId()) => bindWrappedCoreToInstance({
   ...core,
+  getDocumentViewers: () => core.getDocumentViewers(),
   getFormFieldCreationManager: () => core.getFormFieldCreationManager(key),
   getSelectedAnnotations: () => core.getSelectedAnnotations(key),
   getToolMode: () => core.getToolMode(key),
@@ -87,13 +119,14 @@ export const createWrappedCore = (key) => ({
   movePages: (pageArray, newLocation) => core.movePages(pageArray, newLocation, key),
   cancelLoadThumbnail: (requestId) => core.cancelLoadThumbnail(requestId, key),
   goToOutline: (outline) => core.goToOutline(outline, key),
-});
+}, instanceId);
 
 const useCore = (overrideDocumentViewerKey) => {
   const documentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
+  const instanceId = useContext(InstanceIdContext) ?? getCurrentInstanceId();
   const key = overrideDocumentViewerKey || documentViewerKey;
-  const wrappedCore = useMemo(() => createWrappedCore(key), [key]);
-  const documentViewer = useMemo(() => core.getDocumentViewer(key), [key]);
+  const wrappedCore = useMemo(() => createWrappedCore(key, instanceId), [key, instanceId]);
+  const documentViewer = useMemo(() => core.getDocumentViewer(key, instanceId), [key, instanceId]);
 
   return {
     core: wrappedCore,

@@ -1,5 +1,5 @@
 import { saveAs } from 'file-saver';
-import core from 'core';
+import { createInstanceScopedState, getCurrentInstanceId } from 'core/documentViewers';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
@@ -16,17 +16,16 @@ import { isSpreadsheetEditorMode } from './spreadsheetEditor/isSpreadsheetEditor
 import DataElements from 'src/constants/dataElement';
 import { COMMON_COLORS } from 'constants/commonColors';
 import { getDownloadFilename, getDocumentFileExtension } from './downloadHelper';
-import { createWrappedCore } from 'hooks/useCore/useCore';
+import { createWrappedCore, getInstanceCore } from 'hooks/useCore/useCore';
 import { getReplyDraftsForExport } from 'helpers/replyDraftExportStore';
 import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
 import { BEFORE_FILE_DOWNLOAD, AFTER_FILE_DOWNLOAD } from 'constants/downloads';
 
-let isDownloaded = false;
-let previousWatermarkSettings = { };
-let previousFileName = '';
+const downloadState = createInstanceScopedState(() => ({ isDownloaded: false, previousWatermarkSettings: {}, previousFileName: '' }));
 
-const getExportAnnotationList = (documentViewerKey) => {
-  const draftReplies = getReplyDraftsForExport(documentViewerKey);
+const getExportAnnotationList = (documentViewerKey, instanceId) => {
+  const core = getInstanceCore(instanceId);
+  const draftReplies = getReplyDraftsForExport(documentViewerKey, instanceId);
   if (!draftReplies.length) {
     return null;
   }
@@ -73,8 +72,9 @@ const getExportAnnotationList = (documentViewerKey) => {
   return [...existingAnnotations, ...draftReplyAnnotations];
 };
 
-const exportAnnotationsWithDraftReplies = (annotationExportOptions, documentViewerKey) => {
-  const annotationList = getExportAnnotationList(documentViewerKey);
+const exportAnnotationsWithDraftReplies = (annotationExportOptions, documentViewerKey, instanceId) => {
+  const core = getInstanceCore(instanceId);
+  const annotationList = getExportAnnotationList(documentViewerKey, instanceId);
   if (!annotationList) {
     return core.exportAnnotations(annotationExportOptions, documentViewerKey);
   }
@@ -87,6 +87,11 @@ const exportAnnotationsWithDraftReplies = (annotationExportOptions, documentView
 };
 
 export default async (dispatch, options = {}, documentViewerKey = 1) => {
+  // The download awaits throughout, so keep every core call and the download state on the instance it started on.
+  const instanceId = getCurrentInstanceId();
+  const core = getInstanceCore(instanceId);
+  const instanceDownloadState = downloadState.get(instanceId);
+  const documentViewer = core.getDocumentViewer(documentViewerKey);
   let doc = core.getDocument(documentViewerKey);
   let temporaryModifiedDoc;
 
@@ -118,17 +123,16 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     }));
   };
 
-  if (previousFileName !== doc?.getFilename()) {
-    previousFileName = doc?.getFilename();
-    isDownloaded = false;
+  if (instanceDownloadState.previousFileName !== doc?.getFilename()) {
+    instanceDownloadState.previousFileName = doc?.getFilename();
+    instanceDownloadState.isDownloaded = false;
   }
 
-  const documentViewer = core.getDocumentViewer();
-  previousWatermarkSettings = await documentViewer.getWatermark();
-  if (isDownloaded) {
+  instanceDownloadState.previousWatermarkSettings = await documentViewer.getWatermark();
+  if (instanceDownloadState.isDownloaded) {
     documentViewer.setWatermark();
   } else {
-    isDownloaded = true;
+    instanceDownloadState.isDownloaded = true;
     doc.enableWatermarkApplied();
   }
 
@@ -161,12 +165,12 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     saveAs(file, downloadName || filename);
 
     dispatch(actions.closeElement(DataElements.LOADING_MODAL));
-    fireEvent(Events.FILE_DOWNLOADED);
+    fireEvent(Events.FILE_DOWNLOADED, undefined, null, instanceId);
     if (temporaryModifiedDoc) {
       temporaryModifiedDoc.unloadResources();
     }
 
-    documentViewer.setWatermark(previousWatermarkSettings);
+    documentViewer.setWatermark(instanceDownloadState.previousWatermarkSettings);
   };
 
   // We currently don't convert to pdf, png, etc. for office editor.
@@ -312,10 +316,11 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       isGrayscale: false,
     };
     const createdPages = createRasterizedPrintPages(
-      createWrappedCore(documentViewerKey),
+      createWrappedCore(documentViewerKey, instanceId),
       pages,
       printingOptions,
       undefined,
+      instanceId,
     );
     const addWhiteBackground = (dataURL) => {
       const pagePrintCanvas = document.createElement('canvas');
@@ -362,7 +367,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       document.body.removeChild(link);
     }
     dispatch(actions.closeElement(DataElements.LOADING_MODAL));
-    fireEvent(Events.FILE_DOWNLOADED);
+    fireEvent(Events.FILE_DOWNLOADED, undefined, null, instanceId);
     dispatchAfterFileDownload();
     return;
   }
@@ -384,7 +389,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     if (!pages) {
       pages = range(1, doc.getPageCount() + 1, 1);
     }
-    const xfdfString = await exportAnnotationsWithDraftReplies({ fields: true, widgets: true, links: true, useDisplayAuthor }, documentViewerKey);
+    const xfdfString = await exportAnnotationsWithDraftReplies({ fields: true, widgets: true, links: true, useDisplayAuthor }, documentViewerKey, instanceId);
     const fileData = await doc.getFileData({ xfdfString, includeAnnotations, downloadType: workerTypes.PDF });
     temporaryModifiedDoc = await core.createDocument(fileData, { extension: workerTypes.PDF, filename });
     if (includeComments) {
@@ -643,7 +648,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     if (options.documentToBeDownloaded) {
       annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF(pages)).xfdfString);
     } else {
-      annotationsPromise = exportAnnotationsWithDraftReplies({ useDisplayAuthor }, documentViewerKey);
+      annotationsPromise = exportAnnotationsWithDraftReplies({ useDisplayAuthor }, documentViewerKey, instanceId);
     }
   } else if (!options.xfdfString && !includeAnnotations) {
     options.xfdfString = window.Core.EMPTY_XFDF;
@@ -695,7 +700,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       document.body.appendChild(downloadIframe);
       downloadIframe.src = externalURL;
       dispatch(actions.closeElement(DataElements.LOADING_MODAL));
-      fireEvent(Events.FILE_DOWNLOADED);
+      fireEvent(Events.FILE_DOWNLOADED, undefined, null, instanceId);
     } else if (pages && !isSpreadsheetEditorMode() && !downloadAllPages) {
       return (temporaryModifiedDoc || doc).extractPages(pages, options.xfdfString).then((data) => downloadDataAsFile(data, extension, { ...options, downloadName }), handleError);
     } else {

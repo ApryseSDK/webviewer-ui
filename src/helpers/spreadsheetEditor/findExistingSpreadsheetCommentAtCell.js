@@ -1,5 +1,5 @@
 import { SPREADSHEET_SHEET_INDEX_KEY, SPREADSHEET_ROW_KEY, SPREADSHEET_COLUMN_KEY } from 'constants/spreadsheetEditor';
-import getSpreadsheetCustomDataInt from 'helpers/getSpreadsheetCustomDataInt';
+import getSpreadsheetCustomDataInt from './getSpreadsheetCustomDataInt';
 
 /**
  * Finds the existing comment thread's root note at a spreadsheet cell, if any.

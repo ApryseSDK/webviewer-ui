@@ -1,5 +1,5 @@
 import actions from 'actions';
-import { isSpreadsheetEditorMode } from 'helpers/spreadsheetEditor/isSpreadsheetEditorMode';
+import isSpreadsheetEditorMode from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 
 export const onDocumentLoadingStarted = (dispatch, documentViewerKey = null) => () => {
   dispatch(actions.openDocumentLoadingScreen(documentViewerKey));

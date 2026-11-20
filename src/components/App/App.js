@@ -1,12 +1,12 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useContext, useEffect, useState, useMemo,  useCallback } from 'react';
 import classNames from 'classnames';
 import { shallowEqual, useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import useCore from 'hooks/useCore';
 import actions from 'actions';
-import fireEvent, { INTERNAL_LOAD_ERROR_EVENT , getEventHandler } from 'helpers/fireEvent';
+import fireEvent, { INTERNAL_LOAD_ERROR_EVENT, useInstanceEventHandler } from 'helpers/fireEvent';
 import { css } from '@emotion/react';
 
 import LogoBar from 'components/LogoBar';
@@ -59,7 +59,6 @@ import { getInstanceNode } from 'helpers/getRootNode';
 import { isMobileDevice } from 'helpers/device';
 import useHotkeysManager from 'hooks/useHotkeysManager';
 
-import Events from 'constants/events';
 import overlays from 'constants/overlays';
 import { panelNames } from 'constants/panel';
 import DataElements from 'constants/dataElement';
@@ -80,6 +79,11 @@ import useViewportRelativeAnnotationPositioningSync from 'hooks/useViewportRelat
 import { useTranslation } from 'react-i18next';
 import { onOfficeEditorCommentAdded } from 'src/event-listeners';
 import { shouldHandleLoadError } from './loadErrorRouting';
+import StreamingErrorToast from './StreamingErrorToast';
+import useStreamingErrorToast from 'hooks/useStreamingErrorToast';
+import ToastContainerContext from './ToastContainerContext';
+import { registerAppLifecycleResources, scheduleViewerLoadedEvent,  subscribeToMediaQuery } from './appLifecycle';
+import InstanceIdContext from 'src/context/InstanceIdContext';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -91,6 +95,8 @@ const propTypes = {
 };
 
 const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
+  const eventHandler = useInstanceEventHandler();
+  const instanceId = useContext(InstanceIdContext) ?? undefined;
   const { core } = useCore();
   const store = useStore();
   const hotkeysManager = useHotkeysManager();
@@ -129,6 +135,11 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
     });
   }, [isSpreadsheetEditorModeEnabled, topHeadersHeight, isFormulaBarVisible, bottomHeadersHeight]);
   const [direction, setDirection] = useState(defaultDirection);
+  const { isVisible: showStreamingErrorToast, dismiss: dismissStreamingErrorToast } = useStreamingErrorToast();
+  const [toastContainer, setToastContainer] = useState(null);
+  const toastContainerRef = useCallback((node) => {
+    setToastContainer(node);
+  }, []);
 
   // These hooks control behaviours regarding the opening and closing of panels and in the case
   // of the redaction hook it creates a reference that tracks the redaction annotations
@@ -226,9 +237,7 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
       : getHashParameters;
 
     // To avoid race condition with window.dispatchEvent firing before window.addEventListener
-    setTimeout(() => {
-      fireEvent(Events.VIEWER_LOADED);
-    }, 300);
+    const viewerLoadedTimeout = scheduleViewerLoadedEvent(instanceId);
     window.isApryseWebViewerWebComponent ?
       fireEvent('ready', { source: 'apryse-webviewer-ui' }, wcHost) :
       window.parent.postMessage(
@@ -336,41 +345,19 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
       }
     }
 
-    window.addEventListener('blur', () => {
-      dispatch(actions.closeElements(overlays));
-    });
-    window.addEventListener('message', messageHandler, false);
-
-    // When a user switches tabs, the focused element can cause unexpected behavior,
-    // such as triggering keyboard events or displaying tooltips, when they return
-    // to the tab. Blurring the focused element before switching tabs helps to
-    // prevent these unwanted interactions.
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        if (document.activeElement) {
-          document.activeElement.blur();
-        }
-      }
-    });
-
-    // In WebComponent mode there is no postMessage handshake, so expose an
-    // explicit trigger on the WC host element so a host (test harness or
-    // sample) can deterministically start the initial document load AFTER
-    // it has registered its event listeners. The 500ms timeout below is
-    // kept as a fallback for hosts that don't call this method (preserves
-    // existing auto-load behavior). Calling the method first cancels the
-    // timer via loadDocumentAndCleanup.
-    if (window.isApryseWebViewerWebComponent) {
-      if (wcHost && typeof wcHost === 'object') {
-        wcHost.loadInitialDocument = loadDocumentAndCleanup;
-      }
-    }
-
     // In case WV is used outside of iframe, postMessage will not
     // receive the message, and this timeout will trigger loadInitialDocument
     timeoutReturn = setTimeout(loadDocumentAndCleanup, 500);
 
-    return removeEventHandlers;
+    return registerAppLifecycleResources({
+      removeEventHandlers,
+      closeOverlays: () => dispatch(actions.closeElements(overlays)),
+      messageHandler,
+      viewerLoadedTimeout,
+      documentLoadTimeout: timeoutReturn,
+      webComponentHost: wcHost,
+      loadInitialDocument: loadDocumentAndCleanup,
+    });
   }, []);
 
   useEffect(() => {
@@ -386,7 +373,7 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
         setTabletState();
       }
     };
-    tabletBreakpoint.addListener(onBreakpoint);
+    return subscribeToMediaQuery(tabletBreakpoint, onBreakpoint);
   }, []);
 
   useEffect(() => {
@@ -417,11 +404,7 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
 
   useEffect(() => {
     const onError = (errorPayload) => {
-      const state = store.getState();
-      const instanceDocumentViewerKey = window.isApryseWebViewerWebComponent && !selectors.isMultiViewerMode(state)
-        ? selectors.getActiveDocumentViewerKey(state)
-        : undefined;
-      if (!shouldHandleLoadError(errorPayload?.documentViewerId, core, instanceDocumentViewerKey)) {
+      if (!shouldHandleLoadError(errorPayload?.documentViewerId, core)) {
         return;
       }
 
@@ -449,9 +432,10 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
       }
     };
 
-    getEventHandler().addEventListener(INTERNAL_LOAD_ERROR_EVENT, onError);
-    return () => getEventHandler().removeEventListener(INTERNAL_LOAD_ERROR_EVENT, onError);
+    eventHandler.addEventListener(INTERNAL_LOAD_ERROR_EVENT, onError);
+    return () => eventHandler.removeEventListener(INTERNAL_LOAD_ERROR_EVENT, onError);
   }, []);
+
 
   useEffect(() => {
     // update cursor and selection properties for Office Editor custom UI
@@ -485,15 +469,15 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
   const renderPanel = (panelName, dataElement) => {
     switch (panelName) {
       case panelNames.OUTLINE:
-        return <LazyLoadWrapper Component={LazyLoadComponents.OutlinesPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.OutlinesPanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.SIGNATURE:
-        return <LazyLoadWrapper Component={LazyLoadComponents.SignaturePanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.SignaturePanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.BOOKMARKS:
-        return <LazyLoadWrapper Component={LazyLoadComponents.BookmarksPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.BookmarksPanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.FILE_ATTACHMENT:
-        return <LazyLoadWrapper Component={LazyLoadComponents.FileAttachmentPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.FileAttachmentPanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.THUMBNAIL:
-        return <LazyLoadWrapper Component={LazyLoadComponents.ThumbnailsPanel} dataElement={dataElement} panelSelector={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.ThumbnailsPanel} dataElement={dataElement} showNetworkErrorToast={false} panelSelector={dataElement} />;
       case panelNames.LAYERS:
         return <LayersPanel dataElement={dataElement} />;
       case panelNames.TEXT_EDITING:
@@ -501,25 +485,25 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
       case panelNames.CHANGE_LIST:
         return <ComparePanel dataElement={dataElement}/>;
       case panelNames.STYLE:
-        return <LazyLoadWrapper Component={LazyLoadComponents.StylePanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.StylePanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.REDACTION:
-        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} isCustomPanel={true} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} showNetworkErrorToast={false} redactionAnnotationsList={redactionAnnotationsList} isCustomPanel={true} />;
       case panelNames.SEARCH:
-        return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.NOTES:
-        return <LazyLoadWrapper Component={LazyLoadComponents.NotesPanel} dataElement={dataElement} isCustomPanel={true} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.NotesPanel} dataElement={dataElement} showNetworkErrorToast={false} isCustomPanel={true} />;
       case panelNames.INDEX:
-        return <LazyLoadWrapper Component={LazyLoadComponents.IndexPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.IndexPanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.TABS:
-        return <LazyLoadWrapper Component={LazyLoadComponents.TabPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.TabPanel} dataElement={dataElement} showNetworkErrorToast={false} redactionAnnotationsList={redactionAnnotationsList} />;
       case panelNames.SIGNATURE_LIST:
-        return <LazyLoadWrapper Component={LazyLoadComponents.SignatureListPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.SignatureListPanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.RUBBER_STAMP:
-        return <LazyLoadWrapper Component={LazyLoadComponents.RubberStampPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.RubberStampPanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.PORTFOLIO:
-        return <LazyLoadWrapper Component={LazyLoadComponents.PortfolioPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.PortfolioPanel} dataElement={dataElement} showNetworkErrorToast={false} />;
       case panelNames.FORM_FIELD:
-        return <LazyLoadWrapper Component={LazyLoadComponents.FormFieldPanel} dataElement={dataElement} annotation={widgetAnnotationAddedOrSelected} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.FormFieldPanel} dataElement={dataElement} showNetworkErrorToast={false} annotation={widgetAnnotationAddedOrSelected} />;
     }
   };
 
@@ -543,7 +527,12 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
   });
 
   return (
-    <>
+    <ToastContainerContext.Provider value={toastContainer}>
+      <div className='ErrorToastContainer' ref={toastContainerRef}>
+        {showStreamingErrorToast && (
+          <StreamingErrorToast onDismiss={dismissStreamingErrorToast} />
+        )}
+      </div>
       <div
         className={classNames({
           'App': true,
@@ -736,7 +725,7 @@ const App = ({ removeEventHandlers, initialDirection, instanceRootNode }) => {
       <FilePickerHandler />
       <CopyTextHandler />
       <FontHandler />
-    </>
+    </ToastContainerContext.Provider>
   );
 };
 

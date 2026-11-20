@@ -8,9 +8,9 @@ import DataElements from 'constants/dataElement';
 import { spreadsheetNoteStateFlyoutItems } from 'constants/flyoutConstants';
 import {
   SPREADSHEET_COMMENT_STATE_KEY,
-  SPREADSHEET_THREAD_ID_KEY,
   SpreadsheetEditorEditMode,
 } from 'constants/spreadsheetEditor';
+import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import selectors from 'selectors';
 
 const propTypes = {
@@ -28,7 +28,7 @@ function NoteState(props) {
 
   const [t] = useTranslation();
 
-  const isSpreadsheetComment = !!annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY);
+  const isSpreadsheetComment = mapAnnotationToKey(annotation) === annotationMapKeys.SPREADSHEET_EDITOR_COMMENT;
   const annotationState = isSpreadsheetComment
     ? annotation.getCustomData(SPREADSHEET_COMMENT_STATE_KEY) || ''
     : annotation.getStatus();

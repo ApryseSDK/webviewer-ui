@@ -1,8 +1,8 @@
 import ColorPalette from 'components/ColorPalette';
 import Slider from 'components/Slider';
 // Class component
-// eslint-disable-next-line custom/use-core-hook-in-components
-import core from 'core';
+import { getInstanceCore } from 'hooks/useCore/useCore';
+import InstanceIdContext from 'src/context/InstanceIdContext';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
@@ -74,6 +74,12 @@ const WATERMARK_API_LOCATIONS = {
 };
 
 class WatermarkModal extends React.PureComponent {
+  static contextType = InstanceIdContext;
+
+  get core() {
+    return getInstanceCore(this.context ?? undefined);
+  }
+
   static propTypes = {
     isVisible: PropTypes.bool,
     activeDocumentViewerKey: PropTypes.number.isRequired,
@@ -98,7 +104,7 @@ class WatermarkModal extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    core.addEventListener('documentLoaded', this.closeModal);
+    this.core.addEventListener('documentLoaded', this.closeModal);
 
     if (this.props.isVisible !== prevProps.isVisible) {
       // Sets focus with a slight delay after modal becomes visible in order to
@@ -126,23 +132,23 @@ class WatermarkModal extends React.PureComponent {
         },
         async () => {
           // Store the pre-existing watermark (if any) before we overwrite it
-          this.preExistingWatermark = await core.getWatermark(this.props.activeDocumentViewerKey);
+          this.preExistingWatermark = await this.core.getWatermark(this.props.activeDocumentViewerKey);
           this.addWatermarks();
         },
       );
     } else {
       this.removeWatermarkCreatedByModal();
-      core.setWatermark(this.preExistingWatermark, this.props.activeDocumentViewerKey);
+      this.core.setWatermark(this.preExistingWatermark, this.props.activeDocumentViewerKey);
     }
   };
 
   addWatermarks = () => {
     const watermarkOptions = this.createWatermarks();
     const { t } = this.props;
-    core.setWatermark(watermarkOptions, this.props.activeDocumentViewerKey, { skipRefresh: true });
+    this.core.setWatermark(watermarkOptions, this.props.activeDocumentViewerKey, { skipRefresh: true });
 
-    const pageHeight = core.getPageHeight(this.props.pageIndexToView + 1);
-    const pageWidth = core.getPageWidth(this.props.pageIndexToView + 1);
+    const pageHeight = this.core.getPageHeight(this.props.pageIndexToView + 1);
+    const pageWidth = this.core.getPageWidth(this.props.pageIndexToView + 1);
 
     const desiredZoomForWidth = DESIRED_WIDTH / pageWidth;
     const desiredZoomForHeight = DESIRED_HEIGHT / pageHeight;
@@ -150,7 +156,7 @@ class WatermarkModal extends React.PureComponent {
     const desiredZoom = Math.min(desiredZoomForHeight, desiredZoomForWidth);
     const pageNumber = this.props.pageIndexToView + 1;
 
-    core.getDocumentViewer(this.props.activeDocumentViewerKey).getDocument().loadCanvas({
+    this.core.getDocumentViewer(this.props.activeDocumentViewerKey).getDocument().loadCanvas({
       pageNumber: pageNumber,
       zoom: desiredZoom,
       drawComplete: (canvas) => {
@@ -174,13 +180,13 @@ class WatermarkModal extends React.PureComponent {
   constructWatermarkOption = (value) => {
     const fontStyles = [];
     if (value.isBolded) {
-      fontStyles.push(core.getFontStyles().BOLD);
+      fontStyles.push(this.core.getFontStyles().BOLD);
     }
     if (value.isItalic) {
-      fontStyles.push(core.getFontStyles().ITALIC);
+      fontStyles.push(this.core.getFontStyles().ITALIC);
     }
     if (value.isUnderlined) {
-      fontStyles.push(core.getFontStyles().UNDERLINE);
+      fontStyles.push(this.core.getFontStyles().UNDERLINE);
     }
     const watermarkOption = {
       fontSize: value.fontSize,
@@ -208,7 +214,7 @@ class WatermarkModal extends React.PureComponent {
 
   // eslint-disable-next-line class-methods-use-this
   removeWatermarkCreatedByModal = () => {
-    core.setWatermark({}, this.props.activeDocumentViewerKey, { skipRefresh: true });
+    this.core.setWatermark({}, this.props.activeDocumentViewerKey, { skipRefresh: true });
   };
 
   closeModal = () => {

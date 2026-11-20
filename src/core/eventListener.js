@@ -1,18 +1,20 @@
 import core from 'core';
 import Events from 'constants/events';
+import { getInstanceBoundCallback, findInstanceBoundCallback } from './documentViewers';
 
 export const addEventListener = (event, eventListener, options, documentViewerKey) => {
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
   const object = eventToObjectMap[event];
+  const listener = getInstanceBoundCallback(eventListener);
 
-  options ? object.addEventListener(event, eventListener, options) : object.addEventListener(event, eventListener);
+  options ? object.addEventListener(event, listener, options) : object.addEventListener(event, listener);
 };
 
 export const removeEventListener = (event, eventListener, documentViewerKey) => {
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
   const object = eventToObjectMap[event];
 
-  object.removeEventListener(event, eventListener);
+  object.removeEventListener(event, findInstanceBoundCallback(eventListener) || eventListener);
 };
 
 const getEventToObjectMap = (documentViewerKey) => {

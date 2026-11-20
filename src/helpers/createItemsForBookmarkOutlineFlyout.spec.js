@@ -64,4 +64,30 @@ describe('createItemsForBookmarkOutlineFlyout tests', () => {
     expect(hiddenElements.map((item) => item.option)).toEqual(expectedHiddenElements);
     expect(hiddenElements.length).toEqual(7);
   });
+
+  it('should return the correct options for form field folder panel', () => {
+    const itemsForFolder = createItemsForBookmarkOutlineFlyout(menuItems, 'indexPanel.folder', false, jest.fn(), menuTypes);
+    const hiddenElements = itemsForFolder.filter((item) => item.hidden);
+
+    const expectedHiddenElements = [
+      menuTypes.OPENFORMFIELDPANEL,
+      menuTypes.OPENFILE,
+      menuTypes.SETDEST,
+      menuTypes.DOWNLOAD,
+      menuTypes.MOVE_UP,
+      menuTypes.MOVE_DOWN,
+      menuTypes.MOVE_LEFT,
+      menuTypes.MOVE_RIGHT,
+    ];
+    expect(hiddenElements.map((item) => item.option)).toEqual(expect.arrayContaining(expectedHiddenElements));
+    expect(hiddenElements.length).toEqual(8);
+
+    const visibleElements = itemsForFolder.filter((item) => !item.hidden);
+    const expectedVisibleElements = [
+      menuTypes.RENAME,
+      menuTypes.DELETE,
+    ];
+    expect(visibleElements.map((item) => item.option)).toEqual(expect.arrayContaining(expectedVisibleElements));
+    expect(visibleElements.length).toEqual(2);
+  });
 });

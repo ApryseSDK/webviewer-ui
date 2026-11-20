@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import ActionButton from 'components/ActionButton';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
-import setCellAlignment from 'src/helpers/setCellAlignment';
+import setCellAlignment from 'src/helpers/spreadsheetEditor/setCellAlignment';
 import PropTypes from 'prop-types';
 const BaseAlignmentButton = forwardRef((props, ref) => {
   const {

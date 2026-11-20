@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Swipeable } from 'react-swipeable';
 import Button from 'components/Button';
@@ -10,6 +10,7 @@ import './ModalWrapper.scss';
 import selectors from 'selectors';
 import useFocusOnClose from 'hooks/useFocusOnClose';
 import { isMobileSize } from 'helpers/getDeviceSize';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 import { useSelector } from 'react-redux';
 
 const SwipeableWrapper = ({
@@ -43,7 +44,8 @@ SwipeableWrapper.propTypes = {
 const ModalWrapper = React.forwardRef((props, ref) => {
   const [t] = useTranslation();
   const onCloseHandler = useFocusOnClose(props.onCloseClick);
-  const isMobile = isMobileSize();
+  const instanceRootNode = useContext(InstanceRootNodeContext);
+  const isMobile = isMobileSize(instanceRootNode);
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
   const shouldUseMobileWrapper = isMobile && !isInDesktopOnlyMode;
 

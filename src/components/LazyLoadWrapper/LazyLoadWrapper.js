@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import NetworkErrorWrapper from './NetworkErrorWrapper';
 import { isOfficeEditorMode, shouldBeDisabledInOfficeEditor } from 'helpers/officeEditor';
 
 // Map that tracks if the element has been opened before
@@ -18,6 +19,7 @@ const LazyLoadWrapper = ({
   Component,
   dataElement,
   onOpenHook = () => { },
+  showNetworkErrorToast = true,
   ...passedInProps
 }) => {
   const onOpenProps = onOpenHook();
@@ -30,7 +32,11 @@ const LazyLoadWrapper = ({
     }
   }, [isOpen]);
 
-  return (isDisabled || !(isOpen || elementWasOpened(dataElement)) || (isOfficeEditorMode() && shouldBeDisabledInOfficeEditor(dataElement))) ? null : (
+  if (isDisabled || !(isOpen || elementWasOpened(dataElement)) || (isOfficeEditorMode() && shouldBeDisabledInOfficeEditor(dataElement))) {
+    return null;
+  }
+
+  const content = (
     <Suspense fallback={<></>}>
       <Component
         dataElement={dataElement}
@@ -39,6 +45,12 @@ const LazyLoadWrapper = ({
       />
     </Suspense>
   );
+
+  return showNetworkErrorToast ? (
+    <NetworkErrorWrapper dataElement={dataElement}>
+      {content}
+    </NetworkErrorWrapper>
+  ) : content;
 };
 
 export default LazyLoadWrapper;

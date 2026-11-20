@@ -40,9 +40,7 @@ jest.mock('helpers/officeEditor', () => ({
   isOfficeEditorMode: jest.fn(() => false),
 }));
 
-jest.mock('helpers/spreadsheetEditor/isSpreadsheetEditorMode', () => ({
-  isSpreadsheetEditorMode: jest.fn(() => false),
-}));
+jest.mock('src/helpers/spreadsheetEditor/isSpreadsheetEditorMode', () => jest.fn(() => false));
 
 jest.mock('constants/types', () => ({
   workerTypes: {

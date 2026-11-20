@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -10,20 +10,19 @@ import { escapePressListener } from 'helpers/accessibility';
 import DataElements from 'constants/dataElement';
 import { fireError } from 'helpers/fireEvent';
 import { createStructuredLoadError } from 'helpers/loadError';
+import { createInstanceScopedState } from 'core/documentViewers';
+import InstanceIdContext from 'src/context/InstanceIdContext';
 
 import './PasswordModal.scss';
 
-let checkPassword = () => { };
+// cancelPasswordCheck is intentionally blank by default. Its purpose is to allow users to extend the behaviour of cancelling a password modal flow.
+const passwordCallbacks = createInstanceScopedState(() => ({ checkPassword: () => { }, cancelPasswordCheck: () => { } }));
 export const setCheckPasswordFunction = (fn) => {
-  checkPassword = fn;
+  passwordCallbacks.get().checkPassword = fn;
 };
 
-let cancelPasswordCheckCallback = () => {
-  // This callback is intentionally blank. Its purpose is to allow users
-  // to extend the behaviour of cancelling a password modal flow.
-};
 export const setCancelPasswordCheckCallback = (fn) => {
-  cancelPasswordCheckCallback = fn;
+  passwordCallbacks.get().cancelPasswordCheck = fn;
 };
 
 const PASSWORD_MODAL_ERROR_TYPES = {
@@ -32,6 +31,7 @@ const PASSWORD_MODAL_ERROR_TYPES = {
 };
 
 const PasswordModal = () => {
+  const instanceId = useContext(InstanceIdContext) ?? undefined;
   const [isOpen, attempt, maxAttempts] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElements.PASSWORD_MODAL),
@@ -63,7 +63,7 @@ const PasswordModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    checkPassword(password);
+    passwordCallbacks.get(instanceId).checkPassword(password);
   };
 
   const closeModal = (event) => {
@@ -73,7 +73,7 @@ const PasswordModal = () => {
       dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
     }
 
-    cancelPasswordCheckCallback();
+    passwordCallbacks.get(instanceId).cancelPasswordCheck();
   };
 
   const getErrorModal = (errorMessage) => {

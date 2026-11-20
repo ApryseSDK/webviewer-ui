@@ -26,6 +26,15 @@
     background-color: var(--component-background);
     padding-inline-start: 30px;
 
+    &.multiline {
+      padding-inline-end: 32px;
+    }
+
+    &.expanded {
+      height: 94px;
+      align-items: flex-start;
+    }
+
     .FormulaInput {
       position: relative;
       z-index: 1;
@@ -36,6 +45,29 @@
       outline: none;
       font-size: 14px;
       background-color: transparent;
+      overflow: hidden;
+      resize: none;
+
+      &.multilineInput {
+        height: 25px;
+        min-height: 25px;
+        max-height: 25px;
+        padding-block: 3px 4px;
+        line-height: 20.5px;
+        white-space: pre;
+        overflow: hidden;
+      }
+
+      &.multilineInput.expandedInput {
+        height: 92px;
+        min-height: 92px;
+        max-height: 92px;
+        padding-block: 6px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
 
       &.hasFormula {
         color: transparent;
@@ -63,16 +95,43 @@
       padding: 6px 8px;
       color: transparent;
       pointer-events: none;
-      white-space: pre-wrap;
-      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      width: calc(100% - 30px); /* removing the 30px padding-inline-start of .Formula */
       padding-inline-start: 8px;
       font-size: 14px;
       z-index: 0;
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    .FormulaExpandButton {
+      position: absolute;
+      inset-block-start: 3px;
+      inset-inline-end: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      z-index: 2;
+
+      .Icon {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 
   .FormulaIcon {
     position: absolute;
+    inset-block-start: 4px;
     inset-inline-start: 8px;
 
     &.readOnly {

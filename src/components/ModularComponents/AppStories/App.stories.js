@@ -525,6 +525,38 @@ AppFlyoutResponsiveTest.parameters = {
   }
 };
 
+export const AppNarrowWidthResponsivenessTest = (args, context) => {
+  const { addonRtl } = context.globals;
+
+  return (
+    <MockApp initialState={initialState} width={500} height={800} initialDirection={addonRtl} />
+  );
+};
+
+AppNarrowWidthResponsivenessTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const ribbonGroupDropdown = await canvas.findByRole('combobox');
+  await userEvent.click(ribbonGroupDropdown);
+  const annotateOption = await canvas.findByRole('option', { name: getTranslatedText('option.toolbarGroup.toolbarGroup-Annotate') });
+  await userEvent.click(annotateOption);
+  const highlightButton = await canvas.findByRole('button', { name: getTranslatedText('annotation.highlight') });
+  await expect(highlightButton).toBeVisible();
+
+  await window.instance.UI.setActiveRibbonItem('toolbarGroup-Shapes');
+  const rectangleButton = await canvas.findByRole('button', { name: getTranslatedText('annotation.rectangle') });
+  await expect(rectangleButton).toBeVisible();
+};
+
+AppNarrowWidthResponsivenessTest.parameters = {
+  layout: 'fullscreen',
+  chromatic: {
+    delay: 2000,
+    modes: {
+      'Light theme RTL': { disable: true },
+    },
+  }
+};
+
 export const AppDirectionViaSettingsModalLanguageTest = (args, context) => {
   return (
     <MockApp initialState={initialState}/>

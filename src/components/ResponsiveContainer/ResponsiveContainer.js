@@ -45,6 +45,11 @@ const ResponsiveContainer = ({
         // sibling instances to dispatch shrink/grow into each other's
         // Redux stores in an infinite loop.
         const instanceRoot = elementRef.current?.getRootNode?.();
+        // Without a mounted element there is nothing to measure, and the fallback document bucket can hold
+        // promises that never resolve in Web Component mode, which would keep this closure and its store alive.
+        if (!instanceRoot) {
+          return;
+        }
         const resizingPromises = getResizingPromises(instanceRoot);
         if (resizingPromises[parentDataElement]) {
           await resizingPromises[parentDataElement].promise;

@@ -1,4 +1,4 @@
-import getRootNode, { setRootNode } from 'helpers/getRootNode';
+import getRootNode, { runWithStartingRootNode, setRootNode } from 'helpers/getRootNode';
 import {
   createInstanceI18n,
   createInstanceStoreAndPersistor,
@@ -29,20 +29,22 @@ function createUIInstance(instanceRootNode) {
     setRootNode(instanceRootNode);
   }
 
-  normalizeWebViewerPath();
+  runWithStartingRootNode(instanceRootNode, () => {
+    normalizeWebViewerPath();
 
-  const { store, persistor, instanceId } = createInstanceStoreAndPersistor(instanceRootNode);
-  setupHotModuleReplacement(typeof module === 'undefined' ? undefined : module, store, instanceId);
+    const { store, persistor, instanceId } = createInstanceStoreAndPersistor(instanceRootNode);
+    setupHotModuleReplacement(typeof module === 'undefined' ? undefined : module, store, instanceId);
 
-  // Create a per-instance i18next so language changes in one viewer don't bleed into another. Falls back to the global singleton for single-instance / iframe mode (backward compat).
-  const instanceI18n = createInstanceI18n();
-  setupSpamToggleHelpers();
+    // Create a per-instance i18next so language changes in one viewer don't bleed into another. Falls back to the global singleton for single-instance / iframe mode (backward compat).
+    const instanceI18n = createInstanceI18n();
+    setupSpamToggleHelpers();
 
-  if (!window.CanvasRenderingContext2D) {
-    return;
-  }
+    if (!window.CanvasRenderingContext2D) {
+      return;
+    }
 
-  initializeCanvasInstance({ store, persistor, instanceI18n, instanceRootNode, instanceId });
+    initializeCanvasInstance({ store, persistor, instanceI18n, instanceRootNode, instanceId });
+  });
 }
 
 // Backward compatibility

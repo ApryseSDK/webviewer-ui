@@ -20,7 +20,7 @@ describe('ScaleCustom', () => {
     store = null;
   });
 
-  it('renders the component', () => {
+  it('should render the component', () => {
     const props = {
       scale: [[1, 'in'], [1, 'in']],
       onScaleChange: jest.fn(),
@@ -35,7 +35,7 @@ describe('ScaleCustom', () => {
     expect(scaleCustomElement).toBeInTheDocument();
   });
 
-  it('triggers onScaleChange with didPageScaleChange true when page value changes', () => {
+  it('should trigger onScaleChange with didPageScaleChange true when page value changes', () => {
     const onScaleChangeMock = jest.fn();
     const props = {
       scale: [[1, 'in'], [1, 'in']],
@@ -54,7 +54,7 @@ describe('ScaleCustom', () => {
     expect(onScaleChangeMock).toHaveBeenCalledWith(expect.any(Object), { didPageScaleChange: true });
   });
 
-  it('triggers onScaleChange with didPageScaleChange true when page unit changes', () => {
+  it('should trigger onScaleChange with didPageScaleChange true when page unit changes', () => {
     const onScaleChangeMock = jest.fn();
     const props = {
       scale: [[1, 'in'], [1, 'in']],
@@ -76,7 +76,7 @@ describe('ScaleCustom', () => {
     expect(onScaleChangeMock).toHaveBeenCalledWith(expect.any(Object), { didPageScaleChange: true });
   });
 
-  it('triggers onScaleChange with didPageScaleChange false when only world value changes', () => {
+  it('should trigger onScaleChange with didPageScaleChange false when only world value changes', () => {
     const onScaleChangeMock = jest.fn();
     const props = {
       scale: [[1, 'in'], [1, 'in']],
@@ -95,7 +95,7 @@ describe('ScaleCustom', () => {
     expect(onScaleChangeMock).toHaveBeenCalledWith(expect.any(Object), { didPageScaleChange: false });
   });
 
-  it('triggers onScaleChange with didPageScaleChange false when only world unit changes', () => {
+  it('should trigger onScaleChange with didPageScaleChange false when only world unit changes', () => {
     const onScaleChangeMock = jest.fn();
     const props = {
       scale: [[1, 'in'], [1, 'in']],
@@ -115,5 +115,85 @@ describe('ScaleCustom', () => {
     userEvent.click(mmOption);
 
     expect(onScaleChangeMock).toHaveBeenCalledWith(expect.any(Object), { didPageScaleChange: false });
+  });
+
+  it('should round page value and world value when flag is enabled and precision is decimal', () => {
+    const onScaleChangeMock = jest.fn();
+    const props = {
+      scale: [[2.6333333, 'in'], [2.6, 'in']],
+      onScaleChange: onScaleChangeMock,
+      precision: 0.1,
+      isMeasurementPageValueRoundingEnabled: true
+    };
+    render(
+      <Provider store={store}>
+        <ScaleCustom {...props} />
+      </Provider>
+    );
+
+    const pageScaleInput = screen.getByRole('spinbutton', { name: 'Paper Units' });
+    const worldScaleInput = screen.getByRole('spinbutton', { name: 'Display Units' });
+    expect(pageScaleInput).toHaveValue(2.6);
+    expect(worldScaleInput).toHaveValue(2.6);
+  });
+
+  it('should round page value and world value when flag is enabled and precision is fractional', () => {
+    const onScaleChangeMock = jest.fn();
+    const props = {
+      scale: [[2.6333333, 'in'], [2.6, 'in']],
+      onScaleChange: onScaleChangeMock,
+      precision: 1/8,
+      isMeasurementPageValueRoundingEnabled: true
+    };
+    render(
+      <Provider store={store}>
+        <ScaleCustom {...props} />
+      </Provider>
+    );
+
+    const pageScaleInput = screen.getByRole('textbox', { name: 'Paper Units' });
+    const worldScaleInput = screen.getByRole('textbox', { name: 'Display Units' });
+    expect(pageScaleInput).toHaveValue('2 5/8"');
+    expect(worldScaleInput).toHaveValue('2 5/8"');
+  });
+
+  it('should round world value but not page value when flag is disabled and precision is decimal', () => {
+    const onScaleChangeMock = jest.fn();
+    const props = {
+      scale: [[2.6333333, 'in'], [2.6, 'in']],
+      onScaleChange: onScaleChangeMock,
+      precision: 0.1,
+      isMeasurementPageValueRoundingEnabled: false
+    };
+    render(
+      <Provider store={store}>
+        <ScaleCustom {...props} />
+      </Provider>
+    );
+
+    const pageScaleInput = screen.getByRole('spinbutton', { name: 'Paper Units' });
+    const worldScaleInput = screen.getByRole('spinbutton', { name: 'Display Units' });
+    expect(pageScaleInput).toHaveValue(2.6333333);
+    expect(worldScaleInput).toHaveValue(2.6);
+  });
+
+  it('should round world value but not page value when flag is disabled and precision is fractional', () => {
+    const onScaleChangeMock = jest.fn();
+    const props = {
+      scale: [[2.6333333, 'in'], [2.6, 'in']],
+      onScaleChange: onScaleChangeMock,
+      precision: 1/8,
+      isMeasurementPageValueRoundingEnabled: false
+    };
+    render(
+      <Provider store={store}>
+        <ScaleCustom {...props} />
+      </Provider>
+    );
+
+    const pageScaleInput = screen.getByRole('textbox', { name: 'Paper Units' });
+    const worldScaleInput = screen.getByRole('textbox', { name: 'Display Units' });
+    expect(pageScaleInput).toHaveValue('2 41/64"');
+    expect(worldScaleInput).toHaveValue('2 5/8"');
   });
 });

@@ -653,7 +653,7 @@ const extractPages = async (document, pagesToPrint, xfdfString) => {
  * @returns {boolean} True if document is using WebViewer Server
  * @ignore
  */
-const useWebViewerServerDocument = (document) => {
+const isUsingWebViewerServerDocument = (document) => {
   const extension = document.getType();
   const bbURLPromise = document.getPrintablePDF();
   return extension === 'webviewerServer' && bbURLPromise;
@@ -774,7 +774,7 @@ export const processColorAnnotations = async (core, document, modifiedDoc, xfdfS
  * convertToGrayscale.
  */
 const ensurePDFNetInitialized = async (document, isGrayScale) => {
-  const isForceClientSideInit = useWebViewerServerDocument(document) && document.isWebViewerServerDocument();
+  const isForceClientSideInit = isUsingWebViewerServerDocument(document) && document.isWebViewerServerDocument();
   const { PDFNet } = window.Core;
   if (isGrayScale && isForceClientSideInit) {
     await PDFNet.initialize();

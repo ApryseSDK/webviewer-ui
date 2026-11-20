@@ -1,7 +1,7 @@
 import isBorderButtonActive from './isBorderButtonActive';
-import getSelectedCellStyle from './getSelectedCellStyle';
+import getSelectedCellStyle from './spreadsheetEditor/getSelectedCellStyle';
 
-jest.mock('./getSelectedCellStyle');
+jest.mock('./spreadsheetEditor/getSelectedCellStyle');
 
 describe('isBorderButtonActive', () => {
   let mockGetSelectedCellStyle;

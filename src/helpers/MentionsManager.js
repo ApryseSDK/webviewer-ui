@@ -1,4 +1,5 @@
 import core from 'core';
+import { createInstanceScopedState } from 'core/documentViewers';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -551,7 +552,23 @@ WebViewer(...)
  * @param {'add'|'modify'|'delete'} action The action that occurred (add, delete, modify)
  */
 
-export default new MentionsManager();
+const mentionsManagers = createInstanceScopedState(() => new MentionsManager());
+
+// For code that runs outside render or event handlers (Quill callbacks, timers) and must not use the ambient instance.
+export const getMentionsManager = (instanceId) => mentionsManagers.get(instanceId);
+
+// Each instance initializes its own manager (store, annotation manager, listeners, user data); a shared singleton would be re-initialized by every instance. The default export forwards each method to the ambient instance's manager so existing `mentionsManager.x()` call sites keep working.
+const mentionsManager = Object.getOwnPropertyNames(MentionsManager.prototype)
+  .filter((name) => name !== 'constructor')
+  .reduce((facade, name) => {
+    facade[name] = (...args) => {
+      const manager = mentionsManagers.get();
+      return manager[name](...args);
+    };
+    return facade;
+  }, {});
+
+export default mentionsManager;
 export {
   MentionsManager
 };

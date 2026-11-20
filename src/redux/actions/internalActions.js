@@ -503,15 +503,19 @@ export const setFonts = (fonts = []) => ({
   type: 'SET_FONTS',
   payload: { fonts },
 });
-export const setIsMultiViewerMode = (isMultiViewerMode) => {
+export const setIsMultiViewerMode = (isMultiViewerMode) => (dispatch, getState) => {
   if (typeof core.setMultiViewerModeActive === 'function') {
-    core.setMultiViewerModeActive(isMultiViewerMode);
+    core.setMultiViewerModeActive(isMultiViewerMode, getState().viewer.instanceId);
   }
-  return {
+  dispatch({
     type: 'SET_IS_MULTI_VIEWER_MODE',
     payload: { isMultiViewerMode },
-  };
+  });
 };
+export const setInstanceId = (instanceId) => ({
+  type: 'SET_INSTANCE_ID',
+  payload: { instanceId },
+});
 export const setIsMultiViewerReady = (isMultiViewerReady) => ({
   type: 'SET_IS_MULTI_VIEWER_READY',
   payload: { isMultiViewerReady },
@@ -1004,4 +1008,12 @@ export const setActiveBorderButtons = (activeBorderButtons) => ({
 export const stashEnabledTools = (toolNames) => ({
   type: 'STASH_ENABLED_TOOLS',
   payload: { toolNames },
+});
+
+export const enableMeasurementPageValueRounding = () => ({
+  type: 'ENABLE_MEASUREMENT_PAGE_VALUE_ROUNDING',
+});
+
+export const disableMeasurementPageValueRounding = () => ({
+  type: 'DISABLE_MEASUREMENT_PAGE_VALUE_ROUNDING',
 });

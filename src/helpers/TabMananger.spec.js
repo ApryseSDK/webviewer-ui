@@ -229,6 +229,21 @@ describe('TabManager', () => {
     document.body.innerHTML = '';
   });
 
+  describe('multiple instances', () => {
+    it('should keep each store\'s tabs separate when two managers are created', () => {
+      const otherStore = configureStore({
+        reducer: rootReducer(),
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
+      });
+
+      new TabManager(['a.pdf', 'b.pdf'], [], store);
+      new TabManager(['c.pdf', 'd.pdf'], [], otherStore);
+
+      expect(store.getState().viewer.tabs.map((tab) => tab.src)).toEqual(['a.pdf', 'b.pdf']);
+      expect(otherStore.getState().viewer.tabs.map((tab) => tab.src)).toEqual(['c.pdf', 'd.pdf']);
+    });
+  });
+
   describe('getFileDataOptionsForActiveTab', () => {
     it('should return the correct file data options for the active tab and create a new one if none exists', () => {
       // Set the password for tab 1
@@ -851,6 +866,7 @@ describe('TabManager', () => {
 const initialState = {
   viewer: {
     isMultiTab: true,
+    tabs: [],
   },
   advanced: {
     disableI18n: false,

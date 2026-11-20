@@ -5,7 +5,7 @@ import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
-import setCellFormatString from '../../../../../helpers/setCellFormatString';
+import setCellFormatString from 'src/helpers/spreadsheetEditor/setCellFormatString';
 const propTypes = {
   formatType: PropTypes.string,
   isFlyoutItem: PropTypes.bool,

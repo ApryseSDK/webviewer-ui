@@ -24,6 +24,10 @@ describe('useOnFreeTextEdit', () => {
         getContentEditManager: () => ({
           isInContentEditMode: () => false,
         }),
+        getAnnotationManager: () => ({
+          getEditBoxManager: () => ({ getExistingEditor: () => null }),
+        }),
+        getSelectedAnnotations: () => [],
       },
       documentViewer: {},
     });
@@ -51,6 +55,51 @@ describe('useOnFreeTextEdit', () => {
     expect(annotation).toBeNull();
   });
 
+  it('recovers a selected FreeText editor that was focused before mounting', () => {
+    const previousCore = window.Core;
+    class FreeTextAnnotation {
+      getContentEditAnnotationId() {
+        return null;
+      }
+    }
+    const annotation = new FreeTextAnnotation();
+    const editor = { hasFocus: () => true };
+    const saveEditorInstance = jest.fn();
+    window.Core = {
+      Annotations: { FreeTextAnnotation },
+      Tools: { ToolNames: { ADD_PARAGRAPH: 'ADD_PARAGRAPH' } },
+    };
+    useCore.mockReturnValue({
+      core: {
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        getAnnotationManager: () => ({
+          getEditBoxManager: () => ({ getExistingEditor: () => editor }),
+        }),
+        getSelectedAnnotations: () => [annotation],
+      },
+      documentViewer: {},
+    });
+
+    function DummyComponent() {
+      useOnFreeTextEdit(saveEditorInstance);
+      return <div></div>;
+    }
+
+    const store = configureStore({
+      reducer: rootReducer(),
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false, })
+    });
+    render(
+      <Provider store={store}>
+        <DummyComponent />
+      </Provider>
+    );
+
+    expect(saveEditorInstance).toHaveBeenCalledWith([editor, annotation]);
+    window.Core = previousCore;
+  });
+
   describe('MultiViewer mode', () => {
     let store;
     let mockCore1;
@@ -64,6 +113,10 @@ describe('useOnFreeTextEdit', () => {
         getContentEditManager: () => ({
           isInContentEditMode: () => false,
         }),
+        getAnnotationManager: () => ({
+          getEditBoxManager: () => ({ getExistingEditor: () => null }),
+        }),
+        getSelectedAnnotations: () => [],
       };
     };
 

@@ -26,11 +26,11 @@ import actions from 'actions';
 import core from 'core';
 import { getSearchListeners } from 'helpers/search';
 import selectors from 'selectors';
+import { bindToInstance, createInstanceScopedState, getCurrentInstanceId, runWithInstance } from 'core/documentViewers';
 
 const onResultThrottleTimeout = 100;
 
-let isStillProcessingResults = false;
-let throttleResults = [];
+const searchThrottleState = createInstanceScopedState(() => ({ isStillProcessingResults: false, throttleResults: [] }));
 
 function buildSearchModeFlag(options = {}) {
   const SearchMode = core.getSearchMode();
@@ -54,8 +54,16 @@ function buildSearchModeFlag(options = {}) {
   return searchMode;
 }
 
-const searchTextFullFactory = (store) => async (searchValue, options, isUserTriggered = true, config = {}) => {
+const searchTextFullFactory = (store) => (searchValue, options, isUserTriggered = true, config = {}) => {
+// The panel's debounce timer fires after the user may have clicked another instance,
+// so use the store's instance, not the ambient one.
+  const searchInstanceId = store ? selectors.getInstanceId(store.getState()) : getCurrentInstanceId();
+  return runWithInstance(searchInstanceId, () => searchInInstance(store, searchInstanceId, searchValue, options, isUserTriggered, config));
+};
+
+const searchInInstance = async (store, searchInstanceId, searchValue, options, isUserTriggered, config) => {
   const { shouldDispatchUIActions = true } = config;
+  const throttle = searchThrottleState.get(searchInstanceId);
   const dispatch = shouldDispatchUIActions ? store?.dispatch : undefined;
   // Store is optional. Default activeDocumentViewerKey is 1
   const activeDocumentViewerKey = store ? selectors.getActiveDocumentViewerKey(store.getState()) : 1;
@@ -72,29 +80,29 @@ const searchTextFullFactory = (store) => async (searchValue, options, isUserTrig
   let hasActiveResultBeenSet = false;
   let resultTimeout;
 
-  function onResult(result) {
-    throttleResults.push(result);
+  const onResult = bindToInstance(searchInstanceId, (result) => {
+    throttle.throttleResults.push(result);
     if (!resultTimeout) {
-      if (!isStillProcessingResults) {
-        isStillProcessingResults = true;
+      if (!throttle.isStillProcessingResults) {
+        throttle.isStillProcessingResults = true;
       }
       const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
 
-      resultTimeout = setTimeout(() => {
-        activeDocumentViewer.displayAdditionalSearchResults(throttleResults);
+      resultTimeout = setTimeout(bindToInstance(searchInstanceId, () => {
+        activeDocumentViewer.displayAdditionalSearchResults(throttle.throttleResults);
         if (!hasActiveResultBeenSet) {
           // when full search is done, we make first found result to be the active result
           activeDocumentViewer.setActiveSearchResult(result);
           hasActiveResultBeenSet = true;
         }
-        throttleResults = [];
+        throttle.throttleResults = [];
         resultTimeout = null;
         doneCallback();
-      }, onResultThrottleTimeout);
+      }), onResultThrottleTimeout);
     }
-  }
+  });
 
-  function searchInProgressCallback(isSearching) {
+  const searchInProgressCallback = bindToInstance(searchInstanceId, (isSearching) => {
     // execute search listeners when search is complete, thus hooking functionality search in progress event.
     if (isSearching === false) {
       doneCallback = () => {
@@ -127,13 +135,13 @@ const searchTextFullFactory = (store) => async (searchValue, options, isUserTrig
           }
         });
       };
-      isStillProcessingResults = false;
+      throttle.isStillProcessingResults = false;
 
       if (!resultTimeout) {
         doneCallback();
       }
     }
-  }
+  });
 
   function handleSearchError(error) {
     if (dispatch) {
@@ -143,7 +151,7 @@ const searchTextFullFactory = (store) => async (searchValue, options, isUserTrig
   }
 
   const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
-  throttleResults = [];
+  throttle.throttleResults = [];
 
   activeDocumentViewer.clearSearchResults();
   activeDocumentViewer.addEventListener('searchInProgress', searchInProgressCallback);

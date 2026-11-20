@@ -16,15 +16,53 @@ import eventHandler from 'helpers/eventHandler';
 import actions from 'actions';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
-import { createWrappedCore } from 'hooks/useCore/useCore';
+import { createWrappedCore, useInstanceCore } from 'hooks/useCore/useCore';
+import { createInstanceScopedState, runWithInstance } from 'core/documentViewers';
 import DataElements from 'constants/dataElement';
 import ComparisonButton from 'components/MultiViewer/ComparisonButton';
 import defaultTool from 'constants/defaultTool';
 import setViewportRelativeAnnotationPositioning from 'helpers/setViewportRelativeAnnotationPositioning';
 
-const multiViewerHelper = {
+const createMultiViewerState = () => ({
   matchedPages: null,
   isScrolledByClickingChangeItem: false,
+  isSetup: false,
+  removeHandlers: null,
+  oldHeaderItems: null,
+  removeHandlerFunctions: [],
+  syncState: {
+    scrollTop1: 0,
+    scrollTop2: 0,
+    currentScrollContainer: null,
+    topOverflow1: 0,
+    topOverflow2: 0,
+    page1: 1,
+    page2: 1,
+    currentZoomContainer: null,
+    incrementAfterZoom: null,
+  },
+});
+
+const multiViewerStateByInstance = createInstanceScopedState(createMultiViewerState);
+
+const getMultiViewerState = (instanceId) => multiViewerStateByInstance.get(instanceId ?? undefined);
+
+const getStoreInstanceId = (store) => selectors.getInstanceId(store.getState());
+
+// Accessors keep existing `multiViewerHelper.matchedPages = x` call sites working while the value stays per-instance.
+const multiViewerHelper = {
+  get matchedPages() {
+    return getMultiViewerState().matchedPages;
+  },
+  set matchedPages(value) {
+    getMultiViewerState().matchedPages = value;
+  },
+  get isScrolledByClickingChangeItem() {
+    return getMultiViewerState().isScrolledByClickingChangeItem;
+  },
+  set isScrolledByClickingChangeItem(value) {
+    getMultiViewerState().isScrolledByClickingChangeItem = value;
+  },
 };
 
 export const setIsScrolledByClickingChangeItem = (value) => {
@@ -38,22 +76,14 @@ export const getIsScrolledByClickingChangeItem = () => {
 export default multiViewerHelper;
 
 const documentViewerKeys = [1, 2];
-let syncState = {
-  scrollTop1: 0,
-  scrollTop2: 0,
-  currentScrollContainer: null,
-  topOverflow1: 0,
-  topOverflow2: 0,
-  page1: 1,
-  page2: 1,
-  currentZoomContainer: null,
-  incrementAfterZoom: null,
-};
-let removeHandlerFunctions = [];
 const getOtherViewerNumber = (documentViewerKey) => documentViewerKey === 1 ? 2 : 1;
 
 export const useMultiViewerSync = (container, container2) => {
+  const core = useInstanceCore();
   const store = useStore();
+  const instanceId = useSelector(selectors.getInstanceId);
+  const multiViewerState = getMultiViewerState(instanceId);
+  const { syncState, removeHandlerFunctions } = multiViewerState;
   const customMultiViewerSyncHandler = useSelector(selectors.getCustomMultiViewerSyncHandler);
   const syncViewer = useSelector(selectors.getSyncViewer);
   const multiViewerSyncScrollMode = useSelector(selectors.getMultiViewerSyncScrollMode);
@@ -102,7 +132,7 @@ export const useMultiViewerSync = (container, container2) => {
     const { scrollTop } = e.target;
     const diffTop = scrollTop - syncState[`scrollTop${documentViewerKey}`];
 
-    const { matchedPages } = multiViewerHelper;
+    const { matchedPages } = multiViewerState;
     const documentViewer = core.getDocumentViewer(documentViewerKey);
     const otherDocumentViewer = core.getDocumentViewer(otherViewerNumber);
     const visiblePages = documentViewer.getDisplayModeManager().getDisplayMode().getVisiblePages();
@@ -177,7 +207,7 @@ export const useMultiViewerSync = (container, container2) => {
     const otherViewerNumber = getOtherViewerNumber(documentViewerKey);
     if (syncState.currentScrollContainer !== otherViewerNumber) {
       syncState.currentScrollContainer = documentViewerKey;
-      if (multiViewerSyncScrollMode === SYNC_MODES.SKIP_UNMATCHED && multiViewerHelper.matchedPages) {
+      if (multiViewerSyncScrollMode === SYNC_MODES.SKIP_UNMATCHED && multiViewerState.matchedPages) {
         syncSkipUnmatched(e, documentViewerKey);
       } else {
         syncStandard(e, documentViewerKey);
@@ -241,21 +271,22 @@ export const useMultiViewerSync = (container, container2) => {
       }
     }
 
-    if (multiViewerSyncScrollMode === SYNC_MODES.SKIP_UNMATCHED && multiViewerHelper.matchedPages) {
+    if (multiViewerSyncScrollMode === SYNC_MODES.SKIP_UNMATCHED && multiViewerState.matchedPages) {
       container.current.scrollTop = 0;
       container2.current.scrollTop = 0;
     }
 
-    syncState = {
+    Object.assign(syncState, {
       scrollTop1: container.current.scrollTop,
       scrollTop2: container2.current.scrollTop,
+      currentScrollContainer: null,
       topOverflow1: 0,
       topOverflow2: 0,
       page1: core.getCurrentPage(1),
       page2: core.getCurrentPage(2),
       currentZoomContainer: null,
       incrementAfterZoom: null,
-    };
+    });
 
     if (customMultiViewerSyncHandler) {
       customMultiViewerSyncHandler(primaryDocumentViewerKey, removeHandlerFunctions);
@@ -266,7 +297,7 @@ export const useMultiViewerSync = (container, container2) => {
     syncState.topOverflow1 = 0;
     syncState.topOverflow2 = 0;
     removeHandlerFunctions.forEach((removeHandler) => removeHandler());
-    removeHandlerFunctions = [];
+    removeHandlerFunctions.length = 0;
   };
 
   useEffect(() => {
@@ -297,101 +328,105 @@ export const useMultiViewerSync = (container, container2) => {
   };
 };
 
-
-let removeHandlers;
-let isSetup;
-
 export const finalizeMultiViewerSetup = (store) => {
   const { dispatch } = store;
   dispatch(actions.setIsMultiViewerReady(true));
-  fireEvent(Events.MULTI_VIEWER_READY);
+  fireEvent(Events.MULTI_VIEWER_READY, undefined, null, getStoreInstanceId(store));
 };
 
 export const setupMultiViewer = (store, isAlreadyMultiTab = false, deferReady = false) => {
-  if (isSetup) {
+  const instanceId = getStoreInstanceId(store);
+  const multiViewerState = getMultiViewerState(instanceId);
+  if (multiViewerState.isSetup) {
     return;
   }
-  const { dispatch, getState } = store;
-  const state = getState();
-  if (selectors.getIsMultiTab(state) && selectors.getTabs(state)?.length === 0) {
-    return;
-  }
-  const activeToolbarGroup = selectors.getCurrentToolbarGroup(state);
-  const activeToolName = selectors.getActiveToolName(state);
-  const isComparisonDisabled = selectors.isComparisonDisabled(state);
-  const isShowComparisonButtonEnabled = selectors.getIsShowComparisonButtonEnabled(state);
-
-  if (DISABLED_TOOL_GROUPS.includes(activeToolbarGroup)) {
-    dispatch(actions.setToolbarGroup('toolbarGroup-View', false));
-  }
-  for (const keyWord of DISABLED_TOOLS_KEYWORDS) {
-    if (activeToolName.match(keyWord)) {
-      core.setToolMode(window.Core.Tools.ToolNames.EDIT);
+  runWithInstance(instanceId, () => {
+    const { dispatch, getState } = store;
+    const state = getState();
+    if (selectors.getIsMultiTab(state) && selectors.getTabs(state)?.length === 0) {
+      return;
     }
-  }
-  addDocumentViewer(2);
-  const newDocViewer = core.getDocumentViewer(2);
-  setupOpenURLHandler(newDocViewer, store);
-  setupFormSubmissionHandler(newDocViewer, store);
+    const activeToolbarGroup = selectors.getCurrentToolbarGroup(state);
+    const activeToolName = selectors.getActiveToolName(state);
+    const isComparisonDisabled = selectors.isComparisonDisabled(state);
+    const isShowComparisonButtonEnabled = selectors.getIsShowComparisonButtonEnabled(state);
 
-  syncDocumentViewers(1, 2);
-  setViewportRelativeAnnotationPositioning(state, 2);
-  // Flip the MultiViewer-mode mirror before registering the second pane's event handlers.
-  dispatch(actions.setIsMultiViewerMode(true));
-  const { addEventHandlers, removeEventHandlers } = eventHandler(store, 2, true);
-  removeHandlers = removeEventHandlers;
-  addEventHandlers();
-  !isComparisonDisabled && isShowComparisonButtonEnabled && addHeaderItems(store);
-  isSetup = true;
+    if (DISABLED_TOOL_GROUPS.includes(activeToolbarGroup)) {
+      dispatch(actions.setToolbarGroup('toolbarGroup-View', false));
+    }
+    for (const keyWord of DISABLED_TOOLS_KEYWORDS) {
+      if (activeToolName.match(keyWord)) {
+        core.setToolMode(window.Core.Tools.ToolNames.EDIT);
+      }
+    }
+    addDocumentViewer(2, instanceId);
+    const newDocViewer = core.getDocumentViewer(2, instanceId);
+    setupOpenURLHandler(newDocViewer, store);
+    setupFormSubmissionHandler(newDocViewer, store);
 
-  if (!isAlreadyMultiTab && selectors.getIsMultiTab(store.getState())) {
-    const tabManager = selectors.getTabManager(store.getState());
-    const activeTab = selectors.getActiveTab(store.getState());
-    tabManager.updateTab(activeTab, { isMultiViewer: true });
-  }
+    syncDocumentViewers(1, 2);
+    setViewportRelativeAnnotationPositioning(state, 2);
+    // Flip the MultiViewer-mode mirror before registering the second pane's event handlers.
+    dispatch(actions.setIsMultiViewerMode(true));
+    const { addEventHandlers, removeEventHandlers } = eventHandler(store, 2, true);
+    multiViewerState.removeHandlers = removeEventHandlers;
+    addEventHandlers();
+    !isComparisonDisabled && isShowComparisonButtonEnabled && addHeaderItems(store);
+    multiViewerState.isSetup = true;
 
-  if (!deferReady) {
-    dispatch(actions.setIsMultiViewerReady(true));
-    fireEvent(Events.MULTI_VIEWER_READY);
-  }
+    if (!isAlreadyMultiTab && selectors.getIsMultiTab(store.getState())) {
+      const tabManager = selectors.getTabManager(store.getState());
+      const activeTab = selectors.getActiveTab(store.getState());
+      tabManager.updateTab(activeTab, { isMultiViewer: true });
+    }
+
+    if (!deferReady) {
+      dispatch(actions.setIsMultiViewerReady(true));
+      fireEvent(Events.MULTI_VIEWER_READY);
+    }
+  });
 };
 
 export const cleanUpMultiViewer = async (store) => {
+  const instanceId = getStoreInstanceId(store);
+  const multiViewerState = getMultiViewerState(instanceId);
   const { dispatch, getState } = store;
   const state = getState();
   if (selectors.getActiveDocumentViewerKey(state) !== 1) {
     dispatch(actions.setActiveDocumentViewerKey(1));
   }
 
-  if (!isSetup) {
+  if (!multiViewerState.isSetup) {
     return;
   }
   const isComparisonDisabled = selectors.isComparisonDisabled(state);
-  const coreLeftViewer = createWrappedCore(1);
+  const coreLeftViewer = createWrappedCore(1, instanceId);
 
-  dispatch(actions.setIsMultiViewerReady(false));
-  removeHandlers && removeHandlers();
-  removeHandlers = null;
-  // Reset the active document viewer back to the primary viewer BEFORE turning off MultiViewer mode. exitMultiViewerMode() is called outside React, so each dispatch re-renders synchronously (React 17 legacy batching). Flipping isMultiViewerMode to false remounts the single <DocumentContainer />, whose componentDidMount registers its DOM element as the scroll/viewer element for props.activeDocumentViewerKey. If the second viewer was selected, that key is still 2 (in WebComponent mode the selector returns the raw key regardless of mode), so the container would bind to the now-removed viewer 2 and the primary viewer would render blank. Resetting to 1 first guarantees the remounted container binds to viewer 1.
-  dispatch(actions.setActiveDocumentViewerKey(1));
-  dispatch(actions.setIsMultiViewerMode(false));
-  dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
-  core.setToolMode(defaultTool);
-  for (const documentViewerKey of documentViewerKeys) {
-    core.getFormFieldCreationManager(documentViewerKey).endFormFieldCreationMode();
-    if (documentViewerKey !== 1) {
-      removeDocumentViewer(documentViewerKey);
-      dispatch(actions.setPortfolio([], documentViewerKey));
-      dispatch(actions.setDocumentLoaded(false, documentViewerKey));
-      dispatch(actions.setTotalPages(0, documentViewerKey));
-      dispatch(actions.setZoom(1, documentViewerKey));
+  runWithInstance(instanceId, () => {
+    dispatch(actions.setIsMultiViewerReady(false));
+    multiViewerState.removeHandlers?.();
+    multiViewerState.removeHandlers = null;
+    // Reset the active document viewer back to the primary viewer BEFORE turning off MultiViewer mode. exitMultiViewerMode() is called outside React, so each dispatch re-renders synchronously (React 17 legacy batching). Flipping isMultiViewerMode to false remounts the single <DocumentContainer />, whose componentDidMount registers its DOM element as the scroll/viewer element for props.activeDocumentViewerKey.
+    dispatch(actions.setActiveDocumentViewerKey(1));
+    dispatch(actions.setIsMultiViewerMode(false));
+    dispatch(actions.setActiveCustomRibbon('toolbarGroup-View'));
+    core.setToolMode(defaultTool);
+    for (const documentViewerKey of documentViewerKeys) {
+      core.getFormFieldCreationManager(documentViewerKey).endFormFieldCreationMode();
+      if (documentViewerKey !== 1) {
+        removeDocumentViewer(documentViewerKey, instanceId);
+        dispatch(actions.setPortfolio([], documentViewerKey));
+        dispatch(actions.setDocumentLoaded(false, documentViewerKey));
+        dispatch(actions.setTotalPages(0, documentViewerKey));
+        dispatch(actions.setZoom(1, documentViewerKey));
+      }
     }
-  }
-  core.getContentEditManager().endContentEditMode();
-  dispatch(actions.setCompareAnnotationsMap({}));
-  coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
-  !isComparisonDisabled && resetHeaderItems(store);
-  isSetup = false;
+    core.getContentEditManager().endContentEditMode();
+    dispatch(actions.setCompareAnnotationsMap({}));
+    coreLeftViewer.deleteAnnotations(coreLeftViewer.getSemanticDiffAnnotations(), { force: true });
+    !isComparisonDisabled && resetHeaderItems(store);
+    multiViewerState.isSetup = false;
+  });
 
   const freshState = getState();
   const isMultiTab = selectors.getIsMultiTab(freshState);
@@ -412,18 +447,18 @@ export const cleanUpMultiViewer = async (store) => {
 };
 
 // TODO: Remove the two legacy header functions below when legacy UI is removed
-let oldHeaderItems;
 export const addHeaderItems = (store) => {
   const { dispatch, getState } = store;
   if (selectors.getFeatureFlags(getState()).customizableUI) {
     return;
   }
+  const multiViewerState = getMultiViewerState(getStoreInstanceId(store));
 
   const headerItems = selectors.getDefaultHeaderItems(getState());
   const zoomOverlay = headerItems.find((item) => item.dataElement === DataElements.ZOOM_OVERLAY_BUTTON);
   const index = headerItems.indexOf(zoomOverlay);
   if (index !== -1) {
-    oldHeaderItems = {
+    multiViewerState.oldHeaderItems = {
       zoomOverlay,
       index,
     };
@@ -448,7 +483,8 @@ export const addHeaderItems = (store) => {
   dispatch(actions.disableElement('comparePanelToggleButton'));
 };
 export const resetHeaderItems = (store) => {
-  if (!oldHeaderItems) {
+  const multiViewerState = getMultiViewerState(getStoreInstanceId(store));
+  if (!multiViewerState.oldHeaderItems) {
     return;
   }
   const { getState } = store;
@@ -457,10 +493,10 @@ export const resetHeaderItems = (store) => {
   }
 
   const headerItems = selectors.getDefaultHeaderItems(getState());
-  const index = oldHeaderItems.index;
+  const index = multiViewerState.oldHeaderItems.index;
   if (index && index !== -1) {
-    headerItems.splice(index, 1, oldHeaderItems.zoomOverlay);
-    oldHeaderItems = {
+    headerItems.splice(index, 1, multiViewerState.oldHeaderItems.zoomOverlay);
+    multiViewerState.oldHeaderItems = {
       index: null,
       zoomOverlay: null,
     };

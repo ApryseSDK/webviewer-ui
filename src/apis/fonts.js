@@ -45,7 +45,7 @@ const FontsAPI = {
     if (typeof font !== 'string') {
       throw new Error('Font must be a string');
     }
-    const fonts = selectors.getFonts(this.store.getState());
+    const fonts = [...selectors.getFonts(this.store.getState())];
     if (fonts.indexOf(font) !== -1) {
       return console.warn('Font already added');
     }
@@ -63,7 +63,7 @@ const FontsAPI = {
   });
    */
   removeAnnotationFont(font) {
-    const fonts = selectors.getFonts(this.store.getState());
+    const fonts = [...selectors.getFonts(this.store.getState())];
     const fontIndex = fonts.indexOf(font);
     if (fontIndex === -1) {
       return console.warn('Font not found');
@@ -106,7 +106,7 @@ const FontsAPI = {
     if (typeof font !== 'string') {
       throw new Error('Font must be a string');
     }
-    const fonts = selectors.getSignatureFonts(this.store.getState());
+    const fonts = [...selectors.getSignatureFonts(this.store.getState())];
     if (fonts.indexOf(font) !== -1) {
       return console.warn('Font already added');
     }
@@ -129,7 +129,7 @@ const FontsAPI = {
   });
    */
   removeSignatureFont(font) {
-    const fonts = selectors.getSignatureFonts(this.store.getState());
+    const fonts = [...selectors.getSignatureFonts(this.store.getState())];
     const fontIndex = fonts.indexOf(font);
     if (fontIndex === -1) {
       return console.warn('Font not found');

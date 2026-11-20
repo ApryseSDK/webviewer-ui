@@ -41,14 +41,18 @@ jest.mock('core', () => ({
   getTool: jest.fn(() => mockStampTool),
 }));
 
-jest.mock('helpers/fireEvent', () => ({
-  __esModule: true,
-  default: jest.fn(),
-  getEventHandler: () => ({
+jest.mock('helpers/fireEvent', () => {
+  const createEventHandler = () => ({
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-  }),
-}));
+  });
+  return {
+    __esModule: true,
+    default: jest.fn(),
+    getEventHandler: createEventHandler,
+    useInstanceEventHandler: createEventHandler,
+  };
+});
 
 jest.mock('helpers/setToolModeAndGroup', () => jest.fn());
 

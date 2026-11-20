@@ -9,9 +9,7 @@ import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 
 const EmbeddedJSPopupMenu = React.forwardRef(({ dataElement, isSubOpen, left = 0, top = 0, onSelectOption, popUpMenuItems }, ref) => {
-  if (!isSubOpen || !popUpMenuItems || popUpMenuItems.length <= 0) {
-    return <></>;
-  }
+  const isVisible = Boolean(isSubOpen && popUpMenuItems && popUpMenuItems.length > 0);
 
   const [
     embeddedJSPopupStyle,
@@ -30,14 +28,15 @@ const EmbeddedJSPopupMenu = React.forwardRef(({ dataElement, isSubOpen, left = 0
   const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
-    if (isSubOpen) {
-      dispatch(actions.closeElements(['annotationPopup', 'textPopup']));
+    if (!isVisible) {
+      return;
     }
+    dispatch(actions.closeElements(['annotationPopup', 'textPopup']));
     const containerRect = containerRef.current.getBoundingClientRect();
     // Update the menu size if it is too long
     const mHeight = containerRect.bottom >= scrollContainer.clientHeight ? containerRect.height - (containerRect.bottom - scrollContainer.clientHeight) : null;
     setMaxHeight(mHeight);
-  }, [dispatch, isSubOpen]);
+  }, [dispatch, isVisible]);
 
   const onScrollContainer = (e) => {
     if (e.target === containerRef.current) {
@@ -47,6 +46,10 @@ const EmbeddedJSPopupMenu = React.forwardRef(({ dataElement, isSubOpen, left = 0
 
   const outerCss = useMemo(() => ({ left, top, flexDirection: 'column' }), [left, top]);
   const innerCss = useMemo(() => ({ overflowY: 'auto', maxHeight, ...(embeddedJSPopupStyle || {}) }), [maxHeight, embeddedJSPopupStyle]);
+
+  if (!isVisible) {
+    return <></>;
+  }
 
   return (
     <div

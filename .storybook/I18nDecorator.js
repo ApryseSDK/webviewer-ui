@@ -1,42 +1,44 @@
 import React from 'react';
 import i18next from 'i18next';
-import { I18nextProvider } from "react-i18next";
-import thunk from 'redux-thunk';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
+import bengaliTranslation from '../i18n/translation-bn.json';
+import englishTranslation from '../i18n/translation-en.json';
+import frenchTranslation from '../i18n/translation-fr.json';
+import urduTranslation from '../i18n/translation-ur.json';
+import simplifiedChineseTranslation from '../i18n/translation-zh_cn.json';
 
-i18next.languages = [
-  'en',
-  'de',
-  'es',
-  'fr',
-  'it',
-  'ja',
-  'ko',
-  'nl',
-  'pt_br',
-  'ru',
-  'zh_cn',
-  'zh_tw'
-];
+const resources = {
+  bn: {
+    translation: bengaliTranslation,
+  },
+  en: {
+    translation: englishTranslation,
+  },
+  fr: {
+    translation: frenchTranslation,
+  },
+  ur: {
+    translation: urduTranslation,
+  },
+  zh_cn: {
+    translation: simplifiedChineseTranslation,
+  },
+};
+const languages = Object.keys(resources);
 
-const resources = i18next.languages.reduce((accumulator, language, ) => {
-  const translation = require(`../i18n/translation-${language}.json`);
-  accumulator[language] = {
-    translation
-  };
-  return accumulator;
-}, {});
+i18next.languages = languages;
 
 const options = {
   fallbackLng: 'en',
   react: {
     useSuspense: false,
-    wait: true,
   },
   resources
 };
 i18next.init(options);
+initReactI18next.init(i18next);
 
-export default function I18nDecorator(Story){
+export default function I18nDecorator(Story) {
   return (
     <I18nextProvider i18n={i18next}>
       <Story />

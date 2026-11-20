@@ -14,6 +14,7 @@ import retargetEvents from 'react-shadow-dom-retarget-events';
 // eslint-disable-next-line custom/use-core-hook-in-components
 import core from 'core';
 import actions from 'actions';
+import selectors from 'selectors';
 import App from 'components/App';
 import Theme from 'constants/theme';
 import LoadingScreenStyles from 'constants/loadingScreenStyles';
@@ -42,16 +43,20 @@ import {
 } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
 import setViewportRelativeAnnotationPositioning from 'helpers/setViewportRelativeAnnotationPositioning';
-import getRootNode, { getInstanceID } from 'helpers/getRootNode';
+import getRootNode, { getInstanceID, releaseRootNode, setInstanceRootNode } from 'helpers/getRootNode';
 import { createHotkeysManager, setHotkeysManagerForStore } from 'helpers/hotkeysManager';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import ensureReactDraggableStyleEl from 'helpers/ensureReactDraggableStyleEl';
 import EmotionProvider from '../emotion/EmotionProvider';
 import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
+import InstanceIdContext from 'src/context/InstanceIdContext';
+import { runWithInstance } from 'core/documentViewers';
 import localStorageManager from './localStorageManager';
 
-// Global counter for unique documentViewer keys in multi-instance mode. Each createUIInstance call gets its own key so instances don't overwrite each other in the shared documentViewerMap.
-let nextDocumentViewerKey = 1;
+// Global counter for unique UI instance ids.
+// Each createUIInstance call gets its own id,
+// which scopes every shared core module registry to that instance.
+let nextInstanceId = 1;
 
 // Per-instance cleanup registry, keyed by root node.
 const instanceCleanups = new Map();
@@ -175,7 +180,8 @@ function applyCoreRuntimeFlags() {
   window._disableStreaming = getHashParameters('disableStreaming', false);
 }
 
-function setupCorePathsAndLoadLeanScript() {
+let leanScriptLoadPromise;
+export function setupCorePathsAndLoadLeanScript() {
   const corePath = window.isApryseWebViewerWebComponent ? `${window.webViewerPath}core` : '../core';
   const resourcesPath = window.isApryseWebViewerWebComponent ? `${window.webViewerPath}core/assets` : '../core/assets';
   const leanScriptPath = window.isApryseWebViewerWebComponent
@@ -184,7 +190,16 @@ function setupCorePathsAndLoadLeanScript() {
 
   window.Core.setWorkerPath(corePath);
   window.Core.setResourcesPath(resourcesPath);
-  loadScript(leanScriptPath);
+  // Core and its PDFNet namespace are shared by every Web Component instance, so the lean script only needs to run once.
+  if (!leanScriptLoadPromise) {
+    leanScriptLoadPromise = loadScript(leanScriptPath).then((didLoad) => {
+      if (!didLoad) {
+        leanScriptLoadPromise = null;
+      }
+      return didLoad;
+    });
+  }
+  return leanScriptLoadPromise;
 }
 
 function getWorkerTransportPromise() {
@@ -248,42 +263,39 @@ function applyBackendSettings(state, instanceRootNode) {
 function createInstanceDocumentViewer(store, instanceI18n, instanceRootNode) {
   logDebugInfo();
 
-  // In multi-instance mode, each instance gets a unique documentViewer key so they don't overwrite each other in the shared documentViewerMap.
-  const instanceDocViewerKey = nextDocumentViewerKey++;
-  const documentViewer = addDocumentViewer(instanceDocViewerKey);
+  const instanceId = nextInstanceId++;
+  core.registerInstance(instanceId);
+  if (window.isApryseWebViewerWebComponent && instanceRootNode && instanceRootNode !== document) {
+    setInstanceRootNode(instanceId, instanceRootNode);
+  }
+  const documentViewer = addDocumentViewer(1, instanceId);
   setupOpenURLHandler(documentViewer, store);
   setupFormSubmissionHandler(documentViewer, store);
 
-  // Tell this instance's Redux store which DocumentViewer key it owns. Components like DocumentContainer read this via getActiveDocumentViewerKey so they pass the right key to core.setScrollViewElement / scrollViewUpdated.
-  store.dispatch(actions.setActiveDocumentViewerKey(instanceDocViewerKey));
+  store.dispatch(actions.setInstanceId(instanceId));
+  store.dispatch(actions.setActiveDocumentViewerKey(1));
 
   if (getHashParameters('hideDetachedReplies', false)) {
     documentViewer.getAnnotationManager().hideDetachedReplies();
   }
 
-  defineWebViewerInstanceUIAPIs(store, instanceDocViewerKey, instanceI18n, instanceRootNode);
+  defineWebViewerInstanceUIAPIs(store, 1, instanceI18n, instanceRootNode);
   setItemToFlyoutStore(store);
 
-  return { documentViewer, instanceDocViewerKey };
+  return { documentViewer, instanceId };
 }
 
-function setupMultiInstanceActivation(instanceDocViewerKey) {
+function setupMultiInstanceActivation(instanceId, instanceRoot) {
   if (!window.isApryseWebViewerWebComponent) {
     return undefined;
   }
 
-  const activateThisInstance = () => {
-    if (core.getMultiViewerModeActive()) {
-      return;
-    }
-    core.setMultiInstanceActiveKey(instanceDocViewerKey);
-  };
+  const activateThisInstance = () => core.setCurrentInstanceId(instanceId);
 
-  // Set this instance as active immediately (it will be overridden when the user interacts with a different instance).
   activateThisInstance();
 
   // Listen for user interaction inside this instance's shadow root.
-  const root = getRootNode();
+  const root = instanceRoot;
   if (!root || root === document) {
     return undefined;
   }
@@ -485,7 +497,15 @@ function updateInstanceTheme(store, theme) {
   }
 }
 
-function updateInstanceLanguage(instanceI18n, language) {
+// The global i18next may never initialize in Web Component mode, so keep its pending language at module scope.
+// A closure registered per instance would share scope with that instance's i18n and keep the instance alive.
+let pendingGlobalLanguage;
+function applyPendingGlobalLanguage() {
+  i18next.off('initialized', applyPendingGlobalLanguage);
+  void i18next.changeLanguage(pendingGlobalLanguage).catch(() => undefined);
+}
+
+export function updateInstanceLanguage(instanceI18n, language) {
   // nsSeparator is the colon. We do not currently use this because a customer requested removing the colon from the namespace after it broke their labels. Avoid calling init() a second time for createInstance() instances because the first init (in setupI18n) may still be in flight and a second init() would corrupt options/services. Instead, apply the two settings directly.
   if (instanceI18n.options) {
     instanceI18n.options.nsSeparator = false;
@@ -505,7 +525,9 @@ function updateInstanceLanguage(instanceI18n, language) {
         if (i18next.isInitialized) {
           i18next.changeLanguage(language);
         } else {
-          i18next.on('initialized', () => i18next.changeLanguage(language));
+          pendingGlobalLanguage = language;
+          i18next.off('initialized', applyPendingGlobalLanguage);
+          i18next.on('initialized', applyPendingGlobalLanguage);
         }
       } catch {
         // global may not be ready yet; per-instance change above is authoritative
@@ -526,15 +548,17 @@ function renderInstanceApp(rootNode, store, persistor, instanceI18n, removeEvent
   const app = (
     <EmotionProvider rootNode={rootNode}>
       <InstanceRootNodeContext.Provider value={rootNode}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <I18nextProvider i18n={instanceI18n}>
-              <DndProvider backend={HTML5Backend} options={{ rootElement: appElement }}>
-                <App removeEventHandlers={removeEventHandlers} instanceRootNode={rootNode}/>
-              </DndProvider>
-            </I18nextProvider>
-          </PersistGate>
-        </Provider>
+        <InstanceIdContext.Provider value={selectors.getInstanceId(store.getState())}>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <I18nextProvider i18n={instanceI18n}>
+                <DndProvider backend={HTML5Backend} options={{ rootElement: appElement }}>
+                  <App removeEventHandlers={removeEventHandlers} instanceRootNode={rootNode}/>
+                </DndProvider>
+              </I18nextProvider>
+            </PersistGate>
+          </Provider>
+        </InstanceIdContext.Provider>
       </InstanceRootNodeContext.Provider>
     </EmotionProvider>
   );
@@ -558,59 +582,72 @@ function startAsyncUIInitialization({
   instanceI18n,
   removeEventHandlers,
   rootNode,
+  viewerInstanceId,
 }) {
+  // Every step runs bound to this instance:
+  // by the time these continuations resolve,
+  // a sibling instance may have become the ambient one.
+  const inInstance = (fn) => runWithInstance(viewerInstanceId, fn);
   fullAPIReady
     .then(() => loadConfig())
     .then(async () => {
-      preloadWorkersIfConfigured(preloadWorker, documentViewer, store);
-      applyDocumentViewerRuntimeSettings(documentViewer);
+      inInstance(() => {
+        preloadWorkersIfConfigured(preloadWorker, documentViewer, store);
+        applyDocumentViewerRuntimeSettings(documentViewer);
+      });
       await loadUiConfigIfPresent(store);
-      setupLoadAnnotationsFromServer(store);
-      updateInstanceTheme(store, resolveInitialTheme(store));
-      updateInstanceLanguage(instanceI18n, resolveInitialLanguage(store));
+      inInstance(() => {
+        setupLoadAnnotationsFromServer(store);
+        updateInstanceTheme(store, resolveInitialTheme(store));
+        updateInstanceLanguage(instanceI18n, resolveInitialLanguage(store));
+      });
       if (store.themeUpdateQueue) {
         await store.themeUpdateQueue;
       }
       // Render into THIS instance's captured root, not the module-level singleton getRootNode(): under the Vite/ESM build the UI module is evaluated once and shared across every WebComponent instance, so by the time this callback runs (after several awaits) a sibling instance may have flipped the singleton, and rendering into it would mount this instance's React tree into another instance's shadow root.
-      renderInstanceApp(rootNode, store, persistor, instanceI18n, removeEventHandlers);
+      inInstance(() => renderInstanceApp(rootNode, store, persistor, instanceI18n, removeEventHandlers));
     })
     .catch((err) => {
       console.error('[WebViewer] Error during UI initialization:', err);
     });
 }
 
-function closeAndDeleteDocumentViewer(instanceDocViewerKey) {
+export function unmountAndDeleteDocumentViewers(viewerInstanceId) {
   try {
-    const documentViewer = core.getDocumentViewer(instanceDocViewerKey);
-    if (documentViewer) {
-      documentViewer.closeDocument();
-      core.deleteDocumentViewer(instanceDocViewerKey);
-    }
+    // closeDocument alone leaves the window, root node and ContentEdit listeners bound, which retain this instance's shadow root.
+    // unmountInstance releases those without disposing the worker and other state shared with sibling Web Component instances.
+    core.getDocumentViewers(viewerInstanceId).forEach((documentViewer) => {
+      Promise.resolve(documentViewer.unmountInstance()).catch((err) => {
+        console.warn('[WebViewer] Error while unmounting DocumentViewer:', err);
+      });
+    });
   } catch {
     // DocumentViewer may already be gone - ignore
   }
+  core.unregisterInstance(viewerInstanceId);
 }
 
-function buildInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, instanceDocViewerKey) {
+export function buildInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, viewerInstanceId) {
   return () => {
     if (removeActivationHandlers) {
       removeActivationHandlers();
     }
     removeEventHandlers();
 
-    closeAndDeleteDocumentViewer(instanceDocViewerKey);
+    unmountAndDeleteDocumentViewers(viewerInstanceId);
 
     const appEl = instanceRoot.getElementById('app');
     if (appEl) {
       ReactDOM.unmountComponentAtNode(appEl);
     }
+    releaseRootNode(instanceRoot);
   };
 }
 
-function registerInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, instanceDocViewerKey) {
+function registerInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, viewerInstanceId) {
   instanceCleanups.set(
     instanceRoot,
-    buildInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, instanceDocViewerKey),
+    buildInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, viewerInstanceId),
   );
 }
 
@@ -635,17 +672,17 @@ export function initializeCanvasInstance({ store, persistor, instanceI18n, insta
   applyBackendSettings(state, instanceRootNode);
 
   const { preloadWorker } = state.advanced;
-  const { documentViewer, instanceDocViewerKey } = createInstanceDocumentViewer(store, instanceI18n, resolvedRootNode);
+  const { documentViewer, instanceId: viewerInstanceId } = createInstanceDocumentViewer(store, instanceI18n, resolvedRootNode);
 
-  const removeActivationHandlers = setupMultiInstanceActivation(instanceDocViewerKey);
+  const removeActivationHandlers = setupMultiInstanceActivation(viewerInstanceId, resolvedRootNode);
   setupI18n(state, instanceI18n, documentViewer);
   setEnableAnnotationNumbering(state);
-  setUserPermission(state, instanceDocViewerKey);
-  setViewportRelativeAnnotationPositioning(state, instanceDocViewerKey);
+  setUserPermission(state, 1);
+  setViewportRelativeAnnotationPositioning(state, 1);
   setAutoSwitch();
   documentViewer.setToolMode(documentViewer.getTool(defaultTool));
 
-  const { addEventHandlers, removeEventHandlers } = eventHandler(store, instanceDocViewerKey, false, instanceId);
+  const { addEventHandlers, removeEventHandlers } = eventHandler(store, 1, false, instanceId);
 
   startAsyncUIInitialization({
     fullAPIReady,
@@ -656,11 +693,12 @@ export function initializeCanvasInstance({ store, persistor, instanceI18n, insta
     instanceI18n,
     removeEventHandlers,
     rootNode: resolvedRootNode,
+    viewerInstanceId,
   });
   addEventHandlers();
 
   const instanceRoot = resolvedRootNode;
-  registerInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, instanceDocViewerKey);
+  registerInstanceCleanup(instanceRoot, removeEventHandlers, removeActivationHandlers, viewerInstanceId);
 }
 
 export function destroyUIInstance(rootNode) {
@@ -668,8 +706,5 @@ export function destroyUIInstance(rootNode) {
   if (cleanup) {
     cleanup();
     instanceCleanups.delete(rootNode);
-    if (instanceCleanups.size === 0) {
-      nextDocumentViewerKey = 1;
-    }
   }
 }

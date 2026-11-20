@@ -271,6 +271,7 @@ const DataElements = {
   OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING: 'officeEditorPasteWithoutFormatting',
   OFFICE_EDITOR_ADD_COMMENT: 'officeEditorAddComment',
   OFFICE_EDITOR_DELETE: 'officeEditorDelete',
+  OFFICE_EDITOR_SPELL_CHECK_SUGGESTIONS: 'officeEditorSpellCheckSuggestions',
   OFFICE_EDITOR_INSERT_ROW_ABOVE: 'officeEditorInsertRowAbove',
   OFFICE_EDITOR_INSERT_ROW_BELOW: 'officeEditorInsertRowBelow',
   OFFICE_EDITOR_INSERT_COLUMN_RIGHT: 'officeEditorInsertColumnRight',
@@ -451,6 +452,11 @@ const DataElements = {
   TEXT_SQUIGGLY_TOOL_BUTTON: 'textSquigglyToolButton',
   TEXT_STRIKEOUT_TOOL_BUTTON: 'textStrikeoutToolButton',
   TEXT_REDACT_TOOL_BUTTON: 'textRedactToolButton',
+
+  // Snipping Tool Popup Radio Buttons
+  COPY_TO_CLIPBOARD_RADIO_BUTTON: 'copyToClipboardRadioButton',
+  DOWNLOAD_SNIPPING_RADIO_BUTTON: 'downloadSnippingRadioButton',
+  CROP_AND_REMOVE_RADIO_BUTTON: 'cropAndRemoveRadioButton',
 
   // Context Menu Popup
   PAN_TOOL_BUTTON: 'panToolButton',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import './GroupedItems.scss';
 import InnerItem from '../InnerItem/InnerItem';
@@ -24,6 +24,7 @@ const GroupedItems = (props) => {
     style,
   } = props;
   const dispatch = useDispatch();
+  const store = useStore();
 
   const validItems = useMemo(() => {
     const itemValidTypes = Object.values(ITEM_TYPE);
@@ -120,7 +121,7 @@ const GroupedItems = (props) => {
         if (i < indexToExclude) {
           continue;
         }
-        const flyoutItem = itemToFlyout(item);
+        const flyoutItem = itemToFlyout(item, { store });
         if (flyoutItem) {
           flyout.items.push(flyoutItem);
         }

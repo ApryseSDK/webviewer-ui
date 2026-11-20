@@ -20,6 +20,7 @@ const SnippingToolPopup = ({
   isInDesktopOnlyMode,
   isMobile,
   shouldShowApplySnippingWarning,
+  shouldShowCropAndRemoveRadioButton,
 }) => {
   const { t } = useTranslation();
 
@@ -70,7 +71,8 @@ const SnippingToolPopup = ({
         isMobile={isMobile}
         isInDesktopOnlyMode={isInDesktopOnlyMode}
         snippingMode={snippingMode}
-        onSnippingModeChange={onSnippingModeChange} />
+        onSnippingModeChange={onSnippingModeChange}
+        shouldShowCropAndRemoveRadioButton={shouldShowCropAndRemoveRadioButton} />
       <div className="snipping-mobile-section">
         <div className="buttons">
           <Button

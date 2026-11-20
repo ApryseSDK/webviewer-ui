@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Basic as SpreadsheetFontFamilyDropdownStory } from './SpreadsheetFontFamilyDropdown.stories';
-import * as setCellFontStyleModule from 'src/helpers/setCellFontStyle';
+import setCellFontStyle from 'src/helpers/spreadsheetEditor/setCellFontStyle';
 
-jest.mock('src/helpers/setCellFontStyle', () => jest.fn());
+jest.mock('src/helpers/spreadsheetEditor/setCellFontStyle');
 
 describe('SpreadsheetFontFamilyDropdown', () => {
   it('renders the storybook component correctly', () => {
@@ -34,7 +34,7 @@ describe('SpreadsheetFontFamilyDropdown', () => {
     const calibriOption = screen.getByRole('option', { name: 'Calibri' });
     userEvent.click(calibriOption);
 
-    expect(setCellFontStyleModule.default).toHaveBeenCalled();
-    expect(setCellFontStyleModule.default).toHaveBeenCalledWith({ fontFace: 'Calibri' });
+    expect(setCellFontStyle).toHaveBeenCalled();
+    expect(setCellFontStyle).toHaveBeenCalledWith({ fontFace: 'Calibri' });
   });
 });

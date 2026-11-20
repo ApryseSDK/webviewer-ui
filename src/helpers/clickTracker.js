@@ -1,11 +1,13 @@
+import { createInstanceScopedState } from 'core/documentViewers';
+
 export const ClickedItemTypes = {
   BUTTON: 'button',
 };
 
-let clickMiddleWare;
+const clickMiddleWareState = createInstanceScopedState(() => ({ middleware: undefined }));
 
 export const setClickMiddleWare = (middleware) => {
-  clickMiddleWare = middleware;
+  clickMiddleWareState.get().middleware = middleware;
 };
 
-export const getClickMiddleWare = () => clickMiddleWare;
+export const getClickMiddleWare = () => clickMiddleWareState.get().middleware;

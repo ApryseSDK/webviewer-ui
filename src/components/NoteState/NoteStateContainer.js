@@ -4,7 +4,8 @@ import useCore from 'hooks/useCore';
 
 import NoteState from './NoteState';
 import { createStateAnnotation } from 'helpers/NoteStateUtils';
-import { SpreadsheetCommentState, SPREADSHEET_THREAD_ID_KEY } from 'constants/spreadsheetEditor';
+import { SpreadsheetCommentState } from 'constants/spreadsheetEditor';
+import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import useFocusOnClose from 'hooks/useFocusOnClose';
@@ -21,7 +22,7 @@ function NoteStateContainer(props) {
   const { annotation } = props;
 
   const handleStateChange = useFocusOnClose(useCallback(function handleStateChangeCallback(newValue) {
-    if (annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY)) {
+    if (mapAnnotationToKey(annotation) === annotationMapKeys.SPREADSHEET_EDITOR_COMMENT) {
       if (!Object.values(SpreadsheetCommentState).includes(newValue)) {
         return;
       }

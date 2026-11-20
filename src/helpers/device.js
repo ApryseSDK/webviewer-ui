@@ -3,9 +3,25 @@ import getRootNode from 'helpers/getRootNode';
 
 const isWebComponent = window.isApryseWebViewerWebComponent;
 
-export const isDesktop = () => window.innerWidth > TABLET_SIZE || (isWebComponent && getRootNode()?.host.clientWidth > TABLET_SIZE);
-export const isTabletAndMobile = () => window.innerWidth <= TABLET_SIZE || (isWebComponent && getRootNode()?.host.clientWidth <= TABLET_SIZE);
-export const isMobile = () => window.innerWidth < MOBILE_SIZE || (isWebComponent && getRootNode()?.host.clientWidth < MOBILE_SIZE);
+// Keyed by host so multiple viewers on one page don't share widths
+const lastHostWidths = new WeakMap();
+export const getWebComponentHostWidth = (rootNode) => {
+  const host = (rootNode || getRootNode())?.host;
+  const width = host?.clientWidth;
+  if (!host) {
+    return width;
+  }
+  // The host is hidden while printing and reports a width of 0, so keep its last measured width
+  if (width) {
+    lastHostWidths.set(host, width);
+    return width;
+  }
+  return lastHostWidths.get(host) ?? width;
+};
+
+export const isDesktop = () => window.innerWidth > TABLET_SIZE || (isWebComponent && getWebComponentHostWidth() > TABLET_SIZE);
+export const isTabletAndMobile = () => window.innerWidth <= TABLET_SIZE || (isWebComponent && getWebComponentHostWidth() <= TABLET_SIZE);
+export const isMobile = () => window.innerWidth < MOBILE_SIZE || (isWebComponent && getWebComponentHostWidth() < MOBILE_SIZE);
 export const isIEEdge = navigator.userAgent.indexOf('Edge') > -1;
 export const isIEEdgeChromium = navigator.userAgent.indexOf('Edg/') > -1;
 export const isIE11 = navigator.userAgent.indexOf('Trident/7.0') > -1;

@@ -124,7 +124,7 @@ export const updateViewOnlyWhitelist = (store) => (dataElements) => {
 export const updateViewOnlyShortcuts = (store) => (shortcuts) => {
   const hotkeysManager = getHotkeysManager(store);
   checkTypes([shortcuts], [TYPES.ARRAY(TYPES.ONE_OF(Object.values(Shortcuts)))], 'UI.updateViewOnlyShortcuts');
-  setViewOnlyShortcuts(shortcuts);
+  setViewOnlyShortcuts(shortcuts, selectors.getInstanceId(store.getState()));
   const isViewOnly = selectors.isViewOnly(store.getState());
   if (isViewOnly) {
     // Toggle hotkeys view-only mode off and on to apply the new shortcuts

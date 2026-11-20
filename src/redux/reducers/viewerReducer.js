@@ -210,6 +210,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         activeDocumentViewerKey: payload.activeDocumentViewerKey,
       };
+    case 'SET_INSTANCE_ID':
+      return {
+        ...state,
+        instanceId: payload.instanceId,
+      };
     case 'SET_IS_MULTI_VIEWER_READY':
       return {
         ...state,
@@ -1240,15 +1245,16 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
       return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };
-    case 'SET_ANNOTATION_READ_STATE':
-      const { unreadAnnotationIdSet } = state;
+    case 'SET_ANNOTATION_READ_STATE': {
       const { annotationId, isRead } = payload;
+      const unreadAnnotationIdSet = new Set(state.unreadAnnotationIdSet);
       if (isRead) {
         unreadAnnotationIdSet.delete(annotationId);
       } else {
         unreadAnnotationIdSet.add(annotationId);
       }
-      return { ...state, unreadAnnotationIdSet: new Set(unreadAnnotationIdSet) };
+      return { ...state, unreadAnnotationIdSet };
+    }
     case 'SET_LANGUAGE':
       return { ...state, currentLanguage: payload.language };
     case 'SET_FADE_PAGE_NAVIGATION_COMPONENT':
@@ -1301,6 +1307,16 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         deleteScale: payload.deleteScale,
+      };
+    case 'ENABLE_MEASUREMENT_PAGE_VALUE_ROUNDING':
+      return {
+        ...state,
+        isMeasurementPageValueRoundingEnabled: true,
+      };
+    case 'DISABLE_MEASUREMENT_PAGE_VALUE_ROUNDING':
+      return {
+        ...state,
+        isMeasurementPageValueRoundingEnabled: false,
       };
     case 'CLEAR_CURRENT_CONTENT_BEING_EDITED':
       return {
@@ -1364,15 +1380,15 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_NOTES_PANEL_CUSTOM_EMPTY_PANEL':
       return { ...state, notesPanelCustomEmptyPanel: payload.notesPanelCustomEmptyPanel };
     case 'ADD_MEASUREMENT_SCALE_PRESET': {
-      const updatedState = { ...state };
-      const addIndex = payload.index || updatedState.measurementScalePreset[payload.measurementSystem].length;
-      updatedState.measurementScalePreset[payload.measurementSystem].splice(addIndex, 0, payload.newPreset);
-      return updatedState;
+      const presets = [...state.measurementScalePreset[payload.measurementSystem]];
+      const addIndex = payload.index || presets.length;
+      presets.splice(addIndex, 0, payload.newPreset);
+      return { ...state, measurementScalePreset: { ...state.measurementScalePreset, [payload.measurementSystem]: presets } };
     }
     case 'REMOVE_MEASUREMENT_SCALE_PRESET': {
-      const updatedState = { ...state };
-      updatedState.measurementScalePreset[payload.measurementSystem].splice(payload.index, 1);
-      return updatedState;
+      const presets = [...state.measurementScalePreset[payload.measurementSystem]];
+      presets.splice(payload.index, 1);
+      return { ...state, measurementScalePreset: { ...state.measurementScalePreset, [payload.measurementSystem]: presets } };
     }
     case 'SET_IS_MULTIPLE_SCALE_MODE':
       return {

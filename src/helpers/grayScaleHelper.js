@@ -1,10 +1,12 @@
-let grayscaleDarknessFactor = 1;
+import { createInstanceScopedState } from 'core/documentViewers';
+
+const grayscaleState = createInstanceScopedState(() => ({ darknessFactor: 1 }));
 
 export const setGrayscaleDarknessFactor = (factor) => {
-  grayscaleDarknessFactor = factor;
+  grayscaleState.get().darknessFactor = factor;
 };
 
-export const getGrayscaleDarknessFactor = () => grayscaleDarknessFactor;
+export const getGrayscaleDarknessFactor = (instanceId) => grayscaleState.get(instanceId).darknessFactor;
 
 /**
  * Convert a PDF document to grayscale.

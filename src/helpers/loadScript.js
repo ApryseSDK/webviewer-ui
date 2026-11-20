@@ -3,19 +3,19 @@ import wildCardMatch from 'helpers/wildCardMatch';
 
 const loadScript = (scriptSrc, warning) => new Promise((resolve) => {
   if (!scriptSrc) {
-    return resolve();
+    return resolve(true);
   }
 
   const script = document.createElement('script');
   script.type = 'text/javascript';
   script.onload = function() {
-    resolve();
+    resolve(true);
   };
   script.onerror = function() {
     if (warning) {
       console.warn(warning);
     }
-    resolve();
+    resolve(false);
   };
   script.src = scriptSrc;
   document.getElementsByTagName('head')[0].appendChild(script);

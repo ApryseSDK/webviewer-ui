@@ -19,6 +19,7 @@ const TextStylePicker = ({
   isRedaction,
   isContentEditing,
   fonts,
+  getFontDisplayValue = (font) => font,
   stateless = false,
   textEditFormat = {},
   textEditHandleFormatChange = () => { },
@@ -294,6 +295,7 @@ const TextStylePicker = ({
               items={supportedFonts}
               onClickItem={changeFont}
               currentSelectionKey={defaultQuillFont}
+              getDisplayValue={getFontDisplayValue}
               getCustomItemStyle={(item) => ({ fontFamily: item })}
               maxHeight={200}
               placeholder={isContentEditing ? 'Font' : undefined}
@@ -448,6 +450,8 @@ TextStylePicker.propTypes = {
   textEditHandleFormatChange: PropTypes.func,
   isRedaction: PropTypes.bool,
   isContentEditing: PropTypes.bool,
+  fonts: PropTypes.arrayOf(PropTypes.string),
+  getFontDisplayValue: PropTypes.func,
   isFreeText: PropTypes.bool,
   isFreeTextAutoSize: PropTypes.bool,
   onFreeTextSizeToggle: PropTypes.func,

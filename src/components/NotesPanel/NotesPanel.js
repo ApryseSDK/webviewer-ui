@@ -13,21 +13,20 @@ import MultiSelectControls from 'components/MultiSelectControls';
 import CustomElement from 'components/CustomElement';
 import NotesPanelHeader from 'components/NotesPanelHeader';
 import Choice from 'components/Choice';
-/* eslint-disable custom/use-core-hook-in-components */
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import DataElements from 'constants/dataElement';
 import getNotesPanelSortStrategy from 'helpers/getNotesPanelSortStrategy';
+import getNotesPanelModeStrategy from 'helpers/getNotesPanelModeStrategy';
+import getNotesPanelMode from 'helpers/getNotesPanelMode';
 import { prioritizeNotesByAnnotationNumber, createNoteFilter, shouldExpandNoteForReplyMatch } from 'helpers/notesPanelSearchHelpers';
 import getSingleSelectedNoteIndex from 'helpers/getSingleSelectedNoteIndex';
-import { OfficeEditorEditMode } from 'constants/officeEditor';
-import { SpreadsheetEditorEditMode, SPREADSHEET_THREAD_ID_KEY } from 'constants/spreadsheetEditor';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import getNotesPanelConfig from 'helpers/getNotesPanelConfig';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import { isIE } from 'helpers/device';
-import findExistingSpreadsheetCommentAtCell from 'helpers/spreadsheetEditor/findExistingSpreadsheetCommentAtCell';
+import findExistingSpreadsheetCommentAtCell from 'src/helpers/spreadsheetEditor/findExistingSpreadsheetCommentAtCell';
 import useSpreadsheetActiveSheetIndex from 'hooks/useSpreadsheetActiveSheetIndex';
 import useSpreadsheetCellCommentSelection from 'hooks/useSpreadsheetCellCommentSelection';
 import ReplyAttachmentPicker from './ReplyAttachmentPicker';
@@ -56,6 +55,7 @@ const NotesPanel = ({
   isLeftSide,
   currentLeftPanelWidth,
 }) => {
+  const core = useInstanceCore();
   const sortStrategy = useSelector(selectors.getSortStrategy);
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.NOTES_PANEL));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.NOTES_PANEL));
@@ -125,6 +125,7 @@ const NotesPanel = ({
   };
 
   const activeSortStrategy = getNotesPanelSortStrategy(sortStrategy);
+  const modeStrategy = getNotesPanelModeStrategy(getNotesPanelMode({ isOfficeEditorMode, isSpreadsheetEditorMode }));
   const sortOptions = { pageLabels, t, documentViewerKey: activeDocumentViewerKey };
   const filterNote = createNoteFilter({ customNoteFilter, internalNoteFilter, searchInput, documentViewerKey: activeDocumentViewerKey });
   const filteredSortedNotes = activeSortStrategy.getSortedNotes(notes, sortOptions).filter(filterNote);
@@ -265,7 +266,7 @@ const NotesPanel = ({
       isSelected: selectedNoteIds[currNote.Id],
       isContentEditable: core.canModifyContents(currNote, activeDocumentViewerKey) && !currNote.getContents(),
       isOfficeEditorCommentAnnotation: mapAnnotationToKey(currNote) === annotationMapKeys.OFFICE_EDITOR_COMMENT,
-      isSpreadsheetEditorCommentAnnotation: isSpreadsheetEditorMode && !!currNote.getCustomData(SPREADSHEET_THREAD_ID_KEY),
+      isSpreadsheetEditorCommentAnnotation: isSpreadsheetEditorMode && mapAnnotationToKey(currNote) === annotationMapKeys.SPREADSHEET_EDITOR_COMMENT,
       pendingEditTextMap,
       setPendingEditText,
       pendingReplyMap,
@@ -398,20 +399,18 @@ const NotesPanel = ({
   const placeHolder = showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder;
   const showMultiSelectControls = isMultiSelectMode && !isDocumentReadOnly;
 
-  const showOfficeEditorFooter = isOfficeEditorMode && !isMultiSelectMode;
-  const showSpreadsheetEditorFooter = isSpreadsheetEditorMode && !isMultiSelectMode;
-  const showReviewPanelFooter =
-    showOfficeEditorFooter
-    && dataElement === DataElements.OFFICE_EDITOR_REVIEW_PANEL
-    && notesToRender.length > 0;
-  const isOfficeEditorViewOnly = officeEditorEditMode === OfficeEditorEditMode.VIEW_ONLY || officeEditorEditMode === OfficeEditorEditMode.PREVIEW;
-  const isSpreadsheetEditorViewOnly = isSpreadsheetEditorMode && spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
-  const showCommentPanelFooter =
-    (showOfficeEditorFooter
-    && !core.getIsReadOnly(activeDocumentViewerKey)
-    && !isOfficeEditorViewOnly
-    && dataElement === DataElements.OFFICE_EDITOR_COMMENT_PANEL)
-    || (showSpreadsheetEditorFooter && !isSpreadsheetEditorViewOnly && dataElement === DataElements.SPREADSHEET_EDITOR_COMMENT_PANEL);
+  const showReviewPanelFooter = modeStrategy.showReviewFooter({
+    isMultiSelectMode,
+    dataElement,
+    notesCount: notesToRender.length,
+  });
+  const showCommentPanelFooter = modeStrategy.showCommentFooter({
+    isMultiSelectMode,
+    dataElement,
+    officeEditorEditMode,
+    spreadsheetEditorEditMode,
+    documentViewerKey: activeDocumentViewerKey,
+  });
 
   return !showNotePanel ? null : (
     <div
@@ -487,9 +486,9 @@ const NotesPanel = ({
               <div className='divider' />
               <Choice
                 isSwitch
-                checked={officeEditorEditMode === OfficeEditorEditMode.PREVIEW}
+                checked={modeStrategy.isReviewPreviewOn({ officeEditorEditMode })}
                 label={t('officeEditor.previewAllChanges')}
-                onChange={(e) => core.getOfficeEditor().setEditMode(e.target.checked ? OfficeEditorEditMode.PREVIEW : OfficeEditorEditMode.REVIEWING)}
+                onChange={(e) => modeStrategy.setReviewPreview({ enabled: e.target.checked })}
               />
             </div>
           )}

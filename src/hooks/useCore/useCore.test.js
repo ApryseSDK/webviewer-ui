@@ -399,7 +399,7 @@ describe('useCore', () => {
       expect(result.current).toHaveProperty('core');
       expect(result.current).toHaveProperty('documentViewer');
       expect(result.current.documentViewer).toBe(mockDocumentViewer);
-      expect(core.getDocumentViewer).toHaveBeenCalledWith(1);
+      expect(core.getDocumentViewer).toHaveBeenCalledWith(1, 1);
     });
 
     it('should include all wrapped core properties in the returned core object', () => {

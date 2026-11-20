@@ -149,7 +149,7 @@ const CalibrationPopup = ({ annotation }) => {
     if (!isFractionalUnit && unitTo !== 'ft-in') {
       newValueDisplay = `${scaleValue}`;
     } else {
-      newValueDisplay = Scale.getFormattedValue(scaleValue, unitTo, isFractionalUnit ? 1 / 64 : 0.0001, false, true);
+      newValueDisplay = Scale.getFormattedValue(scaleValue, unitTo, isFractionalUnit ? 1 / 64 : 0.0001, { useFractionalCharacters: false, showTrailingZero: true });
     }
     setValueDisplay(newValueDisplay || '');
   };

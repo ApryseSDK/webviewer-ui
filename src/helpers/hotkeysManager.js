@@ -68,14 +68,7 @@ const HotkeysManager = {
    */
   activeHotkeysMap: {},
   previousActiveHotkeysMap: {},
-  initialize(store, instanceRootNode) {
-    // still allow hotkeys when focusing a textarea or an input
-    hotkeys.filter = () => true;
-    // If this manager is re-initialized, detach any listeners registered by the previous instance
-    // before resetting tracking state.
-    if (this.boundHotkeysMap?.size) {
-      this.unbindHotkey();
-    }
+  removeGlobalEventListeners() {
     if (this.pasteEventTarget && this.clipboardPasteHandler) {
       this.pasteEventTarget.removeEventListener?.('paste', this.clipboardPasteHandler);
     }
@@ -85,6 +78,16 @@ const HotkeysManager = {
     if (this.ownerWindow && this.windowClipboardPasteHandler) {
       this.ownerWindow.removeEventListener?.('paste', this.windowClipboardPasteHandler);
     }
+  },
+  initialize(store, instanceRootNode) {
+    // still allow hotkeys when focusing a textarea or an input
+    hotkeys.filter = () => true;
+    // If this manager is re-initialized, detach any listeners registered by the previous instance
+    // before resetting tracking state.
+    if (this.boundHotkeysMap?.size) {
+      this.unbindHotkey();
+    }
+    this.removeGlobalEventListeners();
     this.activeHotkeysMap = {};
     this.previousActiveHotkeysMap = {};
     this.originalActiveHotkeysMap = undefined;
@@ -113,6 +116,19 @@ const HotkeysManager = {
     hotkeys.setScope(defaultHotkeysScope);
     this.formBuilderDisabledKeys = {};
   },
+  destroy() {
+    this.off();
+    this.removeGlobalEventListeners();
+    this.store = undefined;
+    this.instanceRootNode = undefined;
+    this.keyHandlerMap = undefined;
+    this.previousKeyHandlerMap = undefined;
+    this.pasteEventTarget = undefined;
+    this.clipboardPasteHandler = undefined;
+    this.ownerWindow = undefined;
+    this.windowClipboardPasteHandler = undefined;
+    this.windowBlurHandler = undefined;
+  },
   async handleClipboardPaste(e) {
     this.externalClipboardPasteRequested = false;
     const { getState } = this.store;
@@ -121,6 +137,7 @@ const HotkeysManager = {
     if (
       selectors.getIsOfficeEditorMode(state) ||
       selectors.isSpreadsheetEditorModeEnabled(state) ||
+      core.getContentEditManager?.()?.isInContentEditMode?.() ||
       !isShortcutKeyActive(Shortcuts.PASTE, shortcutKeyMap, this.activeHotkeysMap)
     ) {
       return;
@@ -154,11 +171,10 @@ const HotkeysManager = {
   },
   async handleWindowClipboardPaste(e) {
     const state = this.store.getState();
-    const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
     const isRootlessPasteForActiveInstance =
       window.isApryseWebViewerWebComponent &&
       !getInstanceRootFromEvent(e) &&
-      core.getMultiInstanceActiveKey?.() === activeDocumentViewerKey &&
+      core.getCurrentInstanceId?.() === selectors.getInstanceId(state) &&
       !isFocusingElement(this.ownerWindow.document);
     if ((!this.externalClipboardPasteRequested && !isRootlessPasteForActiveInstance) || e.defaultPrevented) {
       return;
@@ -308,7 +324,7 @@ WebViewer(...)
       // add a signature from the modal and then choose to not apply it, so we whitelist it
       // Same with the close shortcut it can be triggered no matter where the focus is since it is kind of like an escape
       const isEscape = e.key === 'Escape' || e.key === ShortcutKeys[Shortcuts.CLOSE];
-      const isInContentEditMode = core.getContentEditManager?.().isInContentEditMode?.();
+      const isInContentEditMode = core.getContentEditManager?.()?.isInContentEditMode?.();
 
       // Let content edit own text shortcuts (copy/paste/bold/etc.) while editing.
       if (isInContentEditMode && !isEscape) {
@@ -993,7 +1009,7 @@ WebViewer(...)
 
       this.off();
 
-      getViewOnlyShortcuts().forEach((shortcut) => {
+      getViewOnlyShortcuts(selectors.getInstanceId(this.store.getState())).forEach((shortcut) => {
         const key = currentShortcutKeyMap[shortcut];
         if (key && this.preViewOnlyEnabledShortcuts[shortcut]) {
           const handler = this.keyHandlerMap[ShortcutKeys[shortcut]];

@@ -39,10 +39,12 @@ const ScaleOverlay = ({
 }) => {
   const [
     { isCalibration, tempScale, previousToolName = 'AnnotationCreateDistanceMeasurement', isFractionalUnit },
-    activeToolName
+    activeToolName,
+    isMeasurementPageValueRoundingEnabled
   ] = useSelector((state) => [
     selectors.getCalibrationInfo(state),
-    selectors.getActiveToolName(state)
+    selectors.getActiveToolName(state),
+    selectors.getIsMeasurementPageValueRoundingEnabled(state)
   ], shallowEqual);
   const { core } = useCore();
   const shouldShowMeasurementDetail = !!Object.keys(scales).length && !(!selectedTool && (!annotations.length || annotations.length > 1));
@@ -76,8 +78,8 @@ const ScaleOverlay = ({
   const canModifyMeasurement = annotations.length === 1 ? core.canModify(annotations[0]) : false;
   const renderScale = (scale) => {
     const precision = core.getScalePrecision(scale);
-    const pageScaleStr = Scale.getFormattedValue(scale.pageScale.value, scale.pageScale.unit, precision, false);
-    const worldScaleStr = Scale.getFormattedValue(scale.worldScale.value, scale.worldScale.unit, precision, false);
+    const pageScaleStr = Scale.getFormattedValue(scale.pageScale.value, scale.pageScale.unit, precision, { useFractionalCharacters: false, showTrailingZero: false, shouldApplyPrecision: isMeasurementPageValueRoundingEnabled });
+    const worldScaleStr = Scale.getFormattedValue(scale.worldScale.value, scale.worldScale.unit, precision, { useFractionalCharacters: false, showTrailingZero: false });
     const scaleDisplay = `${pageScaleStr} = ${worldScaleStr}`;
     return <div>{scaleDisplay}</div>;
   };

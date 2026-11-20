@@ -29,6 +29,7 @@ WebViewer(...)
 import core from 'core';
 import actions from 'actions';
 import { getSearchListeners } from 'helpers/search';
+import { bindToInstance, getCurrentInstanceId } from 'core/documentViewers';
 
 function buildSearchModeFlag(options = {}) {
   const SearchMode = core.getSearchMode();
@@ -75,7 +76,7 @@ export default (dispatch) => (searchValue, options) => {
     dispatch(actions.searchText(searchValue, searchOptions));
   }
 
-  function onResult(result) {
+  const onResult = bindToInstance(getCurrentInstanceId(), (result) => {
     core.displaySearchResult(result);
     // when full search is done, we make first found result to be the active result
     core.setActiveSearchResult(result);
@@ -98,11 +99,11 @@ export default (dispatch) => (searchValue, options) => {
         console.error(e);
       }
     });
-  }
+  });
 
-  function onDocumentEnd() {
+  const onDocumentEnd = bindToInstance(getCurrentInstanceId(), () => {
     core.getDocumentViewer().trigger('endOfDocumentResult', true);
-  }
+  });
   function handleSearchError(error) {
     console.error(error);
   }

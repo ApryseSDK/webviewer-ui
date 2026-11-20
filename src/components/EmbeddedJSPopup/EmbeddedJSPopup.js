@@ -26,10 +26,6 @@ const EmbeddedJSPopup = () => {
     shallowEqual,
   );
 
-  if (isDisabled) {
-    return (null);
-  }
-
   const dispatch = useDispatch();
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const [popUpMenuItems, setPopUpMenuItems] = useState([]);
@@ -41,13 +37,13 @@ const EmbeddedJSPopup = () => {
   });
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !isDisabled) {
       dispatch(actions.closeElements([
         DataElements.ANNOTATION_POPUP,
         DataElements.TEXT_POPUP,
       ]));
     }
-  }, [dispatch, isOpen]);
+  }, [dispatch, isOpen, isDisabled]);
 
   const onFieldClick = (e) => {
     const { top, left } = getMouseEventPosition(e);
@@ -59,6 +55,9 @@ const EmbeddedJSPopup = () => {
   };
 
   useEffect(() => {
+    if (isDisabled) {
+      return;
+    }
     let field;
     const onPopUpMenu = (e) => {
       setPopupData(e);
@@ -75,7 +74,7 @@ const EmbeddedJSPopup = () => {
     return () => {
       documentViewer.removeEventListener('embeddedPopUpMenu', onPopUpMenu);
     };
-  }, [dispatch, activeDocumentViewerKey]);
+  }, [dispatch, activeDocumentViewerKey, isDisabled]);
 
   const clickMenuItem = (value) => {
     if (popupData) {
@@ -84,7 +83,7 @@ const EmbeddedJSPopup = () => {
     dispatch(actions.closeElement(DataElements.EMBEDDED_JS_POPUP));
   };
 
-  if (!isOpen) {
+  if (isDisabled || !isOpen) {
     return null;
   }
 

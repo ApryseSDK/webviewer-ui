@@ -4,3 +4,5 @@ import { workerTypes } from 'constants/types';
 export function isSpreadsheetEditorMode() {
   return core.getDocument()?.getType() === workerTypes.SPREADSHEET_EDITOR;
 }
+
+export default isSpreadsheetEditorMode;

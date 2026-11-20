@@ -19,7 +19,8 @@ const initialState = OEModularUIMockState;
 
 const store = configureStore({ reducer: () => initialState });
 
-const prepareButtonStory = (dataElement = 'editorFileName') => {
+// A component rather than a plain helper, since it uses useEffect.
+const EditorFileNameStory = ({ dataElement = 'editorFileName' }) => {
   const oldDoc = core.getDocument;
   core.getDocument = () => ({
     getFilename: () => 'test.docx',
@@ -37,7 +38,7 @@ const prepareButtonStory = (dataElement = 'editorFileName') => {
 };
 
 export function FileNameButton() {
-  return prepareButtonStory();
+  return <EditorFileNameStory />;
 }
 
 FileNameButton.play = async ({ canvasElement }) => {
@@ -69,7 +70,7 @@ FileNameButton.parameters = disableRtlModeParameters;
 
 export function OfficeEditorDisabledFileName() {
   initialState.officeEditor.editMode = OfficeEditorEditMode.VIEW_ONLY;
-  return prepareButtonStory();
+  return <EditorFileNameStory />;
 }
 
 OfficeEditorDisabledFileName.parameters = disableRtlModeParameters;
@@ -77,7 +78,7 @@ OfficeEditorDisabledFileName.parameters = disableRtlModeParameters;
 export function SpreadsheetEditorDisabledFileName() {
   initialState.viewer.isSpreadsheetEditorModeEnabled = true;
   initialState.spreadsheetEditor.editMode = SpreadsheetEditorEditMode.VIEW_ONLY;
-  return prepareButtonStory('spreadsheetEditorFileName');
+  return <EditorFileNameStory dataElement="spreadsheetEditorFileName" />;
 }
 
 SpreadsheetEditorDisabledFileName.parameters = disableRtlModeParameters;

@@ -1,4 +1,26 @@
+import { createInstanceScopedState } from 'core/documentViewers';
+
 let rootNode;
+// The module-level `rootNode` is whichever instance called setRootNode last; prefer the root registered for the ambient instance.
+const instanceRootNodes = createInstanceScopedState(() => ({ node: undefined }));
+
+let startingRootNode;
+
+const getKnownRootNode = (instanceId) => startingRootNode || instanceRootNodes.get(instanceId).node || rootNode;
+
+/**
+ * Runs `fn` with `node` as the root for every lookup, for the synchronous startup of a new instance.
+ * @ignore
+ */
+export const runWithStartingRootNode = (node, fn) => {
+  const previous = startingRootNode;
+  startingRootNode = node;
+  try {
+    return fn();
+  } finally {
+    startingRootNode = previous;
+  }
+};
 
 function findNestedWebComponents(tagName, root = document) {
   const elements = [];
@@ -38,6 +60,26 @@ export const resetRootNode = () => {
   rootNode = undefined;
 };
 
+/**
+ * Records the root node owned by `instanceId`, so getRootNode() resolves that instance's shadow root while it is ambient.
+ * @ignore
+ */
+export const setInstanceRootNode = (instanceId, node) => {
+  instanceRootNodes.get(instanceId).node = node;
+};
+
+/**
+ * Clear the rootNode cache if it still points at the given node, so a destroyed instance is not retained.
+ *
+ * @ignore
+ * @param {ShadowRoot|Document} node
+ */
+export const releaseRootNode = (node) => {
+  if (node && rootNode === node) {
+    rootNode = undefined;
+  }
+};
+
 export const getShadowRootFromNode = (node) => {
   if (!node) {
     return null;
@@ -73,12 +115,25 @@ export const getInstanceRootFromEvent = (event) => {
   return null;
 };
 
-const getRootNode = () => {
+/**
+ * Whether a DOM event originated inside the given element, including from within nested shadow roots.
+ * In web component mode a window or app-root listener sees `event.target` retargeted to the shadow host,
+ * so `element.contains(event.target)` misses events from inside the shadow tree; the composed path does not.
+ *
+ * @ignore
+ * @param {Event} event
+ * @param {Element} [element]
+ * @returns {boolean}
+ */
+export const isEventWithinElement = (event, element) => event.composedPath().includes(element);
+
+const getRootNode = (instanceId) => {
   if (!window.isApryseWebViewerWebComponent) {
     return document;
   }
-  if (rootNode) {
-    return rootNode;
+  const knownRootNode = getKnownRootNode(instanceId);
+  if (knownRootNode) {
+    return knownRootNode;
   }
 
   let elementList;
@@ -91,9 +146,8 @@ const getRootNode = () => {
     for (const element of elementList) {
       const foundNode = element.shadowRoot;
       if (foundNode && !foundNode.mounted) {
-        foundNode.mounted = true;
-        rootNode = foundNode;
-        return rootNode;
+        setRootNode(foundNode);
+        return foundNode;
       }
     }
   }
@@ -110,8 +164,9 @@ export const getInstanceNode = () => {
   if (!window.isApryseWebViewerWebComponent) {
     return window;
   }
-  if (rootNode) {
-    return rootNode.host;
+  const knownRootNode = getKnownRootNode();
+  if (knownRootNode) {
+    return knownRootNode.host;
   }
   const root = getRootNode();
   return root?.host || null;
@@ -139,6 +194,20 @@ export const getInstanceRect = (element) => {
   const root = element?.getRootNode?.();
   const host = root?.host;
   return host ? host.getBoundingClientRect() : getWebViewerRect();
+};
+
+/**
+ * Get the root node that holds the Spreadsheet Editor grid.
+ *
+ * In web component mode the editor renders inside its own nested shadow root, which a query from the
+ * WebViewer root cannot reach. Otherwise the WebViewer root is returned.
+ *
+ * @ignore
+ * @returns {Document|ShadowRoot|undefined}
+ */
+export const getSpreadsheetEditorRoot = () => {
+  const root = getRootNode();
+  return root?.querySelector('ltleadsheet-element')?.shadowRoot ?? root;
 };
 
 export default getRootNode;

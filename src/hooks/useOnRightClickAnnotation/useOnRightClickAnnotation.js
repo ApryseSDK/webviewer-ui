@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import useOnRightClick from 'hooks/useOnRightClick';
 
 export default () => {
+  const core = useInstanceCore();
   const [rightClickedAnnotation, setRightClickedAnnotation] = useState(null);
 
   useOnRightClick(

@@ -94,7 +94,7 @@ export const Basic = () => {
   );
 };
 
-export const Adding = () => {
+export const Adding = ({ addNewOutline = NOOP }) => {
   return renderInOutlinesPanel(configureStore({ reducer: reducer }),
     <div className='bookmark-outline-single-container editing'>
       <OutlineContext.Provider
@@ -103,7 +103,7 @@ export const Adding = () => {
           currentDestText: 'Full Page',
           isMultiSelectMode: false,
           isOutlineEditable: true,
-          addNewOutline: NOOP,
+          addNewOutline,
           renameOutline: NOOP,
           removeOutlines: NOOP,
         }}

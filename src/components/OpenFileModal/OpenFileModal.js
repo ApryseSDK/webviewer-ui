@@ -131,6 +131,8 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
     return uniqueArr;
   }, []);
 
+  const onAddTabClick = useFocusOnClose(() => handleAddTab(src, extension, filename, size));
+
   return !isDisabled && (
     <div className={modalClass} data-element={DataElements.OPEN_FILE_MODAL} onMouseDown={closeModal}>
       <div className="container" onMouseDown={(e) => e.stopPropagation()}>
@@ -190,7 +192,7 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
               className="modal-btn"
               dataElement="linkSubmitButton"
               label={t('OpenFile.addTab')}
-              onClick={useFocusOnClose(() => handleAddTab(src, extension, filename, size))}
+              onClick={onAddTabClick}
               disabled={selectedTab !== 'urlInputPanelButton' || (!src.length || !extension?.length)}
             />
           </div>

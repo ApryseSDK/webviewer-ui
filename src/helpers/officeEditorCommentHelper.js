@@ -1,17 +1,5 @@
 import { OFFICE_EDITOR_COMMENT_KEY } from 'constants/officeEditor';
-
-export const parseRecordId = (value) => {
-  if (!value) {
-    return null;
-  }
-  const id = Number(value);
-  if (Number.isNaN(id)) {
-    console.warn(`Invalid annotation id value: ${value}`);
-    return null;
-  }
-
-  return id;
-};
+import { parseRecordId } from 'helpers/officeEditorAnnotationsHelper';
 
 const updateOfficeEditorCommentMessage = async ({
   annotation,

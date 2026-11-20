@@ -1,6 +1,6 @@
 import React from 'react';
-// eslint-disable-next-line custom/use-core-hook-in-components
-import core from 'core';
+import { getInstanceCore } from 'hooks/useCore/useCore';
+import InstanceIdContext from 'src/context/InstanceIdContext';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -25,6 +25,12 @@ function resolveReadingModeApi(mod) {
 }
 
 class ReaderModeViewer extends React.PureComponent {
+  static contextType = InstanceIdContext;
+
+  get core() {
+    return getInstanceCore(this.context ?? undefined);
+  }
+
   static propTypes = {
     containerWidth: PropTypes.number.isRequired,
     enableFadePageNavigation: PropTypes.bool.isRequired,
@@ -58,19 +64,19 @@ class ReaderModeViewer extends React.PureComponent {
 
     this.renderDocument();
 
-    core.addEventListener('documentLoaded', this.renderDocument, undefined, this.props.activeDocumentViewerKey);
-    core.addEventListener('pageNumberUpdated', this.goToPage, undefined, this.props.activeDocumentViewerKey);
-    core.addEventListener('zoomUpdated', this.setZoom, undefined, this.props.activeDocumentViewerKey);
-    core.addEventListener('toolUpdated', this.setAddAnnotConfig, undefined, this.props.activeDocumentViewerKey);
-    core.addEventListener('toolModeUpdated', this.setAddAnnotConfig, undefined, this.props.activeDocumentViewerKey);
+    this.core.addEventListener('documentLoaded', this.renderDocument, undefined, this.props.activeDocumentViewerKey);
+    this.core.addEventListener('pageNumberUpdated', this.goToPage, undefined, this.props.activeDocumentViewerKey);
+    this.core.addEventListener('zoomUpdated', this.setZoom, undefined, this.props.activeDocumentViewerKey);
+    this.core.addEventListener('toolUpdated', this.setAddAnnotConfig, undefined, this.props.activeDocumentViewerKey);
+    this.core.addEventListener('toolModeUpdated', this.setAddAnnotConfig, undefined, this.props.activeDocumentViewerKey);
   }
 
   componentWillUnmount() {
-    core.removeEventListener('documentLoaded', this.renderDocument, this.props.activeDocumentViewerKey);
-    core.removeEventListener('pageNumberUpdated', this.goToPage, this.props.activeDocumentViewerKey);
-    core.removeEventListener('zoomUpdated', this.setZoom, this.props.activeDocumentViewerKey);
-    core.removeEventListener('toolUpdated', this.setAddAnnotConfig, this.props.activeDocumentViewerKey);
-    core.removeEventListener('toolModeUpdated', this.setAddAnnotConfig, this.props.activeDocumentViewerKey);
+    this.core.removeEventListener('documentLoaded', this.renderDocument, this.props.activeDocumentViewerKey);
+    this.core.removeEventListener('pageNumberUpdated', this.goToPage, this.props.activeDocumentViewerKey);
+    this.core.removeEventListener('zoomUpdated', this.setZoom, this.props.activeDocumentViewerKey);
+    this.core.removeEventListener('toolUpdated', this.setAddAnnotConfig, this.props.activeDocumentViewerKey);
+    this.core.removeEventListener('toolModeUpdated', this.setAddAnnotConfig, this.props.activeDocumentViewerKey);
 
     this.wvReadingMode?.unmount();
 
@@ -126,7 +132,7 @@ class ReaderModeViewer extends React.PureComponent {
     import('@pdftron/webviewer-reading-mode').then((readingModeModule) => {
       const WebViewerReadingMode = resolveReadingModeApi(readingModeModule);
       const isSinglePageMode = this.props.readerPageMode === ReaderModePageMode.SINGLE;
-      const documentViewer = core.getDocumentViewer(this.props.activeDocumentViewerKey);
+      const documentViewer = this.core.getDocumentViewer(this.props.activeDocumentViewerKey);
       const rootNode = this.viewer.current?.getRootNode?.() || getRootNode();
 
       if (!this.wvReadingMode) {
@@ -140,15 +146,15 @@ class ReaderModeViewer extends React.PureComponent {
         documentViewer.getDocument().getPDFDoc(),
         this.viewer.current,
         {
-          pageNumberUpdateHandler: (pageNumber) => core.setCurrentPage(pageNumber, this.props.activeDocumentViewerKey),
-          pageNum: core.getCurrentPage(this.props.activeDocumentViewerKey),
+          pageNumberUpdateHandler: (pageNumber) => this.core.setCurrentPage(pageNumber, this.props.activeDocumentViewerKey),
+          pageNum: this.core.getCurrentPage(this.props.activeDocumentViewerKey),
           editStyleHandler: this.onEditStyle,
           rootNode,
           isSinglePageMode
         }
       );
       this.updateReaderModeClass();
-      this.setZoom(core.getZoom(this.props.activeDocumentViewerKey));
+      this.setZoom(this.core.getZoom(this.props.activeDocumentViewerKey));
       this.setAddAnnotConfig();
     });
   };
@@ -206,7 +212,7 @@ class ReaderModeViewer extends React.PureComponent {
       return;
     }
     this.wvReadingMode.setZoom(zoom);
-    const pageWidth = core.getDocumentViewer(this.props.activeDocumentViewerKey).getPageWidth(1);
+    const pageWidth = this.core.getDocumentViewer(this.props.activeDocumentViewerKey).getPageWidth(1);
     const readerModeElement = this.viewer.current.firstChild;
     if (pageWidth && readerModeElement) {
       const scaledPageWidth = Math.max(0, pageWidth * zoom);
@@ -244,13 +250,13 @@ class ReaderModeViewer extends React.PureComponent {
 
   updateMaxZoom() {
     // Calling the FitWidth function to get the calculated fit width zoom level for normal page rendering
-    const documentViewer = core.getDocumentViewer(this.props.activeDocumentViewerKey);
+    const documentViewer = this.core.getDocumentViewer(this.props.activeDocumentViewerKey);
     const maxZoomLevel = documentViewer.FitMode.FitWidth.call(documentViewer);
     setMaxZoomLevel(this.props.dispatch)(maxZoomLevel);
-    if (maxZoomLevel < core.getZoom(this.props.activeDocumentViewerKey)) {
-      core.fitToWidth(this.props.activeDocumentViewerKey);
+    if (maxZoomLevel < this.core.getZoom(this.props.activeDocumentViewerKey)) {
+      this.core.fitToWidth(this.props.activeDocumentViewerKey);
     }
-    this.setZoom(core.getZoom(this.props.activeDocumentViewerKey));
+    this.setZoom(this.core.getZoom(this.props.activeDocumentViewerKey));
   }
 
   getAnnotTypeFromToolMode = (toolMode) => {
@@ -275,7 +281,7 @@ class ReaderModeViewer extends React.PureComponent {
     if (!this.wvReadingMode) {
       return;
     }
-    const toolMode = core.getToolMode(this.props.activeDocumentViewerKey);
+    const toolMode = this.core.getToolMode(this.props.activeDocumentViewerKey);
     const annotType = this.getAnnotTypeFromToolMode(toolMode);
     if (annotType) {
       this.wvReadingMode.setAddAnnotConfig({

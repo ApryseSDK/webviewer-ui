@@ -24,9 +24,12 @@ module.exports = {
   // coverageDirectory: undefined,
 
   // An array of regexp pattern strings used to skip coverage collection
-  // coveragePathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
+  coveragePathIgnorePatterns: [
+    "/node_modules/",
+    // Pre-built vendor bundle loaded via setupFilesAfterEnv; instrumenting it wastes
+    // time and never produces usable coverage data (it's not first-party source).
+    String.raw`[/\\]build[/\\]core[/\\]webviewer-core\.min\.js$`,
+  ],
 
   // Indicates which provider should be used to instrument code for coverage
   // coverageProvider: "babel",

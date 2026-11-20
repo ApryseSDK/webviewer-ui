@@ -56,9 +56,12 @@ const renderWithState = (state) => (
   </Provider>
 );
 
-const getOfficeEditorMock = (isTextSelected = true) => ({
+const getOfficeEditorMock = (isTextSelected = true, isSpellCheckEnabled = false) => ({
   isTextSelected: () => isTextSelected,
   isImageSelected: () => false,
+  getSpellCheckManager: () => ({
+    isSpellCheckEnabled: () => isSpellCheckEnabled,
+  }),
 });
 
 const getOfficeEditorModularPopups = () => ({

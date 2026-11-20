@@ -1,7 +1,7 @@
 import core from 'core';
 import { getOfficeEditorCursorProperties, getOfficeEditorSelectionProperties } from './exposedSelectors';
 import { convertCoreHighlightColor } from 'helpers/officeEditor';
-import { getActiveHighlightColor } from './officeEditorSelectors';
+import { getActiveHighlightColor, isJustificationButtonActive } from './officeEditorSelectors';
 
 jest.mock('core', () => ({
   getOfficeEditor: jest.fn(),
@@ -44,5 +44,48 @@ describe('getActiveHighlightColor', () => {
     convertCoreHighlightColor.mockReturnValueOnce(null);
     getOfficeEditorCursorProperties.mockReturnValue({ textBackgroundColor: { r: 0, g: 0, b: 0, a: 0 } });
     expect(getActiveHighlightColor(state)).toBeNull();
+  });
+});
+
+describe('isJustificationButtonActive', () => {
+  const paragraphProperties = (justification) => ({ paragraphProperties: { justification } });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return false when the office editor is not ready', () => {
+    const state = { viewer: { isOfficeEditorMode: false } };
+    expect(isJustificationButtonActive(state, 'center')).toBe(false);
+  });
+
+  it('should return false when no justification type is provided', () => {
+    const state = { viewer: { isOfficeEditorMode: true } };
+    expect(isJustificationButtonActive(state, undefined)).toBe(false);
+  });
+
+  it('should return true when the selection justification matches while text is selected', () => {
+    const state = { viewer: { isOfficeEditorMode: true } };
+    core.getOfficeEditor.mockReturnValue({ isTextSelected: () => true });
+    getOfficeEditorSelectionProperties.mockReturnValue(paragraphProperties('center'));
+    getOfficeEditorCursorProperties.mockReturnValue(paragraphProperties('left'));
+    expect(isJustificationButtonActive(state, 'center')).toBe(true);
+  });
+
+  it('should return false when the selection justification does not match while text is selected', () => {
+    const state = { viewer: { isOfficeEditorMode: true } };
+    core.getOfficeEditor.mockReturnValue({ isTextSelected: () => true });
+    getOfficeEditorSelectionProperties.mockReturnValue(paragraphProperties('center'));
+    getOfficeEditorCursorProperties.mockReturnValue(paragraphProperties('left'));
+    expect(isJustificationButtonActive(state, 'left')).toBe(false);
+  });
+
+  it('should read cursor properties when no text is selected', () => {
+    const state = { viewer: { isOfficeEditorMode: true } };
+    core.getOfficeEditor.mockReturnValue({ isTextSelected: () => false });
+    getOfficeEditorSelectionProperties.mockReturnValue(paragraphProperties('center'));
+    getOfficeEditorCursorProperties.mockReturnValue(paragraphProperties('left'));
+    expect(isJustificationButtonActive(state, 'left')).toBe(true);
+    expect(isJustificationButtonActive(state, 'center')).toBe(false);
   });
 });

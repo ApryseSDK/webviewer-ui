@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
-import { Basic, Renaming, ColoredOutline } from './OutlineContent.stories';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { Adding, Basic, Renaming, ColoredOutline } from './OutlineContent.stories';
 
 const BasicOutline = withProviders(Basic);
+const AddingOutline = withProviders(Adding);
 const RenamingOutline = withProviders(Renaming);
 
 describe('OutlineContent', () => {
@@ -24,6 +25,28 @@ describe('OutlineContent', () => {
 
     fireEvent.change(outlineTitleInput, { target: { value: '' } });
     expect(saveButton).toBeDisabled();
+  });
+
+  it('should only add an outline once when the add button is clicked rapidly', () => {
+    const addNewOutline = jest.fn();
+    render(<AddingOutline addNewOutline={addNewOutline} />);
+
+    const addButton = screen.getByRole('button', { name: /add/i });
+    fireEvent.click(addButton);
+    fireEvent.click(addButton);
+    fireEvent.click(addButton);
+
+    expect(addNewOutline).toHaveBeenCalledTimes(1);
+  });
+
+  it('re-enables the add button when addNewOutline rejects', async () => {
+    const addNewOutline = jest.fn().mockRejectedValue(new Error('failed to add outline'));
+    render(<AddingOutline addNewOutline={addNewOutline} />);
+
+    const addButton = screen.getByRole('button', { name: /add/i });
+    fireEvent.click(addButton);
+
+    await waitFor(() => expect(addButton).toBeEnabled());
   });
 
   it('should set font color if textColor is passed to OutlineContent', () => {

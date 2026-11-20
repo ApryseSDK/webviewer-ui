@@ -2,12 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Basic as StoryBookCellTextColor } from './CellTextColor.stories';
 import userEvent from '@testing-library/user-event';
-import * as setCellFontStyleModule from 'src/helpers/setCellFontStyle';
+import setCellFontStyle from 'src/helpers/spreadsheetEditor/setCellFontStyle';
 
-jest.mock('src/helpers/setCellFontStyle', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
+jest.mock('src/helpers/spreadsheetEditor/setCellFontStyle');
 
 jest.mock('core', () => ({
   getDocument: () => {},
@@ -28,8 +25,8 @@ describe('CellTextColor', () => {
 
     userEvent.click(colorPicker);
 
-    expect(setCellFontStyleModule.default).toHaveBeenCalled();
-    expect(setCellFontStyleModule.default).toHaveBeenCalledWith({ color: { 'A': 1, 'B': 52, 'G': 66, 'R': 228 } });
+    expect(setCellFontStyle).toHaveBeenCalled();
+    expect(setCellFontStyle).toHaveBeenCalledWith({ color: { 'A': 1, 'B': 52, 'G': 66, 'R': 228 } });
   });
 
   it('should call setCellFontStyle when the "Reset to Default" button is clicked', async () => {
@@ -39,8 +36,8 @@ describe('CellTextColor', () => {
 
     userEvent.click(resetButton);
 
-    expect(setCellFontStyleModule.default).toHaveBeenCalled();
-    expect(setCellFontStyleModule.default).toHaveBeenCalledWith({ color: { 'A': 1, 'B': 0, 'G': 0, 'R': 0 } });
+    expect(setCellFontStyle).toHaveBeenCalled();
+    expect(setCellFontStyle).toHaveBeenCalledWith({ color: { 'A': 1, 'B': 0, 'G': 0, 'R': 0 } });
   });
 
   it('should not be able to delete the default color', async () => {

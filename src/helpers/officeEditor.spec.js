@@ -1,4 +1,9 @@
-import { convertCoreHighlightColor } from './officeEditor';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'reducers/rootReducer';
+import actions from 'actions';
+import selectors from 'selectors';
+import DataElements from 'constants/dataElement';
+import { convertCoreHighlightColor, MARGIN_OPTIONS } from './officeEditor';
 
 describe('officeEditor helpers', () => {
   describe('convertCoreHighlightColor', () => {
@@ -33,6 +38,17 @@ describe('officeEditor helpers', () => {
     it('should return null when no highlight color is provided', () => {
       expect(convertCoreHighlightColor(undefined)).toBeNull();
       expect(convertCoreHighlightColor(null)).toBeNull();
+    });
+  });
+
+  describe('MARGIN_OPTIONS', () => {
+    it('should open the margins modal when Custom Margins is chosen', async () => {
+      const store = configureStore({ reducer: rootReducer(), preloadedState: rootReducer(undefined, { type: '@@INIT' }) });
+      const customMargins = MARGIN_OPTIONS.find((option) => option.key === 'customMargins');
+
+      await customMargins.onClick(store.dispatch, actions);
+
+      expect(selectors.isElementOpen(store.getState(), DataElements.OFFICE_EDITOR_MARGINS_MODAL)).toBe(true);
     });
   });
 });

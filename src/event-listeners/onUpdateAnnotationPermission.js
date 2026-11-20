@@ -7,7 +7,7 @@ import disableFeatures from 'src/apis/disableFeatures';
 import enableFeatures from 'src/apis/enableFeatures';
 import Feature from 'constants/feature';
 import { isOfficeEditorMode } from 'src/helpers/officeEditor';
-import { isSpreadsheetEditorMode } from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
+import isSpreadsheetEditorMode from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import selectors from 'selectors';
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 

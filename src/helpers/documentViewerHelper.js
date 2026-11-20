@@ -3,20 +3,20 @@ import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import core from 'core';
 import actions from 'actions';
 
-export const addDocumentViewer = (number) => {
+export const addDocumentViewer = (number, instanceId) => {
   const documentViewer = new window.Core.DocumentViewer();
   documentViewer.enableAnnotations();
   documentViewer.setFitMode(documentViewer.FitMode.FitPage);
   setupDocViewer(documentViewer);
   setDefaultToolStyles(documentViewer);
-  core.setDocumentViewer(number, documentViewer);
+  core.setDocumentViewer(number, documentViewer, instanceId);
   return documentViewer;
 };
 
-export const removeDocumentViewer = (number) => {
-  const documentViewer = core.getDocumentViewer(number);
+export const removeDocumentViewer = (number, instanceId) => {
+  const documentViewer = core.getDocumentViewer(number, instanceId);
   documentViewer.closeDocument();
-  core.deleteDocumentViewer(number);
+  core.deleteDocumentViewer(number, instanceId);
 };
 
 export const syncDocumentViewers = (primarydocumentViewerKey, secondarydocumentViewerKey) => {

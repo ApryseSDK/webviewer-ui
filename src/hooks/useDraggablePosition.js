@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useMemo, useLayoutEffect, useEffect } from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 
@@ -239,6 +239,7 @@ const clampOffsetToContainer = (offset, {
  * - dragBounds: bounds object suitable for Draggable `bounds` prop.
  */
 const useDraggablePosition = (initialPosition) => {
+  const core = useInstanceCore();
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const overlayRef = useRef(null);
   const [overlaySize, setOverlaySize] = useState({ width: 0, height: 0 });

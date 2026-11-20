@@ -170,6 +170,70 @@ select {
   margin: 0;
 }
 
+.ErrorToastContainer {
+  position: fixed;
+  width: min(400px, 100vw);
+  inset-block-end: 20px;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.ErrorToast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: var(--red);
+  color: white;
+  padding: 16px;
+  font-size: var(--font-size-medium);
+  pointer-events: auto;
+}
+
+.ErrorToastContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.ErrorToastClose {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
 .layer-style {
   position: fixed;
   pointer-events: none;

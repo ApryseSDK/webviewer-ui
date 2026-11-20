@@ -67,6 +67,7 @@ const OutlineContent = ({
   const TOOL_NAME = 'OutlineDestinationCreateTool';
 
   const [outlineText, setOutlineText] = useState(text);
+  const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(false);
   const isDefault = !isAdding && !isRenaming && !isChangingDest;
   const isSelected = selectedOutlines?.includes(outlinePath) || false;
 
@@ -85,8 +86,16 @@ const OutlineContent = ({
     }
   };
 
-  const onAddOutline = () => {
-    addNewOutline(outlineText.trim() === '' ? '' : outlineText, activeDocumentViewerKey);
+  const onAddOutline = async () => {
+    if (isAddButtonDisabled) {
+      return;
+    }
+    setIsAddButtonDisabled(true);
+    try {
+      await addNewOutline(outlineText.trim() === '' ? '' : outlineText, activeDocumentViewerKey);
+    } catch (error) {
+      setIsAddButtonDisabled(false);
+    }
   };
 
   const onRenameOutline = () => {
@@ -120,7 +129,7 @@ const OutlineContent = ({
 
   useEffect(() => {
     if (isAdding || isRenaming) {
-      inputRef.current.focus();
+      inputRef.current.focus({ preventScroll: true });
       inputRef.current.select();
     }
   }, [isRenaming, isChangingDest]);
@@ -271,6 +280,7 @@ const OutlineContent = ({
               className="bookmark-outline-save-button"
               label={t('action.add')}
               isSubmitType={true}
+              disabled={isAddButtonDisabled}
               onClick={onAddOutline}
             />
           }

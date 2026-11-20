@@ -39,8 +39,10 @@ describe('TextStylePanel', () => {
         getEditBoxManager: () => ({
           focusBox: jest.fn(),
           resizeAnnotation: jest.fn(),
+          getExistingEditor: () => null,
         }),
       }),
+      getSelectedAnnotations: () => [],
     };
     useCore.mockReturnValue({
       core: mockCore,

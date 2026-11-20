@@ -43,6 +43,7 @@ const propTypes = {
   useI18String: PropTypes.bool,
   shouldPassActiveDocumentViewerKeyToOnClickHandler: PropTypes.bool,
   children: PropTypes.node,
+  isFlyoutItem: PropTypes.bool,
 };
 
 const Button = (props) => {
@@ -136,7 +137,9 @@ const Button = (props) => {
 
   // if there is no file extension then assume that this is a glyph
   const isGlyph = isGlyphSource(img);
-  const shouldRenderTooltip = !!title;
+  const isIconOnly = !!img && !label && !props.children;
+  const tooltipContent = title || (isIconOnly ? ariaLabel : undefined);
+  const shouldRenderTooltip = !!tooltipContent && !(props.isFlyoutItem && label);
   const children = (
     <button
       className={classNames({
@@ -198,7 +201,7 @@ const Button = (props) => {
 
   return removeElement ? null : shouldRenderTooltip ? (
     <Tooltip
-      content={title}
+      content={tooltipContent}
       hideShortcut={hideTooltipShortcut || actuallyDisabled}
       forcePosition={forceTooltipPosition}
       hideOnClick={hideOnClick}

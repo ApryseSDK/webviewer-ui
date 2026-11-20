@@ -1,15 +1,16 @@
 const path = require('path');
 const os = require('os');
+const fs = require('fs');
+const http = require('http');
 const express = require('express');
-const bodyParser = require('body-parser');
-const webpack = require('webpack');
-const devMiddleware = require('webpack-dev-middleware');
-const hotMiddleware = require('webpack-hot-middleware');
 const open = require('open');
-const config = require('./webpack.config-5.dev');
+const { createServer: createViteServer } = require('vite');
 
-const app = express();
-const compiler = webpack(config);
+const uiRoot = __dirname;
+const generatedCorePath = path.resolve(uiRoot, '../../build/core');
+const installedCorePath = path.resolve(uiRoot, 'lib/core');
+const generatedCoreMiddleware = express.static(generatedCorePath);
+const installedCoreMiddleware = express.static(installedCorePath);
 
 const getLocalIpAddress = () => {
   const interfaces = os.networkInterfaces();
@@ -29,39 +30,64 @@ const getLocalIpAddress = () => {
   return '127.0.0.1';
 };
 
-app.use(
-  devMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-  }),
-);
-app.use(hotMiddleware(compiler));
-
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-app.use('/i18n', express.static(path.resolve(__dirname, 'i18n')));
-app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
-app.use('/core', express.static(path.resolve(__dirname, 'lib/core')));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'src/index.html'));
-});
-
 const sampleURL = encodeURIComponent(JSON.stringify('https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf'));
 
-app.get('/sample-url', (req, res) => {
+async function startServer() {
+  const app = express();
+  const server = http.createServer(app);
+  const vite = await createViteServer({
+    configFile: path.resolve(uiRoot, 'vite.ui-hmr.config.js'),
+    server: {
+      middlewareMode: true,
+      hmr: { server },
+    },
+  });
 
-  res.redirect(
-    `/#d=${sampleURL}&a=1`,
-  );
+  app.use('/i18n', express.static(path.resolve(uiRoot, 'i18n')));
+  app.use('/assets', express.static(path.resolve(uiRoot, 'assets')));
+  app.use('/core', (req, res, next) => {
+    const coreMiddleware = fs.existsSync(path.join(generatedCorePath, 'webviewer-core.min.js'))
+      ? generatedCoreMiddleware
+      : installedCoreMiddleware;
+    coreMiddleware(req, res, next);
+  });
+
+  app.get('/', async (req, res, next) => {
+    try {
+      let template = fs.readFileSync(path.resolve(uiRoot, 'src/index.html'), 'utf8');
+      template = template.replace(/\s*<link[^>]*rel="stylesheet"[^>]*href="style\.css"[^>]*>/i, '');
+      template = template.replace(/\s*<script type="module" src="core\/webviewer-core\.min\.js"><\/script>/, '');
+      template = template.replace(
+        /<script type="module" src="webviewer-ui\.min\.js"><\/script>/,
+        '<script type="module" src="/src/ui/src/index.js"></script>',
+      );
+      let html = await vite.transformIndexHtml('/', template);
+      html = html.replace(
+        '<script type="module" src="/src/ui/src/index.js"></script>',
+        '<script type="module" src="/core/webviewer-core.min.js"></script>\n  <script type="module" src="/src/ui/src/index.js"></script>',
+      );
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get('/sample-url', (req, res) => {
+    res.redirect(`/#d=${sampleURL}&a=1`);
+  });
+
+  app.use(vite.middlewares);
+
+  server.listen(3000, '0.0.0.0', () => {
+    // eslint-disable-next-line
+    console.info(`Listening at localhost:3000 (http://${getLocalIpAddress()}:3000)`);
+    open(`http://localhost:3000/#d=${sampleURL}&a=1`);
+  });
+
+  server.on('error', console.error);
+}
+
+startServer().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
 });
-
-const server = app.listen(3000, '0.0.0.0', () => {
-  // eslint-disable-next-line
-  console.info(`Listening at localhost:3000 (http://${getLocalIpAddress()}:3000)`);
-  open(
-    `http://localhost:3000/#d=${sampleURL}&a=1`,
-  );
-});
-
-server.on('error', console.error);

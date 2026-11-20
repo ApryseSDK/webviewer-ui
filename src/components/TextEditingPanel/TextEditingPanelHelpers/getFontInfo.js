@@ -1,15 +1,14 @@
 /**
- * Extracts font and text attributes from the content editor
+ * Extracts font and text attributes from the content editor. The returned Font is the
+ * raw, uncleaned font name; callers are responsible for cleaning it for display only.
  * @param {Object} instance - WebViewer instance
  * @param {Object} contentEditorRef - Reference to the content editor
- * @param {Function} getFontName - Function to clean the font name
  * @returns {Promise<{fontObject: Object, color: Object, attribute: Object}>}
  * @ignore
  */
 const getFontInfo = async (
   instance,
   contentEditorRef,
-  getFontName
 ) => {
   const attribute = contentEditorRef.current.getCachedTextAttributes()
     ?? await contentEditorRef.current.getTextAttributes();
@@ -17,7 +16,7 @@ const getFontInfo = async (
 
   const fontObject = {
     FontSize: attribute.fontSize,
-    Font: getFontName(attribute.fontName),
+    Font: typeof attribute.fontName === 'string' ? attribute.fontName : '',
     TextAlign: attribute.textAlign
   };
 

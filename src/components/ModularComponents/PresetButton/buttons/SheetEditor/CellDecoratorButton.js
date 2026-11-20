@@ -6,7 +6,7 @@ import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
-import setCellFontStyle from 'src/helpers/setCellFontStyle';
+import setCellFontStyle from 'src/helpers/spreadsheetEditor/setCellFontStyle';
 const propTypes = {
   styleType: PropTypes.oneOf(Object.values(STYLE_TOGGLE_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,

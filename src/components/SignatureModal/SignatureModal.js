@@ -195,6 +195,7 @@ const SignatureModal = () => {
     closed: !isOpen,
   });
   const isSavedTabSelected = selectedTab === 'savedSignaturePanelButton';
+  const onCreateClick = useFocusOnClose(isSavedTabSelected ? () => setSignature(selectedIndex) : createSignatures);
 
   if (isDisabled) {
     return null;
@@ -289,7 +290,7 @@ const SignatureModal = () => {
                   {signatureDisclaimerText}
                 </div>
               )}
-              <button className="signature-create" onClick={useFocusOnClose(isSavedTabSelected ? () => setSignature(selectedIndex) : createSignatures)}
+              <button className="signature-create" onClick={onCreateClick}
                 disabled={isSavedTabSelected ? (!isSavedTabSelected || !displayedSignatures.length || !isOpen) : (!(isOpen) || createButtonDisabled)}
                 title={isInitialsModeEnabled ? t('message.signatureRequired') : ''}>
                 {t(isSavedTabSelected ? 'action.apply' : 'action.create')}

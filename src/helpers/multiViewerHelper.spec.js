@@ -1,4 +1,5 @@
-import { cleanUpMultiViewer, setupMultiViewer } from './multiViewerHelper';
+import { cleanUpMultiViewer, finalizeMultiViewerSetup, setupMultiViewer } from './multiViewerHelper';
+import fireEvent from 'helpers/fireEvent';
 import * as actions from 'actions';
 import * as selectors from 'selectors';
 import { createWrappedCore } from 'hooks/useCore/useCore';
@@ -32,6 +33,7 @@ jest.mock('selectors', () => ({
   getTabs: jest.fn().mockReturnValue([]),
   getActiveDocumentViewerKey: jest.fn().mockReturnValue(1),
   isViewportRelativeAnnotationPositioningEnabled: jest.fn().mockReturnValue(false),
+  getInstanceId: jest.fn().mockReturnValue(1),
 }));
 jest.mock('hooks/useCore/useCore');
 jest.mock('core');
@@ -198,7 +200,7 @@ describe('cleanUpMultiViewer', () => {
 
     it('should call removeDocumentViewer for non-primary viewers', async () => {
       await cleanUpMultiViewer(mockStore);
-      expect(documentViewerHelper.removeDocumentViewer).toHaveBeenCalledWith(2);
+      expect(documentViewerHelper.removeDocumentViewer).toHaveBeenCalledWith(2, 1);
     });
 
     it('should call endFormFieldCreationMode for all viewers', async () => {
@@ -244,5 +246,42 @@ describe('cleanUpMultiViewer', () => {
       const setMultiViewerModeOrder = actions.setIsMultiViewerMode.mock.invocationCallOrder[0];
       expect(setActiveKeyOrder).toBeLessThan(setMultiViewerModeOrder);
     });
+  });
+});
+
+describe('setupMultiViewer with two WebViewer instances', () => {
+  const createStore = (instanceId) => ({
+    dispatch: jest.fn(),
+    getState: () => ({ viewer: { instanceId } }),
+  });
+
+  beforeEach(() => {
+    selectors.getInstanceId.mockImplementation((state) => state.viewer.instanceId);
+    selectors.getCurrentToolbarGroup.mockReturnValue('toolbarGroup-View');
+    selectors.getActiveToolName.mockReturnValue('');
+    selectors.isComparisonDisabled.mockReturnValue(true);
+    core.getDocumentViewer = jest.fn(() => ({ getAnnotationManager: () => null }));
+    documentViewerHelper.addDocumentViewer.mockReset();
+  });
+
+  afterEach(() => {
+    selectors.getInstanceId.mockReset().mockReturnValue(1);
+  });
+
+  it('should add a compare pane to each instance that enters MultiViewer, once per instance', () => {
+    const firstStore = createStore(11);
+    const secondStore = createStore(12);
+
+    setupMultiViewer(firstStore);
+    setupMultiViewer(firstStore);
+    setupMultiViewer(secondStore);
+
+    expect(documentViewerHelper.addDocumentViewer.mock.calls).toEqual([[2, 11], [2, 12]]);
+  });
+
+  it('should fire MULTI_VIEWER_READY on the store\'s own instance when finalizing after an await', () => {
+    finalizeMultiViewerSetup(createStore(12));
+
+    expect(fireEvent).toHaveBeenCalledWith('MULTI_VIEWER_READY', undefined, null, 12);
   });
 });

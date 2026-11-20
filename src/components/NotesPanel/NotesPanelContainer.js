@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-/* eslint-disable custom/use-core-hook-in-components */
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import NotesPanel from './NotesPanel';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
@@ -11,6 +10,7 @@ import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 const getPanelDataElement = ({ parentDataElement, dataElement }) => parentDataElement || dataElement || DataElements.NOTES_PANEL;
 
 function NotesPanelContainer(props) {
+  const core = useInstanceCore();
   const { isCustomPanelOpen, parentDataElement = undefined, dataElement } = props;
   const panelDataElement = getPanelDataElement({ parentDataElement, dataElement });
   const [

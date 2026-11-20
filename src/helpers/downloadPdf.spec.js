@@ -2,6 +2,7 @@ import core from 'core';
 import downloadPdf from './downloadPdf';
 import { getReplyDraftsForExport } from 'helpers/replyDraftExportStore';
 import { BEFORE_FILE_DOWNLOAD, AFTER_FILE_DOWNLOAD } from 'constants/downloads';
+import { getCurrentInstanceId, setCurrentInstanceId, resetInstances } from 'core/documentViewers';
 
 jest.mock('file-saver', () => ({
   saveAs: jest.fn(),
@@ -132,6 +133,10 @@ describe('downloadPdf', () => {
     core.getAnnotationsList.mockReturnValue([]);
   };
 
+  afterEach(() => {
+    resetInstances();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     setupCoreMocks();
@@ -182,6 +187,30 @@ describe('downloadPdf', () => {
     expect(draftReplyAnnotation.Author).toBe('test-user');
     expect(draftReplyAnnotation.contents).toBe('Draft reply from autosave');
     expect(core.exportAnnotations).not.toHaveBeenCalled();
+  });
+
+  it('should export draft replies from the downloading instance when another instance becomes current mid-download', async () => {
+    const createInstanceViewer = (annotationId) => {
+      const manager = {
+        getAnnotationsList: jest.fn(() => [{ Id: annotationId, X: 1, Y: 2, PageNumber: 1 }]),
+        exportAnnotations: jest.fn(() => Promise.resolve(`xfdf-${annotationId}`)),
+      };
+      return { ...documentViewer, getAnnotationManager: jest.fn(() => manager), manager };
+    };
+    const viewersByInstance = { 1: createInstanceViewer('annot-of-instance-1'), 2: createInstanceViewer('annot-of-instance-2') };
+    core.getDocumentViewer.mockImplementation(() => viewersByInstance[getCurrentInstanceId()]);
+    getReplyDraftsForExport.mockImplementation((key, instanceId) => (instanceId === 1
+      ? [{ parentAnnotationId: 'annot-of-instance-1', replyText: 'Draft', plainTextValue: 'Draft', isMentionEnabled: false, ids: [] }]
+      : []));
+
+    setCurrentInstanceId(1);
+    const download = downloadPdf(dispatch, {}, documentViewerKey);
+    setCurrentInstanceId(2);
+    await download;
+
+    expect(getReplyDraftsForExport).toHaveBeenCalledWith(documentViewerKey, 1);
+    expect(viewersByInstance[1].manager.exportAnnotations).toHaveBeenCalledTimes(1);
+    expect(viewersByInstance[2].manager.exportAnnotations).not.toHaveBeenCalled();
   });
 
   it('does not duplicate draft replies already present as autosave-draft annotations', async () => {

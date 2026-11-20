@@ -38,6 +38,7 @@ const scales = [
 let presetScales = ['1 mm = 10 mm'];
 const scalesInfo = scales.map((scale) => ({
   scale,
+  scaleKey: scale.toString(),
   title: scale.toString(),
   measurementsNum: 1,
   pages: [1],

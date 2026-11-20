@@ -148,19 +148,19 @@ const ScaleSelector = ({ scalesInfo = [], selectedScales = [], onScaleSelected, 
             </div>
           </li>
           {scalesInfo.map((scaleInfo) => (
-            <li key={scaleInfo.title} className={classNames({
+            <li key={scaleInfo.scaleKey} className={classNames({
               'className="scale-overlay-item': true,
-              'option-selected': selectedScales.includes(scaleInfo.title)
+              'option-selected': selectedScales.includes(scaleInfo.scaleKey)
             })}>
               <button
                 className={classNames({
                   options: true,
                 })}
-                onClick={() => onScaleSelected(selectedScales, scaleInfo.title)}
+                onClick={() => onScaleSelected(selectedScales, scaleInfo.scaleKey)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    onScaleSelected(selectedScales, scaleInfo.title);
+                    onScaleSelected(selectedScales, scaleInfo.scaleKey);
                   }
                 }}
               >

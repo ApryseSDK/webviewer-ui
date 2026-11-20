@@ -66,110 +66,6 @@ describe('Scale Modal Component', () => {
     expect(displayUnitsDropdown).toBeInTheDocument();
   });
 
-  it('does not round page scale when creating a new scale if the page scale was created using calibration', async () => {
-    const props = {
-      annotations: [],
-      selectedTool: null,
-    };
-    render(
-      <Provider store={store}>
-        <ScaleModal {...props} />
-      </Provider>
-    );
-    const calibrationButton = screen.getByRole('button', { name: 'Calibrate' });
-    userEvent.click(calibrationButton);
-    store.dispatch(actions.updateCalibrationInfo({
-      isCalibration: false,
-      tempScale: '1.234567 in = 10.34 mm',
-      isFractionalUnit: false,
-    }));
-
-    // End the calibration process by reopening the scale modal
-    store.dispatch(actions.setIsElementHidden(DataElements.SCALE_MODAL, false));
-    const createButton = screen.getByRole('button', { name: 'Create' });
-    userEvent.click(createButton);
-
-    expect(coreMock.createAndApplyScale).toHaveBeenCalled();
-    const createdScale = coreMock.createAndApplyScale.mock.calls[0][0];
-    const [[pageValue, pageUnit], [worldValue, worldUnit]] = createdScale.getScaleRatioAsArray();
-    expect(pageValue).toBe(1.234567);
-    expect(pageUnit).toBe('in');
-    expect(worldValue).toBe(10.3);
-    expect(worldUnit).toBe('mm');
-  });
-
-  it('rounds page scale to the default precision 0.1 when creating a new scale if the page scale was created manually by user', async () => {
-    const props = {
-      annotations: [],
-      selectedTool: null,
-    };
-    render(
-      <Provider store={store}>
-        <ScaleModal {...props} />
-      </Provider>
-    );
-    const pageValueInput = screen.getByRole('spinbutton', { name: 'Paper Units' });
-    userEvent.clear(pageValueInput);
-    userEvent.type(pageValueInput, '2.345678');
-    const createButton = screen.getByRole('button', { name: 'Create' });
-    userEvent.click(createButton);
-
-    expect(coreMock.createAndApplyScale).toHaveBeenCalled();
-    const createdScale = coreMock.createAndApplyScale.mock.calls[0][0];
-    const [[pageValue, pageUnit]] = createdScale.getScaleRatioAsArray();
-    expect(pageValue).toBe(2.3);
-    expect(pageUnit).toBe('in');
-  });
-
-  it('rounds page scale when creating a new scale even if the previous page scale was created using calibration', async () => {
-    const props = {
-      annotations: [],
-      selectedTool: null,
-    };
-    const { rerender } = render(
-      <Provider store={store}>
-        <ScaleModal {...props} />
-      </Provider>
-    );
-    const calibrationButton = screen.getByRole('button', { name: 'Calibrate' });
-    userEvent.click(calibrationButton);
-    store.dispatch(actions.updateCalibrationInfo({
-      isCalibration: false,
-      tempScale: '1.234567 in = 10.34 mm',
-      isFractionalUnit: false,
-    }));
-
-    // End the calibration process by reopening the scale modal
-    store.dispatch(actions.setIsElementHidden(DataElements.SCALE_MODAL, false));
-    const createButton = screen.getByRole('button', { name: 'Create' });
-    userEvent.click(createButton);
-
-    expect(coreMock.createAndApplyScale).toHaveBeenCalled();
-    const createdScale = coreMock.createAndApplyScale.mock.calls[0][0];
-    const [[pageValue, pageUnit], [worldValue, worldUnit]] = createdScale.getScaleRatioAsArray();
-    expect(pageValue).toBe(1.234567);
-    expect(pageUnit).toBe('in');
-    expect(worldValue).toBe(10.3);
-    expect(worldUnit).toBe('mm');
-
-    // Rerender the scale modal and create another scale without calibration
-    rerender(
-      <Provider store={store}>
-        <ScaleModal {...props} />
-      </Provider>
-    );
-    const pageValueInput = screen.getByRole('spinbutton', { name: 'Paper Units' });
-    userEvent.clear(pageValueInput);
-    userEvent.type(pageValueInput, '2.345678');
-    userEvent.click(createButton);
-
-    expect(coreMock.createAndApplyScale).toHaveBeenCalledTimes(2);
-    const secondCreatedScale = coreMock.createAndApplyScale.mock.calls[1][0];
-    const [[secondPageValue, secondPageUnit]] = secondCreatedScale.getScaleRatioAsArray();
-    expect(secondPageValue).toBe(2.3);
-    expect(secondPageUnit).toBe('in');
-  });
-
   it('keeps typed custom scale value while focused and updates after blur', async () => {
     const props = {
       annotations: [],
@@ -195,6 +91,239 @@ describe('Scale Modal Component', () => {
     await waitFor(() => {
       expect(pageScaleInput).not.toBe(getDOMActiveElement());
       expect(pageScaleInput).toHaveValue(11.6);
+    });
+  });
+
+  describe('Measurement Page Value Rounding', () => {
+    const testCases = [
+      {
+        description: 'should not store the page scale as rounded with decimal precision when creating a new scale if the page scale was created using calibration',
+        isMeasurementPageValueRoundingEnabled: false,
+        isScaleCreatedUsingCalibration: true,
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 in',
+        isFractionalUnit: false,
+        expectedStored: {
+          pageValue: 1.234567,
+          worldValue: 10.3,
+        },
+        expectedVisual: {
+          pageValue: 1.234567,
+          worldValue: 10.3,
+        }
+      },
+      {
+        description: 'should not store the page scale as rounded with fractional precision when creating a new scale if the page scale was created using calibration',
+        isMeasurementPageValueRoundingEnabled: false,
+        isScaleCreatedUsingCalibration: true,
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 in',
+        isFractionalUnit: true,
+        expectedStored: {
+          pageValue: 1.234567,
+          worldValue: 10.375,
+        },
+        expectedVisual: {
+          pageValue: '1 15/64\"',
+          worldValue: '10 3/8\"',
+        },
+      },
+      {
+        description: 'should store the page scale as rounded with decimal precision when isMeasurementPageValueRoundingEnabled is true and it is created manually by the user',
+        isMeasurementPageValueRoundingEnabled: true,
+        isScaleCreatedUsingCalibration: false,
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 in',
+        isFractionalUnit: false,
+        expectedStored: {
+          pageValue: 1.2,
+          worldValue: 10.3,
+        },
+        expectedVisual: {
+          pageValue: 1.2,
+          worldValue: 10.3,
+        },
+      },
+      {
+        description: 'should store the page scale as rounded with fractional precision when isMeasurementPageValueRoundingEnabled is true and it is created manually by the user',
+        isMeasurementPageValueRoundingEnabled: true,
+        isScaleCreatedUsingCalibration: false,
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 in',
+        isFractionalUnit: true,
+        expectedStored: {
+          pageValue: 1.2,
+          worldValue: 10.3,
+        },
+        expectedVisual: {
+          pageValue: 1.2,
+          worldValue: 10.3,
+        },
+      },
+      {
+        description: 'should not store the page scale as rounded with decimal precision when isMeasurementPageValueRoundingEnabled is false, even if it is created manually by the user',
+        isMeasurementPageValueRoundingEnabled: false,
+        isScaleCreatedUsingCalibration: false,
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 in',
+        isFractionalUnit: false,
+        expectedStored: {
+          pageValue: 1.234567,
+          worldValue: 10.3,
+        },
+        expectedVisual: {
+          pageValue: 1.234567,
+          worldValue: 10.3,
+        },
+      },
+      {
+        description: 'should not store the page scale as rounded with fractional precision when isMeasurementPageValueRoundingEnabled is false, even if it is created manually by the user',
+        isMeasurementPageValueRoundingEnabled: false,
+        isScaleCreatedUsingCalibration: false,
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 in',
+        isFractionalUnit: true,
+        expectedStored: {
+          pageValue: 1.234567,
+          worldValue: 10.3,
+        },
+        expectedVisual: {
+          pageValue: 1.234567,
+          worldValue: 10.3,
+        },
+      },
+      {
+        description: 'should not store the page scale as rounded with decimal precision when isMeasurementPageValueRoundingEnabled is true and it is created using calibration',
+        isMeasurementPageValueRoundingEnabled: true,
+        isScaleCreatedUsingCalibration: true,
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 in',
+        isFractionalUnit: false,
+        expectedStored: {
+          pageValue: 1.234567,
+          worldValue: 10.3,
+        },
+        expectedVisual: {
+          pageValue: 1.2,
+          worldValue: 10.3,
+        },
+      },
+      {
+        description: 'should not store the page scale as rounded with fractional precision when isMeasurementPageValueRoundingEnabled is true and it is created using calibration',
+        isMeasurementPageValueRoundingEnabled: true,
+        isScaleCreatedUsingCalibration: true,
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 in',
+        isFractionalUnit: true,
+        expectedStored: {
+          pageValue: 1.234567,
+          worldValue: 10.375,
+        },
+        expectedVisual: {
+          pageValue: '1 1/4\"',
+          worldValue: '10 3/8\"',
+        },
+      },
+    ];
+
+    for (const testCase of testCases) {
+      it(testCase.description, async () => {
+        const { isMeasurementPageValueRoundingEnabled, isScaleCreatedUsingCalibration, isCalibration, tempScale, isFractionalUnit, expectedStored, expectedVisual } = testCase;
+        if (!isMeasurementPageValueRoundingEnabled) {
+          await store.dispatch(actions.disableMeasurementPageValueRounding());
+        }
+        store.dispatch(actions.setIsElementHidden(DataElements.SCALE_MODAL, false));
+        if (isScaleCreatedUsingCalibration) {
+          store.dispatch(actions.updateCalibrationInfo({
+            isCalibration: isCalibration,
+            tempScale: tempScale,
+            isFractionalUnit: isFractionalUnit,
+          }));
+        }
+        const props = {
+          annotations: [],
+          selectedTool: null,
+        };
+        const { container } = render(
+          <Provider store={store}>
+            <ScaleModal {...props} />
+          </Provider>
+        );
+        if (!isScaleCreatedUsingCalibration) {
+          const pageValueInput = screen.getByRole('spinbutton', { name: 'Paper Units' });
+          userEvent.clear(pageValueInput);
+          userEvent.type(pageValueInput, expectedStored.pageValue.toString());
+          const worldValueInput = screen.getByRole('spinbutton', { name: 'Display Units' });
+          userEvent.clear(worldValueInput);
+          userEvent.type(worldValueInput, expectedStored.worldValue.toString());
+        }
+        const createButton = screen.getByRole('button', { name: 'Create' });
+        userEvent.click(createButton);
+
+        expect(coreMock.createAndApplyScale).toHaveBeenCalled();
+        const createdScale = coreMock.createAndApplyScale.mock.calls[coreMock.createAndApplyScale.mock.calls.length - 1][0];
+        const [[pageValue, pageUnit], [worldValue, worldUnit]] = createdScale.getScaleRatioAsArray();
+        expect(pageValue).toBe(expectedStored.pageValue);
+        expect(pageUnit).toBe('in');
+        expect(worldValue).toBe(expectedStored.worldValue);
+        expect(worldUnit).toBe('in');
+
+        const pageScaleInput = container.querySelector('[data-element="customPageScaleValue"]');
+        const pageScaleInputString = String(pageScaleInput.value);
+        expect(pageScaleInputString).toBe(String(expectedVisual.pageValue));
+        const worldScaleInput = container.querySelector('[data-element="customDisplayScaleValue"]');
+        const worldScaleInputString = String(worldScaleInput.value);
+        expect(worldScaleInputString).toBe(String(expectedVisual.worldValue));
+      });
+    }
+
+    it('rounds page scale when creating a new scale even if the previous page scale was created using calibration', async () => {
+      const props = {
+        annotations: [],
+        selectedTool: null,
+      };
+      const { rerender } = render(
+        <Provider store={store}>
+          <ScaleModal {...props} />
+        </Provider>
+      );
+      const calibrationButton = screen.getByRole('button', { name: 'Calibrate' });
+      userEvent.click(calibrationButton);
+      store.dispatch(actions.updateCalibrationInfo({
+        isCalibration: false,
+        tempScale: '1.234567 in = 10.34 mm',
+        isFractionalUnit: false,
+      }));
+
+      // End the calibration process by reopening the scale modal
+      store.dispatch(actions.setIsElementHidden(DataElements.SCALE_MODAL, false));
+      const createButton = screen.getByRole('button', { name: 'Create' });
+      userEvent.click(createButton);
+
+      expect(coreMock.createAndApplyScale).toHaveBeenCalled();
+      const createdScale = coreMock.createAndApplyScale.mock.calls[0][0];
+      const [[pageValue, pageUnit], [worldValue, worldUnit]] = createdScale.getScaleRatioAsArray();
+      expect(pageValue).toBe(1.234567);
+      expect(pageUnit).toBe('in');
+      expect(worldValue).toBe(10.3);
+      expect(worldUnit).toBe('mm');
+
+      // Rerender the scale modal and create another scale without calibration
+      rerender(
+        <Provider store={store}>
+          <ScaleModal {...props} />
+        </Provider>
+      );
+      const pageValueInput = screen.getByRole('spinbutton', { name: 'Paper Units' });
+      userEvent.clear(pageValueInput);
+      userEvent.type(pageValueInput, '2.345678');
+      userEvent.click(createButton);
+
+      expect(coreMock.createAndApplyScale).toHaveBeenCalledTimes(2);
+      const secondCreatedScale = coreMock.createAndApplyScale.mock.calls[1][0];
+      const [[secondPageValue, secondPageUnit]] = secondCreatedScale.getScaleRatioAsArray();
+      expect(secondPageValue).toBe(2.3);
+      expect(secondPageUnit).toBe('in');
     });
   });
 });

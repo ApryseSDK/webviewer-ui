@@ -35,9 +35,13 @@ const TopHeaderContainer = () => {
   const [elementRef, dimensions] = useResizeObserver();
 
   // Debounced function to set the top floating container height
-  const setTopFloatingContainerHeight = debounce((height) => {
+  const setTopFloatingContainerHeight = useMemo(() => debounce((height) => {
     dispatch(actions.setTopFloatingContainerHeight(height));
-  }, 200);
+  }, 200), [dispatch]);
+
+  useEffect(() => () => {
+    setTopFloatingContainerHeight.cancel();
+  }, [setTopFloatingContainerHeight]);
 
   useEffect(() => {
     if (dimensions.height !== null && floatingHeaders.length > 0) {

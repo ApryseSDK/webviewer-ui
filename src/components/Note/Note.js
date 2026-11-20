@@ -19,9 +19,9 @@ import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
-import { parseRecordId } from 'helpers/officeEditorCommentHelper';
+import { parseRecordId } from 'helpers/officeEditorAnnotationsHelper';
 import { OfficeEditorEditMode, OFFICE_EDITOR_TRACKED_CHANGE_KEY, OFFICE_EDITOR_COMMENT_KEY } from 'constants/officeEditor';
-import { SpreadsheetCommentState, SPREADSHEET_THREAD_ID_KEY, SPREADSHEET_SHEET_NAME_KEY, SPREADSHEET_CELL_KEY, SPREADSHEET_COMMENT_STATE_KEY } from 'constants/spreadsheetEditor';
+import { SpreadsheetCommentState, SPREADSHEET_SHEET_NAME_KEY, SPREADSHEET_CELL_KEY, SPREADSHEET_COMMENT_STATE_KEY } from 'constants/spreadsheetEditor';
 import { navigateToSpreadsheetComment } from 'helpers/spreadsheetEditorCommentHelper';
 
 import './Note.scss';
@@ -108,7 +108,7 @@ const Note = ({
     shallowEqual,
   );
   const isOfficeEditorCommentAnnotation = mapAnnotationToKey(annotation) === annotationMapKeys.OFFICE_EDITOR_COMMENT;
-  const isSpreadsheetEditorCommentAnnotation = isSpreadsheetEditorMode && !!annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY);
+  const isSpreadsheetEditorCommentAnnotation = isSpreadsheetEditorMode && mapAnnotationToKey(annotation) === annotationMapKeys.SPREADSHEET_EDITOR_COMMENT;
 
   useEffect(() => {
     if (!isSelected || !isSpreadsheetEditorCommentAnnotation) {
@@ -220,13 +220,12 @@ const Note = ({
   });
 
   useEffect(() => {
-    // If this is not a new one, rebuild the isEditing map
-    const pendingText = pendingEditTextMap[annotation.Id];
-    const shouldEnterEditMode = !isMultiSelectMode && pendingText !== '' && isContentEditable && canEditAnnotation && !isDocumentReadOnly;
-    if (shouldEnterEditMode && !isEditingMap[annotation.Id]) {
+    // Auto-enter edit mode for empty, editable comments when not in multi-select mode.
+    const shouldEnterEditMode = !isMultiSelectMode && isContentEditable && canEditAnnotation && !isDocumentReadOnly;
+    if (shouldEnterEditMode) {
       setIsEditing(true, annotation.Id);
     }
-  }, [isDocumentReadOnly, isContentEditable, canEditAnnotation, setIsEditing, annotation, isMultiSelectMode, pendingEditTextMap, isEditingMap]);
+  }, [isDocumentReadOnly, isContentEditable, canEditAnnotation, setIsEditing, annotation, isMultiSelectMode]);
   const isNoteCurrentlyEditing = Boolean(isEditingMap[annotation.Id]);
   useDidUpdate(() => {
     const shouldExitEditMode = isDocumentReadOnly || !canEditAnnotation || !canEditAnnotationContents;
@@ -271,7 +270,7 @@ const Note = ({
       if (!isRightClickAnnotationPopupEnabled) {
         dispatch(actions.openElement(DataElements.ANNOTATION_POPUP));
       }
-      if (isSpreadsheetEditorMode && annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY)) {
+      if (isSpreadsheetEditorCommentAnnotation) {
         navigateToSpreadsheetComment({ comment: annotation, core, documentViewerKey });
         return;
       }

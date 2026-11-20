@@ -53,6 +53,27 @@ describe('RichTextStyleEditor', () => {
     );
   });
 
+  it('enables rich text mode when an editor was focused before mounting', () => {
+    const setIsRichTextEditMode = jest.fn();
+    const editor = {
+      getSelection: () => null,
+      hasFocus: () => true,
+    };
+
+    render(
+      <Provider store={store}>
+        <RichTextStyleEditor
+          {...defaultProps}
+          editor={editor}
+          isRichTextEditMode={false}
+          setIsRichTextEditMode={setIsRichTextEditMode}
+        />
+      </Provider>
+    );
+
+    expect(setIsRichTextEditMode).toHaveBeenCalledWith(true);
+  });
+
   it('should trigger format update when user clicks color button', () => {
     // eslint-disable-next-line custom/no-hex-colors
     const defaultColor = '#000000';

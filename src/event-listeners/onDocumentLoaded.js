@@ -1,4 +1,5 @@
 import core from 'core';
+import { createInstanceScopedState } from 'core/documentViewers';
 import { createWrappedCore } from 'hooks/useCore/useCore';
 import getHashParameters from 'helpers/getHashParameters';
 import { getLeftPanelDataElements } from 'helpers/isDataElementPanel';
@@ -14,7 +15,7 @@ import { defaultHotkeysScope, getHotkeysManager } from 'helpers/hotkeysManager';
 import { ShortcutKeys, Shortcuts } from 'helpers/hotkeysUtils';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
-import { isSpreadsheetEditorMode } from 'helpers/spreadsheetEditor/isSpreadsheetEditorMode';
+import isSpreadsheetEditorMode from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import DataElements from 'constants/dataElement';
 import { panelNames } from 'constants/panel';
 import { getPortfolioFiles } from 'helpers/portfolio';
@@ -35,7 +36,8 @@ import normalizeInitialEditMode from 'helpers/normalizeInitialEditMode';
 import { VIEWER_CONFIGURATIONS } from 'constants/customizationVariables';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
-let notesInLeftPanel = getHashParameters('notesInLeftPanel', false);
+// Left panel setting to restore when leaving the Office Editor, kept per instance.
+const notesInLeftPanelState = createInstanceScopedState(() => ({ value: getHashParameters('notesInLeftPanel', false) }));
 
 export default (store, documentViewerKey) => async () => {
   const { dispatch } = store;
@@ -119,20 +121,29 @@ export const addPageLabelsToRedux = (store, documentViewerKey) => async () => {
       await pageRenderPromiseCapability.promise;
       await PDFNet.runWithCleanup(getPageCount);
 
-      for (let i = 1; i <= totalPageCount; i++) {
-        const main = async () => {
-          try {
-            checkIfDocumentClosed();
-            const pageLabel = await pdfDoc.getPageLabel(i);
-            checkIfDocumentClosed();
-            const label = await pageLabel.getLabelTitle(i);
-            pageLabels.push(label.length > 0 ? label : i.toString());
-          } catch (e) {
-            console.warn(e);
+      const fetchAndValidatePageLabel = async (pageNumber) => {
+        try {
+          checkIfDocumentClosed();
+          const pageLabel = await pdfDoc.getPageLabel(pageNumber);
+          checkIfDocumentClosed();
+          if (!(await pageLabel.isValid())) {
+            return false;
           }
-        };
+          const label = await pageLabel.getLabelTitle(pageNumber);
+          pageLabels.push(label.length > 0 ? label : pageNumber.toString());
+          return true;
+        } catch (e) {
+          console.warn(e);
+          return false;
+        }
+      };
+
+      for (let i = 1; i <= totalPageCount; i++) {
         await pageRenderPromiseCapability.promise;
-        await PDFNet.runWithCleanup(main);
+        const isPageLabelValid = await PDFNet.runWithCleanup(() => fetchAndValidatePageLabel(i));
+        if (!isPageLabelValid) {
+          return;
+        }
       }
 
       checkIfDocumentClosed();
@@ -204,14 +215,18 @@ export const checkDocumentForTools = (dispatch, documentViewerKey) => () => {
   }
   const docType = doc.getType();
   if (docType === workerTypes.PDF || (docType === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
-    dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
+    dispatch(actions.enableElement('cropToolButton', PRIORITY_ONE));
+    dispatch(actions.enableElement('cropAndRemoveRadioButton', PRIORITY_ONE));
     dispatch(actions.enableElement('contentEditButton', PRIORITY_ONE));
     dispatch(actions.enableElement('addParagraphToolGroupButton', PRIORITY_ONE));
   } else if (docType === workerTypes.IMAGE) {
+    dispatch(actions.enableElement('cropToolButton', PRIORITY_ONE));
+    dispatch(actions.enableElement('cropAndRemoveRadioButton', PRIORITY_ONE));
     dispatch(actions.disableElement('contentEditButton', PRIORITY_ONE));
     dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
   } else {
-    dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
+    dispatch(actions.disableElement('cropToolButton', PRIORITY_ONE));
+    dispatch(actions.disableElement('cropAndRemoveRadioButton', PRIORITY_ONE));
     dispatch(actions.disableElement('contentEditButton', PRIORITY_ONE));
     dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
   }
@@ -295,6 +310,7 @@ export const syncDisplayModeMultiviewer = (documentViewerKey) => () => {
 export const configureEditorMode = (store, documentViewerKey) => () => {
   const hotkeysManager = getHotkeysManager(store);
   const { getState, dispatch } = store;
+  const getInstanceId = () => selectors.getInstanceId(getState());
   const doc = core.getDocument(documentViewerKey);
   if (!doc) {
     return;
@@ -400,7 +416,7 @@ export const configureEditorMode = (store, documentViewerKey) => () => {
     });
     // Setting zoom to 100% later here to avoid mouse clicks from becoming offset.
     core.zoomTo(1, 0, 0);
-    notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
+    notesInLeftPanelState.get(getInstanceId()).value = selectors.getNotesInLeftPanel(getState());
     dispatch(actions.setNotesInLeftPanel(true));
     dispatch(actions.setClearSearchOnPanelClose(true));
   };
@@ -454,7 +470,7 @@ export const configureEditorMode = (store, documentViewerKey) => () => {
     contentSelectTool.removeEventListener('activeStreamChanged', updateOfficeEditorActiveStream);
 
     hotkeys.setScope(defaultHotkeysScope);
-    dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
+    dispatch(actions.setNotesInLeftPanel(notesInLeftPanelState.get(getInstanceId()).value));
     dispatch(actions.setIsOfficeEditorHeaderEnabled(false));
   };
 

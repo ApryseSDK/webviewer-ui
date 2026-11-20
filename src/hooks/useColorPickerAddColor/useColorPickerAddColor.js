@@ -5,7 +5,7 @@ import { getCustomColorAndRemove, parseColor } from 'helpers/colorPickerHelper';
 import Events from 'constants/events';
 import DataElements from 'constants/dataElement';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { getEventHandler } from 'helpers/fireEvent';
+import { useInstanceEventHandler } from 'helpers/fireEvent';
 
 const useAddColorHandler = ({
   colors,
@@ -18,6 +18,7 @@ const useAddColorHandler = ({
   spreadsheetSetter,
   spreadsheetGetter,
 }) => {
+  const eventHandler = useInstanceEventHandler();
   const dispatch = useDispatch();
   const store = useStore();
   const customColors = useSelector((state) => selectors.getCustomColors(state, type));
@@ -52,11 +53,11 @@ const useAddColorHandler = ({
             dispatch(actionToDispatch);
           }
         }
-        getEventHandler().removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+        eventHandler.removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
       }
     };
 
-    getEventHandler().addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+    eventHandler.addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
   }, [colors, type, activeToolName]);
 
   return handleAddColor;

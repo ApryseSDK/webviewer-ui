@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef, useImp
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { setCloseToolTipFunc } from 'helpers/hotkeysManager';
+import { getCloseToolTipFunc, setCloseToolTipFunc } from 'helpers/hotkeysManager';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import { getWebComponentScale } from 'helpers/getWebComponentScale';
@@ -12,6 +12,7 @@ import getRootNode from 'helpers/getRootNode';
 import useHotkeysManager from 'hooks/useHotkeysManager';
 import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
 import Events from 'constants/events';
+import { TOOLTIP_SHOW_DELAY, TOOLTIP_OPACITY_DELAY } from 'constants/tooltip';
 import { css } from '@emotion/react';
 import './Tooltip.scss';
 
@@ -21,14 +22,17 @@ const propTypes = {
   hideShortcut: PropTypes.bool,
   forcePosition: PropTypes.string,
   hideOnClick: PropTypes.bool,
+  virtualFocus: PropTypes.bool,
   xOffset: PropTypes.number
 };
+
+let activeTooltipHideCallback = null;
 
 const isMouseOverElement = (elementBoundingRect, e) => {
   return e.clientX >= elementBoundingRect.left && e.clientX <= elementBoundingRect.right && e.clientY >= elementBoundingRect.top && e.clientY <= elementBoundingRect.bottom;
 };
 
-const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePosition, hideOnClick = true, xOffset = 0 }, ref) => {
+const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePosition, hideOnClick = true, virtualFocus = false, xOffset = 0 }, ref) => {
   const timeoutRef = useRef(null);
   const hiddenByClickRef = useRef(false);
   const childRef = useRef(null);
@@ -48,8 +52,6 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
   });
   const [location, setLocation] = useState('bottom');
   const [t, i18n, ready] = useTranslation();
-  const delayShow = 300;
-  const opacityTimeout = 50;
 
   const setShowGuarded = (value) => {
     if (showRef.current !== value) {
@@ -73,20 +75,31 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
   };
 
   useEffect(() => {
+    if (!childRef.current) {
+      return;
+    }
     const showToolTip = () => {
       clearTimeout(timeoutRef.current);
       if (hiddenByClickRef.current) {
         return;
       }
       timeoutRef.current = setTimeout(() => {
+        const hidePreviousTooltip = activeTooltipHideCallback;
+        if (hidePreviousTooltip !== hideTooltip) {
+          hidePreviousTooltip?.();
+        }
+        activeTooltipHideCallback = hideTooltip;
         setCloseToolTipFunc(hideByClick);
         setShowGuarded(true);
         fireEvent(Events.TOOLTIP_OPENED);
-      }, delayShow - opacityTimeout);
+      }, TOOLTIP_SHOW_DELAY - TOOLTIP_OPACITY_DELAY);
     };
 
     const hideTooltip = () => {
       clearTimeout(timeoutRef.current);
+      if (activeTooltipHideCallback === hideTooltip) {
+        activeTooltipHideCallback = null;
+      }
       setShowGuarded(false);
       setOpacityGuarded(0);
     };
@@ -143,14 +156,21 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
         // accounts for the delay on showToolTip
         setTimeout(() => {
           hideTooltip();
-        }, delayShow);
+        }, TOOLTIP_SHOW_DELAY);
       }
     });
 
     observer.observe(childRef.current, { attributes: true, childList: false, characterData: false });
 
+    if (virtualFocus) {
+      showToolTip();
+    }
+
     return () => {
       hideTooltip();
+      if (getCloseToolTipFunc() === hideByClick) {
+        setCloseToolTipFunc(null);
+      }
       observer.disconnect();
 
       localRoot?.removeEventListener('pointermove', changeToolTipState);
@@ -160,7 +180,7 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       childRef.current?.removeEventListener('focus', showToolTip);
       childRef.current?.removeEventListener('blur', hideByBlur);
     };
-  }, [childRef, hideOnClick, instanceRoot]);
+  }, [childRef, hideOnClick, instanceRoot, virtualFocus]);
 
   useLayoutEffect(() => {
     const childEle = childRef.current;
@@ -239,7 +259,7 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       setTopAndLeft();
       setTimeout(() => {
         setOpacityGuarded(1);
-      }, opacityTimeout);
+      }, TOOLTIP_OPACITY_DELAY);
     } else {
       setOpacityGuarded(0);
     }

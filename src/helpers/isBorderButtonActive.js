@@ -1,4 +1,4 @@
-import getSelectedCellStyle from './getSelectedCellStyle';
+import getSelectedCellStyle from './spreadsheetEditor/getSelectedCellStyle';
 
 const isBorderButtonActive = (borderButton) => {
   const isSelectingMultipleCells = ['Inside', 'Vertical', 'Horizontal', 'All'].includes(borderButton);

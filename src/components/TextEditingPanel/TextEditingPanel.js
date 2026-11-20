@@ -19,6 +19,7 @@ const TextEditingPanel = ({
   disableLinkButton,
   fonts,
   format,
+  getFontDisplayValue,
   handleAddLinkToText,
   handlePrepareAddLinkToText,
   handleColorChange,
@@ -71,6 +72,7 @@ const TextEditingPanel = ({
         <div className={`text-editing-panel-text-style-picker ${contentSelectMode ? '' : 'inactive'}`}>
           <TextStylePicker
             fonts={fonts}
+            getFontDisplayValue={getFontDisplayValue}
             onPropertyChange={handlePropertyChange}
             properties={textEditProperties}
             isContentEditing={true}
@@ -214,6 +216,7 @@ TextEditingPanel.propTypes = {
   disableLinkButton: PropTypes.bool,
   fonts: PropTypes.arrayOf(PropTypes.string),
   format: PropTypes.object,
+  getFontDisplayValue: PropTypes.func,
   handleAddLinkToText: PropTypes.func,
   handlePrepareAddLinkToText: PropTypes.func,
   handleColorChange: PropTypes.func,

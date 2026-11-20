@@ -256,7 +256,7 @@
 
           .documentControlsButton button,
           .PageControlContainer button {
-            &:hover {
+            &:hover:not(:disabled):not(.disabled) {
               @extend %icon-button-hover;
             }
           }
@@ -305,7 +305,7 @@
           padding-inline-start: 2px;
 
           .Button {
-            &:hover:not(.active) {
+            &:hover:not(.active):not(:disabled):not(.disabled) {
               @extend %icon-button-hover;
             }
 

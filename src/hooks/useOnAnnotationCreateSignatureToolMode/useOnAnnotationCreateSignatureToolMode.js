@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
@@ -10,6 +10,7 @@ import { ITEM_RENDER_PREFIXES } from 'src/constants/customizationVariables';
 const ToolNames = window.Core.Tools.ToolNames;
 
 export default function useOnAnnotationCreateSignatureToolMode() {
+  const core = useInstanceCore();
   const dispatch = useDispatch();
   const { customizableUI } = useSelector((state) => selectors.getFeatureFlags(state));
   const signatureListPanelInFlyout = useSelector((state) => selectors.getIsPanelInFlyout(state, ITEM_RENDER_PREFIXES.SIGNATURE_LIST_PANEL));

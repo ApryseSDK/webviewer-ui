@@ -1,4 +1,6 @@
-let fontPath = null;
+import { createInstanceScopedState } from 'core/documentViewers';
+
+const fontPathState = createInstanceScopedState(() => ({ fontPath: null }));
 /**
  * Set the path of fonts used in UI
  * @name setFontPath
@@ -15,7 +17,7 @@ export const setFontPath = (path) => {
   if (!path.endsWith('/')) {
     path += '/';
   }
-  fontPath = path;
+  fontPathState.get().fontPath = path;
 };
 
 /**
@@ -26,5 +28,5 @@ export const setFontPath = (path) => {
  * @returns {string} the prefix url for font path.
  */
 export const getFontPath = () => {
-  return fontPath;
+  return fontPathState.get().fontPath;
 };

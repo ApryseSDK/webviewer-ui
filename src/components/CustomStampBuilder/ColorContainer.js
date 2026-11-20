@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useStore } from 'react-redux';
-import { getEventHandler } from 'helpers/fireEvent';
+import { useInstanceEventHandler } from 'helpers/fireEvent';
 import { COMMON_COLORS } from 'constants/commonColors';
 import actions from 'src/redux/actions';
 import selectors from 'selectors';
@@ -15,6 +15,7 @@ const ColorContainer = ({
   colorsArrayName,
   type,
 }) => {
+  const eventHandler = useInstanceEventHandler();
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const store = useStore();
@@ -53,10 +54,10 @@ const ColorContainer = ({
           setCustomColors(toolColors);
           handleColorChange(colorToBeAdded);
         }
-        getEventHandler().removeEventListener(Events.VISIBILITY_CHANGED, handleVisibilityChanged);
+        eventHandler.removeEventListener(Events.VISIBILITY_CHANGED, handleVisibilityChanged);
       }
     };
-    getEventHandler().addEventListener(Events.VISIBILITY_CHANGED, handleVisibilityChanged);
+    eventHandler.addEventListener(Events.VISIBILITY_CHANGED, handleVisibilityChanged);
   };
 
   const openDeleteModal = () => {

@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Button from 'components/Button';
+import Icon from 'components/Icon';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -40,28 +42,40 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
     isDisabled,
     pageLabels,
     isThumbnailSelectingPages,
+    isCustomPageLabelsEnabled,
   ] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.isElementDisabled(state, 'documentControl'),
     selectors.getPageLabels(state, activeDocumentViewerKey),
     selectors.isThumbnailSelectingPages(state),
+    selectors.isCustomPageLabelsEnabled(state, activeDocumentViewerKey),
   ]);
 
   const initialPagesString = getPageString(selectedPageIndexes, pageLabels);
 
   const [pageString, setPageString] = useState(initialPagesString);
   const [previousPageString, setPreviousPageString] = useState(initialPagesString);
+  const [hasPageNumberError, setHasPageNumberError] = useState(false);
+  // Skips the error reset below when the selection change itself came from an invalid-blur clear.
+  const clearingAfterErrorRef = useRef(false);
 
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
+    if (clearingAfterErrorRef.current) {
+      clearingAfterErrorRef.current = false;
+    } else {
+      setHasPageNumberError(false);
+    }
   }, [setPageString, selectedPageIndexes, shouldShowControls, pageLabels]);
 
   const onBlur = (e) => {
-    const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pages = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels);
+    const selectedPagesString = e.target.value.replaceAll(' ', '');
+    const pages = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, core.getTotalPages());
     const pageIndexes = pages.map((page) => page - 1);
+    const isValidInput = pages.length > 0 || !selectedPagesString;
 
-    if (pages.length || !selectedPagesString) {
+    if (isValidInput) {
+      setHasPageNumberError(false);
       dispatch(actions.setSelectedPageThumbnails(pageIndexes));
 
       const updatedString = getPageString(selectedPageIndexes, pageLabels);
@@ -69,10 +83,15 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
       setPageString(updatedString);
       setPreviousPageString(updatedString);
     } else {
-      setPageString(previousPageString);
+      setHasPageNumberError(true);
+      setPageString('');
+      if (selectedPageIndexes.length > 0) {
+        clearingAfterErrorRef.current = true;
+        dispatch(actions.setSelectedPageThumbnails([]));
+      }
     }
 
-    if (selectedPageIndexes.length > 0 && !isThumbnailSelectingPages) {
+    if (isValidInput && selectedPageIndexes.length > 0 && !isThumbnailSelectingPages) {
       // set a short timeout due to race condition caused by onBlur and
       // changing the documentControlsButton based on isThumbnailSelectingPages
       setTimeout(() => {
@@ -84,7 +103,18 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
   };
 
   const pageStringUpdate = (e) => {
-    setPageString(e.target.value);
+    const inputValue = e.target.value;
+    setPageString(inputValue);
+
+    const selectedPagesString = inputValue.replaceAll(' ', '');
+    const lastChar = selectedPagesString[selectedPagesString.length - 1];
+    if (!selectedPagesString || lastChar === ',' || lastChar === '-') {
+      setHasPageNumberError(false);
+      return;
+    }
+
+    const pages = getPageArrayFromString(selectedPagesString, pageLabels, core.getTotalPages());
+    setHasPageNumberError(pages.length === 0);
   };
 
   const disableThumbnailSelectingPages = () => {
@@ -110,17 +140,21 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
               {t('option.thumbnailPanel.multiSelectPagesExample')}
             </span>
           </label>
-          <div className={'documentControlsInput'}>
-            <input
-              name="pageNumbersInput"
-              onBlur={onBlur}
-              onChange={pageStringUpdate}
-              value={pageString}
-              placeholder={''}
-              aria-label={t('option.thumbnailPanel.enterPageNumbers')}
-              className="pagesInput"
-              type="text"
-            />
+          <div className={classNames('documentControlsInput', { error: hasPageNumberError })}>
+            <div className="pageNumbersInputWrapper">
+              <input
+                name="pageNumbersInput"
+                onBlur={onBlur}
+                onChange={pageStringUpdate}
+                value={pageString}
+                placeholder={''}
+                aria-label={t('option.thumbnailPanel.enterPageNumbers')}
+                aria-describedby={hasPageNumberError ? 'documentControlsPageNumberError' : undefined}
+                className={classNames('pagesInput', { 'pagesInput--error': hasPageNumberError })}
+                type="text"
+              />
+              {hasPageNumberError && <Icon glyph="icon-alert" />}
+            </div>
             <div className={'documentControlsButton'}>
               {!isThumbnailSelectingPages ? (
                 <Button
@@ -139,6 +173,14 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
               )}
             </div>
           </div>
+          {hasPageNumberError && (
+            <div id="documentControlsPageNumberError" className="page-number-error">
+              <p aria-live="assertive" className="no-margin">
+                {t('message.errorPageNumberPart1')}
+                {!isCustomPageLabelsEnabled && `${t('message.errorPageNumberPart2')} ${core.getTotalPages()}.`}
+              </p>
+            </div>
+          )}
         </div>
       ) : null}
     </div>

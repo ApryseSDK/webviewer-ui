@@ -137,6 +137,9 @@ const ToolButton = forwardRef((props, ref) => {
     }
 
     if (isButtonActive) {
+      if (toolName === defaultTool) {
+        return;
+      }
       setIsButtonActive(false);
       handlePanels(toolName, 'close');
       core.setToolMode(defaultTool);

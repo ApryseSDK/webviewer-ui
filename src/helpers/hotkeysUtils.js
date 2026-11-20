@@ -1,4 +1,5 @@
 import { isMac } from './device';
+import { createInstanceScopedState } from 'core/documentViewers';
 
 export const EditorModes = {
   DEFAULT: 'viewer',
@@ -72,7 +73,7 @@ export const Shortcuts = {
   DELETE: 'delete',
 };
 
-export let VIEW_ONLY_SHORTCUTS = [
+const DEFAULT_VIEW_ONLY_SHORTCUTS = [
   Shortcuts.ROTATE_CLOCKWISE,
   Shortcuts.ROTATE_COUNTER_CLOCKWISE,
   Shortcuts.COPY,
@@ -101,8 +102,12 @@ export let VIEW_ONLY_SHORTCUTS = [
   Shortcuts.END,
 ];
 
-export const setViewOnlyShortcuts = (newShortcuts) => VIEW_ONLY_SHORTCUTS = newShortcuts;
-export const getViewOnlyShortcuts = () => VIEW_ONLY_SHORTCUTS;
+const viewOnlyShortcutsState = createInstanceScopedState(() => ({ shortcuts: DEFAULT_VIEW_ONLY_SHORTCUTS }));
+
+export const setViewOnlyShortcuts = (newShortcuts, instanceId) => {
+  viewOnlyShortcutsState.get(instanceId).shortcuts = newShortcuts;
+};
+export const getViewOnlyShortcuts = (instanceId) => viewOnlyShortcutsState.get(instanceId).shortcuts;
 
 export const PDFViewerConfig = [
   [Shortcuts.ROTATE_CLOCKWISE, 'option.settings.rotateDocumentClockwise'],

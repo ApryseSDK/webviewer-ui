@@ -61,6 +61,8 @@ const defaultFonts = {
   },
 };
 
+const loadedFontFaceKeys = new Set();
+
 const loadFont = (font, fontType, isWebFont = false, fileName = null, style = {}) => {
   const fontDirectoryPaht = getFontPath() || 'assets/fonts/';
 
@@ -101,9 +103,19 @@ const loadFont = (font, fontType, isWebFont = false, fileName = null, style = {}
     url = `url(${fontPath}) format(${fontTypes[fontType]})`;
   }
 
+  // document.fonts outlives every instance, so add each face once instead of once per mount.
+  const fontFaceKey = JSON.stringify([font, url, fontStyle]);
+  if (loadedFontFaceKeys.has(fontFaceKey)) {
+    return;
+  }
+  loadedFontFaceKeys.add(fontFaceKey);
+
   const fontFace = new FontFace(font, url, fontStyle);
   fontFace.load().then(function(loadedFace) {
     document.fonts.add(loadedFace);
+  }).catch(function() {
+    // Forget the face if loading or adding it failed, so a later mount can try again.
+    loadedFontFaceKeys.delete(fontFaceKey);
   });
 };
 

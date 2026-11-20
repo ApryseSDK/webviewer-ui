@@ -5,7 +5,7 @@ import SpreadsheetSwitcher from './SpreadsheetSwitcher';
 import useOnDocumentUnloaded from 'hooks/useOnDocumentUnloaded';
 import { useTranslation } from 'react-i18next';
 import useFocusOnClose from 'src/hooks/useFocusOnClose';
-import { isSheetNameDuplicated } from 'helpers/spreadsheetSwitchContainerHelpers';
+import isSheetNameDuplicated from 'src/helpers/spreadsheetEditor/isSheetNameDuplicated';
 import actions from 'actions';
 
 const ERROR = 'SpreadsheetEditorDocument is not loaded';

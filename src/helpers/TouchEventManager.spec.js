@@ -73,6 +73,86 @@ describe('createTouchEventManager', () => {
     expect(defaultTouchEventManager).not.toBe(created);
   });
 
+  it('only suppresses touch interaction while the pen session is active', () => {
+    const manager = createTouchEventManager();
+    manager.documentViewerKey = 1;
+    const isPenPointerDown = jest.fn(() => true);
+    core.getDocumentViewer.mockReturnValue({ isPenPointerDown });
+
+    expect(manager.isPenInputActive()).toBe(true);
+
+    isPenPointerDown.mockReturnValue(false);
+    expect(manager.isPenInputActive()).toBe(false);
+  });
+
+  describe('while a pen owns the input', () => {
+    let manager;
+
+    beforeEach(() => {
+      manager = createTouchEventManager();
+      manager.initialize(makeDocument(), makeContainer({ scrollTo: jest.fn() }), 1);
+      core.getToolMode.mockReturnValue({ name: 'AnnotationCreateFreeHand' });
+      core.getDocumentViewer.mockReturnValue({ isPenPointerDown: () => true, isStylusModeEnabled: () => false });
+      manager.touch.type = 'Tap';
+      manager.touch.touchMoveCount = 5;
+      manager.touch.stopMomentumScroll = false;
+      manager.horziontalLock = true;
+      manager.verticalLock = true;
+      manager.verticalMomentum = 3;
+      manager.horziontalMomentum = 4;
+    });
+
+    const expectTouchStateReset = () => {
+      expect(manager.touch.type).toBe('');
+      expect(manager.touch.touchMoveCount).toBe(0);
+      expect(manager.touch.stopMomentumScroll).toBe(true);
+      expect(manager.horziontalLock).toBe(false);
+      expect(manager.verticalLock).toBe(false);
+      expect(manager.verticalMomentum).toBe(0);
+      expect(manager.horziontalMomentum).toBe(0);
+    };
+
+    it('ignores touch start from a resting palm and clears gesture state', () => {
+      manager.handleTouchStart({ touches: [{ clientX: 1, clientY: 1 }] });
+      expectTouchStateReset();
+      expect(manager.container.scrollTo).not.toHaveBeenCalled();
+    });
+
+    it('cancels touch move so the page does not scroll, and clears gesture state', () => {
+      const e = { cancelable: true, preventDefault: jest.fn(), touches: [{ clientX: 1, clientY: 1 }] };
+      manager.handleTouchMove(e);
+      expect(e.preventDefault).toHaveBeenCalled();
+      expectTouchStateReset();
+    });
+
+    it('does not call preventDefault on a non-cancelable touch move', () => {
+      const e = { cancelable: false, preventDefault: jest.fn(), touches: [{ clientX: 1, clientY: 1 }] };
+      manager.handleTouchMove(e);
+      expect(e.preventDefault).not.toHaveBeenCalled();
+      expectTouchStateReset();
+    });
+
+    it('clears gesture state on touch end without starting a tap or momentum scroll', () => {
+      jest.useFakeTimers();
+      manager.handleTouchEnd({ touches: [], changedTouches: [{ clientX: 1, clientY: 1 }] });
+      expectTouchStateReset();
+      expect(jest.getTimerCount()).toBe(0);
+      jest.useRealTimers();
+    });
+
+    it('clears gesture state on touch cancel', () => {
+      manager.handleTouchCancel({ touches: [], changedTouches: [] });
+      expectTouchStateReset();
+    });
+  });
+
+  it('does not treat touches as pen input when no document viewer is available', () => {
+    const manager = createTouchEventManager();
+    manager.documentViewerKey = 1;
+    core.getDocumentViewer.mockReturnValue(undefined);
+    expect(manager.isPenInputActive()).toBe(false);
+  });
+
   it('keeps the pinch zoom focus independent of the viewer position on the page', () => {
     const container = makeContainer({
       scrollLeft: 20,
@@ -115,5 +195,94 @@ describe('createTouchEventManager', () => {
     manager.handleTouchEnd({});
 
     expect(core.zoomTo).toHaveBeenCalledWith(1.5, 105, 150, 1);
+  });
+
+  describe('axis lock during touch scroll', () => {
+    const setup = (toolMode) => {
+      const container = makeContainer({ scrollTo: jest.fn(), scrollLeft: 300, scrollTop: 900 });
+      core.getToolMode.mockReturnValue(toolMode);
+      const manager = createTouchEventManager();
+      manager.initialize(makeDocument(), container, 1);
+      manager.startingScrollLeft = 100;
+      manager.startingScrollTop = 200;
+      manager.touch = { clientX: 0, clientY: 0, touchMoveCount: 10 };
+      return { manager, container };
+    };
+
+    it('does not reset the locked axis while an annotation is being dragged', () => {
+      const { manager, container } = setup({ isSelecting: () => true });
+      manager.verticalLock = true;
+      manager.horziontalLock = true;
+
+      manager.handleScroll({ clientX: 5, clientY: 5 });
+
+      expect(container.scrollTo).not.toHaveBeenCalled();
+    });
+
+    it('resets the locked axis to the touch start position when not dragging an annotation', () => {
+      const { manager, container } = setup({ isSelecting: () => false });
+      manager.verticalLock = true;
+
+      manager.handleScroll({ clientX: 5, clientY: 5 });
+
+      expect(container.scrollTo).toHaveBeenCalledWith(100, 900);
+    });
+  });
+
+  describe('spreadsheet editor documents', () => {
+    const twoFingers = [
+      { clientX: 100, clientY: 100 },
+      { clientX: 200, clientY: 200 },
+    ];
+    const makeEvent = (touches) => ({ cancelable: true, preventDefault: jest.fn(), touches });
+
+    const setup = (documentType) => {
+      core.getDocument.mockReturnValue({ getType: () => documentType });
+      core.getToolMode.mockReturnValue({ name: 'Pan' });
+      core.getZoom.mockReturnValue(1);
+      core.getDocumentViewer.mockReturnValue({
+        isStylusModeEnabled: jest.fn(() => false),
+        getScrollViewElement: jest.fn(() => makeContainer()),
+        getDisplayModeManager: jest.fn(() => ({
+          getDisplayMode: jest.fn(() => ({ getScale: jest.fn(() => ({ scaleX: 1, scaleY: 1 })) })),
+        })),
+      });
+      jest.spyOn(window, 'getComputedStyle').mockReturnValue({ marginTop: '0' });
+
+      const manager = createTouchEventManager();
+      manager.initialize(makeDocument(), makeContainer());
+      return manager;
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('does not handle touches, which are left to the spreadsheet editor', () => {
+      const manager = setup('spreadsheetEditor');
+      const event = makeEvent(twoFingers);
+
+      manager.handleTouchStart(event);
+      manager.handleTouchMove(event);
+      manager.handleTouchEnd(event);
+
+      expect(event.preventDefault).not.toHaveBeenCalled();
+      expect(manager.touch.type).toBe('');
+      expect(core.zoomTo).not.toHaveBeenCalled();
+    });
+
+    it('still handles touches for other documents', () => {
+      const manager = setup('pdf');
+      const event = makeEvent(twoFingers);
+
+      manager.handleTouchStart(event);
+
+      expect(event.preventDefault).toHaveBeenCalled();
+      expect(manager.touch.distance).toBeGreaterThan(0);
+    });
   });
 });

@@ -1,24 +1,24 @@
 import { isOfficeEditorMode } from 'helpers/officeEditor';
+import { createInstanceScopedState } from 'core/documentViewers';
 
-let minZoom = 0.05;
-let maxZoom = 99.99;
+const zoomLimits = createInstanceScopedState(() => ({ minZoom: 0.05, maxZoom: 99.99 }));
 const MAX_OFFICE_EDITOR_ZOOM = 2;
 
-export const getMinZoomLevel = () => minZoom;
+export const getMinZoomLevel = () => zoomLimits.get().minZoom;
 
 export const setMinZoomLevel = (zoom) => {
-  minZoom = zoom;
+  zoomLimits.get().minZoom = zoom;
 };
 
 export const getMaxZoomLevel = () => {
   if (isOfficeEditorMode()) {
     return MAX_OFFICE_EDITOR_ZOOM;
   }
-  return maxZoom;
+  return zoomLimits.get().maxZoom;
 };
 
 export const setMaxZoomLevel = (zoom) => {
-  maxZoom = zoom;
+  zoomLimits.get().maxZoom = zoom;
 };
 
 export const stepToZoomFactorRangesMap = {

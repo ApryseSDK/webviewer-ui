@@ -7,7 +7,7 @@ import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import getCurrentT from 'helpers/getCurrentT';
-import getSpreadsheetCustomDataInt from 'helpers/getSpreadsheetCustomDataInt';
+import getSpreadsheetCustomDataInt from 'src/helpers/spreadsheetEditor/getSpreadsheetCustomDataInt';
 import { COMMON_COLORS } from './commonColors';
 import {
   SPREADSHEET_COLUMN_KEY,

@@ -22,6 +22,7 @@ import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
 import setToolStyles from 'helpers/setToolStyles';
 import core from 'core';
+import { bindToInstance, createInstanceScopedState } from 'core/documentViewers';
 
 // We need to use import mapping instead of dynamic import to avoid static analysis issues in Vite
 const localGetter = async (language) => {
@@ -83,16 +84,20 @@ const localGetter = async (language) => {
   }
 };
 
-let pendingLanguageTimeout;
+const pendingLanguageTimeouts = createInstanceScopedState(() => ({ timeout: undefined }));
 export default (store, instanceI18n) => async (language) => {
   // Use per-instance i18n if provided, otherwise fall back to global singleton
   const i18n = instanceI18n || i18next;
-  if (pendingLanguageTimeout) {
-    clearTimeout(pendingLanguageTimeout);
+  // The store knows its own instance; the ambient one is wrong for unbound callers such as App's startup effect.
+  const languageInstanceId = selectors.getInstanceId(store.getState());
+  const pending = pendingLanguageTimeouts.get(languageInstanceId);
+  if (pending.timeout) {
+    clearTimeout(pending.timeout);
   }
 
+  const inInstance = (fn) => bindToInstance(languageInstanceId, fn)();
   await new Promise((resolve) => {
-    pendingLanguageTimeout = setTimeout(async () => {
+    pending.timeout = setTimeout(async () => {
       let languageObj = null;
       let languageToImportLocaleFile = language;
 
@@ -123,7 +128,7 @@ export default (store, instanceI18n) => async (language) => {
             // global may not be ready yet; per-instance change above is authoritative
           }
         }
-        setDatePickerLocale(t, language);
+        inInstance(() => setDatePickerLocale(t, language));
         // In WC multi-instance mode, instanceI18n is a separate i18next.createInstance().
         // The global `i18next` singleton is still used by legacy callsites that import
         // it directly (rightToLeft.js's getDir(), sortStrategies.js's i18next.t(),
@@ -137,10 +142,11 @@ export default (store, instanceI18n) => async (language) => {
           }
         }
 
-        updateTextToolDefaults(i18n);
-        updateArcMeasurementLabels(t, store);
-
-        fireEvent(Events['LANGUAGE_CHANGED'], [prev, language]);
+        inInstance(() => {
+          updateTextToolDefaults(i18n);
+          updateArcMeasurementLabels(t, store);
+          fireEvent(Events['LANGUAGE_CHANGED'], [prev, language]);
+        });
       }
       resolve();
     }, 0);

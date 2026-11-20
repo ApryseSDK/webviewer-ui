@@ -73,6 +73,7 @@ export default {
     isComparisonOverlayEnabled: true,
     compareAnnotationsMap: {},
     activeDocumentViewerKey: 1,
+    instanceId: 1,
     zoomLevels: {
       1: 1,
       2: 1,
@@ -1433,6 +1434,7 @@ export default {
     },
     measurementScalePreset: getMeasurementScalePreset(),
     isMultipleScalesMode: true,
+    isMeasurementPageValueRoundingEnabled: true,
     maxSignaturesCount: 10,
     signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     signatureModalColors: SIGNATURE_MODAL_COLORS,

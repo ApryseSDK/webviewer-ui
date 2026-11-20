@@ -1,4 +1,5 @@
 import core from 'core';
+import { createInstanceScopedState } from 'core/documentViewers';
 import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
 import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
 
@@ -62,10 +63,8 @@ function getViewCenterAfterScale(scale, isMultiViewerMode = false, documentViewe
   return { x, y };
 }
 
-let zoomStepHistory = [];
-
 // Keeping track of changes to zoomFactor outside this helper functions
-let storedZoomFactor = -1;
+const zoomState = createInstanceScopedState(() => ({ stepHistory: [], storedZoomFactor: -1 }));
 
 function hasDocument(documentViewerKey = 1) {
   return !!core.getDocument(documentViewerKey);
@@ -75,11 +74,11 @@ function zoomToInternal(currentZoomFactor, newZoomFactor, isMultiViewerMode = fa
   const scale = newZoomFactor / currentZoomFactor;
   const { x, y } = getViewCenterAfterScale(scale, isMultiViewerMode, documentViewerKey);
   core.zoomTo(newZoomFactor, x, y, documentViewerKey);
-  storedZoomFactor = newZoomFactor;
+  zoomState.get().storedZoomFactor = newZoomFactor;
 }
 
 function resetZoomStepHistory() {
-  zoomStepHistory = [];
+  zoomState.get().stepHistory = [];
 }
 
 export function fitToWidth(documentViewerKey = 1) {
@@ -116,12 +115,13 @@ export function fitToPage(documentViewerKey = 1) {
  * @ignore
  */
 export function zoomIn(isMultiViewerMode = false, documentViewerKey = 1) {
+  const zoomStepState = zoomState.get();
   if (!hasDocument(documentViewerKey)) {
     return;
   }
 
   const currentZoomFactor = core.getZoom(documentViewerKey);
-  if (storedZoomFactor > 0 && currentZoomFactor !== storedZoomFactor) {
+  if (zoomStepState.storedZoomFactor > 0 && currentZoomFactor !== zoomStepState.storedZoomFactor) {
     // zoom level was changed by external side effect (like one of core's function to change zoom level)
     // in these cases we need to reset step history
     resetZoomStepHistory();
@@ -131,16 +131,16 @@ export function zoomIn(isMultiViewerMode = false, documentViewerKey = 1) {
   }
 
   let step = getStep(currentZoomFactor);
-  if (zoomStepHistory.length > 0 && zoomStepHistory[zoomStepHistory.length - 1] < 0) {
+  if (zoomStepState.stepHistory.length > 0 && zoomStepState.stepHistory[zoomStepState.stepHistory.length - 1] < 0) {
     // if step history has steps and it has been opposite direction (zoomOut)
     // We use that step. This makes sure that when crossing step range, zoom level goes to same
     // as it was when zoomOut was done.
     // We differentiate zoomIn and zoomOut steps by zoomOut steps are negative and zoomIn are positive
     // thus here using absolute value
-    step = Math.abs(zoomStepHistory.pop());
+    step = Math.abs(zoomStepState.stepHistory.pop());
   } else {
     // We differentiate zoomIn and zoomOut steps by zoomOut steps are negative and zoomIn are positive
-    zoomStepHistory.push(step);
+    zoomStepState.stepHistory.push(step);
   }
   const newZoomFactor = Math.min(currentZoomFactor + step, getMaxZoomLevel());
   zoomToInternal(currentZoomFactor, newZoomFactor, isMultiViewerMode, documentViewerKey);
@@ -151,12 +151,13 @@ export function zoomIn(isMultiViewerMode = false, documentViewerKey = 1) {
  * @ignore
  */
 export function zoomOut(isMultiViewerMode = false, documentViewerKey = 1) {
+  const zoomStepState = zoomState.get();
   if (!hasDocument(documentViewerKey)) {
     return;
   }
 
   const currentZoomFactor = core.getZoom(documentViewerKey);
-  if (storedZoomFactor > 0 && currentZoomFactor !== storedZoomFactor) {
+  if (zoomStepState.storedZoomFactor > 0 && currentZoomFactor !== zoomStepState.storedZoomFactor) {
     // zoom level was changed by external side effect (like one of core's function to change zoom level)
     // in these cases we need to reset step history
     resetZoomStepHistory();
@@ -166,15 +167,15 @@ export function zoomOut(isMultiViewerMode = false, documentViewerKey = 1) {
   }
 
   let step = getStep(currentZoomFactor);
-  if (zoomStepHistory.length > 0 && zoomStepHistory[zoomStepHistory.length - 1] > 0) {
+  if (zoomStepState.stepHistory.length > 0 && zoomStepState.stepHistory[zoomStepState.stepHistory.length - 1] > 0) {
     // if step history has steps and it has been opposite direction (zoomIn)
     // We use that step. This makes sure that when crossing step range, zoom level goes to same
     // as it was when zoomIn was done.
     // We differentiate zoomIn and zoomOut steps by zoomOut steps are negative and zoomIn are positive
-    step = zoomStepHistory.pop();
+    step = zoomStepState.stepHistory.pop();
   } else {
     // We differentiate zoomIn and zoomOut steps by zoomOut steps are negative and zoomIn are positive
-    zoomStepHistory.push(-1 * step);
+    zoomStepState.stepHistory.push(-1 * step);
   }
   const newZoomFactor = Math.max(currentZoomFactor - step, getMinZoomLevel());
   zoomToInternal(currentZoomFactor, newZoomFactor, isMultiViewerMode, documentViewerKey);

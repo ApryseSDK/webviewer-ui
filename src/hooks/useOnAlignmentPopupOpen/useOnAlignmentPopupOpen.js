@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import DataElements from 'constants/dataElement';
 
 export default function useOnLinkAnnotationPopupOpen() {
+  const core = useInstanceCore();
   const dispatch = useDispatch();
   const [annotation, setAnnotation] = useState(null);
 

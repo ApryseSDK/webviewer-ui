@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import SheetTab from './SheetTab';
 import { Provider } from 'react-redux';
 import actions from 'actions';
-import { isSheetNameDuplicated } from 'src/helpers/spreadsheetSwitchContainerHelpers';
+import isSheetNameDuplicated from 'src/helpers/spreadsheetEditor/isSheetNameDuplicated';
 
 const TestSheetTab = withMockRedux(SheetTab);
 

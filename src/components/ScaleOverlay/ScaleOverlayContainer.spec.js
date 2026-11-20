@@ -115,7 +115,7 @@ describe('ScaleOverlayContainer', () => {
     scaleDropdown.click();
     expect(scaleDropdown).toHaveAttribute('aria-labelledby', 'scale-dropdown-label');
 
-    const deleteScaleButton = screen.getByLabelText('Delete 1 in = 1 in');
+    const deleteScaleButton = screen.getByLabelText('Delete 1.0 in = 1.0 in');
     expect(deleteScaleButton).toHaveClass('delete', { exact: true });
   });
 
@@ -173,7 +173,7 @@ describe('ScaleOverlayContainer', () => {
     const scaleDropdown = screen.getByRole('combobox', { name: 'Scale' });
     scaleDropdown.click();
 
-    const deleteScaleButton = screen.getByLabelText('Delete 1 in = 1 in');
+    const deleteScaleButton = screen.getByLabelText('Delete 1.0 in = 1.0 in');
     expect(deleteScaleButton).toBeDisabled();
   });
 
@@ -224,7 +224,7 @@ describe('ScaleOverlayContainer', () => {
     const scaleDropdown = screen.getByRole('combobox', { name: 'Scale' });
     scaleDropdown.click();
 
-    let deleteScaleButton = screen.getByLabelText('Delete 1 in = 1 in');
+    let deleteScaleButton = screen.getByLabelText('Delete 1.0 in = 1.0 in');
     expect(deleteScaleButton).toBeDisabled();
 
     currentCore = createCoreMock({
@@ -239,7 +239,70 @@ describe('ScaleOverlayContainer', () => {
       </Provider>,
     );
 
-    deleteScaleButton = screen.getByLabelText('Delete 1 in = 1 in');
+    deleteScaleButton = screen.getByLabelText('Delete 1.0 in = 1.0 in');
     expect(deleteScaleButton).not.toBeDisabled();
+  });
+
+  describe('Measurement Page Value Rounding', () => {
+    // The page value is the only part of the title affected by isMeasurementPageValueRoundingEnabled
+    const scaleCases = [
+      {
+        name: 'decimal scale',
+        scaleKey: '1.26 in = 1 ft',
+        precision: 0.1,
+        roundedTitle: '1.3 in = 1.0 ft',
+        unroundedTitle: '1.26 in = 1.0 ft',
+      },
+      {
+        name: 'fractional scale',
+        scaleKey: '1.3 in = 1 in',
+        precision: 1 / 16,
+        roundedTitle: '1 5/16" = 1"',
+        unroundedTitle: '1 19/64" = 1"',
+      },
+    ];
+
+    const openScaleDropdown = () => {
+      screen.getByRole('combobox', { name: 'Scale' }).click();
+    };
+
+    describe.each(scaleCases)('$name', ({ scaleKey, precision, roundedTitle, unroundedTitle }) => {
+      beforeEach(() => {
+        currentCore = createCoreMock({ [scaleKey]: [{}] });
+        currentCore.getScalePrecision.mockReturnValue(precision);
+        useCore.mockReturnValue({ core: currentCore });
+      });
+
+      it('rounds the page value when isMeasurementPageValueRoundingEnabled is true', () => {
+        customRenderWithContext({ viewer: { isMeasurementPageValueRoundingEnabled: true } });
+        openScaleDropdown();
+
+        expect(screen.getByLabelText(`Delete ${roundedTitle}`)).toBeInTheDocument();
+        expect(screen.queryByLabelText(`Delete ${unroundedTitle}`)).not.toBeInTheDocument();
+      });
+
+      it('does not round the page value when isMeasurementPageValueRoundingEnabled is false', () => {
+        customRenderWithContext({ viewer: { isMeasurementPageValueRoundingEnabled: false } });
+        openScaleDropdown();
+
+        expect(screen.getByLabelText(`Delete ${unroundedTitle}`)).toBeInTheDocument();
+        expect(screen.queryByLabelText(`Delete ${roundedTitle}`)).not.toBeInTheDocument();
+      });
+
+      it('updates the scale title when isMeasurementPageValueRoundingEnabled changes', () => {
+        const { rerender } = customRenderWithContext({ viewer: { isMeasurementPageValueRoundingEnabled: true } });
+        openScaleDropdown();
+        expect(screen.getByLabelText(`Delete ${roundedTitle}`)).toBeInTheDocument();
+
+        rerender(
+          <Provider store={createStore({ viewer: { isMeasurementPageValueRoundingEnabled: false } })}>
+            <ScaleOverlayContainer {...props} />
+          </Provider>,
+        );
+
+        expect(screen.getByLabelText(`Delete ${unroundedTitle}`)).toBeInTheDocument();
+        expect(screen.queryByLabelText(`Delete ${roundedTitle}`)).not.toBeInTheDocument();
+      });
+    });
   });
 });

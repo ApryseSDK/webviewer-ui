@@ -1,4 +1,5 @@
 import { OFFICE_EDITOR_COMMENT_KEY, OFFICE_EDITOR_TRACKED_CHANGE_KEY } from './officeEditor';
+import { SPREADSHEET_THREAD_ID_KEY } from './spreadsheetEditor';
 
 export const annotationMapKeys = {
   SIGNATURE: 'signature',
@@ -56,6 +57,7 @@ export const annotationMapKeys = {
   CHANGE_VIEW: 'changeView',
   TRACKED_CHANGE: 'trackedChange',
   OFFICE_EDITOR_COMMENT: 'officeEditorComment',
+  SPREADSHEET_EDITOR_COMMENT: 'spreadsheetEditorComment',
 };
 
 /**
@@ -67,6 +69,16 @@ export const annotationMapKeys = {
  * @ignore
  */
 const map = {
+  [annotationMapKeys.SPREADSHEET_EDITOR_COMMENT]: {
+    icon: 'icon-tool-comment-line',
+    iconColor: 'StrokeColor',
+    validStyleTabs: [],
+    currentStyleTab: null,
+    styleTabs: [],
+    toolNames: [],
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.StickyAnnotation &&
+      annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY)
+  },
   [annotationMapKeys.SIGNATURE]: {
     icon: 'icon-tool-signature',
     iconColor: 'StrokeColor',
@@ -517,7 +529,8 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.StickyAnnotation
       && !annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY)
-      && !annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY),
+      && !annotation.getCustomData(OFFICE_EDITOR_COMMENT_KEY)
+      && !annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY),
   },
   [annotationMapKeys.CHANGE_VIEW]: {
     icon: 'icon-tool-changeview',

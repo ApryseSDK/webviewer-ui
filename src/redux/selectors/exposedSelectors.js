@@ -186,13 +186,12 @@ export const isCompareStarted = (state) => state.viewer.isCompareStarted;
 export const isComparisonDisabled = (state) => state.advanced.disableMultiViewerComparison;
 export const getIsComparisonOverlayEnabled = (state) => state.viewer.isComparisonOverlayEnabled;
 export const getActiveDocumentViewerKey = (state) => {
-  if (window.isApryseWebViewerWebComponent && state.viewer.activeDocumentViewerKey) {
-    return state.viewer.activeDocumentViewerKey;
-  }
   return (state.viewer.isMultiViewerMode && state.viewer.activeDocumentViewerKey
     ? state.viewer.activeDocumentViewerKey
     : 1);
 };
+
+export const getInstanceId = (state) => state.viewer.instanceId;
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
 export const isMultiViewerReady = (state) => state.viewer.isMultiViewerReady;
 export const getGenericPanels = (state, location) => {
@@ -310,6 +309,7 @@ export const getIsAddingNewScale = (state) => state.viewer.isAddingNewScale;
 
 export const getMeasurementScalePreset = (state) => state.viewer.measurementScalePreset;
 export const getIsMultipleScalesMode = (state) => state.viewer.isMultipleScalesMode;
+export const getIsMeasurementPageValueRoundingEnabled = (state) => state.viewer.isMeasurementPageValueRoundingEnabled;
 export const getIsNotesPanelMultiSelectEnabled = (state) => state.viewer.isNotesPanelMultiSelectEnabled;
 
 export const getDocumentContainerWidth = (state) => state.viewer.documentContainerWidth;

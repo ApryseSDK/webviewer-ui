@@ -1,5 +1,5 @@
 import isBorderButtonActive from './isBorderButtonActive';
-import getButtonDisplay from './getBorderDisplayButton';
+import getButtonDisplay from './spreadsheetEditor/getButtonDisplay';
 
 /**
  * @ignore

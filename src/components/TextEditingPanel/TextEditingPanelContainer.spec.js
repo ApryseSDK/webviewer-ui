@@ -86,7 +86,6 @@ describe('handleSelectionChange', () => {
   let mockSetTextEditProperties;
   let mockSetFormat;
   let mockHandleColorChange;
-  let mockGetFontName;
 
   beforeEach(() => {
     mockSetSelectionMode = jest.fn();
@@ -94,12 +93,6 @@ describe('handleSelectionChange', () => {
     mockSetTextEditProperties = jest.fn();
     mockSetFormat = jest.fn();
     mockHandleColorChange = jest.fn();
-    mockGetFontName = jest.fn((fontName) => {
-      if (typeof fontName !== 'string') {
-        return '';
-      }
-      return fontName.replace(/(Bold|Italic)/gi, '').trim();
-    });
 
     mockContentEditorRef = {
       current: {
@@ -133,7 +126,6 @@ describe('handleSelectionChange', () => {
 
   it('should call setSelectionMode with TEXT type when in content edit mode', async () => {
     await handleSelectionChange({
-      getFontName: mockGetFontName,
       setFonts: mockSetFonts,
       handleColorChange: mockHandleColorChange,
       setTextEditProperties: mockSetTextEditProperties,
@@ -150,7 +142,6 @@ describe('handleSelectionChange', () => {
 
   it('should not call setSelectionMode when not in content edit mode', async () => {
     await handleSelectionChange({
-      getFontName: mockGetFontName,
       setFonts: mockSetFonts,
       handleColorChange: mockHandleColorChange,
       setTextEditProperties: mockSetTextEditProperties,
@@ -172,7 +163,6 @@ describe('handleSelectionChange', () => {
     mockSetSelectionMode.mockImplementation(() => callOrder.push('setSelectionMode'));
 
     await handleSelectionChange({
-      getFontName: mockGetFontName,
       setFonts: mockSetFonts,
       handleColorChange: mockHandleColorChange,
       setTextEditProperties: mockSetTextEditProperties,
@@ -201,7 +191,6 @@ describe('handleSelectionChange', () => {
     mockContentEditorRef.current.getTextAttributes.mockResolvedValue(mockAttributes);
 
     await handleSelectionChange({
-      getFontName: mockGetFontName,
       setFonts: mockSetFonts,
       handleColorChange: mockHandleColorChange,
       setTextEditProperties: mockSetTextEditProperties,
@@ -235,10 +224,7 @@ describe('handleSelectionChange', () => {
       textAlign: 'left',
     });
 
-    mockGetFontName.mockReturnValue('Times New Roman');
-
     await handleSelectionChange({
-      getFontName: mockGetFontName,
       setFonts: mockSetFonts,
       handleColorChange: mockHandleColorChange,
       setTextEditProperties: mockSetTextEditProperties,
@@ -250,7 +236,7 @@ describe('handleSelectionChange', () => {
       instance: mockInstance,
     });
 
-    expect(mockSetFonts).toHaveBeenCalledWith(['Arial', 'Helvetica', 'Times New Roman']);
+    expect(mockSetFonts).toHaveBeenCalledWith(['Arial', 'Helvetica', 'TimesNewRoman']);
   });
 
   it('should not add font if already in fonts array', async () => {
@@ -261,10 +247,7 @@ describe('handleSelectionChange', () => {
       textAlign: 'left',
     });
 
-    mockGetFontName.mockReturnValue('Arial');
-
     await handleSelectionChange({
-      getFontName: mockGetFontName,
       setFonts: mockSetFonts,
       handleColorChange: mockHandleColorChange,
       setTextEditProperties: mockSetTextEditProperties,
@@ -289,12 +272,9 @@ describe('handleSelectionChange', () => {
         bold: true,
       });
 
-      mockGetFontName.mockReturnValue('Helvetica');
-
       const result = await getFontInfo(
         mockInstance,
         mockContentEditorRef,
-        mockGetFontName
       );
 
       expect(result.fontObject).toEqual({
@@ -314,12 +294,9 @@ describe('handleSelectionChange', () => {
         textAlign: 'left',
       });
 
-      mockGetFontName.mockReturnValue('Arial');
-
       const result = await getFontInfo(
         mockInstance,
         mockContentEditorRef,
-        mockGetFontName
       );
 
       expect(mockInstance.Core.Annotations.Color).toHaveBeenCalledWith(customColor);
@@ -339,18 +316,16 @@ describe('handleSelectionChange', () => {
       };
 
       mockContentEditorRef.current.getTextAttributes.mockResolvedValue(mockAttributes);
-      mockGetFontName.mockReturnValue('Courier');
 
       const result = await getFontInfo(
         mockInstance,
         mockContentEditorRef,
-        mockGetFontName
       );
 
       expect(result.attribute).toEqual(mockAttributes);
     });
 
-    it('should call getFontName with fontName from attributes', async () => {
+    it('should preserve the raw, uncleaned font name from attributes', async () => {
       mockContentEditorRef.current.getTextAttributes.mockResolvedValue({
         fontColor: testColorHex,
         fontSize: 12,
@@ -358,15 +333,12 @@ describe('handleSelectionChange', () => {
         textAlign: 'left',
       });
 
-      mockGetFontName.mockReturnValue('Arial');
-
-      await getFontInfo(
+      const result = await getFontInfo(
         mockInstance,
         mockContentEditorRef,
-        mockGetFontName
       );
 
-      expect(mockGetFontName).toHaveBeenCalledWith('ArialBoldItalic');
+      expect(result.fontObject.Font).toBe('ArialBoldItalic');
     });
 
     it('should return all three properties: fontObject, color, and attribute', async () => {
@@ -377,12 +349,9 @@ describe('handleSelectionChange', () => {
         textAlign: 'left',
       });
 
-      mockGetFontName.mockReturnValue('Arial');
-
       const result = await getFontInfo(
         mockInstance,
         mockContentEditorRef,
-        mockGetFontName
       );
 
       expect(result).toHaveProperty('fontObject');
@@ -401,12 +370,9 @@ describe('handleSelectionChange', () => {
           textAlign: alignment,
         });
 
-        mockGetFontName.mockReturnValue('Arial');
-
         const result = await getFontInfo(
           mockInstance,
           mockContentEditorRef,
-          mockGetFontName
         );
 
         expect(result.fontObject.TextAlign).toBe(alignment);
@@ -414,7 +380,7 @@ describe('handleSelectionChange', () => {
     });
 
     it('should not crash when fontName is a non-string value', async () => {
-      // Defensive regression test: getFontName must guard against any non-string
+      // Defensive regression test: getFontInfo must guard against any non-string
       // fontName (e.g. [], null, undefined) and return '' instead of crashing.
       mockContentEditorRef.current.getTextAttributes.mockResolvedValue({
         fontColor: testColorHex,
@@ -426,7 +392,6 @@ describe('handleSelectionChange', () => {
       const result = await getFontInfo(
         mockInstance,
         mockContentEditorRef,
-        mockGetFontName
       );
 
       expect(result.fontObject.Font).toBe('');

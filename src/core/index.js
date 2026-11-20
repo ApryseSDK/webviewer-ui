@@ -82,6 +82,7 @@ import getDisplayModeObject from './getDisplayModeObject';
 import getScrollViewElement from './getScrollViewElement';
 import getAnnotationById from './getAnnotationById';
 import getAnnotationByMouseEvent from './getAnnotationByMouseEvent';
+import getAnnotationsByMouseEvent from './getAnnotationsByMouseEvent';
 import isFullPDFEnabled from './isFullPDFEnabled';
 import isBlendModeSupported from './isBlendModeSupported';
 import isAnnotationSelected from './isAnnotationSelected';
@@ -124,7 +125,21 @@ import createDocument from './createDocument';
 import performDocumentCreationChecks from './performDocumentCreationChecks';
 import getContentEditManager from './getContentEditManager';
 import getTool from './getTool';
-import { getDocumentViewer, setDocumentViewer, getDocumentViewers, deleteDocumentViewer, setMultiInstanceActiveKey, getMultiInstanceActiveKey, setMultiViewerModeActive, getMultiViewerModeActive, hasDocumentViewer } from './documentViewers';
+import {
+  getDocumentViewer,
+  setDocumentViewer,
+  getDocumentViewers,
+  deleteDocumentViewer,
+  setMultiViewerModeActive,
+  getMultiViewerModeActive,
+  hasDocumentViewer,
+  registerInstance,
+  unregisterInstance,
+  setCurrentInstanceId,
+  getCurrentInstanceId,
+  bindToInstance,
+  bindApiToInstance,
+} from './documentViewers';
 import getUserBookmarks from './getUserBookmarks';
 import setUserBookmarks from './setUserBookmarks';
 import addUserBookmark from './addUserBookmark';
@@ -154,10 +169,14 @@ export default {
   hasDocumentViewer,
   setDocumentViewer,
   deleteDocumentViewer,
-  setMultiInstanceActiveKey,
-  getMultiInstanceActiveKey,
   setMultiViewerModeActive,
   getMultiViewerModeActive,
+  registerInstance,
+  unregisterInstance,
+  setCurrentInstanceId,
+  getCurrentInstanceId,
+  bindToInstance,
+  bindApiToInstance,
   setToolMode,
   getToolMode,
   getTool,
@@ -271,6 +290,7 @@ export default {
   setWatermark,
   getWatermark,
   getAnnotationByMouseEvent,
+  getAnnotationsByMouseEvent,
   groupAnnotations,
   ungroupAnnotations,
   getNumberOfGroups,

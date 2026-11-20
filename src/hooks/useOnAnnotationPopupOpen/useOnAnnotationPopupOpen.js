@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import debounce from 'lodash/debounce';
 import useOnRightClick from 'hooks/useOnRightClick';
 import { isMac } from 'helpers/device';
@@ -17,6 +17,7 @@ const { ToolNames } = window.Core.Tools;
 const { Annotations } = window.Core;
 
 export default function useOnAnnotationPopupOpen() {
+  const core = useInstanceCore();
   const popupItems = useSelector((state) => selectors.getPopupItems(state, DataElements.ANNOTATION_POPUP), shallowEqual);
   const isRightClickAnnotationPopupEnabled = useSelector(selectors.isRightClickAnnotationPopupEnabled);
   const isNotesPanelOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.NOTES_PANEL));

@@ -29,10 +29,11 @@ const Scale = window.Core.Scale;
 const ScaleCustomProps = {
   scale: PropTypes.array,
   onScaleChange: PropTypes.func,
-  precision: PropTypes.number
+  precision: PropTypes.number,
+  isMeasurementPageValueRoundingEnabled: PropTypes.bool
 };
 
-function ScaleCustom({ scale, onScaleChange, precision }) {
+function ScaleCustom({ scale, onScaleChange, precision, isMeasurementPageValueRoundingEnabled = true }) {
   const [measurementUnits] = useSelector((state) => [selectors.getMeasurementUnits(state)], shallowEqual);
   const [pageValueDisplay, setPageValueDisplay] = useState('');
   const [worldValueDisplay, setWorldValueDisplay] = useState('');
@@ -80,28 +81,40 @@ function ScaleCustom({ scale, onScaleChange, precision }) {
     }
   }, [pageScale.unit, worldScale.unit]);
 
-  useEffect(() => {
-    const formatDecimal = (value) => {
-      return value?.toFixed((1 / precision).toString().length - 1);
-    };
+  const formatDecimal = (value) => {
+    return value?.toFixed((1 / precision).toString().length - 1);
+  };
 
+  // Update the displayed page scale values when the underlying scale or precision changes.
+  useEffect(() => {
     const activeElement = getDOMActiveElement();
 
     if (pageScale.value && pageValueInput?.current !== activeElement) {
       if (!isFractionalPrecision) {
-        setPageValueDisplay(formatDecimal(pageScale.value) || '');
+        if (isMeasurementPageValueRoundingEnabled && precision) {
+          setPageValueDisplay(formatDecimal(pageScale.value) || '');
+        } else {
+          setPageValueDisplay(`${pageScale.value}` || '');
+        }
+      } else if (isMeasurementPageValueRoundingEnabled && precision) {
+        setPageValueDisplay(Scale.getFormattedValue(pageScale.value, pageScale.unit, precision, { useFractionalCharacters: false, showTrailingZero: true }) || '');
       } else {
-        setPageValueDisplay(Scale.getFormattedValue(pageScale.value, pageScale.unit, precision, false, true) || '');
+        setPageValueDisplay(Scale.getFormattedValue(pageScale.value, pageScale.unit, precision, { useFractionalCharacters: false, showTrailingZero: true, shouldApplyPrecision: false }) || '');
       }
     }
+  }, [pageScale.value, pageScale.unit, precision, pageValueInput, isMeasurementPageValueRoundingEnabled, scaleValueBlurFlag]);
+
+  // Update the displayed world scale values when the underlying scale or precision changes.
+  useEffect(() => {
+    const activeElement = getDOMActiveElement();
     if (worldScale.value && worldValueInput?.current !== activeElement) {
       if (!isFractionalPrecision && worldScale.unit !== Units.FT_IN) {
         setWorldValueDisplay(formatDecimal(worldScale.value) || '');
       } else {
-        setWorldValueDisplay(Scale.getFormattedValue(worldScale.value, worldScale.unit, precision, false, true) || '');
+        setWorldValueDisplay(Scale.getFormattedValue(worldScale.value, worldScale.unit, precision, { useFractionalCharacters: false, showTrailingZero: true }) || '');
       }
     }
-  }, [pageScale.value, pageScale.unit, worldScale.value, worldScale.unit, precision, worldValueInput, pageValueInput, isFractionalPrecision, scaleValueBlurFlag]);
+  }, [worldScale.value, worldScale.unit, precision, worldValueInput, scaleValueBlurFlag]);
 
   useEffect(() => {
     if (isFractionalPrecision) {

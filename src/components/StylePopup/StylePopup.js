@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
@@ -24,12 +24,18 @@ import classNames from 'classnames';
 import { isMobile } from 'helpers/device';
 import getMeasurementTools from 'helpers/getMeasurementTools';
 // Class component
-// eslint-disable-next-line custom/use-core-hook-in-components
-import core from 'core';
+import { getInstanceCore } from 'hooks/useCore/useCore';
+import InstanceIdContext from 'src/context/InstanceIdContext';
 import './StylePopup.scss';
 
 class StylePopup extends React.PureComponent {
+  // Class components can't use hooks, so the exported wrapper reads the instance id from context and passes it in.
+  get core() {
+    return getInstanceCore(this.props.instanceId);
+  }
+
   static propTypes = {
+    instanceId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     annotationStyle: PropTypes.object,
     /**
      * @deprecated Use annotationStyle instead.
@@ -70,35 +76,35 @@ class StylePopup extends React.PureComponent {
     super(props);
 
     this.state = {
-      document: core.getDocument(),
-      documentType: core.getDocument()?.getType(),
+      document: this.core.getDocument(),
+      documentType: this.core.getDocument()?.getType(),
     };
   }
 
   componentDidMount() {
-    core.addEventListener('documentLoaded', this.onDocumentLoaded);
+    this.core.addEventListener('documentLoaded', this.onDocumentLoaded);
     this.updateSnapModeFromTool();
   }
 
   componentWillUnmount() {
-    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
+    this.core.removeEventListener('documentLoaded', this.onDocumentLoaded);
   }
 
   onDocumentLoaded = () => {
     this.setState({
-      document: core.getDocument(),
-      documentType: core.getDocument()?.getType(),
+      document: this.core.getDocument(),
+      documentType: this.core.getDocument()?.getType(),
     });
   };
 
   onSnappingChange = (event) => {
-    if (!core.isFullPDFEnabled()) {
+    if (!this.core.isFullPDFEnabled()) {
       return;
     }
 
     const enableSnapping = event.target.checked;
     const mode = enableSnapping
-      ? core.getDocumentViewer().SnapMode.e_DefaultSnapMode | core.getDocumentViewer().SnapMode.POINT_ON_LINE
+      ? this.core.getDocumentViewer().SnapMode.e_DefaultSnapMode | this.core.getDocumentViewer().SnapMode.POINT_ON_LINE
       : null;
     const measurementTools = getMeasurementTools();
 
@@ -111,11 +117,11 @@ class StylePopup extends React.PureComponent {
   };
 
   updateSnapModeFromTool = () => {
-    if (!core.isFullPDFEnabled()) {
+    if (!this.core.isFullPDFEnabled()) {
       return;
     }
     const { onSnapModeChange } = this.props;
-    const toolMode = core.getToolMode();
+    const toolMode = this.core.getToolMode();
     if (toolMode && toolMode.getSnapMode) {
       const isSnapModeEnabled = !!toolMode.getSnapMode();
       onSnapModeChange({ toolName: toolMode.name, isEnabled: isSnapModeEnabled });
@@ -425,7 +431,7 @@ class StylePopup extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction }) => ({
+const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction, instanceId }) => ({
   currentStyleTab: selectors.getcurrentStyleTab(state, colorMapKey),
   isStylePopupDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
   isColorPaletteDisabled: selectors.isElementDisabled(state, DataElements.COLOR_PALETTE),
@@ -440,7 +446,7 @@ const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction }) => ({
   isLabelTextContainerDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER),
   fonts: selectors.getFonts(state),
   isSnapModeEnabled: selectors.isSnapModeEnabled(state),
-  isInFormBuilderAndNotFreeText: core.getFormFieldCreationManager().isInFormFieldCreationMode() && !isFreeText,
+  isInFormBuilderAndNotFreeText: getInstanceCore(instanceId).getFormFieldCreationManager().isInFormFieldCreationMode() && !isFreeText,
 });
 
 const mapDispatchToProps = {
@@ -450,10 +456,11 @@ const mapDispatchToProps = {
 };
 const ConnectedStylePopup = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(StylePopup));
 
-const connectedComponent = (props) => {
+const StylePopupWithInstanceId = (props) => {
   const isMobile = isMobileSize();
+  const instanceId = useContext(InstanceIdContext) ?? undefined;
 
-  return <ConnectedStylePopup {...props} isMobile={isMobile} />;
+  return <ConnectedStylePopup {...props} isMobile={isMobile} instanceId={instanceId} />;
 };
 
-export default connectedComponent;
+export default StylePopupWithInstanceId;

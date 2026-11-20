@@ -1,4 +1,4 @@
-import setCellBorder from './setCellBorder';
+import setCellBorder from './spreadsheetEditor/setCellBorder';
 
 /**
  * Apply borders to the currently active border buttons with new style/color

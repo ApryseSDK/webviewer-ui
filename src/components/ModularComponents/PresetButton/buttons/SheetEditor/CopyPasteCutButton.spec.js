@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import * as performClipboardActionOnCells from 'src/helpers/performClipboardActionOnCells';
+import performClipboardActionOnCells from 'src/helpers/spreadsheetEditor/performClipboardActionOnCells';
 import CopyPasteCutButton from './CopyPasteCutButton';
 
 jest.mock('../../../Helpers/menuItems', () => ({
@@ -24,7 +24,7 @@ jest.mock('selectors', () => ({
   getActiveDocumentViewerKey: jest.fn(() => 1)
 }));
 
-jest.mock('src/helpers/performClipboardActionOnCells', () => jest.fn());
+jest.mock('src/helpers/spreadsheetEditor/performClipboardActionOnCells');
 
 const store = configureStore({
   reducer: () => ({

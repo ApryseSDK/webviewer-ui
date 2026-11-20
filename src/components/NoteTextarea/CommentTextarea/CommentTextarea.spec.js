@@ -5,11 +5,19 @@ import { Provider } from 'react-redux';
 import CommentTextarea from './CommentTextarea';
 import { createRefHandler } from './CommentTextareaHelper';
 import { getTranslatedText } from 'src/helpers/testTranslationHelper';
+import InstanceIdContext from 'src/context/InstanceIdContext';
+import mentionsManager from 'helpers/MentionsManager';
+import { registerInstance, resetInstances, runWithInstance, setCurrentInstanceId } from 'core/documentViewers';
+
+const mockQuillModules = [];
 
 jest.mock('react-quill-new', () => {
   const React = require('react');
   const MockQuill = { register: jest.fn() };
-  const MockReactQuill = React.forwardRef((props, ref) => React.createElement('div', { 'data-testid': 'quill-editor' }));
+  const MockReactQuill = React.forwardRef((props, ref) => {
+    mockQuillModules.push(props.modules);
+    return React.createElement('div', { 'data-testid': 'quill-editor' });
+  });
   MockReactQuill.displayName = 'MockReactQuill';
   return { __esModule: true, default: MockReactQuill, Quill: MockQuill };
 });
@@ -144,5 +152,47 @@ describe('CommentTextarea attachment button', () => {
     useSelectorSpy.mockImplementation((selector) => selector(state));
     const { container } = renderWithProvider(<CommentTextarea isReply={false} value="" />, state);
     expect(screen.queryByRole('button', { name: `${getTranslatedText('action.add')} ${getTranslatedText('option.type.fileattachment')}` })).not.toBeInTheDocument();
+  });
+});
+describe('CommentTextarea mention suggestions with two instances', () => {
+  beforeEach(() => {
+    mockQuillModules.length = 0;
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    resetInstances();
+  });
+
+  it('should look up users with the callback and user data of its own instance, whichever instance is current', async () => {
+    registerInstance(1);
+    registerInstance(2);
+    const lookup1 = jest.fn().mockResolvedValue([]);
+    const lookup2 = jest.fn().mockResolvedValue([]);
+    runWithInstance(1, () => mentionsManager.setMentionLookupCallback(lookup1));
+    runWithInstance(2, () => mentionsManager.setMentionLookupCallback(lookup2));
+
+    const state = makeViewerState();
+    jest.spyOn(reactRedux, 'useSelector').mockImplementation((selector) => selector(state));
+    const users1 = [{ id: 1, value: 'User of instance 1' }];
+    const users2 = [{ id: 2, value: 'User of instance 2' }];
+    renderWithProvider(
+      <>
+        <InstanceIdContext.Provider value={1}><CommentTextarea value="" userData={users1} /></InstanceIdContext.Provider>
+        <InstanceIdContext.Provider value={2}><CommentTextarea value="" userData={users2} /></InstanceIdContext.Provider>
+      </>,
+      state
+    );
+    const [source1, source2] = [0, 1].map((index) => mockQuillModules[index].mention.source);
+
+    setCurrentInstanceId(2);
+    await source1('user', jest.fn());
+    setCurrentInstanceId(1);
+    await source2('user', jest.fn());
+
+    expect(lookup1).toHaveBeenCalledWith(users1, 'user');
+    expect(lookup1).toHaveBeenCalledTimes(1);
+    expect(lookup2).toHaveBeenCalledWith(users2, 'user');
+    expect(lookup2).toHaveBeenCalledTimes(1);
   });
 });

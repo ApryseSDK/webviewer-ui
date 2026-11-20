@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import getRootNode from 'helpers/getRootNode';
 import { shallowEqual, useSelector } from 'react-redux';
 import selectors from 'selectors';
 
 export default (handler) => {
+  const core = useInstanceCore();
   const [
     activeDocumentViewerKey,
     isMultiViewerMode,

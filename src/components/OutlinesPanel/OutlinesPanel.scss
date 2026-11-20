@@ -122,6 +122,11 @@
         background: none;
       }
 
+      &.outline-highlight-pulse .panel-list-label-header .Button {
+        border-radius: 4px;
+        animation: outline-highlight-pulse 2s ease-in-out;
+      }
+
       &:focus-visible {
         outline: var(--focus-visible-outline) !important;
       }
@@ -152,4 +157,24 @@
   -webkit-overflow-scrolling: touch;
   flex: 1;
   flex-direction: column;
+}
+
+@keyframes outline-highlight-pulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 1px transparent;
+    background-color: transparent;
+  }
+
+  30%,
+  70% {
+    box-shadow: inset 0 0 0 1px var(--blue-6);
+    background-color: var(--faded-component-background);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .OutlinesPanel .bookmark-outline-single-container.outline-highlight-pulse .panel-list-label-header .Button {
+    animation: none;
+  }
 }

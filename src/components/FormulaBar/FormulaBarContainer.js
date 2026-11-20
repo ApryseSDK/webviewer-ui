@@ -13,6 +13,8 @@ export const FormulaBarContainer = () => {
   const stringCellValue = useSelector(selectors.getStringCellValue);
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
   const isReadOnlyMode = spreadsheetEditorEditMode === EDIT_MODE.VIEW_ONLY;
+  const formulaBarValue = cellFormula ?? stringCellValue ?? '';
+  const multiline = typeof formulaBarValue === 'string' && /[\r\n]/.test(formulaBarValue);
 
   const { core } = useCore();
   const [rangeInputValue, setRangeInputValue] = useState(activeCellRange);
@@ -46,6 +48,7 @@ export const FormulaBarContainer = () => {
       activeCellRange={rangeInputValue}
       cellFormula={cellFormula}
       stringCellValue={stringCellValue}
+      multiline={multiline}
       onRangeInputChange={onRangeInputChange}
       onRangeInputKeyDown={onRangeInputKeyDown}
     />

@@ -1,5 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { TOOLTIP_SHOW_DELAY } from 'constants/tooltip';
+import { render, screen, fireEvent, act } from '@testing-library/react';
+import Dropdown from './Dropdown';
+import Icon from 'components/Icon';
 import { Basic as BasicStory, DropdownWithInput, DropdownWithInputAndNoSearch, ImageDropdown } from './Dropdown.stories';
 import userEvent from '@testing-library/user-event';
 
@@ -207,6 +210,185 @@ describe('Dropdown component with font sizes', () => {
 });
 
 describe('Dropdown with images', () => {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
+  it('translates icon-only tooltips without changing option names and removes them on dismissal', () => {
+    const DropdownWithProviders = withProviders(Dropdown);
+    const { unmount } = render(
+      <DropdownWithProviders id="icon-options" images={[{ key: 'save', src: 'icon-save', title: 'action.save' }]} />
+    );
+    const combobox = screen.getByRole('combobox');
+    fireEvent.keyDown(combobox, { key: 'Enter' });
+    const option = screen.getByRole('option');
+    expect(option).toHaveAttribute('aria-label', 'action.save');
+    fireEvent.focus(option);
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Save');
+    fireEvent.keyDown(combobox, { key: 'Escape' });
+    expect(document.querySelector('[data-element="tooltip"]')).not.toBeInTheDocument();
+    unmount();
+  });
+
+  it('describes the active icon during arrow navigation and hides the tooltip after selection', () => {
+    const onClickItem = jest.fn();
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="keyboard-icons" currentSelectionKey="save" onClickItem={onClickItem} images={[
+      { key: 'save', src: 'icon-save', title: 'action.save' },
+      { key: 'print', src: 'icon-header-print', title: 'action.print' },
+    ]} />);
+    const combobox = screen.getByRole('combobox');
+    fireEvent.keyDown(combobox, { key: 'Enter' });
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Save');
+    fireEvent.keyDown(combobox, { key: 'ArrowDown' });
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Print');
+    fireEvent.keyDown(combobox, { key: 'Enter' });
+    expect(onClickItem).toHaveBeenCalledWith('print', 1);
+    expect(document.querySelector('[data-element="tooltip"]')).not.toBeInTheDocument();
+  });
+
+  it('replaces the previous tooltip when hovering an option underneath it', () => {
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="overlapping-icons" images={[
+      { key: 'save', src: 'icon-save', title: 'action.save' },
+      { key: 'print', src: 'icon-header-print', title: 'action.print' },
+    ]} />);
+    fireEvent.mouseDown(screen.getByRole('combobox'));
+    const saveOption = screen.getByRole('option', { name: 'action.save' });
+    const printOption = screen.getByRole('option', { name: 'action.print' });
+    fireEvent(saveOption, new MouseEvent('pointermove', { bubbles: true, clientX: 40, clientY: 10 }));
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    const originalTooltip = document.querySelector('[data-element="tooltip"]');
+    expect(originalTooltip).toHaveTextContent('Save');
+    jest.spyOn(originalTooltip, 'getBoundingClientRect').mockReturnValue({ left: 0, right: 100, top: 20, bottom: 100, width: 100, height: 80 });
+    fireEvent(printOption, new MouseEvent('pointermove', { bubbles: true, clientX: 40, clientY: 50 }));
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelectorAll('[data-element="tooltip"]')).toHaveLength(1);
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Print');
+  });
+
+  it.each([
+    { images: [{ key: 'save', src: 'icon-save', title: 'Save' }] },
+    { items: ['Save'] },
+  ])('keeps focus on the combobox when keyboard navigation is dismissed with Escape: %j', (optionProps) => {
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="escape-options" {...optionProps} />);
+    const combobox = screen.getByRole('combobox');
+    fireEvent.keyDown(combobox, { key: 'Enter' });
+    expect(combobox).toHaveFocus();
+    fireEvent.keyDown(combobox, { key: 'Escape' });
+    expect(combobox).toHaveFocus();
+    expect(combobox).toHaveAttribute('aria-expanded', 'false');
+    expect(document.querySelector('[data-element="tooltip"]')).not.toBeInTheDocument();
+  });
+
+  it('does not show a redundant tooltip for image options rendered as text', () => {
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="text-options" images={[{ key: 'save', title: 'Save' }]} />);
+    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Enter' });
+    fireEvent.focus(screen.getByRole('option', { name: 'Save' }));
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).not.toBeInTheDocument();
+  });
+
+  it('preserves the flyout Tab handler on the combobox', () => {
+    const onKeyDownHandler = jest.fn((event) => event.preventDefault());
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="flyout-tab-options" items={['Save']} isFlyoutItem onKeyDownHandler={onKeyDownHandler} />);
+    const combobox = screen.getByRole('combobox');
+    fireEvent.keyDown(combobox, { key: 'Enter' });
+    const event = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    fireEvent(combobox, event);
+    expect(onKeyDownHandler).toHaveBeenCalledTimes(1);
+    expect(event.defaultPrevented).toBe(true);
+    expect(combobox).toHaveFocus();
+  });
+
+  it('does not automatically show option tooltips when opening or reopening by mouse', () => {
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="mouse-icons" currentSelectionKey="save" images={[
+      { key: 'save', src: 'icon-save', title: 'action.save' },
+      { key: 'print', src: 'icon-header-print', title: 'action.print' },
+    ]} />);
+    const combobox = screen.getByRole('combobox');
+    fireEvent.mouseDown(combobox);
+    expect(combobox).toHaveAttribute('aria-expanded', 'true');
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).not.toBeInTheDocument();
+    fireEvent.keyDown(combobox, { key: 'ArrowDown' });
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Print');
+    fireEvent.keyDown(combobox, { key: 'Escape' });
+    fireEvent.mouseDown(combobox);
+    expect(combobox).toHaveAttribute('aria-expanded', 'true');
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).not.toBeInTheDocument();
+  });
+
+  it('describes custom icon-only options without adding tooltips to visible text', () => {
+    const DropdownWithProviders = withProviders(Dropdown);
+    const { rerender } = render(<DropdownWithProviders id="custom-icons" items={['action.save']} renderItem={() => <Icon glyph="icon-save" />} />);
+    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Enter' });
+    fireEvent.focus(screen.getByRole('option'));
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Save');
+    rerender(<DropdownWithProviders id="custom-icons" items={['action.save']} renderItem={() => <><Icon glyph="icon-save" />Save</>} />);
+    fireEvent.focus(screen.getByRole('option'));
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).not.toBeInTheDocument();
+  });
+
+  it('uses the rendered accessible description when a style picker display value is not localized', () => {
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="border-icons" items={['Thin']} renderItem={() => <div aria-label="Solid"><Icon glyph="icon-save" /></div>} />);
+    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Enter' });
+    fireEvent.focus(screen.getByRole('option', { name: 'Solid' }));
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Solid');
+  });
+
+  it('preserves a custom renderer accessible name independently of its tooltip title', () => {
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="custom-option-label" items={[{ key: 'custom-save', title: 'action.save' }]} getKey={(item) => item.key} getDisplayValue={(item) => item.key} renderItem={() => <div aria-label="Save the annotated document"><Icon glyph="icon-save" /></div>} />);
+    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Enter' });
+    const option = screen.getByRole('option', { name: 'Save the annotated document' });
+    expect(option).not.toHaveAttribute('aria-label');
+    fireEvent.pointerMove(option);
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Save');
+  });
+
+  it('uses translation prefixes and selects image options with arrows while focus stays on the combobox', () => {
+    const onClickItem = jest.fn();
+    const DropdownWithProviders = withProviders(Dropdown);
+    render(<DropdownWithProviders id="focused-icons" currentSelectionKey="save" translationPrefix="action" images={[
+      { key: 'save', src: 'icon-save' },
+      { key: 'print', src: 'icon-header-print' },
+    ]} onClickItem={onClickItem} />);
+    const combobox = screen.getByRole('combobox');
+    fireEvent.keyDown(combobox, { key: 'Enter' });
+    const option = screen.getByRole('option', { name: 'save' });
+    expect(option).not.toHaveAttribute('tabindex');
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Save');
+    fireEvent.keyDown(combobox, { key: 'ArrowDown' });
+    const nextOption = screen.getByRole('option', { name: 'print' });
+    expect(nextOption).not.toHaveAttribute('tabindex');
+    expect(combobox).toHaveFocus();
+    expect(combobox).toHaveAttribute('aria-activedescendant', 'focused-icons-print');
+    act(() => jest.advanceTimersByTime(TOOLTIP_SHOW_DELAY));
+    expect(document.querySelector('[data-element="tooltip"]')).toHaveTextContent('Print');
+    fireEvent.keyDown(combobox, { key: 'Enter' });
+    expect(onClickItem).toHaveBeenCalledWith('print', 1);
+    expect(document.querySelector('[data-element="tooltip"]')).not.toBeInTheDocument();
+  });
+
   it('should change the activeDescendent correctly for image dropdowns', () => {
     render(<ImageDropdown />);
 

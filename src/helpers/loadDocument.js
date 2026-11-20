@@ -1,5 +1,6 @@
 import { setCheckPasswordFunction } from 'components/PasswordModal';
-import core from 'core';
+import { bindToInstance, getCurrentInstanceId } from 'core/documentViewers';
+import { getInstanceCore } from 'hooks/useCore/useCore';
 import { fireError } from 'helpers/fireEvent';
 import getFileExtension from 'helpers/getFileExtension';
 import getHashParameters from 'helpers/getHashParameters';
@@ -9,7 +10,7 @@ import DataElements from 'constants/dataElement';
 import { VIEWER_CONFIGURATIONS, VALID_DOCX_EXTENSIONS, VALID_SPREADSHEET_EXTENSIONS } from 'constants/customizationVariables';
 import { SpreadsheetEditorEditMode } from 'src/constants/spreadsheetEditor';
 
-const resolveDocumentViewerId = (documentViewerKey, documentViewerId) => {
+const resolveDocumentViewerId = (core, documentViewerKey, documentViewerId) => {
   if (documentViewerId !== undefined && documentViewerId !== null && documentViewerId !== '') {
     return `${documentViewerId}`;
   }
@@ -23,8 +24,9 @@ const resolveDocumentViewerId = (documentViewerKey, documentViewerId) => {
   return resolvedId ? `${resolvedId}` : '';
 };
 
-export default (dispatch, src, options = {}, documentViewerKey = 1, documentViewerId = '') => {
-  const targetDocumentViewerId = resolveDocumentViewerId(documentViewerKey, documentViewerId);
+export default (dispatch, src, options = {}, documentViewerKey = 1, documentViewerId = '', instanceId = getCurrentInstanceId()) => {
+  const core = getInstanceCore(instanceId);
+  const targetDocumentViewerId = resolveDocumentViewerId(core, documentViewerKey, documentViewerId);
   options = { ...getDefaultOptions(), ...options };
 
   const normalizedSpreadsheetInitialEditMode = normalizeInitialEditMode(
@@ -44,12 +46,13 @@ export default (dispatch, src, options = {}, documentViewerKey = 1, documentView
   }
 
   options.docId = options.docId || options.documentId || null;
+  // Core invokes these callbacks later; bind them so error routing and the password modal target the instance that started the load.
   const customLoadingProgressFunction = options.onLoadingProgress;
   options.onLoadingProgress = (percent) => {
     customLoadingProgressFunction && customLoadingProgressFunction(percent);
     dispatch(actions.setLoadingProgress(percent));
   };
-  options.password = transformPasswordOption(options.password, dispatch);
+  options.password = bindToInstance(instanceId, transformPasswordOption(options.password, dispatch));
   options.xodOptions = extractXodOptions(options);
   const handleLoadError = (error) => {
     dispatch(actions.closeDocumentLoadingScreen(documentViewerKey));
@@ -57,12 +60,12 @@ export default (dispatch, src, options = {}, documentViewerKey = 1, documentView
   };
   if ('onError' in options) {
     const userDefinedOnErrorCallback = options.onError;
-    options.onError = function(error) {
+    options.onError = bindToInstance(instanceId, function(error) {
       handleLoadError(error);
       userDefinedOnErrorCallback(error);
-    };
+    });
   } else {
-    options.onError = handleLoadError;
+    options.onError = bindToInstance(instanceId, handleLoadError);
   }
 
   dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));

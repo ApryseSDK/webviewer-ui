@@ -5,6 +5,8 @@ import ModalWrapper from './ModalWrapper';
 import actions from 'actions';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'src/redux/reducers/rootReducer';
+import InstanceRootNodeContext from 'src/context/InstanceRootNodeContext';
+import { isMobileSize } from 'helpers/getDeviceSize';
 
 jest.mock('helpers/fireEvent', () => ({
   __esModule: true,
@@ -27,6 +29,7 @@ describe('ModalWrapper', () => {
 
     beforeEach(() => {
       store = createStore();
+      isMobileSize.mockImplementation(() => true);
     });
 
     afterEach(() => {
@@ -82,6 +85,33 @@ describe('ModalWrapper', () => {
       expect(modalWrapperText).toBeInTheDocument();
       expect(modalContainer).toBeInTheDocument();
       expect(swipeIndicator).not.toBeInTheDocument();
+    });
+
+    it('uses its own instance root to decide the mobile layout when multiple viewers are on the page', () => {
+      const mobileRoot = document.createElement('div').attachShadow({ mode: 'open' });
+      const desktopRoot = document.createElement('div').attachShadow({ mode: 'open' });
+      isMobileSize.mockImplementation((rootNode) => rootNode === mobileRoot);
+
+      const renderModal = (rootNode) => render(
+        <InstanceRootNodeContext.Provider value={rootNode}>
+          <Provider store={store}>
+            <ModalWrapper
+              isOpen={true}
+              onCloseClick={jest.fn()}
+              modalDataElement="testModal"
+              title="action.close"
+            >
+              <div>FooBar</div>
+            </ModalWrapper>
+          </Provider>
+        </InstanceRootNodeContext.Provider>
+      );
+
+      const { container: mobileContainer } = renderModal(mobileRoot);
+      const { container: desktopContainer } = renderModal(desktopRoot);
+
+      expect(mobileContainer.querySelector('.swipe-indicator')).toBeInTheDocument();
+      expect(desktopContainer.querySelector('.swipe-indicator')).not.toBeInTheDocument();
     });
   });
 

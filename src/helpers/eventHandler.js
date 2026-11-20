@@ -1,13 +1,23 @@
-import * as eventListeners from 'src/event-listeners';
+import * as allEventListeners from 'src/event-listeners';
 import { getHotkeysManager } from 'helpers/hotkeysManager';
-import core from 'core';
 import Events from 'constants/events';
+import selectors from 'selectors';
+import { bindToInstance } from 'core/documentViewers';
+import { getInstanceCore } from 'hooks/useCore/useCore';
 
 const { ToolNames } = window.Core.Tools;
 
 export default (store, documentViewerKey = 1, skipHotkeys = false, instanceId = null) => {
   const { dispatch } = store;
   const hotkeysManager = getHotkeysManager(store);
+  // Tool listeners bypass core.addEventListener,
+  // so bind every handler to this store's instance here.
+  const viewerInstanceId = selectors.getInstanceId(store.getState());
+  const core = getInstanceCore(viewerInstanceId);
+  const eventListeners = Object.fromEntries(Object.entries(allEventListeners).map(([name, createListener]) => [
+    name,
+    (...args) => bindToInstance(viewerInstanceId, createListener(...args)),
+  ]));
   // TODO Compare: Add event handlers for panels and refactor code for panels
   const onBeforeDocumentLoaded = eventListeners.onBeforeDocumentLoaded(dispatch, documentViewerKey);
   const onCheckStampAnnotationAdded = eventListeners.onCheckStampAnnotationAdded(dispatch, documentViewerKey);
@@ -91,9 +101,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false, instanceId = 
     addEventHandlers: () => {
       _removed = false;
       // Register editor-feature handlers for the primary DocumentViewer of this instance.
-      const isPrimaryEventHandler =
-        documentViewerKey === 1 ||
-        (window.isApryseWebViewerWebComponent && !core.getMultiViewerModeActive());
+      const isPrimaryEventHandler = documentViewerKey === 1;
       if (isPrimaryEventHandler) {
         _editorEventsRegistered = true;
         // ContentEdit Not supported for MultiViewerMode
@@ -284,7 +292,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false, instanceId = 
       core.getTool('AnnotationCreateFileAttachment', documentViewerKey).removeEventListener('annotationAdded', onFileAttachmentAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CROSS, documentViewerKey).removeEventListener('annotationAdded', onCrossStampAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CHECKMARK, documentViewerKey).removeEventListener('annotationAdded', onCheckStampAnnotationAdded);
-      !skipHotkeys && hotkeysManager.off();
+      !skipHotkeys && hotkeysManager.destroy();
     },
   };
 };

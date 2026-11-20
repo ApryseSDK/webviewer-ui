@@ -1,10 +1,12 @@
 import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import debounce from 'lodash/debounce';
-import useReplyAutosave, { replyDraftByAnnotationId } from './useReplyAutosave';
+import useReplyAutosave, { replyDraftsByInstance } from './useReplyAutosave';
 import useCore from 'hooks/useCore';
 import selectors from 'selectors';
 import NoteContext from 'components/Note/Context';
+import InstanceIdContext from 'src/context/InstanceIdContext';
+import { setCurrentInstanceId, resetInstances } from 'core/documentViewers';
 import {
   getReplyDraftsForExport,
   clearReplyDraftForExport,
@@ -106,7 +108,7 @@ describe('useReplyAutosave', () => {
     };
   };
 
-  const renderUseReplyAutosave = ({ annotation, textareaRef, noteContextValue = {} }) => {
+  const renderUseReplyAutosave = ({ annotation, textareaRef, noteContextValue = {}, instanceId = null }) => {
     const defaultContextValue = {
       isOfficeEditorCommentAnnotation: false,
       setPendingReply: jest.fn(),
@@ -116,9 +118,11 @@ describe('useReplyAutosave', () => {
     };
 
     const wrapper = ({ children }) => (
-      <NoteContext.Provider value={{ ...defaultContextValue, ...noteContextValue }}>
-        {children}
-      </NoteContext.Provider>
+      <InstanceIdContext.Provider value={instanceId}>
+        <NoteContext.Provider value={{ ...defaultContextValue, ...noteContextValue }}>
+          {children}
+        </NoteContext.Provider>
+      </InstanceIdContext.Provider>
     );
 
     return {
@@ -131,7 +135,7 @@ describe('useReplyAutosave', () => {
     jest.clearAllMocks();
     debounce.deferred = false;
     selectors.getAutosaveEnabled.mockReturnValue(true);
-    replyDraftByAnnotationId.clear();
+    replyDraftsByInstance.get().clear();
     clearReplyDraftForExport(viewerKey, annotationId);
     window.Core = {
       Annotations: {
@@ -152,10 +156,14 @@ describe('useReplyAutosave', () => {
     };
   });
 
+  afterEach(() => {
+    resetInstances();
+  });
+
   it('restores draft content from module cache on mount when autosave is enabled', async () => {
     const annotation = makeAnnotation();
     const textareaRef = makeTextareaRef();
-    replyDraftByAnnotationId.set(`${viewerKey}:${annotationId}`, 'Persisted Draft');
+    replyDraftsByInstance.get().set(`${viewerKey}:${annotationId}`, 'Persisted Draft');
 
     const { result, waitFor } = renderUseReplyAutosave({ annotation, textareaRef });
 
@@ -183,10 +191,10 @@ describe('useReplyAutosave', () => {
       result.current.setLocalReplyValue('Draft reply');
     });
 
-    await waitFor(() => replyDraftByAnnotationId.get(`${viewerKey}:${annotationId}`) === 'Draft reply');
+    await waitFor(() => replyDraftsByInstance.get().get(`${viewerKey}:${annotationId}`) === 'Draft reply');
     await waitFor(() => annotationManager.addAnnotations.mock.calls.length > 0);
 
-    expect(replyDraftByAnnotationId.get(`${viewerKey}:${annotationId}`)).toBe('Draft reply');
+    expect(replyDraftsByInstance.get().get(`${viewerKey}:${annotationId}`)).toBe('Draft reply');
     expect(getReplyDraftsForExport(viewerKey)[0].replyText).toBe('Draft reply');
     expect(annotationManager.addAnnotations).toHaveBeenCalled();
     expect(setPendingReply).toHaveBeenCalledWith('', annotationId);
@@ -199,7 +207,7 @@ describe('useReplyAutosave', () => {
     core.getOfficeEditor = jest.fn(() => ({
       getCommentManager: jest.fn(() => ({ addCommentReply })),
     }));
-    replyDraftByAnnotationId.set(`${viewerKey}:${annotationId}`, 'Draft reply');
+    replyDraftsByInstance.get().set(`${viewerKey}:${annotationId}`, 'Draft reply');
 
     const { unmount } = renderUseReplyAutosave({
       annotation,
@@ -214,14 +222,39 @@ describe('useReplyAutosave', () => {
     });
 
     expect(addCommentReply).not.toHaveBeenCalled();
-    expect(replyDraftByAnnotationId.get(`${viewerKey}:${annotationId}`)).toBe('Draft reply');
+    expect(replyDraftsByInstance.get().get(`${viewerKey}:${annotationId}`)).toBe('Draft reply');
+  });
+
+  it('should keep a sibling instance\'s stored drafts when this instance\'s document is unloaded', () => {
+    const textareaRef = makeTextareaRef();
+    replyDraftsByInstance.get(2).set(`${viewerKey}:${annotationId}`, 'Sibling draft');
+    setCurrentInstanceId(2);
+
+    renderUseReplyAutosave({ annotation: makeAnnotation(), textareaRef, instanceId: 1 });
+    const onUnloaded = mockCore.addEventListener.mock.calls.find(([event]) => event === 'documentUnloaded')[1];
+    act(() => onUnloaded());
+
+    expect(replyDraftsByInstance.get(2).get(`${viewerKey}:${annotationId}`)).toBe('Sibling draft');
+    expect(replyDraftsByInstance.get(1).size).toBe(0);
+  });
+
+  it('should export a debounced draft under its own instance when a sibling is ambient as the timer fires', () => {
+    debounce.deferred = true;
+    const textareaRef = makeTextareaRef();
+    const { unmount } = renderUseReplyAutosave({ annotation: makeAnnotation(), textareaRef, instanceId: 1 });
+
+    setCurrentInstanceId(2);
+    unmount();
+
+    expect(getReplyDraftsForExport(viewerKey, 1)).toHaveLength(1);
+    expect(getReplyDraftsForExport(viewerKey, 2)).toHaveLength(0);
   });
 
   it('does not restore a draft keyed to a different viewer', async () => {
     const annotation = makeAnnotation();
     const textareaRef = makeTextareaRef();
     // Store a draft under a different viewer key — must not bleed into viewer-1.
-    replyDraftByAnnotationId.set(`viewer-2:${annotationId}`, 'Other viewer draft');
+    replyDraftsByInstance.get().set(`viewer-2:${annotationId}`, 'Other viewer draft');
 
     const { result } = renderUseReplyAutosave({ annotation, textareaRef });
 
@@ -285,7 +318,7 @@ describe('useReplyAutosave', () => {
     });
 
     // Nothing is persisted yet because the debounce interval has not elapsed.
-    expect(replyDraftByAnnotationId.get(`${viewerKey}:${annotationId}`)).toBeUndefined();
+    expect(replyDraftsByInstance.get().get(`${viewerKey}:${annotationId}`)).toBeUndefined();
 
     await act(async () => {
       unmount();
@@ -296,6 +329,6 @@ describe('useReplyAutosave', () => {
       'annotationChanged',
       [[expect.anything()], 'modify', expect.objectContaining({ source: expect.any(String) })],
     );
-    expect(replyDraftByAnnotationId.get(`${viewerKey}:${annotationId}`)).toBeUndefined();
+    expect(replyDraftsByInstance.get().get(`${viewerKey}:${annotationId}`)).toBeUndefined();
   });
 });

@@ -21,6 +21,7 @@ function SnippingToolPopupContainer() {
   const isSnippingPopupOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.SNIPPING_TOOL_POPUP));
   const isInDesktopOnlyMode = useSelector(selectors.isInDesktopOnlyMode);
   const shouldShowApplySnippingWarning = useSelector(selectors.shouldShowApplySnippingWarning);
+  const shouldShowCropAndRemoveRadioButton = useSelector((state) => !selectors.isElementDisabled(state, DataElements.CROP_AND_REMOVE_RADIO_BUTTON));
 
   const isOpen = activeToolName === snippingToolName && isSnippingPopupOpen;
   const dispatch = useDispatch();
@@ -96,10 +97,11 @@ function SnippingToolPopupContainer() {
     }
   }, [isSnipping]);
 
+  const defaultSnippingMode = Core.Tools.SnippingCreateTool.SnippingModes.CLIPBOARD; // eslint-disable-line no-undef
   const [snippingMode, setSnippingMode] = useState(null);
 
   useEffect(() => {
-    const modeToSet = snippingMode || 'CLIPBOARD';
+    const modeToSet = snippingMode || defaultSnippingMode;
     snippingCreateTool.setSnippingMode(modeToSet);
     setSnippingMode(modeToSet);
   }, [snippingCreateTool]);
@@ -129,6 +131,10 @@ function SnippingToolPopupContainer() {
     setIsSnipping(snippingCreateTool.getIsSnipping());
   }, [snippingAnnotation]);
 
+  useEffect(() => {
+    onSnippingModeChange(defaultSnippingMode);
+  }, [shouldShowCropAndRemoveRadioButton]);
+
   const applySnipping = async (e) => {
     await snippingCreateTool.applySnipping();
     snippingCreateTool.reset();
@@ -146,6 +152,7 @@ function SnippingToolPopupContainer() {
     isSnipping,
     isInDesktopOnlyMode,
     shouldShowApplySnippingWarning,
+    shouldShowCropAndRemoveRadioButton,
     isMobile,
   };
 

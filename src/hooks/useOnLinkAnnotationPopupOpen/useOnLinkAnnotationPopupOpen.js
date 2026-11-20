@@ -4,7 +4,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import getLinkDestination from 'helpers/getLinkDestination';
 import { getShadowRootFromNode } from 'helpers/getRootNode';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import DataElements from 'constants/dataElement';
 import _debounce from 'lodash/debounce';
 
@@ -16,7 +16,7 @@ const LINK_POPUP_HOVER_BRIDGE = 8;
 
 // Mouse move events fire for the whole document, including when the cursor is over the popup
 // Ignore the link underneath the popup to keep the popup from jumping
-const isCursorOverLinkPopup = (event, store, activeDocumentViewerKey) => {
+const isCursorOverLinkPopup = (core, event, store, activeDocumentViewerKey) => {
   if (event.target?.closest?.(LINK_POPUP_SELECTOR)) {
     return true;
   }
@@ -40,6 +40,7 @@ const isCursorOverLinkPopup = (event, store, activeDocumentViewerKey) => {
 };
 
 export default function useOnLinkAnnotationPopupOpen() {
+  const core = useInstanceCore();
   const dispatch = useDispatch();
   const [annotation, setAnnotation] = useState(null);
   const [isEnterComponent, setIsEnterComponent] = useState(false);
@@ -71,7 +72,7 @@ export default function useOnLinkAnnotationPopupOpen() {
       }
       // Keep the popup open while the cursor moves into it instead of switching to the link
       // rendered underneath the popup
-      if (isCursorOverLinkPopup(e, store, activeDocumentViewerKey)) {
+      if (isCursorOverLinkPopup(core, e, store, activeDocumentViewerKey)) {
         hidePopup.cancel();
         return;
       }

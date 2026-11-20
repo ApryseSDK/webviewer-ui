@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import {
   modifyColumns,
   modifyColumnsInReverse,
@@ -22,6 +22,7 @@ const convertWidthsAndSpacingToColumns = (widthsAndSpacing) => {
 };
 
 export const useOfficeEditorColumnsModal = () => {
+  const core = useInstanceCore();
   const [columnAmount, setColumnAmount] = useState(0);
   const [columns, setColumns] = useState([]); // [{ width: 0, spacing: 0 }]
   const [equalColumns, setEqualColumns] = useState(true);

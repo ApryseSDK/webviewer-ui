@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import ReplyArea from './ReplyArea';
 import NoteContext from 'components/Note/Context';
 import useReplyAutosave from 'hooks/useReplyAutosave/useReplyAutosave';
@@ -140,17 +140,32 @@ const renderComponent = (autosaveValue, contextValue, props = {}, stateOverrides
 describe('ReplyArea autosave integration', () => {
   afterEach(() => {
     jest.clearAllMocks();
+    jest.useRealTimers();
   });
 
   it('keeps focus on spreadsheet cells during automatic comment expansion', () => {
+    jest.useFakeTimers();
+    const noteTextareaModule = require('components/NoteTextarea');
     const contextValue = createContextValue({
       scrollToSelectedAnnot: true,
       isSpreadsheetEditorCommentAnnotation: true,
     });
 
-    renderComponent(createAutosaveValue(), contextValue);
+    // autoFocusNoteOnAnnotationSelection is explicitly enabled so the assertion below
+    // exercises the suppression guard rather than an already-disabled focus path.
+    renderComponent(createAutosaveValue(), contextValue, {}, {
+      viewer: {
+        autoFocusNoteOnAnnotationSelection: true,
+      },
+    });
+
+    // ReplyArea schedules deferred autofocus/setSelection after mount; flush pending timers.
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
 
     expect(mockTextareaFocus).not.toHaveBeenCalled();
+    expect(noteTextareaModule.mockEditor.setSelection).not.toHaveBeenCalled();
   });
 
   it('focuses the reply input when note editing is explicitly triggered', () => {

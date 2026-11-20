@@ -3,9 +3,10 @@ import selectors from 'selectors';
 import { useSelector } from 'react-redux';
 import { focusableElementDomString } from 'constants/focusableElementDomString';
 import getRootNode from 'helpers/getRootNode';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 
 export default function useTabFocus(enabled = true) {
+  const core = useInstanceCore();
   const pageNumber = useSelector(selectors.getCurrentPage);
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function useTabFocus(enabled = true) {
         const displayMode = documentViewer.getDisplayModeManager().getDisplayMode();
         const visiblePages = displayMode.getVisiblePages();
         const currentPageContainers = visiblePages.map((page) => getRootNode().querySelector(`#pageContainer${page}`));
-        const isActiveElementInContainers = currentPageContainers.some((container) => container.contains(document.activeElement));
+        const isActiveElementInContainers = currentPageContainers.some((container) => container.contains(activeElement));
         // get the correct page if the last selected element was outside of the visible page containers or if the active element is the document
         if ((nextElement.id.includes('pageText') && !isActiveElementInContainers) || activeElement?.className === 'document') {
           e.preventDefault();

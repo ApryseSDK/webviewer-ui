@@ -1,9 +1,10 @@
 import React from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 
 function useWidgetHighlightingSync() {
+  const core = useInstanceCore();
   const isWidgetHighlightingEnabled = useSelector(selectors.isWidgetHighlightingEnabled);
 
   React.useEffect(() => {

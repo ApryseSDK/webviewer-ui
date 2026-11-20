@@ -1,18 +1,15 @@
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
+import { createInstanceScopedState } from 'core/documentViewers';
+
+const docsByInstance = createInstanceScopedState(() => ({}));
 
 const OutlineUtils = {
   setDoc(doc, documentViewerKey = 1) {
-    if (!this.doc) {
-      this.doc = {};
-    }
-    this.doc = {
-      ...this.doc,
-      [documentViewerKey]: doc,
-    };
+    docsByInstance.get()[documentViewerKey] = doc;
   },
   getDoc(documentViewerKey = 1) {
-    return this.doc?.[documentViewerKey];
+    return docsByInstance.get()[documentViewerKey];
   },
   async setOutlineName(path, newName, documentViewerKey = 1) {
     const target = await this.findPDFNetOutline(path, documentViewerKey);

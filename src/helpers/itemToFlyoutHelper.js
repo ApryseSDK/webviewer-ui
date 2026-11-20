@@ -15,10 +15,11 @@ import { getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/Zo
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import DataElements from 'constants/dataElement';
 import classNames from 'classnames';
+import { createInstanceScopedState } from 'core/documentViewers';
 
-let store;
+const flyoutStoreState = createInstanceScopedState(() => ({ store: undefined }));
 export const setItemToFlyoutStore = (newStore) => {
-  store = newStore;
+  flyoutStoreState.get().store = newStore;
 };
 
 export const itemToFlyout = (item, {
@@ -27,6 +28,7 @@ export const itemToFlyout = (item, {
   useOverrideClickOnly = false,
   extraProps = {},
   skipCheck = false,
+  store = flyoutStoreState.get().store,
 } = {}) => {
   const itemProps = item.properties || item.props || item;
   const {
@@ -112,7 +114,7 @@ export const itemToFlyout = (item, {
     case ITEM_TYPE.GROUPED_ITEMS:
     case ITEM_TYPE.MODULAR_HEADER:
       flyoutItem.className = 'FlyoutGroupedItems';
-      flyoutItem.children = items.map((item) => itemToFlyout(item));
+      flyoutItem.children = items.map((item) => itemToFlyout(item, { store })).filter(Boolean);
       break;
     case ITEM_TYPE.TOOL_BUTTON:
       flyoutItem.className = 'FlyoutToolButton';

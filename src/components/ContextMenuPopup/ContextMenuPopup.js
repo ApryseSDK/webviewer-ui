@@ -2,63 +2,43 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch, useStore, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import FocusTrap from 'components/FocusTrap';
-import { useTranslation } from 'react-i18next';
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
 import ErrorBoundaryComponent from 'components/ErrorBoundaryComponent';
-import OfficeActionItem from './OfficeActionItem';
+import OfficeContextMenu from './OfficeContextMenu';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import actions from 'actions';
 import selectors from 'selectors';
-import useCore from 'hooks/useCore';
-import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox, isMac } from 'helpers/device';
+import { isMobile as isMobileCSS, isIE, isMobileDevice } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import getRootNode from 'helpers/getRootNode';
 import DataElements from 'constants/dataElement';
 import COMPONENT_TYPES from 'constants/componentTypes';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
-import { EditingStreamType } from 'constants/officeEditor';
-import { ITEM_TYPE } from 'constants/customizationVariables';
-import { OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER } from 'src/redux/officeEditorModularComponents';
 
 import './ContextMenuPopup.scss';
 
-// Renders office popup items in a child component so item-building errors are caught by ErrorBoundaryComponent.
-const OfficeContextMenuItems = ({ items, renderItem }) => items.map(renderItem);
-
-OfficeContextMenuItems.propTypes = {
-  items: PropTypes.array.isRequired,
-  renderItem: PropTypes.func.isRequired,
-};
-
 const ContextMenuPopup = ({
   clickPosition,
+  spellingErrorId,
+  misspelledWord,
 }) => {
-  const { core } = useCore();
   const isOfficeEditor = isOfficeEditorMode();
-  const officeEditor = isOfficeEditor ? core.getOfficeEditor() : null;
 
   const isOpen = useSelector((state) => selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP));
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.CONTEXT_MENU_POPUP));
   const isRightClickAnnotationPopupEnabled = useSelector(selectors.isRightClickAnnotationPopupEnabled);
   const isMultiViewerMode = useSelector(selectors.isMultiViewerMode);
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
-  const popupItems = useSelector(
-    (state) => selectors.getPopupItems(state, DataElements.CONTEXT_MENU_POPUP),
-    shallowEqual,
-  );
-  const isCursorInTable = useSelector(selectors.isCursorInTable);
   const isSpreadsheetEditorModeEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);
   const spreadsheetEditorEditMode = useSelector(selectors.getSpreadsheetEditorEditMode);
   const isReadOnlyMode = spreadsheetEditorEditMode === SpreadsheetEditorEditMode.VIEW_ONLY;
-  const activeStream = useSelector(selectors.getOfficeEditorActiveStream);
 
   const [isSpreadsheetAndReadOnlyMode, setIsSpreadsheetAndReadOnlyMode] = useState(isSpreadsheetEditorModeEnabled && isReadOnlyMode);
 
-  const [t] = useTranslation();
   const dispatch = useDispatch();
   // this is hacky, hopefully we can remove this when tool group button is restructured
   const store = useStore();
@@ -94,16 +74,28 @@ const ContextMenuPopup = ({
       return;
     }
 
-    const { width, height } = popupRef.current.getBoundingClientRect();
     const documentContainerSelector = isMultiViewerMode ? `#DocumentContainer${activeDocumentViewerKey}` : '.DocumentContainer';
     const documentContainer = getRootNode().querySelector(documentContainerSelector);
     if (!documentContainer) {
       return;
     }
 
-    const containerBox = documentContainer.getBoundingClientRect();
-    const { left, top } = adjustPopupPosition(clickPosition, containerBox, width, height);
-    setPosition({ left, top });
+    const updatePosition = () => {
+      const { width, height } = popupRef.current.getBoundingClientRect();
+      const containerBox = documentContainer.getBoundingClientRect();
+      const { left, top } = adjustPopupPosition(clickPosition, containerBox, width, height);
+      setPosition((prev) => (prev.left === left && prev.top === top ? prev : { left, top }));
+    };
+    updatePosition();
+
+    // Content such as spell check suggestions can load after the popup opens, so re-clamp whenever its size changes.
+    // ResizeObserver callbacks run after layout but before paint, so the overflow is corrected before it is visible.
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+    const resizeObserver = new ResizeObserver(updatePosition);
+    resizeObserver.observe(popupRef.current);
+    return () => resizeObserver.disconnect();
   }, [clickPosition, isMultiViewerMode, activeDocumentViewerKey, isSpreadsheetAndReadOnlyMode]);
 
   /**
@@ -161,164 +153,6 @@ const ContextMenuPopup = ({
     return { offsetLeft, offsetTop };
   };
 
-  const modifierKey = isMac ? '⌘ Command' : 'Ctrl';
-  const modifierKeyShort = isMac ? '⌘Cmd' : 'Ctrl';
-
-  const handlePaste = (withFormatting = true) => {
-    if (!isFirefox) {
-      core.getOfficeEditor().pasteText(withFormatting);
-      return;
-    }
-
-    const title = withFormatting ? t('officeEditor.pastingTitle') : t('officeEditor.pastingWithoutFormatTitle');
-    const message = withFormatting ? t('officeEditor.pastingMessage') : t('officeEditor.pastingWithoutFormatMessage');
-    const keyboardShortcut = withFormatting ? `${modifierKey} + V` : `${modifierKey} + Shift + V`;
-    const confirmBtnText = t('action.close');
-
-    const warning = {
-      message: `${message}:\n\n${keyboardShortcut}`,
-      title,
-      confirmBtnText,
-      onConfirm: () => {
-        // setTimeout needed because the focus can not be set immediately after closing the warning modal
-        setTimeout(() => {
-          core.getViewerElement().focus();
-        });
-      },
-      onCancel: () => {
-        setTimeout(() => {
-          core.getViewerElement().focus();
-        });
-      },
-    };
-    dispatch(actions.showWarningMessage(warning));
-
-  };
-
-  const getTableActionItem = (title, onClick) => ({ title, onClick });
-
-  const getTableOnlyOfficePopupItem = (dataElement) => {
-    switch (dataElement) {
-      case OFFICE_EDITOR_CONTEXT_MENU_TABLE_DIVIDER:
-        return { type: ITEM_TYPE.DIVIDER };
-      case DataElements.OFFICE_EDITOR_INSERT_ROW_ABOVE:
-        return getTableActionItem('officeEditor.insertRowAbove', () => officeEditor.insertRows(true));
-      case DataElements.OFFICE_EDITOR_INSERT_ROW_BELOW:
-        return getTableActionItem('officeEditor.insertRowBelow', () => officeEditor.insertRows(false));
-      case DataElements.OFFICE_EDITOR_INSERT_COLUMN_RIGHT:
-        return getTableActionItem('officeEditor.insertColumnRight', () => officeEditor.insertColumns(true));
-      case DataElements.OFFICE_EDITOR_INSERT_COLUMN_LEFT:
-        return getTableActionItem('officeEditor.insertColumnLeft', () => officeEditor.insertColumns(false));
-      case DataElements.OFFICE_EDITOR_DELETE_ROW:
-        return getTableActionItem('officeEditor.deleteRow', () => officeEditor.removeRows());
-      case DataElements.OFFICE_EDITOR_DELETE_COLUMN:
-        return getTableActionItem('officeEditor.deleteColumn', () => officeEditor.removeColumns());
-      case DataElements.OFFICE_EDITOR_DELETE_TABLE:
-        return getTableActionItem('officeEditor.deleteTable', () => officeEditor.removeTable());
-      default:
-        return undefined;
-    }
-  };
-
-  // `null` means the item should be explicitly hidden for current context.
-  // `undefined` means there is no built-in default mapping, so caller can still render custom action items.
-  const getDefaultOfficePopupItemProps = (dataElement) => {
-    const tableOnlyItem = getTableOnlyOfficePopupItem(dataElement);
-    if (tableOnlyItem) {
-      return isCursorInTable ? tableOnlyItem : null;
-    }
-
-    if (dataElement === DataElements.OFFICE_EDITOR_DELETE && isCursorInTable) {
-      return null;
-    }
-
-    switch (dataElement) {
-      case DataElements.OFFICE_EDITOR_CUT:
-        return {
-          title: 'action.cut',
-          img: 'icon-cut',
-          onClick: () => officeEditor.cutSelectedText(),
-          shortcut: `${modifierKeyShort}+X`,
-          disabled: !officeEditor.isTextSelected(),
-        };
-      case DataElements.OFFICE_EDITOR_COPY:
-        return {
-          title: 'action.copy',
-          img: 'icon-copy',
-          onClick: () => officeEditor.copySelectedText(),
-          shortcut: `${modifierKeyShort}+C`,
-          disabled: !officeEditor.isTextSelected(),
-        };
-      case DataElements.OFFICE_EDITOR_PASTE:
-        return {
-          title: 'action.paste',
-          img: 'icon-paste',
-          onClick: () => handlePaste(),
-          shortcut: `${modifierKeyShort}+V`,
-        };
-      case DataElements.OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING:
-        return {
-          title: 'action.pasteWithoutFormatting',
-          img: 'icon-paste-without-formatting',
-          onClick: () => handlePaste(false),
-          shortcut: `${modifierKeyShort}+Shift+V`,
-        };
-      case DataElements.OFFICE_EDITOR_ADD_COMMENT:
-        return {
-          title: 'action.addComment',
-          img: 'icon-tool-comment-line',
-          onClick: () => officeEditor.getCommentManager().addCommentThreadAtCurrentRange(''),
-          disabled: activeStream !== EditingStreamType.BODY,
-        };
-      case DataElements.OFFICE_EDITOR_DELETE:
-        return {
-          title: 'action.delete',
-          img: 'icon-delete-line',
-          onClick: () => officeEditor.removeSelection(),
-          disabled: !(officeEditor.isTextSelected() || officeEditor.isImageSelected()),
-        };
-      default:
-        return undefined;
-    }
-  };
-
-  const renderOfficePopupItem = (item, index) => {
-    const mediaQueryClassName = item.hidden?.map((screen) => `hide-in-${screen}`).join(' ');
-    const key = `${item.type || 'actionButton'}-${item.dataElement || index}`;
-    const defaultOfficeItemProps = item.dataElement ? getDefaultOfficePopupItemProps(item.dataElement) : undefined;
-    const shouldHideItem = defaultOfficeItemProps === null; // we explicitly filter out null items but allow undefined items that can be custom action items from the user
-    if (shouldHideItem) {
-      return null;
-    }
-
-    const officePopupItem = {
-      ...defaultOfficeItemProps,
-      ...item,
-      mediaQueryClassName,
-    };
-
-    if (officePopupItem.type === 'divider' || officePopupItem.type === 'spacer') {
-      return (
-        <div
-          key={key}
-          data-element={officePopupItem.dataElement}
-          className={classNames(officePopupItem.type === 'spacer' ? 'spacer' : 'divider', mediaQueryClassName)}
-        />
-      );
-    }
-
-    if (defaultOfficeItemProps || officePopupItem.type === 'actionButton') {
-      return (
-        <OfficeActionItem
-          key={key}
-          {...officePopupItem}
-        />
-      );
-    }
-
-    return null;
-  };
-
   if (isDisabled) {
     return null;
   }
@@ -344,7 +178,7 @@ const ContextMenuPopup = ({
             componentType={COMPONENT_TYPES.POPUP}
           >
             {isOfficeEditor ? (
-              <OfficeContextMenuItems items={popupItems} renderItem={renderOfficePopupItem} />
+              <OfficeContextMenu spellingErrorId={spellingErrorId} misspelledWord={misspelledWord} />
             ) : (
               <CustomizablePopup
                 dataElement={DataElements.CONTEXT_MENU_POPUP}
@@ -439,6 +273,8 @@ ContextMenuPopup.propTypes = {
     left: PropTypes.number,
     top: PropTypes.number,
   }).isRequired,
+  spellingErrorId: PropTypes.number,
+  misspelledWord: PropTypes.string,
 };
 
 export default React.memo(ContextMenuPopup);

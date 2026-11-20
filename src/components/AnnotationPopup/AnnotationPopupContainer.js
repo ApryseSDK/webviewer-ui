@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import debounce from 'lodash/debounce';
 import { saveAs } from 'file-saver';
 
 import useCore from 'hooks/useCore';
+import useInstanceDebouncedCallback from 'hooks/useInstanceDebouncedCallback';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
@@ -154,13 +154,13 @@ const AnnotationPopupContainer = ({
     }
   };
 
-  const handleResize = debounce(() => {
+  const handleResize = useInstanceDebouncedCallback(() => {
     if (AnnotationPopupContainer) {
       setPopupPosition();
     }
   }, sixtyFramesPerSecondIncrement, { 'trailing': true, 'leading': false });
 
-  const handleVisibility = debounce(() => {
+  const handleVisibility = useInstanceDebouncedCallback(() => {
     if (AnnotationPopupContainer) {
       setIsVisible(isFocusedAnnotationSelected);
     }

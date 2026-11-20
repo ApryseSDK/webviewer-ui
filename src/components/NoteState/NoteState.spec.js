@@ -33,14 +33,14 @@ describe('NoteState', () => {
     ['resolved', 'icon-annotation-status-completed'],
   ])('uses the mapped icon for the %s spreadsheet comment state', (state, expectedIcon) => {
     const getStatus = jest.fn(() => 'Accepted');
-    const annotation = {
+    const annotation = Object.assign(Object.create(window.Core.Annotations.StickyAnnotation.prototype), {
       Id: 'comment-123',
       getStatus,
       getCustomData: (key) => ({
         spreadsheetThreadId: 'thread-123',
         spreadsheetCommentState: state,
       })[key],
-    };
+    });
 
     render(<NoteState annotation={annotation} />);
 
@@ -54,13 +54,13 @@ describe('NoteState', () => {
       viewer: {},
       spreadsheetEditor: { editMode: SpreadsheetEditorEditMode.VIEW_ONLY },
     }));
-    const annotation = {
+    const annotation = Object.assign(Object.create(window.Core.Annotations.StickyAnnotation.prototype), {
       Id: 'comment-123',
       getCustomData: (key) => ({
         spreadsheetThreadId: 'thread-123',
         spreadsheetCommentState: 'open',
       })[key],
-    };
+    });
 
     render(<NoteState annotation={annotation} />);
 

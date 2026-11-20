@@ -6,6 +6,8 @@ import StylePopup from 'components/StylePopup';
 import DataElements from 'constants/dataElement';
 import { workerTypes } from 'constants/types';
 import core from 'core';
+import InstanceIdContext from 'src/context/InstanceIdContext';
+import { getCurrentInstanceId, registerInstance, resetInstances, setCurrentInstanceId } from 'core/documentViewers';
 
 // mock initial state.
 // UI Buttons are redux connected, and they need a state or the
@@ -47,14 +49,14 @@ const StylePopupWithRedux = (props) => (
   </Provider>
 );
 
-const createStylePopupTest = (colorMapKey, additionalProps = {}) => {
+const createStylePopupTest = (colorMapKey, additionalProps = {}, wrap = (element) => element) => {
   const style = {
     Opacity: 20,
     StrokeThickness: 0,
     FontSize: '20pt',
     StrokeStyle: 'sold',
   };
-  const { container } = render(<StylePopupWithRedux
+  const { container } = render(wrap(<StylePopupWithRedux
     hideSnapModeCheckbox={false}
     colorMapKey={colorMapKey}
     style={style}
@@ -65,7 +67,7 @@ const createStylePopupTest = (colorMapKey, additionalProps = {}) => {
     onRichTextStyleChange={noop}
     onLineStyleChange={noop}
     {...additionalProps}
-  />);
+  />));
 
   const header = container.querySelector('.palette-options');
   const menuList = container.querySelectorAll('.collapsible-menu');
@@ -181,6 +183,63 @@ describe('StylePopup component', () => {
 
       const checkbox = screen.queryByText(checkboxText);
       expect(checkbox).toBeNull();
+    });
+
+    describe('with two instances', () => {
+      beforeEach(() => {
+        registerInstance(1);
+        registerInstance(2);
+      });
+
+      afterEach(() => {
+        resetInstances();
+      });
+
+      it('Should read the initial document from its own instance when another instance is current', () => {
+        core.getDocument.mockImplementation(() => {
+          const type = getCurrentInstanceId() === 1 ? workerTypes.PDF : workerTypes.WEBVIEWER_SERVER;
+          return { getType: () => type, isWebViewerServerDocument: () => true };
+        });
+        setCurrentInstanceId(2);
+
+        createStylePopupTest('distanceMeasurement', props, (element) => (
+          <InstanceIdContext.Provider value={1}>{element}</InstanceIdContext.Provider>
+        ));
+
+        screen.getByText(checkboxText);
+      });
+
+      it('Should read the snap mode from the tool of its own instance when another instance is current', () => {
+        const instancesAsked = [];
+        jest.spyOn(core, 'isFullPDFEnabled').mockReturnValue(true);
+        jest.spyOn(core, 'getToolMode').mockImplementation(() => {
+          instancesAsked.push(getCurrentInstanceId());
+          return { name: 'MeasurementTool', getSnapMode: () => true };
+        });
+        setCurrentInstanceId(2);
+
+        createStylePopupTest('distanceMeasurement', props, (element) => (
+          <InstanceIdContext.Provider value={1}>{element}</InstanceIdContext.Provider>
+        ));
+
+        expect(instancesAsked).toEqual([1]);
+      });
+
+      it('Should ask its own instance whether it is in form creation mode when another instance is current', () => {
+        const instancesAsked = [];
+        jest.spyOn(core, 'getFormFieldCreationManager').mockImplementation(() => {
+          instancesAsked.push(getCurrentInstanceId());
+          return { isInFormFieldCreationMode: () => false };
+        });
+        setCurrentInstanceId(2);
+
+        createStylePopupTest('distanceMeasurement', props, (element) => (
+          <InstanceIdContext.Provider value={1}>{element}</InstanceIdContext.Provider>
+        ));
+
+        expect(instancesAsked.length).toBeGreaterThan(0);
+        expect(new Set(instancesAsked)).toEqual(new Set([1]));
+      });
     });
   });
 });

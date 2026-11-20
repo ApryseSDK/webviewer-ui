@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill-new';
 import { Mention, MentionBlot } from 'quill-mention';
-import mentionsManager from 'helpers/MentionsManager';
+import { getMentionsManager } from 'helpers/MentionsManager';
+import InstanceIdContext from 'src/context/InstanceIdContext';
 import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -14,7 +15,6 @@ import { createRefHandler } from './CommentTextareaHelper';
 import '../../../constants/quill.scss';
 import './CommentTextarea.scss';
 /* eslint-disable react/forbid-dom-props, react/forbid-component-props */
-let globalUserData = [];
 
 // These are the formats that will be accepted by quill
 // removed images and videos
@@ -50,8 +50,8 @@ Quill.register({
   'blots/mention': MentionBlot,
 });
 
-// mentionsModule has to be outside the funtion to be able to access it without it being destroyed and recreated
-const mentionModule = {
+// Quill calls `source` from DOM handlers, long after render, so it resolves the manager through its own instance id rather than the ambient one.
+const createMentionModule = (instanceId, userDataRef) => ({
   mention: {
     allowedChars: /^[A-Za-z\sÅÄÖåäö0-9\-_]*$/,
     mentionDenotationChars: ['@', '#'],
@@ -71,12 +71,12 @@ const mentionModule = {
       return div;
     },
     async source(searchTerm, renderList) {
-      const mentionsSearchFunction = mentionsManager.getMentionLookupCallback();
-      const foundUsers = await mentionsSearchFunction(globalUserData, searchTerm);
+      const mentionsSearchFunction = getMentionsManager(instanceId).getMentionLookupCallback();
+      const foundUsers = await mentionsSearchFunction(userDataRef.current, searchTerm);
       renderList(foundUsers, searchTerm);
     }
   }
-};
+});
 
 const CommentTextarea = React.forwardRef(
   (
@@ -98,7 +98,11 @@ const CommentTextarea = React.forwardRef(
     const isOfficeEditorMode = useSelector(selectors.getIsOfficeEditorMode);
     const isSpreadsheetEditorMode = useSelector(selectors.isSpreadsheetEditorModeEnabled);
 
-    globalUserData = userData;
+    const instanceId = useContext(InstanceIdContext) ?? undefined;
+    const userDataRef = useRef(userData);
+    userDataRef.current = userData;
+    // Quill only reads its modules once, so the config has to keep the same identity across renders.
+    const mentionModule = useMemo(() => createMentionModule(instanceId, userDataRef), [instanceId]);
 
     const addAttachment = () => {
       getRootNode().querySelector('#reply-attachment-picker')?.click();

@@ -154,15 +154,11 @@ function CustomModal() {
   }).filter(Boolean);
 }
 
-const ModalSection = ({ type, data }) => {
-  if (!data) {
-    return null;
-  }
-
+export const ModalSection = ({ type, data }) => {
   const ref = React.useRef(null);
 
-  const { className, style, innerHTML = null, children = [] } = data;
-  let { title } = data;
+  const { className, style, innerHTML = null, children = [] } = data || {};
+  let { title } = data || {};
   const titleElement = (title && !innerHTML) ? <p>{title}</p> : null;
 
   useLayoutEffect(() => {
@@ -173,6 +169,10 @@ const ModalSection = ({ type, data }) => {
 
     createElementsForModal(innerHTML, el, children);
   }, [innerHTML, children]);
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <div

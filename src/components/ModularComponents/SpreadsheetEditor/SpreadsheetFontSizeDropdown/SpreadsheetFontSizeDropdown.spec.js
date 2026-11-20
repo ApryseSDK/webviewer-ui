@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Basic as SpreadsheetFontSizeDropdownStory } from './SpreadsheetFontSizeDropdown.stories';
-import * as setCellFontStyleModule from 'src/helpers/setCellFontStyle';
+import setCellFontStyle from 'src/helpers/spreadsheetEditor/setCellFontStyle';
 
-jest.mock('src/helpers/setCellFontStyle', () => jest.fn());
+jest.mock('src/helpers/spreadsheetEditor/setCellFontStyle');
 
 describe('SpreadsheetFontSizeDropdown', () => {
   it('renders the storybook component correctly', () => {
@@ -34,7 +34,7 @@ describe('SpreadsheetFontSizeDropdown', () => {
     const option12 = screen.getByRole('option', { name: '12' });
     userEvent.click(option12);
 
-    expect(setCellFontStyleModule.default).toHaveBeenCalled();
-    expect(setCellFontStyleModule.default).toHaveBeenCalledWith({ pointSize: 12 });
+    expect(setCellFontStyle).toHaveBeenCalled();
+    expect(setCellFontStyle).toHaveBeenCalledWith({ pointSize: 12 });
   });
 });

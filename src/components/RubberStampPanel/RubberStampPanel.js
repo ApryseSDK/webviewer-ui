@@ -18,7 +18,7 @@ import CustomRubberStamps from './CustomRubberStamps';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import PropTypes from 'prop-types';
-import { getEventHandler } from 'helpers/fireEvent';
+import { useInstanceEventHandler } from 'helpers/fireEvent';
 import StampSearchOverlay from './StampSearchOverlay';
 import HorizontalDivider from 'components/HorizontalDivider';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
@@ -29,6 +29,7 @@ const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const DOCUMENT_TEMPLATE_ID_CUSTOM_DATA_KEY = 'trn-pdf-stamp-template-id';
 
 const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFlyout = false }) => {
+  const eventHandler = useInstanceEventHandler();
   const { core } = useCore();
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -207,9 +208,9 @@ const RubberStampPanel = ({ dataElement = DataElements.RUBBER_STAMP_PANEL, isFly
       }
     };
 
-    getEventHandler().addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+    eventHandler.addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
     return () => {
-      getEventHandler().removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+      eventHandler.removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
     };
   }, []);
 

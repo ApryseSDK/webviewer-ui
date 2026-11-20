@@ -6,6 +6,7 @@ import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
+import { useTranslation } from 'react-i18next';
 /**
  * A button that toggles form field edit mode.
  * @name formFieldEditButton
@@ -13,6 +14,7 @@ import { getButtonPressedAnnouncement } from 'helpers/accessibility';
  */
 const FormFieldEditButton = forwardRef((props, ref) => {
   const { core } = useCore();
+  const [t] = useTranslation();
   const {
     isFlyoutItem,
     buttonStyle,
@@ -68,7 +70,7 @@ const FormFieldEditButton = forwardRef((props, ref) => {
           isActive={active}
           buttonStyle={resolvedButtonStyle}
           ariaPressed={active}
-          onClickAnnouncement={getButtonPressedAnnouncement(title)}
+          onClickAnnouncement={getButtonPressedAnnouncement(title, t)}
         />
       )
   );

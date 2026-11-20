@@ -132,10 +132,10 @@ describe('NoteStateContainer', () => {
 
   it('sets a resolved spreadsheet comment state through CommentManager', async function() {
     const setCommentState = jest.fn();
-    const mockAnnotation = {
+    const mockAnnotation = Object.assign(Object.create(window.Core.Annotations.StickyAnnotation.prototype), {
       Id: '123',
       getCustomData: (key) => key === 'spreadsheetThreadId' ? 'thread-123' : null,
-    };
+    });
     core.getDocumentViewer = () => ({
       getSpreadsheetEditorManager: () => ({
         getCommentManager: () => ({ setCommentState }),

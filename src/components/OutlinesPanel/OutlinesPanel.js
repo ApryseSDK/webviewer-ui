@@ -30,6 +30,8 @@ import Spinner from 'components/Spinner';
 import useDocumentLoadState from 'hooks/useDocumentLoadState';
 import { convertToPDFDestCoord, getDefaultDestCoord, getOutlineName, getVisibleOutlines } from 'src/helpers/outlinesPanelHelper';
 
+const HIGHLIGHT_PULSE_DURATION = 3000;
+
 const OutlinesPanel = ({ isTest = false }) => {
   const { core } = useCore();
   const dispatch = useDispatch();
@@ -39,6 +41,9 @@ const OutlinesPanel = ({ isTest = false }) => {
   const nextPathRef = useRef(null);
   const outlinesPromiseRef = useRef(null);
   const hasMountedRef = useRef(false);
+  const virtuosoRef = useRef(null);
+  const pendingScrollPathRef = useRef(null);
+  const highlightTimeoutRef = useRef(null);
 
   const activeDocumentViewerKey = useSelector(selectors.getActiveDocumentViewerKey);
   const isViewOnly = useSelector(selectors.isViewOnly);
@@ -54,6 +59,7 @@ const OutlinesPanel = ({ isTest = false }) => {
   const [activeOutlinePath, setActiveOutlinePath] = useState(null);
   const [isAddingNewOutline, setIsAddingNewOutline] = useState(false);
   const [isOutlineEditable, setIsOutlineEditable] = useState(false);
+  const [highlightedOutlinePath, setHighlightedOutlinePath] = useState(null);
 
   const [isMultiSelectMode, setIsMultiSelectMode] = useState(false);
   const [selectedOutlines, setSelectedOutlines] = useState([]);
@@ -236,12 +242,16 @@ const OutlinesPanel = ({ isTest = false }) => {
 
     const doc = core.getDocumentViewer().getDocument();
     const { x, y } = convertToPDFDestCoord(doc, currentDestPage, currentDestCoord);
+    let addedOutlinePath;
     if (outlines.length === 0) {
-      await outlineUtils.addRootOutline(outlineName, currentDestPage, x, y, 0, activeDocumentViewerKey);
+      addedOutlinePath = await outlineUtils.addRootOutline(outlineName, currentDestPage, x, y, 0, activeDocumentViewerKey);
     } else {
-      await outlineUtils.addNewOutline(outlineName, activeOutlinePath, currentDestPage, x, y, 0, activeDocumentViewerKey);
+      addedOutlinePath = await outlineUtils.addNewOutline(outlineName, activeOutlinePath, currentDestPage, x, y, 0, activeDocumentViewerKey);
     }
 
+    if (addedOutlinePath) {
+      pendingScrollPathRef.current = addedOutlinePath;
+    }
     updateOutlines();
   };
 
@@ -277,14 +287,6 @@ const OutlinesPanel = ({ isTest = false }) => {
       setCurrentDestCoord(defaultDestCoord);
     }
   }, [currentDestText, currentPage]);
-
-  useEffect(() => {
-    if (isAddingNewOutline) {
-      core.setToolMode(TOOL_NAME);
-    } else {
-      clearOutlineDestination();
-    }
-  }, [isAddingNewOutline]);
 
   const generalMoveOutlineAction = (dragOutline, dropOutline, moveDirection) => {
     const dragPath = outlineUtils.getPath(dragOutline);
@@ -338,6 +340,51 @@ const OutlinesPanel = ({ isTest = false }) => {
     () => getVisibleOutlines(outlines, outlinesStateMap, shouldAutoExpandOutlines),
     [outlines, outlinesStateMap, shouldAutoExpandOutlines]
   );
+
+  useEffect(() => {
+    if (isAddingNewOutline) {
+      core.setToolMode(TOOL_NAME);
+      const activeOutlineIndex = visibleOutlines.findIndex(
+        ({ outline }) => outlineUtils.getPath(outline) === activeOutlinePath
+      );
+      if (activeOutlineIndex !== -1) {
+        virtuosoRef.current?.scrollToIndex({
+          index: activeOutlineIndex,
+          align: 'center',
+          behavior: 'smooth',
+        });
+      }
+    } else {
+      clearOutlineDestination();
+    }
+  }, [isAddingNewOutline]);
+
+  useEffect(() => {
+    const outlinePath = pendingScrollPathRef.current;
+    if (!outlinePath) {
+      return;
+    }
+
+    const index = visibleOutlines.findIndex(
+      ({ outline }) => outlineUtils.getPath(outline) === outlinePath
+    );
+
+    if (index !== -1) {
+      pendingScrollPathRef.current = null;
+      virtuosoRef.current?.scrollIntoView({
+        index,
+        align: 'center',
+        behavior: 'smooth',
+        done: () => {
+          setHighlightedOutlinePath(outlinePath);
+          clearTimeout(highlightTimeoutRef.current);
+          highlightTimeoutRef.current = setTimeout(() => setHighlightedOutlinePath(null), HIGHLIGHT_PULSE_DURATION);
+        },
+      });
+    }
+  }, [visibleOutlines]);
+
+  useEffect(() => () => clearTimeout(highlightTimeoutRef.current), []);
 
   const renderOutlineItem = useCallback((index, { outline, nestingLevel }) => (
     <OutlineListItem
@@ -407,6 +454,7 @@ const OutlinesPanel = ({ isTest = false }) => {
             isMultiSelectMode,
             shouldAutoExpandOutlines,
             isOutlineEditable,
+            highlightedOutlinePath,
             addNewOutline,
             updateOutlines,
             renameOutline,
@@ -431,6 +479,7 @@ const OutlinesPanel = ({ isTest = false }) => {
                 </DataElementWrapper>
               )}
               <Virtuoso
+                ref={virtuosoRef}
                 className={classNames({ 'small-outlines-list': isAddingNewOutline })}
                 data={visibleOutlines}
                 computeItemKey={(_, { outline }) => outlineUtils.getOutlineId(outline)}

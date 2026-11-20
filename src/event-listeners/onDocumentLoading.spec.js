@@ -1,9 +1,11 @@
 import actions from 'actions';
-import * as spreadsheetEditorHelpers from 'helpers/spreadsheetEditor/isSpreadsheetEditorMode';
+import isSpreadsheetEditorMode from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 
 import { onDocumentLoadingStarted, onDocumentUIReady } from './onDocumentLoading';
 import { openSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorLoaded';
 import { closeSpreadsheetEditorLoadingModal } from './onSpreadsheetEditorReady';
+
+jest.mock('src/helpers/spreadsheetEditor/isSpreadsheetEditorMode');
 
 describe('document loading listeners', () => {
   const openAction = { type: 'OPEN_DOCUMENT_LOADING_SCREEN' };
@@ -29,7 +31,7 @@ describe('document loading listeners', () => {
   });
 
   it('closes document loading when the PDF or DOCX UI is configured', () => {
-    jest.spyOn(spreadsheetEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(false);
+    isSpreadsheetEditorMode.mockReturnValue(false);
 
     onDocumentUIReady(dispatch, 2)();
 
@@ -38,7 +40,7 @@ describe('document loading listeners', () => {
   });
 
   it('keeps document loading open until the spreadsheet UI is ready', () => {
-    jest.spyOn(spreadsheetEditorHelpers, 'isSpreadsheetEditorMode').mockReturnValue(true);
+    isSpreadsheetEditorMode.mockReturnValue(true);
 
     onDocumentUIReady(dispatch)();
 

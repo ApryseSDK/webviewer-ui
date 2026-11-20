@@ -38,6 +38,11 @@
         width: 21px;
         color: var(--icon-color);
       }
+
+      &:disabled,
+      &.disabled {
+        cursor: not-allowed;
+      }
     }
 
     .button-hover {

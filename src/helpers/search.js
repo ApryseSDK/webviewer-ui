@@ -1,32 +1,33 @@
 import core from 'core';
+import { createInstanceScopedState } from 'core/documentViewers';
 
-let searchListeners = [];
-let overrideSearchExecutionFn;
+const searchState = createInstanceScopedState(() => ({ listeners: [], overrideSearchExecutionFn: undefined }));
 
 export function addSearchListener(searchListener) {
-  searchListeners.push(searchListener);
+  searchState.get().listeners.push(searchListener);
 }
 
 export function removeSearchListener(searchListener) {
-  searchListeners = searchListeners.filter((listener) => {
+  const state = searchState.get();
+  state.listeners = state.listeners.filter((listener) => {
     return listener !== searchListener;
   });
 }
 
 export function getSearchListeners() {
-  return [...searchListeners];
+  return [...searchState.get().listeners];
 }
 
 export function clearSearchListeners() {
-  searchListeners = [];
+  searchState.get().listeners = [];
 }
 
 export function overrideSearchExecution(fn) {
-  overrideSearchExecutionFn = fn;
+  searchState.get().overrideSearchExecutionFn = fn;
 }
 
 export function getOverrideSearchExecution() {
-  return overrideSearchExecutionFn;
+  return searchState.get().overrideSearchExecutionFn;
 }
 
 export function buildSearchModeArray(searchOptions) {

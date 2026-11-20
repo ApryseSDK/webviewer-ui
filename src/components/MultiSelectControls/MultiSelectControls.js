@@ -197,7 +197,7 @@ const MultiSelectControls = ({
           title={t('option.notesOrder.status')}
           img={'icon-annotation-status-none'}
           toggleElement={DataElements.NOTE_STATE_FLYOUT}
-          disabled={modifiableMultiSelectAnnotations.length === 0}
+          disabled={multiSelectedAnnotations.length === 0}
           forceTooltipPosition={multiSelectTooltipPosition}
         />
         <NoteStateFlyout

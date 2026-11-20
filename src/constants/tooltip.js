@@ -1,0 +1,2 @@
+export const TOOLTIP_SHOW_DELAY = 300;
+export const TOOLTIP_OPACITY_DELAY = 50;

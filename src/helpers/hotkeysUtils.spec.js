@@ -3,7 +3,10 @@ import {
   Keys,
   Shortcuts,
   concatKeys,
+  getViewOnlyShortcuts,
+  setViewOnlyShortcuts,
 } from './hotkeysUtils';
+import { resetInstances } from 'core/documentViewers';
 
 describe('hotkeysUtils content edit shortcut map', () => {
   it('falls back to default copy/paste/undo/redo shortcuts when missing in user map', () => {
@@ -35,5 +38,18 @@ describe('hotkeysUtils content edit shortcut map', () => {
     expect(map[Shortcuts.CONTENT_EDIT_ITALIC]).toBe(concatKeys(Keys.CTRL_I, Keys.COMMAND_I));
     expect(map[Shortcuts.CONTENT_EDIT_UNDERLINE]).toBe(concatKeys(Keys.CTRL_U, Keys.COMMAND_U));
     expect(map[Shortcuts.CONTENT_EDIT_STRIKEOUT]).toBe(concatKeys(Keys.CTRL_K, Keys.COMMAND_K));
+  });
+});
+
+describe('hotkeysUtils view-only shortcuts', () => {
+  afterEach(() => resetInstances());
+
+  it('should only change the view-only shortcuts of the instance that set them', () => {
+    const defaults = getViewOnlyShortcuts(2);
+
+    setViewOnlyShortcuts([Shortcuts.RECTANGLE], 1);
+
+    expect(getViewOnlyShortcuts(1)).toEqual([Shortcuts.RECTANGLE]);
+    expect(getViewOnlyShortcuts(2)).toEqual(defaults);
   });
 });

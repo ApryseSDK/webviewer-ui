@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import getToolStyles from 'helpers/getToolStyles';
 import setToolStyles from 'helpers/setToolStyles';
@@ -21,6 +21,7 @@ import { parseMiddleLineStyleValue } from 'helpers/customLineStyleUtils';
 const { Annotations } = window.Core;
 
 const useStylePanel = ({ selectedAnnotations, currentTool }) => {
+  const core = useInstanceCore();
   const { t, i18n } = useTranslation();
   const [annotationStyle, setAnnotationStyle] = useState({
     StrokeColor: null,

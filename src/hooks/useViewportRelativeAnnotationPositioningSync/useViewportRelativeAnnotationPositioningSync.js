@@ -1,9 +1,10 @@
 import React from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 
 function useViewportRelativeAnnotationPositioningSync() {
+  const core = useInstanceCore();
   const isViewportRelativeAnnotationPositioningEnabled = useSelector(selectors.isViewportRelativeAnnotationPositioningEnabled);
 
   React.useEffect(() => {

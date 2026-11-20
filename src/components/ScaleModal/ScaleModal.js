@@ -50,6 +50,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
     measurementScalePreset,
     { tempScale, isFractionalUnit },
     isMultipleScalesMode,
+    isMeasurementPageValueRoundingEnabled,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.SCALE_MODAL),
     selectors.isElementOpen(state, DataElements.SCALE_MODAL),
@@ -60,6 +61,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
     selectors.getMeasurementScalePreset(state),
     selectors.getCalibrationInfo(state),
     selectors.getIsMultipleScalesMode(state),
+    selectors.getIsMeasurementPageValueRoundingEnabled(state),
   ]);
 
   const [isFractionalPrecision, setIsFractionalPrecision] = useState(false);
@@ -208,7 +210,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
     if (isCustomOption) {
       const scale = customScale.getScaleRatioAsArray();
 
-      if (!isCurrentPageScaleFromCalibration) {
+      if (isMeasurementPageValueRoundingEnabled && !isCurrentPageScaleFromCalibration) {
         scale[0][0] = getPrecisionsValue(scale[0][0], scale[0][1]);
       }
       scale[1][0] = getPrecisionsValue(scale[1][0], scale[1][1]);
@@ -284,6 +286,7 @@ const ScaleModal = ({ annotations, selectedTool }) => {
                 scale={customScale.getScaleRatioAsArray()}
                 onScaleChange={onCustomScaleChange}
                 precision={precisionOption[1]}
+                isMeasurementPageValueRoundingEnabled={isMeasurementPageValueRoundingEnabled}
               />
             ) : (
               null

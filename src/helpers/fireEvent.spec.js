@@ -1,7 +1,9 @@
 import fireEvent, { fireError, getEventHandler, INTERNAL_LOAD_ERROR_EVENT } from 'helpers/fireEvent';
 import Events from 'constants/events';
+import getRootNode from 'helpers/getRootNode';
+import { registerInstance, resetInstances, runWithInstance } from 'core/documentViewers';
 
-jest.mock('helpers/getRootNode', () => () => global.document);
+jest.mock('helpers/getRootNode', () => jest.fn(() => global.document));
 
 describe('fireEvent', () => {
   let handler;
@@ -238,6 +240,54 @@ describe('fireEvent', () => {
 
       window.removeEventListener(Events.LOAD_ERROR, publicListener);
       window.removeEventListener(INTERNAL_LOAD_ERROR_EVENT, internalListener);
+    });
+  });
+
+  describe('multiple instances', () => {
+    afterEach(() => {
+      resetInstances();
+    });
+
+    it('should deliver an event only to listeners registered on the firing instance', async () => {
+      registerInstance(1);
+      registerInstance(2);
+      const listenerA = jest.fn();
+      const listenerB = jest.fn();
+      runWithInstance(1, () => getEventHandler().addEventListener(Events.THEME_CHANGED, listenerA));
+      runWithInstance(2, () => getEventHandler().addEventListener(Events.THEME_CHANGED, listenerB));
+
+      await runWithInstance(2, () => fireEvent(Events.THEME_CHANGED, 'dark'));
+
+      expect(listenerA).not.toHaveBeenCalled();
+      expect(listenerB).toHaveBeenCalledWith('dark');
+    });
+
+    it('should keep delivering to the firing instance when the ambient instance changes mid-dispatch', async () => {
+      registerInstance(1);
+      registerInstance(2);
+      const listenerA = jest.fn();
+      runWithInstance(1, () => getEventHandler().addEventListener(Events.VISIBILITY_CHANGED, listenerA));
+      const panel = document.createElement('div');
+      panel.setAttribute('data-element', 'notesPanel');
+      document.body.appendChild(panel);
+
+      const pending = runWithInstance(1, () => fireEvent(Events.VISIBILITY_CHANGED, ['notesPanel', true]));
+      registerInstance(2);
+      await pending;
+
+      expect(listenerA).toHaveBeenCalledWith('notesPanel', true);
+      panel.remove();
+    });
+
+    it('should deliver a visibility event to an instance that has no root node yet', async () => {
+      registerInstance(1);
+      const listener = jest.fn();
+      runWithInstance(1, () => getEventHandler().addEventListener(Events.VISIBILITY_CHANGED, listener));
+      getRootNode.mockReturnValueOnce(undefined);
+
+      await runWithInstance(1, () => fireEvent(Events.VISIBILITY_CHANGED, ['notesPanel', true]));
+
+      expect(listener).toHaveBeenCalledWith('notesPanel', true);
     });
   });
 });

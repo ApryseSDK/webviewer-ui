@@ -240,7 +240,7 @@ function DocumentCropPopupContainer() {
     }
     return (
       <Draggable
-        cancel={'input, button, .collapsible-menu, .ui__choice__label'}
+        cancel={'input, button, .collapsible-menu, .ui__choice__label, .Dropdown__wrapper'}
         position={position}
         bounds={dragBounds}
         onDrag={handleDrag}

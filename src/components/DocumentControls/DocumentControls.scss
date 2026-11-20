@@ -20,8 +20,29 @@
       padding-bottom: 0px;
     }
 
+    &.error {
+      padding-bottom: 4px;
+
+      @include mobile {
+        padding-bottom: 4px;
+      }
+    }
+
     &.customizableUI {
       padding: 8px 0px;
+    }
+
+    .pageNumbersInputWrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 1;
+
+      .Icon {
+        position: absolute;
+        inset-inline-end: 8px;
+        color: var(--error-border-color);
+      }
     }
 
     .pagesInput {
@@ -48,6 +69,15 @@
       &::placeholder {
         color: var(--placeholder-text);
       }
+
+      &.pagesInput--error {
+        padding-inline-end: 30px;
+        border-color: var(--error-border-color);
+
+        &:focus {
+          border-color: var(--error-border-color);
+        }
+      }
     }
 
     .documentControlsButton {
@@ -73,6 +103,12 @@
         }
       }
     }
+  }
+
+  .page-number-error {
+    color: var(--error-text-color);
+    margin-top: 4px;
+    padding-bottom: 8px;
   }
 
   // This label only appears in the Modular UI

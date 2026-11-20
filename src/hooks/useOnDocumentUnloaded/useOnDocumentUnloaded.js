@@ -1,7 +1,8 @@
 import React from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 
 const useOnDocumentUnloaded = (callback) => {
+  const core = useInstanceCore();
   React.useEffect(() => {
     const onDocumentUnloaded = () => {
       callback();

@@ -110,6 +110,7 @@
 
         &[disabled] {
           color: var(--gray-5);
+          cursor: not-allowed;
         }
 
         .icon-label-wrapper {

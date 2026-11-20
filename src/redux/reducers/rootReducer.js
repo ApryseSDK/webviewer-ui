@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
-import initialState from 'src/redux/initialState';
+import sharedInitialState from 'src/redux/initialState';
+import cloneInitialState from 'src/redux/cloneInitialState';
 import viewerReducer from 'reducers/viewerReducer';
 import searchReducer from 'reducers/searchReducer';
 import userReducer from 'reducers/userReducer';
@@ -12,6 +13,11 @@ import spreadsheetEditorReducer from './spreadsheetEditorReducer';
 import { getInstanceID } from 'helpers/getRootNode';
 import { persistReducer } from 'redux-persist';
 import localStorageManager from '../../helpers/localStorageManager';
+
+// redux-persist schedules a 5 second "persist timed out" timer per persisted reducer and never clears it, so every
+// mounted instance stays reachable for 5 seconds after it is destroyed. localStorageManager always settles, so the
+// timeout safety net is not needed.
+const PERSIST_TIMEOUT = 0;
 
 /**
  * @ignore
@@ -30,6 +36,7 @@ export function createRootReducer(instanceId) {
   const viewerPersistConfig = {
     key: `webviewer-viewer-${instanceId}`,
     storage: localStorageManager,
+    timeout: PERSIST_TIMEOUT,
     whitelist: [
       'toolbarGroup',
       'lastPickedToolForGroup',
@@ -55,14 +62,19 @@ export function createRootReducer(instanceId) {
   const searchPersistConfig = {
     key: `webviewer-search-${instanceId}`,
     storage: localStorageManager,
+    timeout: PERSIST_TIMEOUT,
     whitelist: ['clearSearchPanelOnClose']
   };
 
   const officeEditorPersistConfig = {
     key: `webviewer-office-editor-${instanceId}`,
     storage: localStorageManager,
+    timeout: PERSIST_TIMEOUT,
     whitelist: ['unitMeasurement']
   };
+
+  // Every store gets its own copy so in-place edits of nested arrays, sets and objects cannot leak across instances.
+  const initialState = cloneInitialState(sharedInitialState);
 
   return combineReducers({
     viewer: persistReducer(viewerPersistConfig, viewerReducer(initialState.viewer)),

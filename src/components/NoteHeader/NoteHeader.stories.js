@@ -139,10 +139,10 @@ BasicWithTrackedChange.parameters = disableRtlModeParameters;
 
 export const testPropsSpreadsheetComment = {
   ...testProps,
-  annotation: {
+  annotation: Object.assign(Object.create(window.Core.Annotations.StickyAnnotation.prototype), {
     ...mockAnnotation,
     getCustomData: (key) => key === SPREADSHEET_THREAD_ID_KEY ? 'thread-123' : null,
-  },
+  }),
 };
 
 export function SpreadsheetComment() {

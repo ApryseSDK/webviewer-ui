@@ -7,7 +7,7 @@ import { CELL_ACTION_OPTIONS } from 'constants/spreadsheetEditor';
 import capitalize from 'helpers/capitalize';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
-import performClipboardActionOnCells from 'src/helpers/performClipboardActionOnCells';
+import performClipboardActionOnCells from 'src/helpers/spreadsheetEditor/performClipboardActionOnCells';
 const propTypes = {
   actionType: PropTypes.oneOf(Object.values(CELL_ACTION_OPTIONS)).isRequired,
   isFlyoutItem: PropTypes.bool,

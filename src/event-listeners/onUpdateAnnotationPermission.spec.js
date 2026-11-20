@@ -5,7 +5,7 @@ import core from 'core';
 import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 import actions from 'actions';
 import { isOfficeEditorMode } from 'src/helpers/officeEditor';
-import { isSpreadsheetEditorMode } from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
+import isSpreadsheetEditorMode from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 
 jest.mock('selectors');
 jest.mock('core');
@@ -14,9 +14,7 @@ jest.mock('actions');
 jest.mock('src/helpers/officeEditor', () => ({
   isOfficeEditorMode: jest.fn(),
 }));
-jest.mock('src/helpers/spreadsheetEditor/isSpreadsheetEditorMode', () => ({
-  isSpreadsheetEditorMode: jest.fn(),
-}));
+jest.mock('src/helpers/spreadsheetEditor/isSpreadsheetEditorMode');
 
 const mockEnableTools = jest.fn();
 const mockDisableTools = jest.fn();

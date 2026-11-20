@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
@@ -9,6 +9,7 @@ import defaultTool from 'constants/defaultTool';
 import { ITEM_RENDER_PREFIXES } from 'constants/customizationVariables';
 
 export default function useOnAnnotationCreateRubberStampToolMode() {
+  const core = useInstanceCore();
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const { customizableUI } = useSelector((state) => selectors.getFeatureFlags(state));

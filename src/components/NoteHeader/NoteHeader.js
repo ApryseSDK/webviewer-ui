@@ -17,8 +17,9 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import useCore from 'hooks/useCore';
 import { isAutosaveDraftReply } from 'helpers/autosaveDraftReply';
-import { parseRecordId } from 'helpers/officeEditorCommentHelper';
-import { SPREADSHEET_THREAD_ID_KEY, SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
+import { parseRecordId } from 'helpers/officeEditorAnnotationsHelper';
+import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
+import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import { OFFICE_EDITOR_TRACKED_CHANGE_KEY, OfficeEditorEditMode } from 'constants/officeEditor';
@@ -204,7 +205,7 @@ function NoteHeader(props) {
   }
   let fillColor = getColor(annotation.FillColor);
 
-  const isSpreadsheetComment = !!annotation.getCustomData(SPREADSHEET_THREAD_ID_KEY) && isSpreadsheetEditorMode;
+  const isSpreadsheetComment = mapAnnotationToKey(annotation) === annotationMapKeys.SPREADSHEET_EDITOR_COMMENT && isSpreadsheetEditorMode;
   if (isSpreadsheetComment) {
     color = 'var(--icon-color)';
   }

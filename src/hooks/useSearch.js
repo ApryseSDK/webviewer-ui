@@ -1,13 +1,14 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions/index';
-import { isSpreadsheetEditorMode } from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
+import isSpreadsheetEditorMode from 'src/helpers/spreadsheetEditor/isSpreadsheetEditorMode';
 import selectors from 'selectors';
 import { debounce } from 'lodash';
 import { buildSearchModeArray } from 'src/helpers/search';
 
 function useSearch(activeDocumentViewerKey) {
+  const core = useInstanceCore();
   const searchValue = useSelector(selectors.getSearchValue);
   const caseSensitive = useSelector(selectors.isCaseSensitive);
   const wholeWord = useSelector(selectors.isWholeWord);

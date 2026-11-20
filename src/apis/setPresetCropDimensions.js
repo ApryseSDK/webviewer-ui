@@ -37,8 +37,7 @@ export default (store) => (presetName, newPreset) => {
     }
   }
 
-  const presets = selectors.getPresetCropDimensions(store.getState());
-  presets[presetName] = newPreset;
+  const presets = { ...selectors.getPresetCropDimensions(store.getState()), [presetName]: newPreset };
 
   store.dispatch(actions.setPresetCropDimensions(presets));
 };

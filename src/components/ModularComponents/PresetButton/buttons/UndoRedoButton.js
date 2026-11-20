@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
+import { useTranslation } from 'react-i18next';
 import useCore from 'hooks/useCore';
 import FlyoutItemContainer from '../../FlyoutItemContainer';
 import classNames from 'classnames';
-import { triggerSelectedRangeStyleChangedWithLatestStyle } from 'src/helpers/undoRedoSpreadsheetHelpers';
+import triggerSelectedRangeStyleChangedWithLatestStyle from 'src/helpers/spreadsheetEditor/triggerSelectedRangeStyleChangedWithLatestStyle';
 // Configuration map for undo/redo operations
 const getUndoRedoConfig = (core) => ({
   undo: {
@@ -49,6 +50,7 @@ const getUndoRedoConfig = (core) => ({
  */
 const UndoRedoButton = forwardRef((props, ref) => {
   const { core } = useCore();
+  const [t] = useTranslation();
   const {
     type, // 'undo' or 'redo'
     isFlyoutItem,
@@ -122,7 +124,7 @@ const UndoRedoButton = forwardRef((props, ref) => {
           shouldPassActiveDocumentViewerKeyToOnClickHandler={true}
           disabled={disabled}
           buttonStyle={resolvedButtonStyle}
-          onClickAnnouncement={getButtonPressedAnnouncement(finalTitle)}
+          onClickAnnouncement={getButtonPressedAnnouncement(finalTitle, t)}
         />
       )
   );

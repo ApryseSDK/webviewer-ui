@@ -1,7 +1,7 @@
 import applyActiveBorders from './applyActiveBorders';
-import setCellBorder from './setCellBorder';
+import setCellBorder from './spreadsheetEditor/setCellBorder';
 
-jest.mock('./setCellBorder');
+jest.mock('./spreadsheetEditor/setCellBorder');
 
 describe('applyActiveBorders', () => {
   const mockStyle = 'Thin';

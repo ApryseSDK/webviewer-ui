@@ -68,6 +68,15 @@
         box-shadow: none;
       }
 
+      // Button.scss clears the hover box-shadow and background on mobile; this is more specific so the tab border stays visible
+      @include mobile {
+        &:hover:not(:disabled):not(.disabled):not(.active) {
+          border: 1px solid var(--blue-6);
+          background: var(--faded-component-background);
+          box-shadow: none;
+        }
+      }
+
       &.active {
         border: 1px solid var(--tab-color-selected);
         background: var(--tab-color-selected) !important;

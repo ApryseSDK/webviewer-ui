@@ -6,13 +6,11 @@ import {
   renderWithRedux,
   getSpreadsheetEditorState
 } from './UndoRedoTestHelpers';
-import { triggerSelectedRangeStyleChangedWithLatestStyle } from 'src/helpers/undoRedoSpreadsheetHelpers';
+import triggerSelectedRangeStyleChangedWithLatestStyle from 'src/helpers/spreadsheetEditor/triggerSelectedRangeStyleChangedWithLatestStyle';
 
 jest.mock('core');
 
-jest.mock('src/helpers/undoRedoSpreadsheetHelpers', () => ({
-  triggerSelectedRangeStyleChangedWithLatestStyle: jest.fn(),
-}));
+jest.mock('src/helpers/spreadsheetEditor/triggerSelectedRangeStyleChangedWithLatestStyle');
 
 const buttonTestConfig = [
   {

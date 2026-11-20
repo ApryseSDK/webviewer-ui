@@ -15,14 +15,14 @@ const getColorForMode = (isDarkMode, darkModeColor, lightModeColor, isFocused = 
   return 'transparent';
 };
 
-const getContainerMaxHeight = () => {
-  if (isMobileSize()) {
+const getContainerMaxHeight = (isMobile) => {
+  if (isMobile) {
     return '55px';
   }
   return '70px';
 };
 
-const getStyles = (isDarkMode) => ({
+const getStyles = (isDarkMode, isMobile) => ({
   groupHeading: (base) => ({
     ...base,
     textTransform: 'none',
@@ -103,7 +103,7 @@ const getStyles = (isDarkMode) => ({
   valueContainer: (base) => ({
     ...base,
     padding: '1px',
-    maxHeight: getContainerMaxHeight(),
+    maxHeight: getContainerMaxHeight(isMobile),
     overflowY: 'scroll',
   }),
   control: (base) => ({
@@ -218,7 +218,9 @@ const RedactionSearchMultiSelect = (props) => {
   ];
 
   const isDarkMode = activeTheme === 'dark';
-  const styles = getStyles(isDarkMode);
+  // isMobileSize uses a hook, so read it here rather than inside react-select's style callbacks.
+  const isMobile = isMobileSize();
+  const styles = getStyles(isDarkMode, isMobile);
 
   return (
     <CreatableMultiSelect

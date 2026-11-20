@@ -28,10 +28,15 @@
       color: var(--icon-color);
     }
 
-    &:hover {
+    &:hover:not(:disabled):not(.disabled) {
       border-color: var(--focus-border);
       background: var(--tools-button-hover);
       border-radius: 4px;
+    }
+
+    &:disabled,
+    &.disabled {
+      cursor: not-allowed;
     }
 
     &.active {
@@ -81,10 +86,15 @@
       color: var(--icon-color);
     }
 
-    &:hover {
+    &:hover:not(:disabled):not(.disabled) {
       border-color: var(--focus-border);
       background: var(--tools-button-hover);
       border-radius: 4px;
+    }
+
+    &:disabled,
+    &.disabled {
+      cursor: not-allowed;
     }
   }
 }

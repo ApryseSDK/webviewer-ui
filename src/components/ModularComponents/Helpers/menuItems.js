@@ -10,6 +10,7 @@ import {
 import Button from 'components/Button';
 import classNames from 'classnames';
 import { getButtonPressedAnnouncement } from 'helpers/accessibility';
+import { useTranslation } from 'react-i18next';
 const baseMenuItems = {
   [PRESET_BUTTON_TYPES.UNDO]: {
     dataElement: 'undoButton',
@@ -412,7 +413,9 @@ export const menuItems = {
   }, {}),
 };
 
-export const getPresetButtonDOM = (presetButtonProperties) => {
+// A component (not a plain helper) so it can call useTranslation for the click announcement.
+const PresetButtonDOM = ({ presetButtonProperties }) => {
+  const [t] = useTranslation();
   const { buttonType, isDisabled, onClick, isFullScreen, isActive, buttonStyle, className } = presetButtonProperties;
   const resolvedButtonStyle = buttonStyle ?? presetButtonProperties.style;
   const menuItem = { ...menuItems[buttonType] };
@@ -438,7 +441,9 @@ export const getPresetButtonDOM = (presetButtonProperties) => {
       disabled={isDisabled}
       isActive={isActive}
       buttonStyle={resolvedButtonStyle}
-      onClickAnnouncement={getButtonPressedAnnouncement(title)}
+      onClickAnnouncement={getButtonPressedAnnouncement(title, t)}
     />
   );
 };
+
+export const getPresetButtonDOM = (presetButtonProperties) => <PresetButtonDOM presetButtonProperties={presetButtonProperties} />;

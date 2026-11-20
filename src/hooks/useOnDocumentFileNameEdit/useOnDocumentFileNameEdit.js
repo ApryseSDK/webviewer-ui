@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import core from 'core';
+import { useInstanceCore } from 'hooks/useCore/useCore';
 import selectors from 'selectors';
 import { OfficeEditorEditMode } from 'constants/officeEditor';
 import { SpreadsheetEditorEditMode } from 'constants/spreadsheetEditor';
 
 const useOnDocumentFileNameEdit = () => {
+  const core = useInstanceCore();
   const isOfficeEditorEnabled = useSelector(selectors.getIsOfficeEditorMode);
   const officeEditMode = useSelector(selectors.getOfficeEditorEditMode);
   const isSpreadsheetEditorEnabled = useSelector(selectors.isSpreadsheetEditorModeEnabled);

@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import core from 'core';
+import { createInstanceScopedState } from 'core/documentViewers';
 
 import { adjustListBoxForPrint } from './printHTMLToCanvasHelper';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
@@ -12,9 +13,8 @@ import { getCurrentViewRect, doesCurrentViewContainEntirePage } from './printCur
 import { getSortStrategies } from 'constants/sortStrategies';
 import { hideRequiredWidgetStyling, showRequiredWidgetStyling } from './widgetPrintHelpers';
 
-let pendingCanvases = [];
-let colorMap;
-let PRINT_QUALITY = 1;
+// One print job per instance at a time; a sibling instance printing concurrently must not cancel or restyle this one.
+const printJobState = createInstanceScopedState(() => ({ pendingCanvases: [], colorMap: undefined, printQuality: 1, grayscaleDarknessFactor: 1 }));
 
 dayjs.extend(LocalizedFormat);
 
@@ -33,7 +33,7 @@ const calculatePageZoom = (core, pageNumber) => {
   return zoom;
 };
 
-const getNote = (core, annotation, dateFormat, language, timezone) => {
+const getNote = (core, annotation, dateFormat, language, timezone, colorMap) => {
   const note = document.createElement('div');
   note.className = 'note';
 
@@ -43,7 +43,7 @@ const getNote = (core, annotation, dateFormat, language, timezone) => {
   const noteRootInfo = document.createElement('div');
   noteRootInfo.className = 'note__info--with-icon';
 
-  const noteIcon = getNoteIcon(annotation);
+  const noteIcon = getNoteIcon(annotation, colorMap);
 
   noteRootInfo.appendChild(noteIcon);
   noteRootInfo.appendChild(getNoteInfo(core, annotation, dateFormat, language, timezone));
@@ -109,7 +109,7 @@ const getNoteContent = (annotation) => {
   return contentElement;
 };
 
-const getNoteIcon = (annotation) => {
+const getNoteIcon = (annotation, colorMap) => {
   const key = mapAnnotationToKey(annotation);
   const iconColor = colorMap[key] && colorMap[key].iconColor;
   const icon = getDataWithKey(key).icon;
@@ -147,7 +147,7 @@ const getNoteIcon = (annotation) => {
   return noteIcon;
 };
 
-export const creatingNotesPage = (core, annotations, pageNumber, dateFormat, language, timezone) => new Promise((resolve) => {
+export const creatingNotesPage = (core, annotations, pageNumber, dateFormat, language, timezone, colorMap) => new Promise((resolve) => {
   const container = document.createElement('div');
   container.className = 'page__container';
 
@@ -157,7 +157,7 @@ export const creatingNotesPage = (core, annotations, pageNumber, dateFormat, lan
 
   container.appendChild(header);
   annotations.forEach((annotation) => {
-    const note = getNote(core, annotation, dateFormat, language, timezone);
+    const note = getNote(core, annotation, dateFormat, language, timezone, colorMap);
 
     container.appendChild(note);
   });
@@ -191,7 +191,7 @@ export const getPrintableAnnotationNotes = (core, pageNumber) => core
 export const cancelPrint = () => {
   core.getDocumentViewers().forEach((documentViewer) => {
     const doc = documentViewer.getDocument();
-    pendingCanvases.forEach((id) => doc.cancelLoadCanvas(id));
+    printJobState.get().pendingCanvases.forEach((id) => doc.cancelLoadCanvas(id));
   });
 };
 
@@ -297,11 +297,12 @@ const getPrintRotation = (core, pageIndex, maintainPageOrientation) => {
   return core.getRotation(pageIndex + 1);
 };
 
-const creatingImage = (core, pageNumber, includeAnnotations, maintainPageOrientation, isCurrentView, createCanvases = false, isGrayscale = false) => new Promise((resolve) => {
+const creatingImage = (core, pageNumber, pageOptions, printJob) => new Promise((resolve) => {
+  const { includeAnnotations, maintainPageOrientation, isCurrentView, createCanvases = false, isGrayscale = false } = pageOptions;
   const pageIndex = pageNumber - 1;
   const printRotation = getPrintRotation(core, pageIndex, maintainPageOrientation);
   const onCanvasLoaded = async (canvas) => {
-    pendingCanvases = pendingCanvases.filter((pendingCanvas) => pendingCanvas !== id);
+    printJob.pendingCanvases = printJob.pendingCanvases.filter((pendingCanvas) => pendingCanvas !== id);
     positionCanvas(core, canvas, pageIndex);
     let printableAnnotInfo = [];
     if (!includeAnnotations) {
@@ -319,7 +320,7 @@ const creatingImage = (core, pageNumber, includeAnnotations, maintainPageOrienta
       });
     }
 
-    const grayscaleDarknessFactor = getGrayscaleDarknessFactor();
+    const { grayscaleDarknessFactor } = printJob;
 
     if (isGrayscale && grayscaleDarknessFactor >= 1) {
       const ctx = canvas.getContext('2d');
@@ -387,27 +388,31 @@ const creatingImage = (core, pageNumber, includeAnnotations, maintainPageOrienta
     zoom,
     pageRotation: printRotation,
     drawComplete: onCanvasLoaded,
-    multiplier: PRINT_QUALITY,
+    multiplier: printJob.printQuality,
     'print': true,
     renderRect
   });
 
-  pendingCanvases.push(id);
+  printJob.pendingCanvases.push(id);
 });
 
-export const createRasterizedPrintPages = (core, pagesToPrint, printOptions, onProgress) => {
+// Pass `instanceId` when calling after an await, where the ambient instance may have changed.
+export const createRasterizedPrintPages = (core, pagesToPrint, printOptions, onProgress, instanceId) => {
   const createdPages = [];
-  pendingCanvases = [];
-  PRINT_QUALITY = printOptions?.printQuality;
-  colorMap = printOptions?.colorMap;
+  const printJob = printJobState.get(instanceId);
+  printJob.pendingCanvases = [];
+  printJob.printQuality = printOptions?.printQuality;
+  printJob.colorMap = printOptions?.colorMap;
+  printJob.grayscaleDarknessFactor = getGrayscaleDarknessFactor(instanceId);
 
   pagesToPrint.forEach((pageNumber) => {
-    createdPages.push(creatingImage(core, pageNumber,
-      printOptions?.includeAnnotations,
-      printOptions?.maintainPageOrientation,
-      printOptions?.isPrintCurrentView || printOptions?.isCurrentView,
-      printOptions?.createCanvases,
-      printOptions?.isGrayscale));
+    createdPages.push(creatingImage(core, pageNumber, {
+      includeAnnotations: printOptions?.includeAnnotations,
+      maintainPageOrientation: printOptions?.maintainPageOrientation,
+      isCurrentView: printOptions?.isPrintCurrentView || printOptions?.isCurrentView,
+      createCanvases: printOptions?.createCanvases,
+      isGrayscale: printOptions?.isGrayscale,
+    }, printJob));
 
     if (onProgress) {
       createdPages[createdPages.length - 1].then((htmlElement) => {
@@ -419,7 +424,7 @@ export const createRasterizedPrintPages = (core, pagesToPrint, printOptions, onP
     if (printOptions?.includeComments && printableAnnotationNotes) {
       const sortedNotes = getSortStrategies()[printOptions?.sortStrategy].getSortedNotes(printableAnnotationNotes);
       if (sortedNotes.length) {
-        createdPages.push(creatingNotesPage(core, sortedNotes, pageNumber, printOptions?.dateFormat, printOptions?.language, printOptions?.timezone));
+        createdPages.push(creatingNotesPage(core, sortedNotes, pageNumber, printOptions?.dateFormat, printOptions?.language, printOptions?.timezone, printJob.colorMap));
       }
       if (onProgress) {
         createdPages[createdPages.length - 1].then((htmlElement) => {

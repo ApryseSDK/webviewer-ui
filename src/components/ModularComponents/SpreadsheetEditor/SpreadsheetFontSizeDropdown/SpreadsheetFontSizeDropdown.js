@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
 import { AVAILABLE_FONT_SIZES } from 'constants/spreadsheetEditor';
-import setCellFontStyle from 'src/helpers/setCellFontStyle';
+import setCellFontStyle from 'src/helpers/spreadsheetEditor/setCellFontStyle';
 import './SpreadsheetFontSizeDropdown.scss';
 
 const SpreadsheetFontSizeDropdown = (props) => {

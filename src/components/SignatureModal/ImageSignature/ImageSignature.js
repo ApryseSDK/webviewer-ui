@@ -19,7 +19,6 @@ const signatureType = {
   INITIALS: 'initials',
 };
 const acceptedFileTypes = ['png', 'jpg', 'jpeg'];
-let acceptedFileSize = null;
 
 function readImageFile(file, t) {
   return new Promise((resolve, reject) => {
@@ -56,6 +55,7 @@ const ImageSignature = ({
   isInitialsModeEnabled = false,
 }) => {
   const { core } = useCore();
+  const [acceptedFileSize, setAcceptedFileSize] = useState(null);
   const [fullSignatureImage, setFullSignatureImage] = useState(null);
   const [fullSignatureFileSize, setFullSignatureFileSize] = useState(null);
   const [initialsImage, setInitialsImage] = useState(null);
@@ -69,7 +69,7 @@ const ImageSignature = ({
 
   useEffect(() => {
     const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
-    acceptedFileSize = signatureToolArray[0]['ACCEPTED_FILE_SIZE'];
+    setAcceptedFileSize(signatureToolArray[0]['ACCEPTED_FILE_SIZE']);
     if (!isModalOpen) {
       setFullSignatureImage(null);
       setInitialsImage(null);

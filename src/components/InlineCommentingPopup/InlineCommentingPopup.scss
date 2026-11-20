@@ -22,6 +22,18 @@
   @include tablet-and-desktop {
     overflow: auto;
     max-height: calc(100% - 100px);
+
+    &.InlineCommentingSpreadsheetEditorPopup {
+      // Above the headers and sheet tab bar (z-index 72-73) but below flyouts (90), so the note menus still open over it.
+      z-index: 80;
+
+      // WVR-12108: placeholder position. Replace with positioning anchored to the cell.
+      $placeholder-top: 150px;
+      inset-block-start: $placeholder-top;
+
+      // Never taller than the space between the placeholder and the sheet tab bar.
+      max-height: calc(100% - #{$placeholder-top} - var(--panel-bottom-headers-height, 0px));
+    }
   }
 
   .inline-comment-container {

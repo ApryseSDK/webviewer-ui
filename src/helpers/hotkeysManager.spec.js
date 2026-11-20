@@ -70,7 +70,7 @@ describe('hotkeysManager', () => {
     hotkeysManager.preferInternalAnnotationPaste = true;
   });
   afterEach(() => {
-    hotkeysManager.off();
+    hotkeysManager.destroy();
     jest.clearAllMocks();
   });
 
@@ -131,6 +131,34 @@ describe('hotkeysManager', () => {
       hotkeysManager.off(Keys.CTRL_Z);
 
       expect(hotkeys.unbind).toHaveBeenCalledWith(Keys.CTRL_Z, expect.any(Function));
+    });
+  });
+
+  describe('destroy', () => {
+    it('should remove lifecycle listeners and release instance references', () => {
+      const ownerWindow = {
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      };
+      const instanceRoot = {
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        ownerDocument: { defaultView: ownerWindow },
+      };
+      const manager = createHotkeysManager();
+
+      manager.initialize(mockStore, instanceRoot);
+      const clipboardPasteHandler = manager.clipboardPasteHandler;
+      const windowClipboardPasteHandler = manager.windowClipboardPasteHandler;
+      const windowBlurHandler = manager.windowBlurHandler;
+
+      manager.destroy();
+
+      expect(instanceRoot.removeEventListener).toHaveBeenCalledWith('paste', clipboardPasteHandler);
+      expect(ownerWindow.removeEventListener).toHaveBeenCalledWith('paste', windowClipboardPasteHandler);
+      expect(ownerWindow.removeEventListener).toHaveBeenCalledWith('blur', windowBlurHandler);
+      expect(manager.store).toBeUndefined();
+      expect(manager.instanceRootNode).toBeUndefined();
     });
   });
 
@@ -547,7 +575,8 @@ describe('hotkeysManager', () => {
     it('handles a rootless paste for the active web component instance', async () => {
       const originalIsWebComponent = window.isApryseWebViewerWebComponent;
       window.isApryseWebViewerWebComponent = true;
-      core.getMultiInstanceActiveKey = jest.fn(() => 1);
+      core.getCurrentInstanceId = jest.fn(() => 1);
+      selectors.getInstanceId = jest.fn(() => 1);
       const event = {
         composedPath: () => [document.body, document, window],
         currentTarget: window,
@@ -565,7 +594,8 @@ describe('hotkeysManager', () => {
     it('ignores a rootless paste for an inactive web component instance', async () => {
       const originalIsWebComponent = window.isApryseWebViewerWebComponent;
       window.isApryseWebViewerWebComponent = true;
-      core.getMultiInstanceActiveKey = jest.fn(() => 2);
+      core.getCurrentInstanceId = jest.fn(() => 2);
+      selectors.getInstanceId = jest.fn(() => 1);
       const event = {
         composedPath: () => [document.body, document, window],
         currentTarget: window,
@@ -583,7 +613,8 @@ describe('hotkeysManager', () => {
     it('ignores a rootless paste when a host document input is focused', async () => {
       const originalIsWebComponent = window.isApryseWebViewerWebComponent;
       window.isApryseWebViewerWebComponent = true;
-      core.getMultiInstanceActiveKey = jest.fn(() => 1);
+      core.getCurrentInstanceId = jest.fn(() => 1);
+      selectors.getInstanceId = jest.fn(() => 1);
       isFocusingElement.mockReturnValueOnce(true);
       const event = {
         composedPath: () => [document.body, document, window],
@@ -659,6 +690,23 @@ describe('hotkeysManager', () => {
 
       await manager.handleClipboardPaste({});
 
+      expect(pasteClipboardImage).not.toHaveBeenCalled();
+      expect(pasteClipboardText).not.toHaveBeenCalled();
+    });
+
+    it('leaves paste handling to Content Edit mode', async () => {
+      shortcutKeyMap[Shortcuts.PASTE] = Keys.CTRL_V;
+      const isInContentEditMode = jest.fn(() => true);
+      core.getContentEditManager.mockReturnValue({
+        isInContentEditMode,
+      });
+      const manager = createHotkeysManager();
+      manager.store = mockStore;
+      manager.activeHotkeysMap = { [Keys.CTRL_V]: true };
+
+      await manager.handleClipboardPaste({});
+
+      expect(isInContentEditMode).toHaveBeenCalledTimes(1);
       expect(pasteClipboardImage).not.toHaveBeenCalled();
       expect(pasteClipboardText).not.toHaveBeenCalled();
     });

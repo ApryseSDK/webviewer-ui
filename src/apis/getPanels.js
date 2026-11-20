@@ -87,7 +87,7 @@ export class Panel {
    * });
    */
   delete() {
-    const panelList = selectors.getGenericPanels(this._store.getState());
+    const panelList = [...selectors.getGenericPanels(this._store.getState())];
     const panelIndex = panelList.findIndex((panel) => panel.dataElement === this._dataElement);
     if (panelIndex === -1) {
       return;
@@ -97,7 +97,7 @@ export class Panel {
   }
 
   updatePanelInStore(oldDataElement = undefined) {
-    const panelList = selectors.getGenericPanels(this._store.getState());
+    const panelList = [...selectors.getGenericPanels(this._store.getState())];
     const panelIndex = panelList.findIndex((panel) => panel.dataElement === (oldDataElement || this._dataElement));
     if (panelIndex === -1) {
       return;

@@ -7,7 +7,9 @@ import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import LoadingScreen from 'components/LoadingScreen';
 import rootReducer from 'reducers/rootReducer';
-import PasswordModalComponent from './PasswordModal';
+import PasswordModalComponent, { setCheckPasswordFunction, setCancelPasswordCheckCallback } from './PasswordModal';
+import InstanceIdContext from 'src/context/InstanceIdContext';
+import { registerInstance, resetInstances, runWithInstance, setCurrentInstanceId } from 'core/documentViewers';
 import { PasswordModal, PasswordManyAttemptsErrorModal } from './PasswordModal.stories';
 import { fireError } from 'helpers/fireEvent';
 import { createStructuredLoadError } from 'helpers/loadError';
@@ -54,6 +56,48 @@ describe('PasswordModal', () => {
         filename: 'PasswordModal',
         functionName: 'renderContent',
       }));
+    });
+  });
+
+  describe('with two instances', () => {
+    beforeEach(() => {
+      registerInstance(1);
+      registerInstance(2);
+    });
+
+    afterEach(() => {
+      resetInstances();
+    });
+
+    it('should check the password with the callback of its own instance when another instance is current', () => {
+      const check1 = jest.fn();
+      const check2 = jest.fn();
+      runWithInstance(1, () => setCheckPasswordFunction(check1));
+      runWithInstance(2, () => setCheckPasswordFunction(check2));
+      setCurrentInstanceId(2);
+      const PasswordModalWithProviders = withProviders(PasswordModal);
+      render(<InstanceIdContext.Provider value={1}><PasswordModalWithProviders /></InstanceIdContext.Provider>);
+
+      fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'secret' } });
+      fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+      expect(check1).toHaveBeenCalledWith('secret');
+      expect(check2).not.toHaveBeenCalled();
+    });
+
+    it('should call the cancel callback of its own instance when another instance is current', () => {
+      const cancel1 = jest.fn();
+      const cancel2 = jest.fn();
+      runWithInstance(1, () => setCancelPasswordCheckCallback(cancel1));
+      runWithInstance(2, () => setCancelPasswordCheckCallback(cancel2));
+      setCurrentInstanceId(2);
+      const PasswordModalWithProviders = withProviders(PasswordManyAttemptsErrorModal);
+      render(<InstanceIdContext.Provider value={1}><PasswordModalWithProviders /></InstanceIdContext.Provider>);
+
+      fireEvent.click(screen.getByRole('button', { name: /^ok$/i }));
+
+      expect(cancel1).toHaveBeenCalledTimes(1);
+      expect(cancel2).not.toHaveBeenCalled();
     });
   });
 

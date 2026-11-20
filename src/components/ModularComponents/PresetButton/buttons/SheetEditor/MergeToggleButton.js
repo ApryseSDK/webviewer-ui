@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import FlyoutItemContainer from '../../../FlyoutItemContainer';
 import { menuItems } from '../../../Helpers/menuItems';
-import mergeCellRange from 'src/helpers/mergeCellRange';
+import mergeCellRange from 'src/helpers/spreadsheetEditor/mergeCellRange';
 const propTypes = {
   type: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
