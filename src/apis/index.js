@@ -27,6 +27,7 @@ import disableTool from './disableTool';
 import disableTools from './disableTools';
 import displayErrorMessage from './displayErrorMessage';
 import downloadPdf from './downloadPdf';
+import applyDeprecatedCoreAliases from 'helpers/applyDeprecatedCoreAliases';
 import enableAllElements from './enableAllElements';
 import enableElement from './enableElement';
 import enableElements from './enableElements';
@@ -644,17 +645,22 @@ export default (store, instanceDocViewerKey, instanceI18n, instanceRootNode) => 
   const instanceId = store.getState().viewer.instanceId;
   const documentViewer = core.getDocumentViewer(documentViewerKey, instanceId);
 
+  const instanceCore = {
+    ...objForWebViewerCore,
+    ...window.Core,
+    documentViewer,
+    annotationManager: documentViewer.getAnnotationManager(),
+    getDocumentViewers: () => core.getDocumentViewers(instanceId),
+  };
+
+  // Defined after the spread above so that the deprecation warnings only fire when a user reads the alias.
+  applyDeprecatedCoreAliases(instanceCore);
+
   getInstanceNode().instance = {
     // keys needed for webviewer.js
     CORE_NAMESPACE_KEY: CORE_NAMESPACE,
     UI_NAMESPACE_KEY: UI_NAMESPACE,
-    [CORE_NAMESPACE]: {
-      ...objForWebViewerCore,
-      ...window.Core,
-      documentViewer,
-      annotationManager: documentViewer.getAnnotationManager(),
-      getDocumentViewers: () => core.getDocumentViewers(instanceId),
-    },
+    [CORE_NAMESPACE]: instanceCore,
     // instance.UI is wrapped here, so APIs like instanceA.UI.setZoomLevel() act on A even if B was clicked last.
     // This is the main entry point for customer calls.
     [UI_NAMESPACE]: core.bindApiToInstance(objForWebViewerUI, instanceId),
